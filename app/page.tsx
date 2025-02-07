@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function Home() {
   return (
-    <main className='relative h-screen w-screen flex items-center justify-center'>
+    <main className='relative h-screen w-screen flex items-center justify-center overflow-x-hidden'>
       <div className='absolute inset-0 bg-white/60'>
         <Image
           src='/hivebg.jpeg'
@@ -14,17 +14,16 @@ export default function Home() {
           className='object-cover -z-20'
         />
       </div>
-      <div className='flex items-center justify-between gap-14 z-10 max-w-7xl 2xl:max-w-[1440px]'>
-        <div className='relative w-[380px] aspect-[3000/2381]'>
+      <div className='flex flex-col lg:flex-row items-center justify-between gap-14 z-10 max-w-7xl 2xl:max-w-[1440px] px-4'>
+        <div className='relative w-full sm:w-[380px] aspect-[3000/2381]'>
           <Image src='/pmohive-logo.png' alt='PMO Hive logo' fill priority />
         </div>
         <div className=''>
-          <h1 className='text-6xl leading-tight font-medium text-black'>
-            Our Website is
-            <br />
+          <h1 className='text-5xl sm:text-6xl leading-tight font-medium text-black'>
+            Our Website is <br className='hidden sm:block' />
             Coming Soon
           </h1>
-          <p className='text-2xl text-balance mt-10 text-gray-600'>
+          <p className='text-2xl text-balance mt-6 sm:mt-10 text-gray-600'>
             In the meantime, please contact us at:
           </p>
           <a
