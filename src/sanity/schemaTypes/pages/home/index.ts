@@ -2,6 +2,8 @@ import { defineField, defineType } from 'sanity';
 import { HomeIcon } from 'lucide-react';
 import { heroSectionType } from './heroSectionType';
 import { aboutSectionType } from './aboutSectionType';
+import { teamSectionType } from './teamSectionType';
+import { contactSectionType } from './contactSectionType';
 
 export const homePageType = defineType({
   name: 'homePage',
@@ -48,6 +50,22 @@ export const homePageType = defineType({
       validation: (rule) => rule.required().error('About section is required'),
       group: 'content',
     }),
+    defineField({
+      name: 'team',
+      title: 'Team Section',
+      type: 'teamSection',
+      description: 'Team section with team members',
+      validation: (rule) => rule.required().error('Team section is required'),
+      group: 'content',
+    }),
+    defineField({
+      name: 'contact',
+      title: 'Contact Section',
+      type: 'contactSection',
+      description: 'Contact section with call-to-action buttons',
+      validation: (rule) => rule.required().error('Contact section is required'),
+      group: 'content',
+    }),
   ],
   preview: {
     select: {
@@ -66,3 +84,5 @@ export const homePageType = defineType({
 // Export all section types for registration
 export { heroSectionType };
 export { aboutSectionType };
+export { teamSectionType };
+export { contactSectionType };

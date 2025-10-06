@@ -1,4 +1,4 @@
-import { FileIcon, GlobeIcon, HomeIcon } from 'lucide-react';
+import { FileIcon, GlobeIcon, HomeIcon, UserIcon } from 'lucide-react';
 import type { StructureBuilder, StructureResolver } from 'sanity/structure';
 
 export const structure: StructureResolver = (S: StructureBuilder) =>
@@ -33,6 +33,19 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
                 .child(S.documentTypeList('post').title('Posts')),
             ])
         ),
+      S.listItem()
+        .title('Team')
+        .icon(FileIcon)
+        .child(
+          S.list()
+            .title('Team')
+            .items([
+              S.listItem()
+                .title('Team Members')
+                .icon(FileIcon)
+                .child(S.documentTypeList('teamMember').title('Team Members')),
+            ])
+        ),
       S.divider(),
       // S.listItem()
       //   .title('General')
@@ -42,6 +55,6 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
       //   ),
       S.divider(),
       ...S.documentTypeListItems().filter(
-        (listItem) => !['homePage', 'post'].includes(listItem.getId()!)
+        (listItem) => !['homePage', 'post', 'teamMember'].includes(listItem.getId()!)
       ),
     ]);

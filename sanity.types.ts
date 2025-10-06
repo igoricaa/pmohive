@@ -69,6 +69,30 @@ export type Post = {
   };
 };
 
+export type TeamMember = {
+  _id: string;
+  _type: "teamMember";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  specializations: Array<string>;
+  bio: BlockContent;
+};
+
 export type HomePage = {
   _id: string;
   _type: "homePage";
@@ -78,12 +102,36 @@ export type HomePage = {
   title: string;
   hero: HeroSection;
   about: AboutSection;
+  team: TeamSection;
+};
+
+export type TeamSection = {
+  _type: "teamSection";
+  subtitle: string;
+  heading: string;
+  description: BlockContent;
+  button: {
+    text: string;
+    link: string;
+  };
+  teamMembers: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "teamMember";
+  }>;
 };
 
 export type AboutSection = {
   _type: "aboutSection";
-  subtitle: string;
-  animatedText: string;
+  heading: string;
+  aboutText: BlockContent;
+  stats: Array<{
+    statTitle: string;
+    statValue: number;
+    _key: string;
+  }>;
 };
 
 export type HeroSection = {
@@ -269,7 +317,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = BlockContent | Post | HomePage | AboutSection | HeroSection | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = BlockContent | Post | TeamMember | HomePage | TeamSection | AboutSection | HeroSection | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
@@ -284,6 +332,7 @@ export type HOME_PAGE_QUERYResult = {
     title: string;
     hero: HeroSection;
     about: AboutSection;
+    team: TeamSection;
   } | null;
 };
 // Variable: LATEST_POSTS_QUERY

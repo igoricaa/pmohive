@@ -8,28 +8,56 @@ export const aboutSectionType = defineType({
   icon: UserIcon,
   fields: [
     defineField({
-      name: 'subtitle',
-      title: 'Subtitle',
+      name: 'heading',
+      title: 'Heading',
       type: 'string',
-      description: 'Section subtitle text',
+      description: 'Section heading text',
       validation: (rule) =>
         rule
           .required()
-          .error('Subtitle is required')
-          .max(10)
-          .warning('Keep subtitle under 10 characters'),
+          .error('Heading is required')
+          .max(20)
+          .warning('Keep heading under 20 characters'),
     }),
     defineField({
-      name: 'animatedText',
-      title: 'Animated Text',
-      type: 'string',
-      description: 'Text that will be animated on the frontend',
-      validation: (rule) => rule.required(),
+      name: 'aboutText',
+      title: 'About Text',
+      type: 'blockContent',
+      description: 'Section about text',
+      validation: (rule) => rule.required().error('About text is required'),
+    }),
+    defineField({
+      name: 'stats',
+      title: 'Stats',
+      type: 'array',
+      description: 'Section stats',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'statTitle',
+              title: 'Stat Title',
+              type: 'string',
+              description: 'Section stat title',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'statValue',
+              title: 'Stat Value',
+              type: 'number',
+              description: 'Section stat value',
+              validation: (rule) => rule.required(),
+            }),
+          ],
+        },
+      ],
+      validation: (rule) => rule.required().error('Stats are required'),
     }),
   ],
   preview: {
     select: {
-      title: 'subtitle',
+      title: 'heading',
     },
     prepare({ title }) {
       return {
