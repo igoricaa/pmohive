@@ -84,25 +84,18 @@ export type AboutSection = {
   _type: "aboutSection";
   subtitle: string;
   animatedText: string;
-  description: BlockContent;
-  buttonText: string;
-  backgroundIllustration: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
 };
 
 export type HeroSection = {
   _type: "heroSection";
-  bgImages: {
+  subtitle: string;
+  heading: string;
+  description: string;
+  button?: {
+    link: string;
+    buttonText: string;
+  };
+  images: {
     image1: {
       asset?: {
         _ref: string;
@@ -129,9 +122,33 @@ export type HeroSection = {
       alt: string;
       _type: "image";
     };
+    image3: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    image4: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
   };
-  heading: string;
-  description: string;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -269,11 +286,43 @@ export type HOME_PAGE_QUERYResult = {
     about: AboutSection;
   } | null;
 };
+// Variable: LATEST_POSTS_QUERY
+// Query: *[_type == "post"] | order(_createdAt desc) [0...$limit] {  title,  "slug": slug.current,  excerpt,  featuredMedia {    asset->  }}
+export type LATEST_POSTS_QUERYResult = Array<{
+  title: string;
+  slug: string;
+  excerpt: BlockContent | null;
+  featuredMedia: {
+    asset: {
+      _id: string;
+      _type: "sanity.imageAsset";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
+  };
+}>;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "{\n    \"homePage\": *[_type == \"homePage\"][0],\n  }": HOME_PAGE_QUERYResult;
+    "*[_type == \"post\"] | order(_createdAt desc) [0...$limit] {\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  featuredMedia {\n    asset->\n  }\n}": LATEST_POSTS_QUERYResult;
   }
 }

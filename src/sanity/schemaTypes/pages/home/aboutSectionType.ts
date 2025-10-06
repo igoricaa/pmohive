@@ -16,8 +16,8 @@ export const aboutSectionType = defineType({
         rule
           .required()
           .error('Subtitle is required')
-          .max(20)
-          .warning('Keep subtitle under 20 characters'),
+          .max(10)
+          .warning('Keep subtitle under 10 characters'),
     }),
     defineField({
       name: 'animatedText',
@@ -26,38 +26,14 @@ export const aboutSectionType = defineType({
       description: 'Text that will be animated on the frontend',
       validation: (rule) => rule.required(),
     }),
-    defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'blockContent',
-      description: 'Main description content for the about section',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'buttonText',
-      title: 'Button Text',
-      type: 'string',
-      description: 'Text displayed on the call-to-action button',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'backgroundIllustration',
-      title: 'Background Illustration',
-      type: 'image',
-      description: 'Background illustration or decorative image',
-      validation: (rule) => rule.required(),
-    }),
   ],
   preview: {
     select: {
       title: 'subtitle',
-      subtitle: 'description',
-      media: 'backgroundIllustration',
     },
-    prepare({ title, subtitle, media }) {
+    prepare({ title }) {
       return {
         title: title || 'About Section',
-        media,
       };
     },
   },

@@ -16,6 +16,10 @@ This is a Next.js 15 application integrated with Sanity CMS. The project uses:
 
 ## Commands
 
+**IMPORTANT**: This project uses **pnpm** as the package manager. Always use:
+- `pnpm` instead of `npm`
+- `pnpx` instead of `npx`
+
 ### Development
 ```bash
 pnpm dev           # Start dev server with Turbopack
@@ -31,6 +35,12 @@ pnpm format        # Format code with Biome
 
 ### Sanity Studio
 The Sanity Studio is accessible at `/studio` route when the dev server is running. Configuration is in [sanity.config.ts](sanity.config.ts).
+
+### Sanity Type Generation
+```bash
+pnpx sanity@latest schema extract --enforce-required-fields  # Extract schema
+pnpx sanity@latest typegen generate                          # Generate TypeScript types
+```
 
 ## Architecture
 
