@@ -4,6 +4,7 @@ import { heroSectionType } from './heroSectionType';
 import { aboutSectionType } from './aboutSectionType';
 import { teamSectionType } from './teamSectionType';
 import { contactSectionType } from './contactSectionType';
+import { blogSectionType } from './blogSectionType';
 
 export const homePageType = defineType({
   name: 'homePage',
@@ -59,6 +60,14 @@ export const homePageType = defineType({
       group: 'content',
     }),
     defineField({
+      name: 'blog',
+      title: 'Blog Section',
+      type: 'blogSection',
+      description: 'Blog section with subtitle, heading and description',
+      validation: (rule) => rule.required().error('Blog section is required'),
+      group: 'content',
+    }),
+    defineField({
       name: 'contact',
       title: 'Contact Section',
       type: 'contactSection',
@@ -85,4 +94,5 @@ export const homePageType = defineType({
 export { heroSectionType };
 export { aboutSectionType };
 export { teamSectionType };
+export { blogSectionType };
 export { contactSectionType };
