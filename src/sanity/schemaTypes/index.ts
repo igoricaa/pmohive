@@ -3,9 +3,11 @@ import { aboutSectionType, blogSectionType, contactSectionType, heroSectionType,
 import { postType } from './posts';
 import { blockContentType } from './blockContentType';
 import { teamMemberType } from './teamMemberType';
+import { generalType } from './generalType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
+    generalType,
     homePageType,
     aboutSectionType,
     heroSectionType,

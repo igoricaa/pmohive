@@ -35,26 +35,26 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
         ),
       S.listItem()
         .title('Team')
-        .icon(FileIcon)
+        .icon(UserIcon)
         .child(
           S.list()
             .title('Team')
             .items([
               S.listItem()
                 .title('Team Members')
-                .icon(FileIcon)
+                .icon(UserIcon)
                 .child(S.documentTypeList('teamMember').title('Team Members')),
             ])
         ),
       S.divider(),
-      // S.listItem()
-      //   .title('General')
-      //   .icon(GlobeIcon)
-      //   .child(
-      //     S.document().schemaType('generalInfo').documentId('generalInfo')
-      //   ),
+      S.listItem()
+        .title('General')
+        .icon(GlobeIcon)
+        .child(
+          S.document().schemaType('general').documentId('general')
+        ),
       S.divider(),
       ...S.documentTypeListItems().filter(
-        (listItem) => !['homePage', 'post', 'teamMember'].includes(listItem.getId()!)
+        (listItem) => !['homePage', 'post', 'teamMember', 'general'].includes(listItem.getId()!)
       ),
     ]);
