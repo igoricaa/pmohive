@@ -1,10 +1,11 @@
 import { cn } from '@/lib/utils';
-import { urlFor, urlForUncropped } from '@/sanity/lib/image';
+import { urlForUncropped } from '@/sanity/lib/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { Image } from 'next-sanity/image';
 import Link from 'next/link';
-import { buttonVariants } from '../ui/button';
+
 import { ArrowRight } from 'lucide-react';
+import { buttonVariants } from '@/components/ui/button';
 
 interface HeroSectionProps {
   subtitle: {
