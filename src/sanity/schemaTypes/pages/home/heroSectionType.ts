@@ -10,8 +10,22 @@ export const heroSectionType = defineType({
     defineField({
       name: 'subtitle',
       title: 'Subtitle',
-      type: 'string',
+      type: 'object',
       description: 'Subtitle text that will be displayed in hero section',
+      fields: [
+        defineField({
+          name: 'text',
+          title: 'Text',
+          type: 'string',
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: 'highlightedText',
+          title: 'Highlighted Text',
+          type: 'string',
+          validation: (rule) => rule.required(),
+        }),
+      ],
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -29,26 +43,44 @@ export const heroSectionType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'button',
-      title: 'Button',
-      type: 'object',
-      description: 'Button for the hero section',
-      fields: [
-        defineField({
-          name: 'link',
-          title: 'Link',
-          type: 'url',
-          description: 'Link used for the call-to-action button',
-          validation: (rule) => rule.required(),
-        }),
-        defineField({
-          name: 'buttonText',
-          title: 'Button Text',
-          type: 'string',
-          description: 'Text displayed on the call-to-action button',
-          validation: (rule) => rule.required(),
-        }),
+      name: 'buttons',
+      title: 'Buttons',
+      type: 'array',
+      description: 'Buttons for the hero section',
+      of: [
+        {
+          name: 'button',
+          title: 'Button',
+          type: 'object',
+          description: 'Button for the hero section',
+          fields: [
+            defineField({
+              name: 'text',
+              title: 'Text',
+              type: 'string',
+              description: 'Text displayed on the call-to-action button',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'hightlightedText',
+              title: 'HightlightedText',
+              type: 'string',
+              description:
+                'Hightlighted text displayed on the call-to-action button',
+            }),
+            defineField({
+              name: 'link',
+              title: 'Link',
+              type: 'string',
+              description: 'Link used for the call-to-action button',
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          validation: (rule) => rule.required().error('Button is required'),
+        },
       ],
+      validation: (rule) =>
+        rule.required().min(1).error('At least one button is required'),
     }),
     defineField({
       name: 'images',

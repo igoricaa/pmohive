@@ -1,9 +1,10 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-
-@custom-variant dark (&:is(.dark *));
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @theme inline {
+  --padding-side: var(--padding-side);
+  --color-primary: #f09a60;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -32,7 +33,6 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -44,6 +44,21 @@
 }
 
 :root {
+  --padding-side: 1rem;
+  /* Typography Variables - SM Mobile (default) */
+  --h1-font-size: 2.5rem; /* 40px */
+  --h1-line-height: 1;
+  --h2-font-size: 2.125rem; /* 34px */
+  --h2-line-height: 1;
+  --h3-font-size: 1.75rem; /* 28px */
+  --h3-line-height: 1;
+  --h4-font-size: 1.5rem; /* 24px */
+  --h4-line-height: 1;
+  --h5-font-size: 1.375rem; /* 22px */
+  --h5-line-height: 1;
+  --h6-font-size: 1.125rem; /* 18px */
+  --h6-line-height: 1;
+
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -76,226 +91,108 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-}
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* MD Tablet */
+  @media (min-width: 768px) {
+    --padding-side: 1.5rem;
+    --h1-font-size: 3.25rem; /* 52px */
+    --h2-font-size: 2.75rem; /* 44px */
+    --h3-font-size: 2.25rem; /* 36px */
+    --h4-font-size: 1.875rem; /* 30px */
+    --h5-font-size: 1.625rem; /* 26px */
+    --h6-font-size: 1.375rem; /* 22px */
+  }
+
+  /* LG Desktop */
+  @media (min-width: 1024px) {
+    --padding-side: 2rem;
+    --h1-font-size: 4rem; /* 64px */
+    --h1-line-height: 0.912;
+    --h2-font-size: 3.5rem; /* 56px */
+    --h2-line-height: 0.912;
+    --h3-font-size: 2.625rem; /* 42px */
+    --h3-line-height: 0.912;
+    --h4-font-size: 2.25rem; /* 36px */
+    --h4-line-height: 0.912;
+    --h5-font-size: 2rem; /* 32px */
+    --h5-line-height: 0.912;
+    --h6-font-size: 1.5rem; /* 24px */
+    --h6-line-height: 0.912;
+  }
+
+  /* XL Desktop */
+  @media (min-width: 1920px) {
+    --h1-font-size: 5rem; /* 80px */
+    --h2-font-size: 4rem; /* 64px */
+    --h3-font-size: 3rem; /* 48px */
+    --h4-font-size: 2.5rem; /* 40px */
+    --h5-font-size: 2.25rem; /* 36px */
+    --h6-font-size: 1.75rem; /* 28px */
+  }
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply font-mono;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-black text-white;
   }
 
   /* Responsive Typography - H Tags */
-  /* SM Mobile (default) */
   h1 {
     font-family: var(--font-geist-sans);
-    font-size: 2.5rem; /* 40px */
-    line-height: 1;
+    font-size: var(--h1-font-size);
+    line-height: var(--h1-line-height);
     letter-spacing: 0;
     font-weight: 700;
   }
 
   h2 {
     font-family: var(--font-geist-sans);
-    font-size: 2.125rem; /* 34px */
-    line-height: 1;
+    font-size: var(--h2-font-size);
+    line-height: var(--h2-line-height);
     letter-spacing: 0;
     font-weight: 700;
   }
 
   h3 {
     font-family: var(--font-geist-sans);
-    font-size: 1.75rem; /* 28px */
-    line-height: 1;
+    font-size: var(--h3-font-size);
+    line-height: var(--h3-line-height);
     letter-spacing: 0;
     font-weight: 700;
   }
 
   h4 {
     font-family: var(--font-geist-sans);
-    font-size: 1.5rem; /* 24px */
-    line-height: 1;
+    font-size: var(--h4-font-size);
+    line-height: var(--h4-line-height);
     letter-spacing: 0;
     font-weight: 700;
   }
 
   h5 {
     font-family: var(--font-geist-sans);
-    font-size: 1.375rem; /* 22px */
-    line-height: 1;
+    font-size: var(--h5-font-size);
+    line-height: var(--h5-line-height);
     letter-spacing: 0;
     font-weight: 700;
   }
 
   h6 {
     font-family: var(--font-geist-sans);
-    font-size: 1.125rem; /* 18px */
-    line-height: 1;
+    font-size: var(--h6-font-size);
+    line-height: var(--h6-line-height);
     letter-spacing: 0;
     font-weight: 700;
   }
+}
 
-  h7 {
-    font-family: var(--font-geist-sans);
-    font-size: 1rem; /* 16px */
-    line-height: 1.1;
-    letter-spacing: 0;
-    font-weight: 700;
-  }
+.highlight {
+  color: var(--color-primary);
+}
 
-  h8 {
-    font-family: var(--font-geist-mono);
-    font-size: 0.875rem; /* 14px */
-    line-height: 1.1;
-    letter-spacing: 0;
-    font-weight: 700;
-  }
-
-  /* MD Tablet */
-  @media (min-width: 768px) {
-    h1 {
-      font-size: 3.25rem; /* 52px */
-    }
-
-    h2 {
-      font-size: 2.75rem; /* 44px */
-    }
-
-    h3 {
-      font-size: 2.25rem; /* 36px */
-    }
-
-    h4 {
-      font-size: 1.875rem; /* 30px */
-    }
-
-    h5 {
-      font-size: 1.625rem; /* 26px */
-    }
-
-    h6 {
-      font-size: 1.375rem; /* 22px */
-    }
-
-    h7 {
-      font-size: 1.125rem; /* 18px */
-    }
-
-    h8 {
-      font-size: 1rem; /* 16px */
-    }
-  }
-
-  /* LG Desktop */
-  @media (min-width: 1024px) {
-    h1 {
-      font-size: 4rem; /* 64px */
-      line-height: 0.912;
-    }
-
-    h2 {
-      font-size: 3.5rem; /* 56px */
-      line-height: 0.912;
-    }
-
-    h3 {
-      font-size: 2.625rem; /* 42px */
-      line-height: 0.912;
-    }
-
-    h4 {
-      font-size: 2.25rem; /* 36px */
-      line-height: 0.912;
-    }
-
-    h5 {
-      font-size: 2rem; /* 32px */
-      line-height: 0.912;
-    }
-
-    h6 {
-      font-size: 1.5rem; /* 24px */
-      line-height: 0.912;
-    }
-
-    h7 {
-      font-size: 1.125rem; /* 18px */
-      line-height: 0.931;
-    }
-
-    h8 {
-      font-size: 1rem; /* 16px */
-      line-height: 1;
-    }
-  }
-
-  /* XL Desktop */
-  @media (min-width: 1920px) {
-    h1 {
-      font-size: 5rem; /* 80px */
-    }
-
-    h2 {
-      font-size: 4rem; /* 64px */
-    }
-
-    h3 {
-      font-size: 3rem; /* 48px */
-    }
-
-    h4 {
-      font-size: 2.5rem; /* 40px */
-    }
-
-    h5 {
-      font-size: 2.25rem; /* 36px */
-    }
-
-    h6 {
-      font-size: 1.75rem; /* 28px */
-    }
-
-    h7 {
-      font-size: 1.375rem; /* 22px */
-    }
-
-    h8 {
-      font-size: 1.125rem; /* 18px */
-    }
-  }
+.hexagon-clip {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }

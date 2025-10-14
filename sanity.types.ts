@@ -69,6 +69,62 @@ export type Post = {
   };
 };
 
+export type Project = {
+  _id: string;
+  _type: "project";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  featuredImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  content: BlockContent;
+};
+
+export type Service = {
+  _id: string;
+  _type: "service";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  featuredImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  descriptionPartOne: BlockContent;
+  descriptionPartTwo?: BlockContent;
+  relevantProjects?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "project";
+  }>;
+};
+
 export type TeamMember = {
   _id: string;
   _type: "teamMember";
@@ -93,6 +149,31 @@ export type TeamMember = {
   bio: BlockContent;
 };
 
+export type ContactPage = {
+  _id: string;
+  _type: "contactPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  subtitle: string;
+  title: string;
+  description: string;
+};
+
+export type AboutPage = {
+  _id: string;
+  _type: "aboutPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  hero: HeroSection;
+  about: AboutSection;
+  team: TeamSection;
+  blog: BlogSection;
+  contact: ContactSection;
+};
+
 export type HomePage = {
   _id: string;
   _type: "homePage";
@@ -103,6 +184,39 @@ export type HomePage = {
   hero: HeroSection;
   about: AboutSection;
   team: TeamSection;
+  blog: BlogSection;
+  contact: ContactSection;
+};
+
+export type ContactSection = {
+  _type: "contactSection";
+  subtitle: string;
+  description: BlockContent;
+  backgroundImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  buttons: Array<{
+    text: string;
+    link: string;
+    _key: string;
+  }>;
+};
+
+export type BlogSection = {
+  _type: "blogSection";
+  subtitle: string;
+  heading: string;
+  description: BlockContent;
 };
 
 export type TeamSection = {
@@ -136,13 +250,19 @@ export type AboutSection = {
 
 export type HeroSection = {
   _type: "heroSection";
-  subtitle: string;
+  subtitle: {
+    text: string;
+    highlightedText: string;
+  };
   heading: string;
   description: string;
-  button?: {
+  buttons: Array<{
+    text: string;
+    hightlightedText?: string;
     link: string;
-    buttonText: string;
-  };
+    _type: "button";
+    _key: string;
+  }>;
   images: {
     image1: {
       asset?: {
@@ -197,6 +317,60 @@ export type HeroSection = {
       _type: "image";
     };
   };
+};
+
+export type General = {
+  _id: string;
+  _type: "general";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  logoFull: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  logoMark: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  email: string;
+  phone: string;
+  socials?: Array<{
+    title: string;
+    url: string;
+    icon: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    _key: string;
+  }>;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -317,7 +491,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = BlockContent | Post | TeamMember | HomePage | TeamSection | AboutSection | HeroSection | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = BlockContent | Post | Project | Service | TeamMember | ContactPage | AboutPage | HomePage | ContactSection | BlogSection | TeamSection | AboutSection | HeroSection | General | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
@@ -333,6 +507,8 @@ export type HOME_PAGE_QUERYResult = {
     hero: HeroSection;
     about: AboutSection;
     team: TeamSection;
+    blog: BlogSection;
+    contact: ContactSection;
   } | null;
 };
 // Variable: LATEST_POSTS_QUERY
