@@ -239,11 +239,28 @@ export type TeamSection = {
 
 export type AboutSection = {
   _type: "aboutSection";
-  heading: string;
-  aboutText: BlockContent;
+  heading: {
+    text: string;
+    highlightedText: string;
+  };
+  aboutText: string;
   stats: Array<{
     statTitle: string;
-    statValue: number;
+    statValue?: string;
+    statIcon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
+    statDescription: BlockContent;
     _key: string;
   }>;
 };
