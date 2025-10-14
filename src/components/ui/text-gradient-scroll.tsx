@@ -18,18 +18,21 @@ type LetterType = {
   children: React.ReactNode | string;
   progress: MotionValue<number>;
   range: number[];
+  isFirst?: boolean;
 };
 
 type WordType = {
   children: React.ReactNode;
   progress: MotionValue<number>;
   range: number[];
+  isFirst?: boolean;
 };
 
 type CharType = {
   children: React.ReactNode;
   progress: MotionValue<number>;
   range: number[];
+  isFirst?: boolean;
 };
 
 type TextGradientScrollContextType = {
@@ -67,11 +70,11 @@ function TextGradientScroll({
           const start = i / words.length;
           const end = start + 1 / words.length;
           return type === 'word' ? (
-            <Word key={i} progress={scrollYProgress} range={[start, end]}>
+            <Word key={i} progress={scrollYProgress} range={[start, end]} isFirst={i === 0}>
               {word}
             </Word>
           ) : (
-            <Letter key={i} progress={scrollYProgress} range={[start, end]}>
+            <Letter key={i} progress={scrollYProgress} range={[start, end]} isFirst={i === 0}>
               {word}
             </Letter>
           );
@@ -83,20 +86,20 @@ function TextGradientScroll({
 
 export { TextGradientScroll };
 
-const Word = ({ children, progress, range }: WordType) => {
+const Word = ({ children, progress, range, isFirst }: WordType) => {
   const opacity = useTransform(progress, range, [0, 1]);
 
   return (
     <span className='relative me-2 mt-2'>
       <span style={{ position: 'absolute', opacity: 0.1 }}>{children}</span>
-      <motion.span style={{ transition: 'all .5s', opacity: opacity }}>
+      <motion.span className={cn(isFirst && 'text-primary')} style={{ transition: 'all .5s', opacity: opacity }}>
         {children}
       </motion.span>
     </span>
   );
 };
 
-const Letter = ({ children, progress, range }: LetterType) => {
+const Letter = ({ children, progress, range, isFirst }: LetterType) => {
   if (typeof children === 'string') {
     const amount = range[1] - range[0];
     const step = amount / children.length;
@@ -107,7 +110,7 @@ const Letter = ({ children, progress, range }: LetterType) => {
           const start = range[0] + i * step;
           const end = range[0] + (i + 1) * step;
           return (
-            <Char key={`c_${i}`} progress={progress} range={[start, end]}>
+            <Char key={`c_${i}`} progress={progress} range={[start, end]} isFirst={isFirst}>
               {char}
             </Char>
           );
@@ -117,7 +120,7 @@ const Letter = ({ children, progress, range }: LetterType) => {
   }
 };
 
-const Char = ({ children, progress, range }: CharType) => {
+const Char = ({ children, progress, range, isFirst }: CharType) => {
   const opacity = useTransform(progress, range, [0, 1]);
   const { textOpacity } = useGradientScroll();
 
@@ -133,6 +136,7 @@ const Char = ({ children, progress, range }: CharType) => {
         {children}
       </span>
       <motion.span
+        className={cn(isFirst && 'text-primary')}
         style={{
           transition: 'all .5s',
           opacity: opacity,
