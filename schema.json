@@ -1868,7 +1868,7 @@
     }
   },
   {
-    "name": "general",
+    "name": "generalInfo",
     "type": "document",
     "attributes": {
       "_id": {
@@ -1881,7 +1881,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "general"
+          "value": "generalInfo"
         }
       },
       "_createdAt": {
@@ -2052,7 +2052,7 @@
             }
           }
         },
-        "optional": false
+        "optional": true
       },
       "email": {
         "type": "objectAttribute",

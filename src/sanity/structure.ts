@@ -1,4 +1,13 @@
-import { BriefcaseIcon, FileIcon, FolderKanbanIcon, GlobeIcon, HomeIcon, InfoIcon, MailIcon, UserIcon } from 'lucide-react';
+import {
+  BriefcaseIcon,
+  FileIcon,
+  FolderKanbanIcon,
+  GlobeIcon,
+  HomeIcon,
+  InfoIcon,
+  MailIcon,
+  UserIcon,
+} from 'lucide-react';
 import type { StructureBuilder, StructureResolver } from 'sanity/structure';
 
 export const structure: StructureResolver = (S: StructureBuilder) =>
@@ -28,7 +37,9 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
                 .title('Contact Page')
                 .icon(MailIcon)
                 .child(
-                  S.document().schemaType('contactPage').documentId('contactPage')
+                  S.document()
+                    .schemaType('contactPage')
+                    .documentId('contactPage')
                 ),
             ])
         ),
@@ -86,13 +97,23 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
         ),
       S.divider(),
       S.listItem()
-        .title('General')
+        .title('General Info')
         .icon(GlobeIcon)
         .child(
-          S.document().schemaType('general').documentId('general')
+          S.document().schemaType('generalInfo').documentId('generalInfo')
         ),
       S.divider(),
       ...S.documentTypeListItems().filter(
-        (listItem) => !['homePage', 'aboutPage', 'contactPage', 'post', 'service', 'project', 'teamMember', 'general'].includes(listItem.getId()!)
+        (listItem) =>
+          ![
+            'homePage',
+            'aboutPage',
+            'contactPage',
+            'post',
+            'service',
+            'project',
+            'teamMember',
+            'generalInfo',
+          ].includes(listItem.getId()!)
       ),
     ]);

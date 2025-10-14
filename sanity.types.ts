@@ -319,9 +319,9 @@ export type HeroSection = {
   };
 };
 
-export type General = {
+export type GeneralInfo = {
   _id: string;
-  _type: "general";
+  _type: "generalInfo";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -338,7 +338,7 @@ export type General = {
     alt: string;
     _type: "image";
   };
-  logoMark: {
+  logoMark?: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -491,7 +491,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = BlockContent | Post | Project | Service | TeamMember | ContactPage | AboutPage | HomePage | ContactSection | BlogSection | TeamSection | AboutSection | HeroSection | General | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = BlockContent | Post | Project | Service | TeamMember | ContactPage | AboutPage | HomePage | ContactSection | BlogSection | TeamSection | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
@@ -542,6 +542,63 @@ export type LATEST_POSTS_QUERYResult = Array<{
     } | null;
   };
 }>;
+// Variable: GENERAL_INFO_QUERY
+// Query: {  "generalInfo": *[_type == "generalInfo"][0],}
+export type GENERAL_INFO_QUERYResult = {
+  generalInfo: {
+    _id: string;
+    _type: "generalInfo";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    logoFull: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    logoMark?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    email: string;
+    phone: string;
+    socials?: Array<{
+      title: string;
+      url: string;
+      icon: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "image";
+      };
+      _key: string;
+    }>;
+  } | null;
+};
 
 // Query TypeMap
 import "@sanity/client";
@@ -549,5 +606,6 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "{\n    \"homePage\": *[_type == \"homePage\"][0],\n  }": HOME_PAGE_QUERYResult;
     "*[_type == \"post\"] | order(_createdAt desc) [0...$limit] {\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  featuredMedia {\n    asset->\n  }\n}": LATEST_POSTS_QUERYResult;
+    "{\n  \"generalInfo\": *[_type == \"generalInfo\"][0],\n}": GENERAL_INFO_QUERYResult;
   }
 }

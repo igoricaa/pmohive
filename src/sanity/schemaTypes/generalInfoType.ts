@@ -1,9 +1,9 @@
 import { SettingsIcon } from 'lucide-react';
 import { defineField, defineType } from 'sanity';
 
-export const generalType = defineType({
-  name: 'general',
-  title: 'General Settings',
+export const generalInfoType = defineType({
+  name: 'generalInfo',
+  title: 'General Info',
   type: 'document',
   icon: SettingsIcon,
   groups: [
@@ -63,7 +63,6 @@ export const generalType = defineType({
             rule.required().error('Alt text is required for accessibility'),
         },
       ],
-      validation: (rule) => rule.required().error('Logo mark is required'),
       group: 'logo',
     }),
     defineField({
@@ -72,10 +71,7 @@ export const generalType = defineType({
       type: 'string',
       description: 'Contact email address',
       validation: (rule) =>
-        rule
-          .required()
-          .email()
-          .error('A valid email address is required'),
+        rule.required().email().error('A valid email address is required'),
       group: 'contact',
     }),
     defineField({
@@ -100,16 +96,14 @@ export const generalType = defineType({
               title: 'Title',
               type: 'string',
               description: 'Social media platform name',
-              validation: (rule) =>
-                rule.required().error('Title is required'),
+              validation: (rule) => rule.required().error('Title is required'),
             }),
             defineField({
               name: 'url',
               title: 'URL',
               type: 'url',
               description: 'Social media profile URL',
-              validation: (rule) =>
-                rule.required().error('URL is required'),
+              validation: (rule) => rule.required().error('URL is required'),
             }),
             defineField({
               name: 'icon',
@@ -126,7 +120,9 @@ export const generalType = defineType({
                   title: 'Alt Text',
                   description: 'Alternative text for accessibility',
                   validation: (rule) =>
-                    rule.required().error('Alt text is required for accessibility'),
+                    rule
+                      .required()
+                      .error('Alt text is required for accessibility'),
                 },
               ],
               validation: (rule) => rule.required().error('Icon is required'),

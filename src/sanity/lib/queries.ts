@@ -1,6 +1,7 @@
 import { defineQuery } from 'next-sanity';
 import { sanityFetch } from './client';
 import {
+  GENERAL_INFO_QUERYResult,
   HOME_PAGE_QUERYResult,
   LATEST_POSTS_QUERYResult,
 } from '../../../sanity.types';
@@ -25,6 +26,18 @@ export const LATEST_POSTS_QUERY =
     asset->
   }
 }`);
+
+export const GENERAL_INFO_QUERY = defineQuery(`{
+  "generalInfo": *[_type == "generalInfo"][0],
+}`);
+
+export const getGeneralInfoData =
+  async (): Promise<GENERAL_INFO_QUERYResult> => {
+    return await sanityFetch({
+      query: GENERAL_INFO_QUERY,
+      tags: ['generalInfo'],
+    });
+  };
 
 export const getLatestPosts = async (
   limit = 3
