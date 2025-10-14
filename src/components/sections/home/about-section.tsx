@@ -10,9 +10,15 @@ type AboutSectionType = {
   };
   aboutText: string;
   stats: Stat[];
+  wrapUpText: string;
 };
 
-const AboutSection = ({ heading, aboutText, stats }: AboutSectionType) => {
+const AboutSection = ({
+  heading,
+  aboutText,
+  stats,
+  wrapUpText,
+}: AboutSectionType) => {
   return (
     <section>
       <div className='flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl mx-auto'>
@@ -37,6 +43,10 @@ const AboutSection = ({ heading, aboutText, stats }: AboutSectionType) => {
           />
         ))}
       </div>
+
+      <p className='font-bold sm:max-xl:font-semibold leading-none text-[28px] sm:text-4xl xl:text-[42px] text-center max-w-75 sm:max-w-2xl xl:max-w-300 mx-auto'>
+        {wrapUpText}
+      </p>
     </section>
   );
 };

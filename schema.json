@@ -1545,6 +1545,13 @@
             }
           },
           "optional": false
+        },
+        "wrapUpText": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": false
         }
       }
     }

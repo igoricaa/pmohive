@@ -107,6 +107,13 @@ export const aboutSectionType = defineType({
       ],
       validation: (rule) => rule.required().error('Stats are required'),
     }),
+    defineField({
+      name: 'wrapUpText',
+      title: 'Wrap Up Text',
+      type: 'string',
+      description: 'Section wrap up text',
+      validation: (rule) => rule.required().error('Wrap up text is required'),
+    }),
   ],
   preview: {
     select: {

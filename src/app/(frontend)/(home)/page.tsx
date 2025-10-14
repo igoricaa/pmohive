@@ -29,6 +29,7 @@ export default async function Home() {
         heading={homePageData.about.heading}
         aboutText={homePageData.about.aboutText}
         stats={homePageData.about.stats as Stat[]}
+        wrapUpText={homePageData.about.wrapUpText}
       />
     </main>
   );

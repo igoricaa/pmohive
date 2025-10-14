@@ -263,6 +263,7 @@ export type AboutSection = {
     statDescription: BlockContent;
     _key: string;
   }>;
+  wrapUpText: string;
 };
 
 export type HeroSection = {
