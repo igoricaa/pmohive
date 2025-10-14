@@ -27,9 +27,10 @@ export default async function Home() {
 
       <AboutSection
         heading={homePageData.about.heading}
-        aboutText={homePageData.about.aboutText}
+        animatedText={homePageData.about.animatedText}
         stats={homePageData.about.stats as Stat[]}
         wrapUpText={homePageData.about.wrapUpText}
+        weAreSection={homePageData.about.weAreSection}
       />
     </main>
   );

@@ -2,22 +2,31 @@ import { TextGradientScroll } from '@/components/ui/text-gradient-scroll';
 import { Stat } from '@/lib/types';
 import StatCard from './stat-card';
 import { cn } from '@/lib/utils';
+import { HOME_PAGE_QUERYResult } from '../../../../sanity.types';
+import { Image } from 'next-sanity/image';
+import { urlForUncropped } from '@/sanity/lib/image';
+import PortableText from '@/components/portable-text';
+import { PortableTextBlock } from 'next-sanity';
 
 type AboutSectionType = {
   heading: {
     text: string;
     highlightedText: string;
   };
-  aboutText: string;
+  animatedText: string;
   stats: Stat[];
   wrapUpText: string;
+  weAreSection: NonNullable<
+    HOME_PAGE_QUERYResult['homePage']
+  >['about']['weAreSection'];
 };
 
 const AboutSection = ({
   heading,
-  aboutText,
+  animatedText,
   stats,
   wrapUpText,
+  weAreSection,
 }: AboutSectionType) => {
   return (
     <section>
@@ -29,7 +38,7 @@ const AboutSection = ({
           </span>
         </p>
         <TextGradientScroll
-          text={aboutText}
+          text={animatedText}
           className='text-2xl sm:text-3xl xl:text-4xl font-semibold xl:font-medium justify-center'
         />
       </div>
@@ -47,6 +56,28 @@ const AboutSection = ({
       <p className='font-bold sm:max-xl:font-semibold leading-none text-[28px] sm:text-4xl xl:text-[42px] text-center max-w-75 sm:max-w-2xl xl:max-w-300 mx-auto'>
         {wrapUpText}
       </p>
+
+      <div className='py-27 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-12 gap-2 md:gap-4 items-center'>
+        <Image
+          src={urlForUncropped(weAreSection.image).url()}
+          alt={weAreSection.image.alt}
+          width={566}
+          height={420}
+          className='h-auto w-full object-cover col-span-1 xl:col-span-5 xl:col-start-2'
+        />
+        <div className='col-span-1 xl:col-span-5'>
+          <h2 className='text-4xl sm:text-[44px] xl:text-[56px] mt-4 sm:mt-0 font-bold mb-3 sm:mb-5 xl:mb-4'>
+            {weAreSection.heading}{' '}
+            <span className='font-mono highlight ml-2 text-4xl sm:text-[44px] xl:text-[56px] mt-4 sm:mt-0 font-bold'>
+              {weAreSection.highlightedText}
+            </span>
+          </h2>
+
+          <PortableText
+            value={weAreSection.description as PortableTextBlock[]}
+          />
+        </div>
+      </div>
     </section>
   );
 };

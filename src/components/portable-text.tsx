@@ -158,10 +158,7 @@ const PortableText = ({
       ),
       normal: ({ value, children }) => (
         <p
-          className={cn(
-            'font-mono',
-            paragraphClassName
-          )}
+          className={cn('font-mono text-sm', paragraphClassName)}
           id={value?._key}
         >
           {children}

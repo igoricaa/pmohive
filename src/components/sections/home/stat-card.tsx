@@ -27,7 +27,7 @@ const StatCard = ({ stat, className }: { stat: Stat, className?: string }) => {
       </p>
       <PortableText
         value={stat.statDescription as PortableTextBlock[]}
-        paragraphClassName='mt-3! xl:mt-3.5! text-sm! font-mono'
+        paragraphClassName='mt-3! xl:mt-3.5!'
       />
     </article>
   );

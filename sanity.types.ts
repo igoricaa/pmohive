@@ -243,7 +243,7 @@ export type AboutSection = {
     text: string;
     highlightedText: string;
   };
-  aboutText: string;
+  animatedText: string;
   stats: Array<{
     statTitle: string;
     statValue?: string;
@@ -264,6 +264,24 @@ export type AboutSection = {
     _key: string;
   }>;
   wrapUpText: string;
+  weAreSection: {
+    heading: string;
+    highlightedText: string;
+    description: BlockContent;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+  };
 };
 
 export type HeroSection = {

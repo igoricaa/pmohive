@@ -37,11 +37,11 @@ export const aboutSectionType = defineType({
     }),
 
     defineField({
-      name: 'aboutText',
-      title: 'About Text',
+      name: 'animatedText',
+      title: 'Animated Text',
       type: 'string',
-      description: 'Section about text',
-      validation: (rule) => rule.required().error('About text is required'),
+      description: 'Section animated text',
+      validation: (rule) => rule.required().error('Animated text is required'),
     }),
     defineField({
       name: 'stats',
@@ -113,6 +113,59 @@ export const aboutSectionType = defineType({
       type: 'string',
       description: 'Section wrap up text',
       validation: (rule) => rule.required().error('Wrap up text is required'),
+    }),
+
+    defineField({
+      name: 'weAreSection',
+      title: 'We Are Section',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'heading',
+          title: 'Heading',
+          type: 'string',
+          description: 'Section heading text',
+          validation: (rule) => rule.required().error('Heading is required'),
+        }),
+        defineField({
+          name: 'highlightedText',
+          title: 'Highlighted Text',
+          type: 'string',
+          description: 'Section highlighted text',
+          validation: (rule) =>
+            rule.required().error('Highlighted text is required'),
+        }),
+        defineField({
+          name: 'description',
+          title: 'Description',
+          type: 'blockContent',
+          description: 'Section description content',
+          validation: (rule) =>
+            rule.required().error('Description is required'),
+        }),
+        defineField({
+          name: 'image',
+          title: 'Image',
+          type: 'image',
+          description: 'Section image',
+          validation: (rule) => rule.required().error('Image is required'),
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alt Text',
+              description: 'Alternative text for accessibility',
+              validation: (rule) =>
+                rule.required().error('Alt text is required for accessibility'),
+            },
+          ],
+        }),
+      ],
+      description: 'Section we are section',
+      validation: (rule) => rule.required().error('We are section is required'),
     }),
   ],
   preview: {
