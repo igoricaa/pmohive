@@ -226,7 +226,10 @@ export type BlogSection = {
 
 export type TeamSection = {
   _type: "teamSection";
-  subtitle: string;
+  subtitle: {
+    text: string;
+    highlightedText: string;
+  };
   heading: string;
   description: BlockContent;
   button: {
@@ -536,7 +539,7 @@ export type AllSanitySchemaTypes = BlockContent | Post | Project | Service | Tea
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
-// Query: {    "homePage": *[_type == "homePage"][0],  }
+// Query: {    "homePage": *[_type == "homePage"][0] {      ...,      team {        ...,        teamMembers[]->      }    }  }
 export type HOME_PAGE_QUERYResult = {
   homePage: {
     _id: string;
@@ -547,7 +550,42 @@ export type HOME_PAGE_QUERYResult = {
     title: string;
     hero: HeroSection;
     about: AboutSection;
-    team: TeamSection;
+    team: {
+      _type: "teamSection";
+      subtitle: {
+        text: string;
+        highlightedText: string;
+      };
+      heading: string;
+      description: BlockContent;
+      button: {
+        text: string;
+        link: string;
+      };
+      teamMembers: Array<{
+        _id: string;
+        _type: "teamMember";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        name: string;
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string;
+          _type: "image";
+        };
+        specializations: Array<string>;
+        bio: BlockContent;
+      }>;
+    };
     blog: BlogSection;
     pmoPromo: PmoPromoSection;
   } | null;
@@ -645,7 +683,7 @@ export type GENERAL_INFO_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "{\n    \"homePage\": *[_type == \"homePage\"][0],\n  }": HOME_PAGE_QUERYResult;
+    "{\n    \"homePage\": *[_type == \"homePage\"][0] {\n      ...,\n      team {\n        ...,\n        teamMembers[]->\n      }\n    }\n  }": HOME_PAGE_QUERYResult;
     "*[_type == \"post\"] | order(_createdAt desc) [0...$limit] {\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  featuredMedia {\n    asset->\n  }\n}": LATEST_POSTS_QUERYResult;
     "{\n  \"generalInfo\": *[_type == \"generalInfo\"][0],\n}": GENERAL_INFO_QUERYResult;
   }

@@ -4,6 +4,7 @@ import AboutSection from '@/components/sections/home/about-section';
 import PmoPromoSection from '@/components/sections/home/pmo-promo-section';
 import { Stat } from '@/lib/types';
 import { PortableTextBlock } from 'next-sanity';
+import CareersSection from '@/components/sections/home/careers-section';
 
 export default async function Home() {
   const [homePageResult, latestPostsResult] = await Promise.all([
@@ -18,7 +19,7 @@ export default async function Home() {
   }
 
   return (
-    <main className='px-side pt-2 md:pt-0'>
+    <main className='pt-2 md:pt-0'>
       <HeroSection
         subtitle={homePageData.hero.subtitle}
         heading={homePageData.hero.heading}
@@ -33,6 +34,14 @@ export default async function Home() {
         stats={homePageData.about.stats as Stat[]}
         wrapUpText={homePageData.about.wrapUpText}
         weAreSection={homePageData.about.weAreSection}
+      />
+
+      <CareersSection
+        subtitle={homePageData.team.subtitle}
+        heading={homePageData.team.heading}
+        description={homePageData.team.description as PortableTextBlock[]}
+        ctaButton={homePageData.team.button}
+        teamMembers={homePageData.team.teamMembers}
       />
 
       <PmoPromoSection

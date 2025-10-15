@@ -7,7 +7,13 @@ import {
 } from '../../../sanity.types';
 
 export const HOME_PAGE_QUERY = defineQuery(`{
-    "homePage": *[_type == "homePage"][0],
+    "homePage": *[_type == "homePage"][0] {
+      ...,
+      team {
+        ...,
+        teamMembers[]->
+      }
+    }
   }`);
 
 export const getHomePageData = async (): Promise<HOME_PAGE_QUERYResult> => {

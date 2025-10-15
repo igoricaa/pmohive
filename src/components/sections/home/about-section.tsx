@@ -29,7 +29,7 @@ const AboutSection = ({
   weAreSection,
 }: AboutSectionType) => {
   return (
-    <section>
+    <section className='px-side'>
       <div className='flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl mx-auto'>
         <p className='font-mono text-base xl:text-lg font-medium text-center'>
           {heading.text}
@@ -57,7 +57,7 @@ const AboutSection = ({
         {wrapUpText}
       </p>
 
-      <div className='py-27 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-12 gap-2 md:gap-4 items-center'>
+      <div className='py-27 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-2 md:gap-4 items-center'>
         <Image
           src={urlForUncropped(weAreSection.image).url()}
           alt={weAreSection.image.alt}
@@ -66,9 +66,9 @@ const AboutSection = ({
           className='h-auto w-full object-cover col-span-1 xl:col-span-5 xl:col-start-2'
         />
         <div className='col-span-1 xl:col-span-5'>
-          <h2 className='text-4xl sm:text-[44px] xl:text-[56px] mt-4 sm:mt-0 font-bold mb-3 sm:mb-5 xl:mb-4'>
+          <h2 className='text-4xl sm:text-[44px] xl:text-[56px] mt-4 md:mt-0 font-bold mb-3 sm:mb-5 xl:mb-4'>
             {weAreSection.heading}{' '}
-            <span className='font-mono highlight ml-2 text-4xl sm:text-[44px] xl:text-[56px] mt-4 sm:mt-0 font-bold'>
+            <span className='font-mono highlight ml-2 text-4xl sm:text-[44px] xl:text-[56px] font-bold'>
               {weAreSection.highlightedText}
             </span>
           </h2>

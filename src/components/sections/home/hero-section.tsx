@@ -35,7 +35,7 @@ const HeroSection = ({
   images,
 }: HeroSectionProps) => {
   return (
-    <section className='relative grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 items-center gap-2 md:gap-4'>
+    <section className='px-side relative grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 items-center gap-2 md:gap-4'>
       <div className='md:col-span-4 md:order-2 z-0 lg:col-span-7 '>
         <div className='flex gap-2 max-w-[calc(80%)] md:max-w-full xl:max-w-[calc(82%)] ml-auto translate-x-0.5 md:translate-x-0'>
           <Image
