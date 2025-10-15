@@ -1,7 +1,9 @@
 import { getHomePageData, getLatestPosts } from '@/sanity/lib/queries';
 import HeroSection from '@/components/sections/home/hero-section';
 import AboutSection from '@/components/sections/home/about-section';
+import PmoPromoSection from '@/components/sections/home/pmo-promo-section';
 import { Stat } from '@/lib/types';
+import { PortableTextBlock } from 'next-sanity';
 
 export default async function Home() {
   const [homePageResult, latestPostsResult] = await Promise.all([
@@ -31,6 +33,14 @@ export default async function Home() {
         stats={homePageData.about.stats as Stat[]}
         wrapUpText={homePageData.about.wrapUpText}
         weAreSection={homePageData.about.weAreSection}
+      />
+
+      <PmoPromoSection
+        subtitle={homePageData.pmoPromo.subtitle}
+        heading={homePageData.pmoPromo.heading}
+        description={homePageData.pmoPromo.description as PortableTextBlock[]}
+        backgroundImage={homePageData.pmoPromo.backgroundImage}
+        buttons={homePageData.pmoPromo.buttons}
       />
     </main>
   );

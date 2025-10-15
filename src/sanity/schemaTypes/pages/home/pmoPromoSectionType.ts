@@ -1,18 +1,43 @@
-import { MailIcon } from 'lucide-react';
+import { StarIcon } from 'lucide-react';
 import { defineField, defineType } from 'sanity';
 
-export const contactSectionType = defineType({
-  name: 'contactSection',
-  title: 'Contact Section',
+export const pmoPromoSectionType = defineType({
+  name: 'pmoPromoSection',
+  title: 'PMO Promo Section',
   type: 'object',
-  icon: MailIcon,
+  icon: StarIcon,
   fields: [
     defineField({
       name: 'subtitle',
       title: 'Subtitle',
-      type: 'string',
+      type: 'object',
       description: 'Section subtitle text',
+      fields: [
+        defineField({
+          name: 'highlightedText',
+          title: 'Highlighted Text',
+          type: 'string',
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: 'text',
+          title: 'Text',
+          type: 'string',
+          validation: (rule) => rule.required(),
+        }),
+      ],
       validation: (rule) => rule.required().error('Subtitle is required'),
+    }),
+    defineField({
+      name: 'heading',
+      title: 'Heading',
+      type: 'string',
+      description: 'Main heading for the section',
+      validation: (rule) =>
+        rule
+          .required()
+          .max(120)
+          .error('Heading is required and must be 120 characters or less'),
     }),
     defineField({
       name: 'description',
@@ -25,27 +50,28 @@ export const contactSectionType = defineType({
       name: 'backgroundImage',
       title: 'Background Image',
       type: 'image',
-      description: 'Background image for the contact section',
+      description: 'Background image for the promo section',
       options: {
         hotspot: true,
       },
       fields: [
-        {
+        defineField({
           name: 'alt',
-          type: 'string',
           title: 'Alt Text',
+          type: 'string',
           description: 'Alternative text for accessibility',
           validation: (rule) =>
             rule.required().error('Alt text is required for accessibility'),
-        },
+        }),
       ],
-      validation: (rule) => rule.required().error('Background image is required'),
+      validation: (rule) =>
+        rule.required().error('Background image is required'),
     }),
     defineField({
       name: 'buttons',
-      title: 'Buttons',
+      title: 'Call to Action Buttons',
       type: 'array',
-      description: 'Call-to-action buttons',
+      description: 'CTA buttons (maximum 2)',
       of: [
         {
           type: 'object',
@@ -54,29 +80,28 @@ export const contactSectionType = defineType({
               name: 'text',
               title: 'Button Text',
               type: 'string',
-              description: 'Text displayed on the button',
               validation: (rule) =>
                 rule.required().error('Button text is required'),
             }),
             defineField({
+              name: 'highlightedText',
+              title: 'Highlighted Text',
+              type: 'string',
+              description:
+                'Optional highlighted portion of text (e.g., "/pmo" in "More about /pmo")',
+            }),
+            defineField({
               name: 'link',
-              title: 'Button Link',
+              title: 'Link',
               type: 'string',
               description: 'URL or path for the button',
-              validation: (rule) =>
-                rule.required().error('Button link is required'),
+              validation: (rule) => rule.required().error('Link is required'),
             }),
           ],
           preview: {
             select: {
               title: 'text',
               subtitle: 'link',
-            },
-            prepare({ title, subtitle }) {
-              return {
-                title: title || 'Button',
-                subtitle: subtitle || 'No link',
-              };
             },
           },
         },
@@ -85,7 +110,8 @@ export const contactSectionType = defineType({
         rule
           .required()
           .min(1)
-          .error('At least one button is required'),
+          .max(2)
+          .error('At least 1 and maximum 2 buttons are required'),
     }),
   ],
   preview: {
@@ -95,7 +121,8 @@ export const contactSectionType = defineType({
     },
     prepare({ title, media }) {
       return {
-        title: title || 'Contact Section',
+        title: title || 'PMO Promo Section',
+        subtitle: 'Promo Section',
         media,
       };
     },

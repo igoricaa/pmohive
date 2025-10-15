@@ -11,12 +11,15 @@ const buttonVariants = cva(
       variant: {
         default: 'bg-black text-white border-1 border-white/40',
         secondary: 'bg-primary text-black border-1 border-black/40',
+        navigation:
+          'bg-black-custom border-1 border-white/35 rounded-full flex items-center justify-center hover:bg-primary transition-[color,width]',
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-12 px-6 xl:px-7',
         sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
         lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
+        navigation: 'size-10 hover:w-14.5 xl:size-14 xl:hover:w-20',
         icon: 'size-9',
         'icon-sm': 'size-8',
         'icon-lg': 'size-10',

@@ -4,11 +4,11 @@ import { urlForUncropped } from '@/sanity/lib/image';
 import { PortableTextBlock } from 'next-sanity';
 import { Image } from 'next-sanity/image';
 
-const StatCard = ({ stat, className }: { stat: Stat, className?: string }) => {
+const StatCard = ({ stat, className }: { stat: Stat; className?: string }) => {
   return (
     <article className={className}>
       {stat.statValue && !stat.statIcon && (
-        <p className='font-bold text-[4rem] xl:text-[5.5rem] leading-none'>
+        <p className='font-semibold text-[4rem] xl:text-[5.5rem] leading-none'>
           {stat.statValue}+
         </p>
       )}
@@ -27,7 +27,7 @@ const StatCard = ({ stat, className }: { stat: Stat, className?: string }) => {
       </p>
       <PortableText
         value={stat.statDescription as PortableTextBlock[]}
-        paragraphClassName='mt-3! xl:mt-3.5!'
+        paragraphClassName='mt-3! xl:mt-3.5! text-light-grey'
       />
     </article>
   );

@@ -1,4 +1,4 @@
-import { TextGradientScroll } from '@/components/ui/text-gradient-scroll';
+import { TextGradientScroll } from '@/components/text-gradient-scroll';
 import { Stat } from '@/lib/types';
 import StatCard from './stat-card';
 import { cn } from '@/lib/utils';

@@ -63,11 +63,12 @@ export const aboutPageType = defineType({
       group: 'content',
     }),
     defineField({
-      name: 'contact',
-      title: 'Contact Section',
-      type: 'contactSection',
-      description: 'Contact section with call-to-action buttons',
-      validation: (rule) => rule.required().error('Contact section is required'),
+      name: 'pmoPromo',
+      title: 'PMO Promo Section',
+      type: 'pmoPromoSection',
+      description: 'PMO promo section with call-to-action buttons',
+      validation: (rule) =>
+        rule.required().error('PMO promo section is required'),
       group: 'content',
     }),
   ],

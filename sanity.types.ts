@@ -171,7 +171,7 @@ export type AboutPage = {
   about: AboutSection;
   team: TeamSection;
   blog: BlogSection;
-  contact: ContactSection;
+  pmoPromo: PmoPromoSection;
 };
 
 export type HomePage = {
@@ -185,12 +185,16 @@ export type HomePage = {
   about: AboutSection;
   team: TeamSection;
   blog: BlogSection;
-  contact: ContactSection;
+  pmoPromo: PmoPromoSection;
 };
 
-export type ContactSection = {
-  _type: "contactSection";
-  subtitle: string;
+export type PmoPromoSection = {
+  _type: "pmoPromoSection";
+  subtitle: {
+    highlightedText: string;
+    text: string;
+  };
+  heading: string;
   description: BlockContent;
   backgroundImage: {
     asset?: {
@@ -207,6 +211,7 @@ export type ContactSection = {
   };
   buttons: Array<{
     text: string;
+    highlightedText?: string;
     link: string;
     _key: string;
   }>;
@@ -527,7 +532,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = BlockContent | Post | Project | Service | TeamMember | ContactPage | AboutPage | HomePage | ContactSection | BlogSection | TeamSection | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = BlockContent | Post | Project | Service | TeamMember | ContactPage | AboutPage | HomePage | PmoPromoSection | BlogSection | TeamSection | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
@@ -544,7 +549,7 @@ export type HOME_PAGE_QUERYResult = {
     about: AboutSection;
     team: TeamSection;
     blog: BlogSection;
-    contact: ContactSection;
+    pmoPromo: PmoPromoSection;
   } | null;
 };
 // Variable: LATEST_POSTS_QUERY

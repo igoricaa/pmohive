@@ -2,9 +2,9 @@ import { type SchemaTypeDefinition } from 'sanity';
 import {
   aboutSectionType,
   blogSectionType,
-  contactSectionType,
   heroSectionType,
   homePageType,
+  pmoPromoSectionType,
   teamSectionType,
 } from './pages/home';
 import { aboutPageType } from './pages/aboutPageType';
@@ -25,9 +25,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     contactPageType,
     aboutSectionType,
     heroSectionType,
+    pmoPromoSectionType,
     teamSectionType,
     blogSectionType,
-    contactSectionType,
     teamMemberType,
     serviceType,
     projectType,

@@ -1001,11 +1001,11 @@
         },
         "optional": false
       },
-      "contact": {
+      "pmoPromo": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "contactSection"
+          "name": "pmoPromoSection"
         },
         "optional": false
       }
@@ -1085,18 +1085,18 @@
         },
         "optional": false
       },
-      "contact": {
+      "pmoPromo": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "contactSection"
+          "name": "pmoPromoSection"
         },
         "optional": false
       }
     }
   },
   {
-    "name": "contactSection",
+    "name": "pmoPromoSection",
     "type": "type",
     "value": {
       "type": "object",
@@ -1105,10 +1105,33 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "contactSection"
+            "value": "pmoPromoSection"
           }
         },
         "subtitle": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "object",
+            "attributes": {
+              "highlightedText": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": false
+              },
+              "text": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": false
+              }
+            }
+          },
+          "optional": false
+        },
+        "heading": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
@@ -1212,6 +1235,13 @@
                     "type": "string"
                   },
                   "optional": false
+                },
+                "highlightedText": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  },
+                  "optional": true
                 },
                 "link": {
                   "type": "objectAttribute",
