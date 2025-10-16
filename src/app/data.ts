@@ -7,7 +7,7 @@ export const routes: Route[] = [
   },
   {
     path: '/about-us',
-    label: 'About-us',
+    label: 'About Us',
   },
   {
     path: '/industry-focus',

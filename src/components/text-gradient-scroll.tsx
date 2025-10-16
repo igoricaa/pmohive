@@ -1,7 +1,13 @@
 'use client';
 
-import React, { createContext, useContext, useRef } from 'react';
-import { useScroll, useTransform, motion, MotionValue } from 'motion/react';
+import {
+  type MotionValue,
+  motion,
+  useScroll,
+  useTransform,
+} from 'motion/react';
+import type React from 'react';
+import { createContext, useContext, useRef } from 'react';
 import { cn } from '@/lib/utils';
 
 type TextOpacityEnum = 'none' | 'soft' | 'medium';
@@ -70,11 +76,21 @@ function TextGradientScroll({
           const start = i / words.length;
           const end = start + 1 / words.length;
           return type === 'word' ? (
-            <Word key={i} progress={scrollYProgress} range={[start, end]} isFirst={i === 0}>
+            <Word
+              key={i}
+              progress={scrollYProgress}
+              range={[start, end]}
+              isFirst={i === 0}
+            >
               {word}
             </Word>
           ) : (
-            <Letter key={i} progress={scrollYProgress} range={[start, end]} isFirst={i === 0}>
+            <Letter
+              key={i}
+              progress={scrollYProgress}
+              range={[start, end]}
+              isFirst={i === 0}
+            >
               {word}
             </Letter>
           );
@@ -92,7 +108,10 @@ const Word = ({ children, progress, range, isFirst }: WordType) => {
   return (
     <span className='relative me-2 mt-2'>
       <span style={{ position: 'absolute', opacity: 0.1 }}>{children}</span>
-      <motion.span className={cn(isFirst && 'text-primary')} style={{ transition: 'all .5s', opacity: opacity }}>
+      <motion.span
+        className={cn(isFirst && 'text-primary')}
+        style={{ transition: 'all .5s', opacity: opacity }}
+      >
         {children}
       </motion.span>
     </span>
@@ -110,7 +129,12 @@ const Letter = ({ children, progress, range, isFirst }: LetterType) => {
           const start = range[0] + i * step;
           const end = range[0] + (i + 1) * step;
           return (
-            <Char key={`c_${i}`} progress={progress} range={[start, end]} isFirst={isFirst}>
+            <Char
+              key={`c_${i}`}
+              progress={progress}
+              range={[start, end]}
+              isFirst={isFirst}
+            >
               {char}
             </Char>
           );
@@ -127,7 +151,7 @@ const Char = ({ children, progress, range, isFirst }: CharType) => {
   return (
     <span>
       <span
-        className={cn('absolute', {
+        className={cn('absolute font-sans', {
           'opacity-0': textOpacity == 'none',
           'opacity-10': textOpacity == 'soft',
           'opacity-30': textOpacity == 'medium',
@@ -136,7 +160,7 @@ const Char = ({ children, progress, range, isFirst }: CharType) => {
         {children}
       </span>
       <motion.span
-        className={cn(isFirst && 'text-primary')}
+        className={cn(isFirst && 'text-primary', 'font-sans')}
         style={{
           transition: 'all .5s',
           opacity: opacity,

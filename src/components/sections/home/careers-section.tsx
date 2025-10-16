@@ -1,7 +1,6 @@
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { ArrowRight } from 'lucide-react';
 import { Image } from 'next-sanity/image';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import {
   Carousel,
   CarouselContent,
@@ -76,11 +75,12 @@ const CareersSection = ({
         </div>
 
         {/* Carousel Area */}
-        <div className='md:col-span-4 xl:col-span-8 xl:pr-[calc(var(--padding-side)-16px)]'>
+        {/* xl:pr-[calc(var(--padding-side)-16px)] */}
+        {/* xl:pr-side */}
+        <div className='md:col-span-4 xl:col-span-8'>
           <Carousel
             opts={{
               align: 'start',
-              loop: true,
             }}
             className='w-full order-1 flex flex-col md:flex-col-reverse gap-3 md:gap-2.5 xl:gap-3'
           >
@@ -90,8 +90,7 @@ const CareersSection = ({
                 <CarouselItem
                   key={`${member.name}-${index}`}
                   className={cn(
-                    'basis-[82%] sm:basis-[70%] xl:basis-1/2 pl-0 pr-4',
-                    index === teamMembers.length - 1 && 'pr-side'
+                    'basis-[82%] sm:basis-[70%] xl:basis-1/2 pl-0 pr-4 sm:pl-0 sm:pr-side'
                   )}
                 >
                   <div className='relative h-full aspect-[285/372] overflow-hidden group'>
@@ -131,6 +130,30 @@ const CareersSection = ({
                   </div>
                 </CarouselItem>
               ))}
+              <CarouselItem
+                className={cn(
+                  'basis-[82%] sm:basis-[70%] xl:basis-1/2 pl-0 pr-side'
+                )}
+              >
+                <div className='pt-16 pb-4 px-4 flex flex-col h-full rounded-[8px] border-1 border-primary'>
+                  <h3 className='text-lg xl:text-3xl text-center'>
+                    Looking for the next step in your career?
+                  </h3>
+                  <p className='text-center text-sm mt-3'>
+                    Keep na eye on our carrer page for future openings
+                  </p>
+                  <Link
+                    href='/careers-and-culture'
+                    className={cn(
+                      buttonVariants({ variant: 'secondary', size: 'default' }),
+                      'w-full mt-auto'
+                    )}
+                  >
+                    Careers & Culture
+                    <ArrowRight className='size-4! sm:size-6!' />
+                  </Link>
+                </div>
+              </CarouselItem>
             </CarouselContent>
 
             {/* Custom positioned navigation - below carousel on mobile, above on tablet */}

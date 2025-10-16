@@ -30,7 +30,7 @@ const TopBar = ({ phone, email }: { phone: string; email: string }) => {
     <div className='flex justify-between items-center py-2 sm:py-4 xl:py-5 border-b-1 border-white/30'>
       <Link
         href='/careers-and-culture'
-        className='font-semibold text-light-grey text-xs sm:text-sm lg:text-base'
+        className='font-semibold text-light-grey text-xs sm:text-sm lg:text-base whitespace-nowrap'
       >
         Careers and Culture
       </Link>
@@ -38,14 +38,14 @@ const TopBar = ({ phone, email }: { phone: string; email: string }) => {
       <div className='flex gap-3 items-center'>
         <Link
           href={'tel:' + phone}
-          className='font-semibold text-light-grey text-xs sm:text-sm lg:text-base'
+          className='font-semibold text-light-grey text-xs sm:text-sm lg:text-base whitespace-nowrap'
         >
           {phone}
         </Link>
         <span className='text-light-grey text-base font-light'>|</span>
         <Link
           href={'mailto:' + email}
-          className='font-semibold text-light-grey text-xs sm:text-sm lg:text-base'
+          className='font-semibold text-light-grey text-xs sm:text-sm lg:text-base whitespace-nowrap'
         >
           {email}
         </Link>

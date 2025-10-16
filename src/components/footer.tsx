@@ -34,13 +34,15 @@ export default async function Footer() {
         {/* Top section with logo and navigation */}
         <div className='flex flex-col sm:flex-row justify-between'>
           {/* Logo */}
-          <Image
-            src={urlFor(logoFull).url()}
-            alt={logoFull.alt}
-            width={419}
-            height={214}
-            className='object-contain h-full w-44 min-w-44 md:w-68.5 md:min-w-68.5 xl:w-105 xl:min-w-105'
-          />
+          <Link href='/'>
+            <Image
+              src={urlFor(logoFull).url()}
+              alt={logoFull.alt}
+              width={419}
+              height={214}
+              className='object-contain h-full w-44 min-w-44 md:w-68.5 md:min-w-68.5 xl:w-105 xl:min-w-105'
+            />
+          </Link>
 
           {/* Right side content */}
           <div className='flex flex-1 min-w-0 flex-col sm:items-end pb-2.5'>

@@ -30,7 +30,7 @@ const AboutSection = ({
 }: AboutSectionType) => {
   return (
     <section className='px-side'>
-      <div className='flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl mx-auto'>
+      <div className='flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto pt-28 pb-16 xl:pt-32 xl:pb-40'>
         <p className='font-mono text-base xl:text-lg font-medium text-center'>
           {heading.text}
           <span className='font-mono highlight xl:text-lg 2xl:text-xl font-medium ml-2.5'>
@@ -39,11 +39,11 @@ const AboutSection = ({
         </p>
         <TextGradientScroll
           text={animatedText}
-          className='text-2xl sm:text-3xl xl:text-4xl font-semibold xl:font-medium justify-center'
+          className='font-semibold justify-center font-sans text-2xl sm:text-3xl xl:text-5xl 2xl:text-6xl'
         />
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7.5 sm:gap-x-4 sm:gap-y-8 lg:gap-y-0 py-12 sm:pt-17 sm:pb-16 xl:py-27'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7.5 sm:gap-x-4 sm:gap-y-8 lg:gap-y-0 py-12 sm:pt-17 sm:pb-16 xl:py-27 2xl:max-w-10/12 mx-auto'>
         {stats.map((stat, index) => (
           <StatCard
             key={stat.statTitle}
@@ -53,9 +53,12 @@ const AboutSection = ({
         ))}
       </div>
 
-      <p className='font-bold sm:max-xl:font-semibold leading-none text-[28px] sm:text-4xl xl:text-[42px] text-center max-w-75 sm:max-w-2xl xl:max-w-300 mx-auto'>
-        {wrapUpText}
-      </p>
+      <div className='flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto pt-28 pb-16 xl:pt-32 xl:pb-40'>
+        <TextGradientScroll
+          text={wrapUpText}
+          className='font-semibold justify-center font-sans text-2xl sm:text-3xl xl:text-5xl 2xl:text-6xl'
+        />
+      </div>
 
       <div className='py-27 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-2 md:gap-4 items-center'>
         <Image
