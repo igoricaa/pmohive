@@ -140,7 +140,10 @@
   }
   body {
     @apply bg-black text-white;
-    /* bg-[url(/bg-pattern.svg)] bg-center bg-repeat bg-size-[auto_20px] */
+  }
+
+  main {
+    @apply relative before:absolute before:-top-40 before:left-0 before:h-[calc(100%+160px)] before:w-full before:bg-[url('/bg-pattern.svg')] before:bg-repeat before:bg-size-[10px] before:opacity-20 before:-z-10;
   }
 
   /* Responsive Typography - H Tags */

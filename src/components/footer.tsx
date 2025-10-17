@@ -4,6 +4,7 @@ import { getGeneralInfoData } from '@/sanity/lib/queries';
 import { urlFor } from '@/sanity/lib/image';
 import { routes } from '@/app/data';
 import MenuLink from './menuLink';
+import hexagonalPattern from '../../public/hexagonal-pattern.svg';
 
 export default async function Footer() {
   const { generalInfo: generalInfoData } = await getGeneralInfoData();
@@ -21,7 +22,7 @@ export default async function Footer() {
       {/* Decorative hexagonal pattern - top right */}
       <div className='absolute right-0 -top-1.5 md:-top-26 md:-right-53 xl:-right-41 w-[747px] h-[531px] opacity-20 pointer-events-none z-0'>
         <Image
-          src='/hexagonal-pattern.svg'
+          src={hexagonalPattern}
           alt='Hexagonal pattern'
           width={747}
           height={531}
@@ -67,7 +68,7 @@ export default async function Footer() {
             </nav>
 
             {/* Social media icons */}
-            {socials && (
+            {socials && socials.length > 0 && (
               <div className='flex items-center gap-6 xl:gap-8'>
                 {socials.map((social) => (
                   <Link
@@ -96,10 +97,10 @@ export default async function Footer() {
         {/* Bottom section with copyright and legal links */}
         <div className='flex flex-col sm:flex-row-reverse justify-between pt-4 pb-4.5 sm:pt-5 sm:pb-5 sm:items-center gap-2 border-t-1 border-white/30 mt-8 sm:mt-6 xl:mt-7'>
           {/* Legal links */}
-          <nav className='flex items-center gap-0.5 justify-between'>
+          <nav className='flex items-center gap-3 justify-between'>
             <Link
               href='/data-protection'
-              className='font-semibold text-sm sm:text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
+              className='font-sans font-semibold text-sm sm:text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
             >
               Data Protection
             </Link>
@@ -108,7 +109,7 @@ export default async function Footer() {
             </span>
             <Link
               href='/terms'
-              className='font-semibold text-sm sm:text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
+              className='font-sans font-semibold text-sm sm:text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
             >
               Terms &amp; Conditions
             </Link>
@@ -117,7 +118,7 @@ export default async function Footer() {
             </span>
             <Link
               href='/imprint'
-              className='font-semibold text-sm sm:text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
+              className='font-sans font-semibold text-sm sm:text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
             >
               Imprint
             </Link>

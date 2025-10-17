@@ -4,21 +4,24 @@ import { getGeneralInfoData } from '@/sanity/lib/queries';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { Image } from 'next-sanity/image';
 import Link from 'next/link';
-import MenuLink from './menuLink';
 
-async function Header() {
+import MenuLink from '../menuLink';
+import Sidebar from './sidebar';
+import { GeneralInfo } from '../../../sanity.types';
+
+export async function Header() {
   const { generalInfo: generalInfoData } = await getGeneralInfoData();
 
   if (!generalInfoData) {
     return <header>Loading...</header>;
   }
 
-  const { logoFull, logoMark, email, phone, socials } = generalInfoData;
+  const { logoFull, email, phone, socials } = generalInfoData;
 
   return (
     <header className='px-side'>
       <TopBar phone={phone} email={email} />
-      <MainBar logoFull={logoFull} />
+      <MainBar logoFull={logoFull} socials={socials} />
     </header>
   );
 }
@@ -54,7 +57,13 @@ const TopBar = ({ phone, email }: { phone: string; email: string }) => {
   );
 };
 
-const MainBar = ({ logoFull }: { logoFull: SanityImageSource }) => {
+const MainBar = ({
+  logoFull,
+  socials,
+}: {
+  logoFull: SanityImageSource;
+  socials: GeneralInfo['socials'];
+}) => {
   return (
     <div className='flex justify-between items-center pt-3 pb-2 sm:pt-4 sm:pb-0'>
       <Link href='/'>
@@ -76,17 +85,8 @@ const MainBar = ({ logoFull }: { logoFull: SanityImageSource }) => {
           ))}
         </div>
 
-        <Burger />
+        <Sidebar socials={socials} />
       </div>
-    </div>
-  );
-};
-
-const Burger = () => {
-  return (
-    <div className='flex items-center gap-2'>
-      <div className='w-6 h-6 bg-gray-300'></div>
-      <div className='w-6 h-6 bg-gray-300'></div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/header';
+import Header from '@/components/header/header';
 import Footer from '@/components/footer';
 import Lenis from '@/components/lenis';
 
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative before:fixed before:inset-0 before:bg-[url('/bg-pattern.svg')] before:bg-repeat before:bg-size-[12px] before:opacity-15 before:-z-10`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Lenis>
           <Header />
