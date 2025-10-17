@@ -5,6 +5,7 @@ import PmoPromoSection from '@/components/sections/home/pmo-promo-section';
 import { Stat } from '@/lib/types';
 import { PortableTextBlock } from 'next-sanity';
 import CareersSection from '@/components/sections/home/careers-section';
+import BlogSection from '@/components/sections/home/blog-section';
 
 export default async function Home() {
   const [homePageResult, latestPostsResult] = await Promise.all([
@@ -34,6 +35,7 @@ export default async function Home() {
         stats={homePageData.about.stats as Stat[]}
         wrapUpText={homePageData.about.wrapUpText}
         weAreSection={homePageData.about.weAreSection}
+        className='mt-12 sm:mt-24 xl:mt-27'
       />
 
       <CareersSection
@@ -42,6 +44,7 @@ export default async function Home() {
         description={homePageData.team.description as PortableTextBlock[]}
         ctaButton={homePageData.team.button}
         teamMembers={homePageData.team.teamMembers}
+        className='mt-12 sm:mt-24 xl:mt-27'
       />
 
       <PmoPromoSection
@@ -50,6 +53,15 @@ export default async function Home() {
         description={homePageData.pmoPromo.description as PortableTextBlock[]}
         backgroundImage={homePageData.pmoPromo.backgroundImage}
         buttons={homePageData.pmoPromo.buttons}
+        className='mt-12 sm:mt-16 xl:mt-8.5 2xl:mt-16'
+      />
+
+      <BlogSection
+        subtitle={homePageData.blog.subtitle}
+        heading={homePageData.blog.heading}
+        description={homePageData.blog.description as PortableTextBlock[]}
+        ctaButton={homePageData.blog.button}
+        posts={latestPostsResult}
       />
     </main>
   );

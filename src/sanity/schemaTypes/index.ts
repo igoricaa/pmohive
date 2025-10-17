@@ -16,6 +16,7 @@ import { teamMemberType } from './teamMemberType';
 import { serviceType } from './serviceType';
 import { projectType } from './projectType';
 import { generalInfoType } from './generalInfoType';
+import { buttonType } from './buttonType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -33,5 +34,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     projectType,
     postType,
     blockContentType,
+    buttonType,
   ],
 };

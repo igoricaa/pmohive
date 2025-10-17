@@ -28,9 +28,8 @@ export const LATEST_POSTS_QUERY =
   title,
   "slug": slug.current,
   excerpt,
-  featuredMedia {
-    asset->
-  }
+  featuredMedia,
+  date,
 }`);
 
 export const GENERAL_INFO_QUERY = defineQuery(`{

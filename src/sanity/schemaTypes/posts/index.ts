@@ -25,11 +25,14 @@ export const postType = defineType({
       },
       validation: (rule) => rule.required(),
     }),
-    // defineField({
-    //   name: 'date',
-    //   type: 'datetime',
-    //   validation: (rule) => rule.required(),
-    // }),
+    defineField({
+      name: 'date',
+      type: 'date',
+      options: {
+        dateFormat: 'DD.MM.YYYY',
+      },
+      validation: (rule) => rule.required(),
+    }),
     defineField({
       name: 'content',
       type: 'blockContent',

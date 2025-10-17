@@ -21,6 +21,7 @@ interface PmoPromoSectionProps {
     highlightedText?: string;
     link: string;
   }[];
+  className?: string;
 }
 
 const PmoPromoSection = ({
@@ -29,10 +30,11 @@ const PmoPromoSection = ({
   description,
   backgroundImage,
   buttons,
+  className,
 }: PmoPromoSectionProps) => {
   return (
-    <section className='px-side'>
-      <div className='relative overflow-hidden sm:h-100 xl:h-130 pb-6 xl:pb-12 sm:px-4 xl:px-10 2xl:px-0 grid grid-cols-1 md:grid-cols-8 xl:grid-cols-12 gap-4 xl:gap-5 items-end'>
+    <section className={cn('px-side', className)}>
+      <div className='relative overflow-hidden sm:h-100 xl:h-130 sm:pb-6 xl:pb-12 sm:px-4 xl:px-10 2xl:px-0 grid grid-cols-1 md:grid-cols-8 xl:grid-cols-12 gap-4 xl:gap-5 items-end'>
         <div className='relative w-full h-53 sm:h-full sm:absolute sm:inset-0 z-0'>
           <Image
             src={urlForUncropped(backgroundImage).url()}

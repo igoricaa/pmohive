@@ -10,8 +10,22 @@ export const blogSectionType = defineType({
     defineField({
       name: 'subtitle',
       title: 'Subtitle',
-      type: 'string',
-      description: 'Section subtitle text',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'text',
+          title: 'Text',
+          type: 'string',
+          validation: (rule) => rule.required().error('Text is required'),
+        }),
+        defineField({
+          name: 'highlightedText',
+          title: 'Highlighted Text',
+          type: 'string',
+          validation: (rule) =>
+            rule.required().error('Highlighted text is required'),
+        }),
+      ],
       validation: (rule) => rule.required().error('Subtitle is required'),
     }),
     defineField({
@@ -27,6 +41,13 @@ export const blogSectionType = defineType({
       type: 'blockContent',
       description: 'Section description content',
       validation: (rule) => rule.required().error('Description is required'),
+    }),
+    defineField({
+      name: 'button',
+      title: 'Button',
+      type: 'button',
+      description: 'Button for the blog section',
+      validation: (rule) => rule.required().error('Button is required'),
     }),
   ],
   preview: {

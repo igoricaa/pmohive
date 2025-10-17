@@ -41,7 +41,7 @@ const CareersSection = ({
   return (
     <section
       className={cn(
-        'py-8 md:py-12 grid grid-cols-1 md:grid-cols-8 xl:grid-cols-12 gap-4 xl:gap-5',
+        'grid grid-cols-1 md:grid-cols-8 xl:grid-cols-12 gap-4 xl:gap-5',
         className
       )}
     >
@@ -49,7 +49,7 @@ const CareersSection = ({
       <div className='md:col-span-4 2xl:col-span-3 2xl:col-start-2 px-side md:pr-0 flex flex-col md:max-xl:justify-between'>
         <div>
           {/* Subtitle */}
-          <p className='font-medium'>
+          <p className='font-medium xl:text-lg'>
             {subtitle.text}
             <span className='highlight ml-2'>{subtitle.highlightedText}</span>
           </p>

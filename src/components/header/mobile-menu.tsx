@@ -48,7 +48,7 @@ const MobileMenu = ({ socials }: { socials: GeneralInfo['socials'] }) => {
 
       <div
         className={cn(
-          'fixed top-0 right-0 w-full sm:w-130 h-screen bg-black translate-x-full transition-transform ease-out duration-300 z-30 px-6 sm:px-8 pb-6 sm:pb-8 pt-26 sm:pt-35 flex flex-col justify-between overflow-hidden',
+          'fixed top-0 right-0 w-full sm:w-130 h-screen bg-black translate-x-full transition-transform ease-out duration-200 z-30 px-6 sm:px-8 pb-6 sm:pb-8 pt-26 sm:pt-35 flex flex-col justify-between overflow-hidden',
           'before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-gradient-to-b before:from-black before:from-5% before:via-[#F79E62] before:via-50% before:to-black before:to-95%',
           isOpen && 'translate-x-0'
         )}

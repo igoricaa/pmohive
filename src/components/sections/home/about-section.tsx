@@ -19,6 +19,7 @@ type AboutSectionType = {
   weAreSection: NonNullable<
     HOME_PAGE_QUERYResult['homePage']
   >['about']['weAreSection'];
+  className?: string;
 };
 
 const AboutSection = ({
@@ -27,9 +28,10 @@ const AboutSection = ({
   stats,
   wrapUpText,
   weAreSection,
+  className,
 }: AboutSectionType) => {
   return (
-    <section className='px-side'>
+    <section className={cn('px-side', className)}>
       <div className='flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto pt-28 pb-16 xl:pt-32 xl:pb-40'>
         <p className='font-mono text-base xl:text-lg font-medium text-center'>
           {heading.text}
@@ -43,7 +45,7 @@ const AboutSection = ({
         />
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7.5 sm:gap-x-4 sm:gap-y-8 lg:gap-y-0 py-12 sm:pt-17 sm:pb-16 xl:py-27 2xl:max-w-10/12 mx-auto'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7.5 sm:gap-x-4 sm:gap-y-8 lg:gap-y-0 mt-12 sm:mt-17 xl:mt-27 2xl:max-w-10/12 mx-auto'>
         {stats.map((stat, index) => (
           <StatCard
             key={stat.statTitle}
@@ -60,7 +62,7 @@ const AboutSection = ({
         />
       </div>
 
-      <div className='py-27 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-2 md:gap-4 items-center'>
+      <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-2 md:gap-4 items-center mt-16 xl:mt-40'>
         <Image
           src={urlForUncropped(weAreSection.image).url()}
           alt={weAreSection.image.alt}

@@ -53,6 +53,7 @@ export type Post = {
   _rev: string;
   title: string;
   slug: Slug;
+  date: string;
   content: BlockContent;
   excerpt?: BlockContent;
   featuredMedia: {
@@ -149,6 +150,13 @@ export type TeamMember = {
   bio: BlockContent;
 };
 
+export type Button = {
+  _type: "button";
+  text: string;
+  highlightedText?: string;
+  link: string;
+};
+
 export type ContactPage = {
   _id: string;
   _type: "contactPage";
@@ -219,9 +227,13 @@ export type PmoPromoSection = {
 
 export type BlogSection = {
   _type: "blogSection";
-  subtitle: string;
+  subtitle: {
+    text: string;
+    highlightedText: string;
+  };
   heading: string;
   description: BlockContent;
+  button: Button;
 };
 
 export type TeamSection = {
@@ -535,7 +547,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = BlockContent | Post | Project | Service | TeamMember | ContactPage | AboutPage | HomePage | PmoPromoSection | BlogSection | TeamSection | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = BlockContent | Post | Project | Service | TeamMember | Button | ContactPage | AboutPage | HomePage | PmoPromoSection | BlogSection | TeamSection | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
@@ -591,35 +603,24 @@ export type HOME_PAGE_QUERYResult = {
   } | null;
 };
 // Variable: LATEST_POSTS_QUERY
-// Query: *[_type == "post"] | order(_createdAt desc) [0...$limit] {  title,  "slug": slug.current,  excerpt,  featuredMedia {    asset->  }}
+// Query: *[_type == "post"] | order(_createdAt desc) [0...$limit] {  title,  "slug": slug.current,  excerpt,  featuredMedia,  date,}
 export type LATEST_POSTS_QUERYResult = Array<{
   title: string;
   slug: string;
   excerpt: BlockContent | null;
   featuredMedia: {
-    asset: {
-      _id: string;
-      _type: "sanity.imageAsset";
-      _createdAt: string;
-      _updatedAt: string;
-      _rev: string;
-      originalFilename?: string;
-      label?: string;
-      title?: string;
-      description?: string;
-      altText?: string;
-      sha1hash?: string;
-      extension?: string;
-      mimeType?: string;
-      size?: number;
-      assetId?: string;
-      uploadId?: string;
-      path?: string;
-      url?: string;
-      metadata?: SanityImageMetadata;
-      source?: SanityAssetSourceData;
-    } | null;
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
   };
+  date: string;
 }>;
 // Variable: GENERAL_INFO_QUERY
 // Query: {  "generalInfo": *[_type == "generalInfo"][0],}
@@ -684,7 +685,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "{\n    \"homePage\": *[_type == \"homePage\"][0] {\n      ...,\n      team {\n        ...,\n        teamMembers[]->\n      }\n    }\n  }": HOME_PAGE_QUERYResult;
-    "*[_type == \"post\"] | order(_createdAt desc) [0...$limit] {\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  featuredMedia {\n    asset->\n  }\n}": LATEST_POSTS_QUERYResult;
+    "*[_type == \"post\"] | order(_createdAt desc) [0...$limit] {\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  featuredMedia,\n  date,\n}": LATEST_POSTS_QUERYResult;
     "{\n  \"generalInfo\": *[_type == \"generalInfo\"][0],\n}": GENERAL_INFO_QUERYResult;
   }
 }
