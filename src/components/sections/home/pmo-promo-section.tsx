@@ -31,8 +31,8 @@ const PmoPromoSection = ({
   buttons,
 }: PmoPromoSectionProps) => {
   return (
-    <section className='px-side '>
-      <div className='relative overflow-hidden flex flex-col justify-end sm:h-100 xl:h-130 pb-6 xl:pb-12 sm:px-4 xl:px-10'>
+    <section className='px-side'>
+      <div className='relative overflow-hidden sm:h-100 xl:h-130 pb-6 xl:pb-12 sm:px-4 xl:px-10 2xl:px-0 grid grid-cols-1 md:grid-cols-8 xl:grid-cols-12 gap-4 xl:gap-5 items-end'>
         <div className='relative w-full h-53 sm:h-full sm:absolute sm:inset-0 z-0'>
           <Image
             src={urlForUncropped(backgroundImage).url()}
@@ -42,7 +42,7 @@ const PmoPromoSection = ({
           />
         </div>
 
-        <div className='relative z-10'>
+        <div className='relative z-10 col-span-full 2xl:col-span-10 2xl:col-start-2'>
           <div className='sm:max-w-xl xl:max-w-3xl'>
             <p className='xl:text-lg font-medium pt-3 sm:pt-0'>
               <span className='highlight mr-2'>{subtitle.highlightedText}</span>

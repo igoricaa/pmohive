@@ -6,6 +6,7 @@
   --color-primary: #f09a60;
   --color-light-grey: #e9e9e9;
   --color-black-custom: #090909;
+  --breakpoint-2xl: 108rem;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);

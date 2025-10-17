@@ -70,7 +70,7 @@ const HeroSection = ({
           />
         </div>
       </div>
-      <div className='md:col-span-4 2xl:col-span-3 2xl:col-start-2 md:order-1 lg:col-span-5 z-1 md:pt-17 lg:pt-0'>
+      <div className='md:col-span-4 lg:col-span-5 2xl:col-span-4 2xl:col-start-2 md:order-1 z-1 md:pt-17 lg:pt-0'>
         <p className='font-medium md:text-lg'>
           {subtitle.text}{' '}
           <span className='highlight ml-2'>{subtitle.highlightedText}</span>
