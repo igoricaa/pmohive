@@ -140,6 +140,7 @@
   }
   body {
     @apply bg-black text-white;
+    /* bg-[url(/bg-pattern.svg)] bg-center bg-repeat bg-size-[auto_20px] */
   }
 
   /* Responsive Typography - H Tags */

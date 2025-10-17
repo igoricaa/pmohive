@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative before:fixed before:inset-0 before:bg-[url('/bg-pattern.svg')] before:bg-repeat before:bg-size-[12px] before:opacity-15 before:-z-10`}
       >
         <Lenis>
           <Header />
