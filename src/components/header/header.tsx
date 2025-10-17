@@ -8,6 +8,7 @@ import Link from 'next/link';
 import MenuLink from '../menuLink';
 import Sidebar from './sidebar';
 import { GeneralInfo } from '../../../sanity.types';
+import MobileMenu from './mobile-menu';
 
 export async function Header() {
   const { generalInfo: generalInfoData } = await getGeneralInfoData();
@@ -86,6 +87,7 @@ const MainBar = ({
         </div>
 
         <Sidebar socials={socials} />
+        <MobileMenu socials={socials} />
       </div>
     </div>
   );

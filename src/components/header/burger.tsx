@@ -12,7 +12,7 @@ const Burger = ({
 }) => {
   return (
     <div
-      className='flex items-center gap-2 cursor-pointer z-50'
+      className='flex items-center gap-2 cursor-pointer z-50 relative'
       onClick={() => setIsOpen(!isOpen)}
     >
       <Image src={burger} unoptimized alt='Burger' width={40} height={32} />

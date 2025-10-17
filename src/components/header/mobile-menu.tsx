@@ -4,20 +4,19 @@ import { cn } from '@/lib/utils';
 import Burger from './burger';
 import { useState } from 'react';
 import Link from 'next/link';
-import { buttonVariants } from '../ui/button';
-import { ArrowRight } from 'lucide-react';
 import { GeneralInfo } from '../../../sanity.types';
-import { Image } from 'next-sanity/image';
-import { urlFor } from '@/sanity/lib/image';
-import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import hexagonalPattern from '../../../public/hexagonal-pattern.svg';
 import ImageNext from 'next/image';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { urlFor } from '@/sanity/lib/image';
+import { routes } from '@/app/data';
+import MenuLink from '../menuLink';
 
-const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
+const MobileMenu = ({ socials }: { socials: GeneralInfo['socials'] }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className='hidden xl:block'>
+    <div className='xl:hidden'>
       <Burger isOpen={isOpen} setIsOpen={setIsOpen} />
 
       <div
@@ -49,7 +48,7 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
 
       <div
         className={cn(
-          'fixed top-0 right-0 w-120 h-full bg-black translate-x-full transition-transform ease-out duration-300 z-30 px-8 pb-8 pt-35 flex flex-col justify-between overflow-hidden',
+          'fixed top-0 right-0 w-full sm:w-130 h-screen bg-black translate-x-full transition-transform ease-out duration-300 z-30 px-6 sm:px-8 pb-6 sm:pb-8 pt-26 sm:pt-35 flex flex-col justify-between overflow-hidden',
           'before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-gradient-to-b before:from-black before:from-5% before:via-[#F79E62] before:via-50% before:to-black before:to-95%',
           isOpen && 'translate-x-0'
         )}
@@ -59,45 +58,16 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
           src={hexagonalPattern}
           alt='Hexagonal pattern'
           unoptimized
-          className='object-contain min-w-[747px] h-[531px] -z-10 absolute -top-6 -left-42'
+          className='object-contain min-w-[747px] h-[531px] -z-10 absolute -top-6 -left-50'
         />
 
-        <div>
-          <h2>Our Role</h2>
-          <p className='text-sm mt-4'>
-            PMO Hive acts as the independent control tower for hyperscale
-            delivery. We integrate cost, schedule, and risk governance across
-            every tier of a programme — ensuring clarity, compliance, and
-            control from day one.
-          </p>
-          <div className='flex gap-3 mt-6'>
-            <Link
-              href='/about-us'
-              className={cn(
-                buttonVariants({
-                  variant: 'default',
-                })
-              )}
-            >
-              Learn More
-              <span className='highlight ml-2'>/pmo</span>
-            </Link>
-
-            <Link
-              href='/contact-us'
-              className={cn(
-                buttonVariants({
-                  variant: 'secondary',
-                })
-              )}
-            >
-              Contact Us
-              <ArrowRight />
-            </Link>
-          </div>
+        <div className='flex flex-col gap-4 sm:gap-6'>
+          {routes.map((route) => (
+            <MenuLink key={route.path} route={route} variant='mobile-menu' />
+          ))}
         </div>
 
-        <div>
+        <div className='flex flex-col-reverse sm:flex-col gap-4'>
           {socials && socials.length > 0 && (
             <div className='flex items-center gap-6 xl:gap-8'>
               {socials.map((social) => (
@@ -109,7 +79,7 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
                   className='hover:opacity-70 transition-opacity'
                   aria-label={social.title}
                 >
-                  <Image
+                  <ImageNext
                     src={urlFor(social.icon as SanityImageSource).url()}
                     alt={social.title}
                     width={30}
@@ -122,14 +92,14 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
             </div>
           )}
 
-          <nav className='flex items-center gap-3 mt-4'>
+          <nav className='flex flex-col sm:flex-row sm:items-center gap-3'>
             <Link
               href='/data-protection'
               className='font-sans font-semibold text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
             >
               Data Protection
             </Link>
-            <span className='font-light text-base tracking-[0.1px] text-light-grey'>
+            <span className='font-light text-base tracking-[0.1px] text-light-grey hidden sm:block'>
               |
             </span>
             <Link
@@ -138,7 +108,7 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
             >
               Terms &amp; Conditions
             </Link>
-            <span className='text-base tracking-[0.1px] text-light-grey'>
+            <span className='text-base tracking-[0.1px] text-light-grey hidden sm:block'>
               |
             </span>
             <Link
@@ -154,4 +124,4 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
   );
 };
 
-export default Sidebar;
+export default MobileMenu;

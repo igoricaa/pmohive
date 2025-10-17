@@ -12,7 +12,7 @@ const MenuLink = ({
 }: {
   route: Route;
   className?: string;
-  variant?: 'default' | 'footer';
+  variant?: 'default' | 'footer' | 'mobile-menu';
 }) => {
   const pathname = usePathname();
 
@@ -28,13 +28,19 @@ const MenuLink = ({
             pathname === route.path
               ? 'opacity-100 translate-x-4 sm:translate-x-0'
               : 'opacity-50'
+          }`,
+        variant === 'mobile-menu' &&
+          `text-2xl sm:text-4xl font-semibold ${
+            pathname === route.path && 'translate-x-6 sm:translate-x-8'
           }`
       )}
     >
       <span
         className={cn(
           'text-primary text-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute -left-4 transition-[opacity,visibility]',
-          pathname === route.path && 'opacity-100 visible'
+          pathname === route.path && 'opacity-100 visible',
+          variant === 'mobile-menu' &&
+            'text-2xl sm:text-4xl font-semibold -left-6 sm:-left-8'
         )}
       >
         /
