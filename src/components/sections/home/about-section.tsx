@@ -77,6 +77,7 @@ const AboutSection = ({
               alt='Arrow top right'
               width={88}
               height={88}
+              unoptimized
               className='-z-5 object-cover absolute top-6 right-6 w-22 h-22 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-[opacity,visibility,translate] duration-200 ease-out -translate-x-5 translate-y-5 group-hover:translate-0'
             />
 
