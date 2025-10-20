@@ -93,7 +93,7 @@ const BlogSection = ({
                 )}
               >
                 <Link href={`/blog/${post.slug}`}>
-                  <div className='relative h-full aspect-[285/372] overflow-hidden group'>
+                  <div className='relative h-full aspect-[285/372] overflow-hidden'>
                     {/* Background Image */}
                     <div className='absolute inset-0 -z-20'>
                       <Image

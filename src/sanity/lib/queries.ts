@@ -12,6 +12,21 @@ export const HOME_PAGE_QUERY = defineQuery(`{
       team {
         ...,
         teamMembers[]->
+      },
+      about {
+        ...,
+        understandingPMO[] {
+          subtitle {
+            text,
+            highlightedText
+          },
+          heading,
+          description[],
+          image {
+            ...,
+            alt
+          }
+        }
       }
     }
   }`);

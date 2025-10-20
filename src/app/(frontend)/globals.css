@@ -3,10 +3,14 @@
 
 @theme inline {
   --padding-side: var(--padding-side);
+  --color-primary-rgb: 240, 154, 96;
   --color-primary: #f09a60;
   --color-light-grey: #e9e9e9;
   --color-black-custom: #090909;
   --breakpoint-2xl: 108rem;
+
+  --circle-size: 100%;
+  --blending: hard-light;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -61,6 +65,9 @@
   --h5-line-height: 1;
   --h6-font-size: 1.125rem; /* 18px */
   --h6-line-height: 1;
+
+  --menu-animation-duration: 200ms;
+  --menu-animation-timing: ease-out;
 
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -143,7 +150,7 @@
   }
 
   main {
-    @apply relative before:absolute before:-top-40 before:left-0 before:h-[calc(100%+160px)] before:w-full before:bg-[url('/bg-pattern.svg')] before:bg-repeat before:bg-size-[10px] before:opacity-20 before:-z-10;
+    @apply relative before:absolute before:-top-40 before:left-0 before:h-[calc(100%+160px)] before:w-full before:bg-[url('/bg-pattern.svg')] before:bg-repeat before:bg-size-[10px] before:opacity-20 before:-z-100;
   }
 
   /* Responsive Typography - H Tags */
@@ -200,6 +207,150 @@
   color: var(--color-primary);
 }
 
-.hexagon-clip {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+.burger-menu-piece {
+  transition: transform var(--menu-animation-duration)
+    var(--menu-animation-timing);
+
+  &:nth-child(2) {
+    opacity: 1;
+    transition:
+      transform var(--menu-animation-duration) var(--menu-animation-timing),
+      opacity 0ms linear var(--menu-animation-duration) / 2;
+  }
+
+  .active & {
+    &:nth-child(1) {
+      animation: burger-open-top var(--menu-animation-duration)
+        var(--menu-animation-timing) forwards;
+    }
+
+    &:nth-child(2) {
+      opacity: 0;
+      transition:
+        transform var(--menu-animation-duration) var(--menu-animation-timing),
+        opacity 0ms linear var(--menu-animation-duration) / 2;
+    }
+
+    &:nth-child(3) {
+      animation: burger-open-bot var(--menu-animation-duration)
+        var(--menu-animation-timing) forwards;
+    }
+  }
+
+  .closing & {
+    &:nth-child(1) {
+      animation: burger-close-top var(--menu-animation-duration)
+        var(--menu-animation-timing) forwards;
+    }
+
+    &:nth-child(3) {
+      animation: burger-close-bot var(--menu-animation-duration)
+        var(--menu-animation-timing) forwards;
+    }
+  }
+}
+
+@keyframes burger-open-top {
+  50% {
+    transform: translate3d(0, 12px, 0);
+  }
+  100% {
+    transform: translate3d(0, 12px, 0) rotate(45deg);
+  }
+}
+
+@keyframes burger-open-bot {
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+  100% {
+    transform: translate3d(0, -12px, 0) rotate(-45deg);
+  }
+}
+
+@keyframes burger-close-top {
+  0% {
+    transform: translate3d(0, 12px, 0) rotate(45deg);
+  }
+  50% {
+    transform: translate3d(0, 12px, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes burger-close-bot {
+  0% {
+    transform: translate3d(0, -12px, 0) rotate(-45deg);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveVertical {
+  0% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes moveHorizontal {
+  0% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+  50% {
+    transform: translateX(50%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+}
+
+.gradient__bg {
+  svg {
+    display: none;
+  }
+
+  & .gradient__bg__g3 {
+    position: absolute;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color-primary-rgb), 0.7) 0,
+        rgba(var(--color-primary-rgb), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+    top: calc(50% - var(--circle-size) / 2 + 200px);
+    left: calc(50% - var(--circle-size) / 2 - 500px);
+
+    transform-origin: calc(50% + 400px);
+    animation: moveInCircle 20s linear infinite;
+
+    opacity: 1;
+  }
 }

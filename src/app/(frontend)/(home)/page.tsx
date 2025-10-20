@@ -6,6 +6,7 @@ import { Stat } from '@/lib/types';
 import { PortableTextBlock } from 'next-sanity';
 import CareersSection from '@/components/sections/home/careers-section';
 import BlogSection from '@/components/sections/home/blog-section';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
 export default async function Home() {
   const [homePageResult, latestPostsResult] = await Promise.all([
@@ -32,6 +33,17 @@ export default async function Home() {
       <AboutSection
         heading={homePageData.about.heading}
         animatedText={homePageData.about.animatedText}
+        understandingPMOItems={homePageData.about.understandingPMO.map(
+          (item) => ({
+            subtitle: {
+              text: item.subtitle.text,
+              highlightedText: item.subtitle.highlightedText || null,
+            },
+            heading: item.heading,
+            description: item.description as PortableTextBlock[],
+            image: item.image as SanityImageSource & { alt: string },
+          })
+        )}
         stats={homePageData.about.stats as Stat[]}
         wrapUpText={homePageData.about.wrapUpText}
         weAreSection={homePageData.about.weAreSection}

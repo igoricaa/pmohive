@@ -572,10 +572,6 @@ const buttonVariants = cva(
 .highlight {
   color: var(--color-primary);
 }
-
-.hexagon-clip {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-}
 ```
 
 ### Component Styling Pattern

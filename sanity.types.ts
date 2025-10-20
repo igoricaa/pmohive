@@ -264,6 +264,29 @@ export type AboutSection = {
     highlightedText: string;
   };
   animatedText: string;
+  understandingPMO: Array<{
+    subtitle: {
+      text: string;
+      highlightedText?: string;
+    };
+    heading: string;
+    description: BlockContent;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    _type: "item";
+    _key: string;
+  }>;
   stats: Array<{
     statTitle: string;
     statValue?: string;
@@ -551,7 +574,7 @@ export type AllSanitySchemaTypes = BlockContent | Post | Project | Service | Tea
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
-// Query: {    "homePage": *[_type == "homePage"][0] {      ...,      team {        ...,        teamMembers[]->      }    }  }
+// Query: {    "homePage": *[_type == "homePage"][0] {      ...,      team {        ...,        teamMembers[]->      },      about {        ...,        understandingPMO[] {          subtitle {            text,            highlightedText          },          heading,          description[],          image {            ...,            alt          }        }      }    }  }
 export type HOME_PAGE_QUERYResult = {
   homePage: {
     _id: string;
@@ -561,7 +584,103 @@ export type HOME_PAGE_QUERYResult = {
     _rev: string;
     title: string;
     hero: HeroSection;
-    about: AboutSection;
+    about: {
+      _type: "aboutSection";
+      heading: {
+        text: string;
+        highlightedText: string;
+      };
+      animatedText: string;
+      understandingPMO: Array<{
+        subtitle: {
+          text: string;
+          highlightedText: string | null;
+        };
+        heading: string;
+        description: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "highlighted" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }>;
+          level?: number;
+          _type: "block";
+          _key: string;
+        } | {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+          _key: string;
+        }>;
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string;
+          _type: "image";
+        };
+      }>;
+      stats: Array<{
+        statTitle: string;
+        statValue?: string;
+        statIcon?: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        };
+        statDescription: BlockContent;
+        _key: string;
+      }>;
+      wrapUpText: string;
+      weAreSection: {
+        heading: string;
+        highlightedText: string;
+        description: BlockContent;
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string;
+          _type: "image";
+        };
+      };
+    };
     team: {
       _type: "teamSection";
       subtitle: {
@@ -684,7 +803,7 @@ export type GENERAL_INFO_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "{\n    \"homePage\": *[_type == \"homePage\"][0] {\n      ...,\n      team {\n        ...,\n        teamMembers[]->\n      }\n    }\n  }": HOME_PAGE_QUERYResult;
+    "{\n    \"homePage\": *[_type == \"homePage\"][0] {\n      ...,\n      team {\n        ...,\n        teamMembers[]->\n      },\n      about {\n        ...,\n        understandingPMO[] {\n          subtitle {\n            text,\n            highlightedText\n          },\n          heading,\n          description[],\n          image {\n            ...,\n            alt\n          }\n        }\n      }\n    }\n  }": HOME_PAGE_QUERYResult;
     "*[_type == \"post\"] | order(_createdAt desc) [0...$limit] {\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  featuredMedia,\n  date,\n}": LATEST_POSTS_QUERYResult;
     "{\n  \"generalInfo\": *[_type == \"generalInfo\"][0],\n}": GENERAL_INFO_QUERYResult;
   }

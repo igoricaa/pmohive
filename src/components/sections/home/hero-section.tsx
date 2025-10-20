@@ -41,32 +41,32 @@ const HeroSection = ({
           <Image
             src={urlForUncropped(images.image1).url()}
             alt={images.image1.alt}
-            width={1000}
-            height={1000}
-            className='w-full h-auto object-cover aspect-square'
+            width={473}
+            height={546}
+            className='w-full h-auto object-cover'
           />
           <Image
             src={urlForUncropped(images.image2).url()}
             alt={images.image2.alt}
-            width={1000}
-            height={1000}
-            className='w-full h-auto object-cover aspect-square'
+            width={473}
+            height={546}
+            className='w-full h-auto object-cover'
           />
         </div>
         <div className='flex gap-2 mt-2 md:mt-4 max-w-[calc(80%)] md:max-w-full xl:max-w-[calc(82%)] md:ml-auto -translate-y-[calc(25%+2px)] md:-translate-y-[calc(25%+8px)] md:-translate-x-[calc(25%+2px)] xl:-translate-x-[calc(25%+2px)]'>
           <Image
             src={urlForUncropped(images.image3).url()}
             alt={images.image3.alt}
-            width={1000}
-            height={1000}
-            className='w-full m h-auto object-cover aspect-square'
+            width={473}
+            height={546}
+            className='w-full m h-auto object-cover'
           />
           <Image
             src={urlForUncropped(images.image4).url()}
             alt={images.image4.alt}
-            width={1000}
-            height={1000}
-            className='w-full h-auto object-cover aspect-square'
+            width={473}
+            height={546}
+            className='w-full h-auto object-cover'
           />
         </div>
       </div>

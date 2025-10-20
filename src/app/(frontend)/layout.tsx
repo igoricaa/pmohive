@@ -4,6 +4,7 @@ import './globals.css';
 import Header from '@/components/header/header';
 import Footer from '@/components/footer';
 import Lenis from '@/components/lenis';
+import BackgroundGradient from '@/components/bg-gradient';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -29,10 +30,11 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
         <Lenis>
           <Header />
+          <BackgroundGradient />
           {children}
           <Footer />
         </Lenis>
