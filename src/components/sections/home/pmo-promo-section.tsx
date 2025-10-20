@@ -7,6 +7,7 @@ import { ArrowRight } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { PortableTextBlock } from 'next-sanity';
 import PortableText from '@/components/portable-text';
+import Heading from '@/components/ui/heading';
 
 interface PmoPromoSectionProps {
   subtitle: {
@@ -46,14 +47,15 @@ const PmoPromoSection = ({
 
         <div className='relative z-10 col-span-full 2xl:col-span-10 2xl:col-start-2'>
           <div className='sm:max-w-xl xl:max-w-3xl'>
-            <p className='xl:text-lg font-medium pt-3 sm:pt-0'>
-              <span className='highlight mr-2'>{subtitle.highlightedText}</span>
-              {subtitle.text}
-            </p>
-
-            <h2 className='mt-2 sm:mt-1 xl:mt-2 text-2xl sm:text-3xl xl:text-4xl'>
+            <Heading
+              level='h4'
+              subtitle={{
+                text: subtitle.text,
+                highlightedText: subtitle.highlightedText,
+              }}
+            >
               {heading}
-            </h2>
+            </Heading>
 
             <div className='mt-4 sm:mt-3 xl:mt-2'>
               <PortableText value={description} />

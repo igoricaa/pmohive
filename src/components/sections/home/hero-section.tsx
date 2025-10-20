@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import { ArrowRight } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
+import Heading from '@/components/ui/heading';
 
 interface HeroSectionProps {
   subtitle: {
@@ -71,11 +72,16 @@ const HeroSection = ({
         </div>
       </div>
       <div className='md:col-span-4 lg:col-span-5 2xl:col-span-4 2xl:col-start-2 md:order-1 z-1 md:pt-17 lg:pt-0'>
-        <p className='font-medium md:text-lg'>
-          {subtitle.text}{' '}
-          <span className='highlight ml-2'>{subtitle.highlightedText}</span>
-        </p>
-        <h1 className='mt-2'>{heading}</h1>
+        <Heading
+          level='h1'
+          subtitle={{
+            text: subtitle.text,
+            highlightedText: subtitle.highlightedText,
+          }}
+        >
+          {heading}
+        </Heading>
+
         <p className='mt-3 xl:mt-4 text-sm max-w-xl'>{description}</p>
         <div className='flex gap-3 mt-4'>
           {buttons.map((button, index) => (

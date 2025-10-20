@@ -14,6 +14,7 @@ import { Button, LATEST_POSTS_QUERYResult } from '../../../../sanity.types';
 import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
 import Link from 'next/link';
+import Heading from '@/components/ui/heading';
 
 interface BlogSectionProps {
   subtitle: {
@@ -45,16 +46,15 @@ const BlogSection = ({
       {/* Content Area */}
       <div className='md:col-span-3 2xl:col-start-2 px-side md:pr-0 flex flex-col md:max-xl:justify-between'>
         <div>
-          {/* Subtitle */}
-          <p className='font-medium xl:text-lg'>
-            {subtitle.text}
-            <span className='highlight ml-2'>{subtitle.highlightedText}</span>
-          </p>
-
-          {/* Heading */}
-          <h2 className='text-[34px] sm:text-[44px] xl:text-[56px] mt-2 xl:mt-4.5'>
+          <Heading
+            level='h2'
+            subtitle={{
+              text: subtitle.text,
+              highlightedText: subtitle.highlightedText,
+            }}
+          >
             {heading}
-          </h2>
+          </Heading>
 
           {/* Description */}
           <div className='mt-3 sm:mt-4'>
