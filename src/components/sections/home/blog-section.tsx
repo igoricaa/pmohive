@@ -1,5 +1,4 @@
 import { ArrowRight } from 'lucide-react';
-import { Image } from 'next-sanity/image';
 import { buttonVariants } from '@/components/ui/button';
 import {
   Carousel,
@@ -8,13 +7,17 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { cn, formatDate } from '@/lib/utils';
-import { urlForUncropped } from '@/sanity/lib/image';
-import { Button, LATEST_POSTS_QUERYResult } from '../../../../sanity.types';
+import { cn } from '@/lib/utils';
+import {
+  Button,
+  LATEST_POSTS_QUERYResult,
+  Post,
+} from '../../../../sanity.types';
 import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
 import Link from 'next/link';
 import Heading from '@/components/ui/heading';
+import PostCard from '@/components/blog/post-card';
 
 interface BlogSectionProps {
   subtitle: {
@@ -89,48 +92,10 @@ const BlogSection = ({
               <CarouselItem
                 key={`${post.title}-${index}`}
                 className={cn(
-                  'basis-[82%] sm:basis-[65%] xl:basis-1/3 pl-0 pr-4 sm:pl-0 sm:pr-side group'
+                  'basis-[82%] sm:basis-[65%] xl:basis-1/3 pl-0 pr-4 sm:pl-0 sm:pr-side '
                 )}
               >
-                <Link href={`/blog/${post.slug}`}>
-                  <div className='relative h-full aspect-[285/372] overflow-hidden'>
-                    {/* Background Image */}
-                    <div className='absolute inset-0 -z-20'>
-                      <Image
-                        src={urlForUncropped(post.featuredMedia).url()}
-                        alt={post.title}
-                        width={285}
-                        height={372}
-                        className='w-full h-full object-cover'
-                      />
-                    </div>
-
-                    {/* Gradient Overlay */}
-                    <div className='absolute inset-0 bg-gradient-to-b from-transparent from-50% to-black/45 -z-10' />
-
-                    {/* Content */}
-                    <div className='px-4 pb-4 pt-5 z-0 h-full flex flex-col justify-between'>
-                      <p className='text-sm'>{formatDate(post.date)}</p>
-
-                      <div className='xl:translate-y-25 xl:group-hover:translate-y-0 transition-[translate] duration-200'>
-                        <h3 className='text-lg sm:text-3xl xl:text-2xl'>
-                          {post.title}
-                        </h3>
-
-                        <div className='mt-2 sm:mt-3 xl:mt-5 z-0 max-w-md transition-opacity xl:opacity-0 xl:group-hover:opacity-100 delay-0 xl:group-hover:delay-200 duration-100 xl:group-hover:duration-200'>
-                          <div className='line-clamp-3 '>
-                            <PortableText
-                              value={post.excerpt as PortableTextBlock[]}
-                            />
-                          </div>
-                          <button className='font-bold text-lg font-sans mt-3 sm:max-lg:mt-4 flex gap-1 items-center'>
-                            <ArrowRight className='size-5!' /> Read More
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
+                <PostCard post={post as unknown as Post} />
               </CarouselItem>
             ))}
           </CarouselContent>
