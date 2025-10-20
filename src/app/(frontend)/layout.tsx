@@ -5,6 +5,8 @@ import Header from '@/components/header/header';
 import Footer from '@/components/footer';
 import Lenis from '@/components/lenis';
 import BackgroundGradient from '@/components/bg-gradient';
+import QueryProvider from '@/providers/query-provider';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,12 +34,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
-        <Lenis>
-          <Header />
-          <BackgroundGradient />
-          {children}
-          <Footer />
-        </Lenis>
+        <QueryProvider>
+          <NuqsAdapter>
+            <Lenis>
+              <Header />
+              <BackgroundGradient />
+              {children}
+              <Footer />
+            </Lenis>
+          </NuqsAdapter>
+        </QueryProvider>
       </body>
     </html>
   );

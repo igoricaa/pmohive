@@ -26,6 +26,13 @@ export const postType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'category',
+      title: 'Category',
+      type: 'reference',
+      to: [{ type: 'postCategory' }],
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'date',
       type: 'date',
       options: {
@@ -52,10 +59,12 @@ export const postType = defineType({
     select: {
       title: 'title',
       media: 'featuredMedia',
+      category: 'category.name',
     },
-    prepare({ title, media }) {
+    prepare({ title, media, category }) {
       return {
         title,
+        subtitle: category,
         media,
       };
     },

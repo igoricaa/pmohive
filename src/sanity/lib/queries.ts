@@ -68,3 +68,64 @@ export const getLatestPosts = async (
     tags: ['post', 'latestPosts'],
   });
 };
+
+export const BLOG_POSTS_QUERY = defineQuery(`
+  *[_type == "post"
+    && (!defined($search) || title match $search + "*")
+    && (!defined($category) || category._ref == $category)
+  ] | order(date desc) [0...11] {
+    _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    featuredMedia,
+    date,
+    category->{
+      _id,
+      name,
+      "slug": slug.current
+    }
+  }
+`);
+
+export const BLOG_POSTS_QUERY_ASC = defineQuery(`
+  *[_type == "post"
+    && (!defined($search) || title match $search + "*")
+    && (!defined($category) || category._ref == $category)
+  ] | order(date asc) [0...11] {
+    _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    featuredMedia,
+    date,
+    category->{
+      _id,
+      name,
+      "slug": slug.current
+    }
+  }
+`);
+
+export const POST_CATEGORIES_QUERY = defineQuery(`
+  *[_type == "postCategory"] | order(name asc) {
+    _id,
+    name,
+    "slug": slug.current
+  }
+`);
+
+export async function getInitialBlogPosts() {
+  return await sanityFetch({
+    query: BLOG_POSTS_QUERY,
+    params: { search: null, category: null },
+    tags: ['post'],
+  });
+}
+
+export async function getAllPostCategories() {
+  return await sanityFetch({
+    query: POST_CATEGORIES_QUERY,
+    tags: ['postCategory'],
+  });
+}

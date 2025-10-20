@@ -53,6 +53,12 @@ export type Post = {
   _rev: string;
   title: string;
   slug: Slug;
+  category: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "postCategory";
+  };
   date: string;
   content: BlockContent;
   excerpt?: BlockContent;
@@ -68,6 +74,16 @@ export type Post = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+};
+
+export type PostCategory = {
+  _id: string;
+  _type: "postCategory";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  slug: Slug;
 };
 
 export type Project = {
@@ -570,7 +586,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = BlockContent | Post | Project | Service | TeamMember | Button | ContactPage | AboutPage | HomePage | PmoPromoSection | BlogSection | TeamSection | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | ContactPage | AboutPage | HomePage | PmoPromoSection | BlogSection | TeamSection | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
@@ -798,6 +814,39 @@ export type GENERAL_INFO_QUERYResult = {
     }>;
   } | null;
 };
+// Variable: BLOG_POSTS_QUERY
+// Query: *[_type == "post"    && (!defined($search) || title match $search + "*")    && (!defined($category) || category._ref == $category)  ] | order(date desc) {    _id,    title,    "slug": slug.current,    excerpt,    featuredMedia,    date,    category->{      _id,      name,      "slug": slug.current    }  }
+export type BLOG_POSTS_QUERYResult = Array<{
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: BlockContent | null;
+  featuredMedia: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  date: string;
+  category: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
+}>;
+// Variable: POST_CATEGORIES_QUERY
+// Query: *[_type == "postCategory"] | order(name asc) {    _id,    name,    "slug": slug.current  }
+export type POST_CATEGORIES_QUERYResult = Array<{
+  _id: string;
+  name: string;
+  slug: string;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -806,5 +855,7 @@ declare module "@sanity/client" {
     "{\n    \"homePage\": *[_type == \"homePage\"][0] {\n      ...,\n      team {\n        ...,\n        teamMembers[]->\n      },\n      about {\n        ...,\n        understandingPMO[] {\n          subtitle {\n            text,\n            highlightedText\n          },\n          heading,\n          description[],\n          image {\n            ...,\n            alt\n          }\n        }\n      }\n    }\n  }": HOME_PAGE_QUERYResult;
     "*[_type == \"post\"] | order(_createdAt desc) [0...$limit] {\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  featuredMedia,\n  date,\n}": LATEST_POSTS_QUERYResult;
     "{\n  \"generalInfo\": *[_type == \"generalInfo\"][0],\n}": GENERAL_INFO_QUERYResult;
+    "\n  *[_type == \"post\"\n    && (!defined($search) || title match $search + \"*\")\n    && (!defined($category) || category._ref == $category)\n  ] | order(date desc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    featuredMedia,\n    date,\n    category->{\n      _id,\n      name,\n      \"slug\": slug.current\n    }\n  }\n": BLOG_POSTS_QUERYResult;
+    "\n  *[_type == \"postCategory\"] | order(name asc) {\n    _id,\n    name,\n    \"slug\": slug.current\n  }\n": POST_CATEGORIES_QUERYResult;
   }
 }

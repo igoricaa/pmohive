@@ -10,6 +10,7 @@ import {
 import { aboutPageType } from './pages/aboutPageType';
 import { contactPageType } from './pages/contactPageType';
 import { postType } from './posts';
+import { postCategoryType } from './posts/postCategoryType';
 import { blockContentType } from './blockContentType';
 import { teamMemberType } from './teamMemberType';
 
@@ -33,6 +34,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     serviceType,
     projectType,
     postType,
+    postCategoryType,
     blockContentType,
     buttonType,
   ],
