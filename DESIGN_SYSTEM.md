@@ -156,7 +156,15 @@ const geistMono = Geist_Mono({
 src/components/
 ├── ui/                          # shadcn/ui components
 │   ├── button.tsx              # Core button component
-│   └── carousel.tsx            # Carousel component (Embla-based)
+│   ├── carousel.tsx            # Carousel component (Embla-based)
+│   ├── input.tsx               # Input component
+│   └── select.tsx              # Select dropdown component
+├── blog/                        # Blog-specific components
+│   ├── search-input.tsx        # Search with debouncing + nuqs
+│   ├── category-filter.tsx     # Category dropdown + nuqs
+│   ├── sort-select.tsx         # Sort dropdown + nuqs
+│   ├── posts-grid.tsx          # Posts grid with React Query
+│   └── post-card.tsx           # Individual post card
 ├── sections/                    # Page section components
 │   └── home/
 │       ├── hero-section.tsx
@@ -322,6 +330,135 @@ opts={{
 
 **Standard Practice**: Use this carousel component for ALL carousel implementations in the project.
 
+### Blog Components Pattern
+
+The blog system demonstrates a self-contained component architecture using nuqs for URL state management and React Query for server state.
+
+**SearchInput** ([src/components/blog/search-input.tsx](src/components/blog/search-input.tsx)):
+
+```tsx
+'use client';
+
+import { useQueryState, parseAsString, debounce } from 'nuqs';
+import { Input } from '@/components/ui/input';
+
+export default function SearchInput() {
+  const [search, setSearch] = useQueryState(
+    'search',
+    parseAsString.withDefault('').withOptions({ history: 'push' })
+  );
+
+  return (
+    <Input
+      type='text'
+      value={search}
+      onChange={(e) =>
+        setSearch(e.target.value, {
+          limitUrlUpdates: e.target.value === '' ? undefined : debounce(500),
+        })
+      }
+    />
+  );
+}
+```
+
+**Key Features**:
+- Manages own state via useQueryState
+- 500ms debounce to prevent excessive requests
+- Instant clear when empty
+- No props needed
+
+**CategoryFilter** ([src/components/blog/category-filter.tsx](src/components/blog/category-filter.tsx)):
+
+```tsx
+'use client';
+
+import { useQueryState, parseAsString } from 'nuqs';
+import { usePostCategories } from '@/hooks/use-post-categories';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+export default function CategoryFilter() {
+  const [category, setCategory] = useQueryState(
+    'category',
+    parseAsString.withDefault('all').withOptions({ history: 'push' })
+  );
+  const { data: categories, isLoading } = usePostCategories();
+
+  return (
+    <Select value={category} onValueChange={setCategory}>
+      <SelectTrigger>
+        <SelectValue placeholder='All Categories' />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value='all'>All Categories</SelectItem>
+        {categories?.map((cat) => (
+          <SelectItem key={cat._id} value={cat._id}>{cat.name}</SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}
+```
+
+**Key Features**:
+- Reads categories from server-hydrated React Query cache
+- URL state synchronized with dropdown selection
+- Self-contained with no props
+
+**PostsGrid** ([src/components/blog/posts-grid.tsx](src/components/blog/posts-grid.tsx)):
+
+```tsx
+'use client';
+
+import { useQueryState, parseAsString } from 'nuqs';
+import { useBlogPosts } from '@/hooks/use-blog-posts';
+import PostCard from './post-card';
+
+export default function PostsGrid() {
+  const [search] = useQueryState('search', parseAsString.withDefault(''));
+  const [category] = useQueryState('category', parseAsString.withDefault('all'));
+  const [sort] = useQueryState('sort', parseAsString.withDefault('desc'));
+
+  const categoryId = category === 'all' ? '' : category;
+  const { data: posts, isLoading, error } = useBlogPosts(search, categoryId, sort);
+
+  if (isLoading) {
+    return (
+      <div className='grid grid-cols-1 sm:grid-cols-8 lg:grid-cols-12 gap-4 xl:gap-5'>
+        {[...Array(12)].map((_, i) => (
+          <div key={i} className='col-span-full sm:col-span-4 xl:col-span-3 aspect-[285/372] animate-pulse bg-muted' />
+        ))}
+      </div>
+    );
+  }
+
+  if (error) return <div>Error loading posts</div>;
+  if (!posts || posts.length === 0) return <div>No posts found</div>;
+
+  return (
+    <div className='grid grid-cols-1 sm:grid-cols-8 lg:grid-cols-12 gap-4 xl:gap-5'>
+      {posts.map((post) => (
+        <PostCard key={post._id} post={post} className='col-span-full sm:col-span-4 xl:col-span-3' />
+      ))}
+    </div>
+  );
+}
+```
+
+**Key Features**:
+- Reads all filters from URL state
+- React Query handles data fetching and caching
+- Skeleton loading state matching final layout
+- Error and empty states
+- Responsive grid layout
+
+**Pattern Benefits**:
+1. **Self-Contained**: Each component manages its own state
+2. **No Props**: No prop drilling or state lifting needed
+3. **Shareable URLs**: URL reflects filter state
+4. **Browser Integration**: Back/forward buttons work
+5. **Type-Safe**: nuqs provides TypeScript types for URL params
+
 ### Component Documentation
 
 **Currently**: No Storybook or component documentation
@@ -404,6 +541,53 @@ pnpm dev           # Turbopack dev server
 pnpm build         # Production build with Turbopack
 pnpm start         # Production server
 ```
+
+### State Management
+
+**React Query (TanStack Query v5)**: Server state management
+
+- Package: `@tanstack/react-query`
+- Provider: [src/providers/query-provider.tsx](src/providers/query-provider.tsx)
+- Configuration:
+  - `staleTime: Infinity` - Data never stale by default
+  - `gcTime: 10 * 60 * 1000` - 10 minutes garbage collection
+  - `retry: 1` - Single retry on failure
+  - All refetch options disabled by default
+
+**nuqs**: URL state management
+
+- Package: `nuqs`
+- Adapter: `nuqs/adapters/next/app` (NuqsAdapter)
+- Type-safe URL search params
+- Browser history integration
+- Pattern: `useQueryState('paramName', parseAsString.withDefault('default'))`
+
+**Server-Side Prefetching Pattern**:
+
+```tsx
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
+
+export default async function Page() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['data-key'],
+    queryFn: fetchDataFunction,
+  });
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ClientComponents />
+    </HydrationBoundary>
+  );
+}
+```
+
+**Benefits**:
+- Instant initial page load (server-rendered)
+- Client components read from hydrated cache
+- Subsequent updates via client-side queries
+- SEO-friendly with pre-rendered content
 
 ## 4. Asset Management
 
@@ -675,15 +859,29 @@ pmohive/
 │   │   ├── (frontend)/          # Route group: frontend routes
 │   │   │   ├── (home)/          # Nested route group: home page
 │   │   │   │   └── page.tsx
+│   │   │   ├── blog/            # Blog page
+│   │   │   │   └── page.tsx
 │   │   │   ├── layout.tsx       # Frontend layout
 │   │   │   └── globals.css      # Global styles
+│   │   ├── api/                 # API routes
+│   │   │   └── blog/
+│   │   │       └── posts/
+│   │   │           └── route.ts # Blog posts API
 │   │   └── studio/              # Sanity Studio route
 │   │       └── [[...tool]]/
 │   │           └── page.tsx
 │   ├── components/              # React components
 │   │   ├── ui/                  # shadcn/ui components
 │   │   │   ├── button.tsx
-│   │   │   └── carousel.tsx    # Embla-based carousel
+│   │   │   ├── carousel.tsx    # Embla-based carousel
+│   │   │   ├── input.tsx
+│   │   │   └── select.tsx
+│   │   ├── blog/                # Blog components
+│   │   │   ├── search-input.tsx
+│   │   │   ├── category-filter.tsx
+│   │   │   ├── sort-select.tsx
+│   │   │   ├── posts-grid.tsx
+│   │   │   └── post-card.tsx
 │   │   ├── sections/            # Page section components
 │   │   │   └── home/
 │   │   │       ├── hero-section.tsx
@@ -695,12 +893,17 @@ pmohive/
 │   │   ├── lenis.tsx            # Smooth scroll wrapper
 │   │   ├── portable-text.tsx    # Sanity PortableText renderer
 │   │   └── text-gradient-scroll.tsx # Custom UI components
+│   ├── hooks/                   # Custom React hooks
+│   │   ├── use-blog-posts.ts   # Blog posts query
+│   │   └── use-post-categories.ts # Categories query
+│   ├── providers/               # React context providers
+│   │   └── query-provider.tsx  # React Query provider
 │   ├── lib/                     # Shared utilities
 │   │   └── utils.ts             # cn() helper
 │   └── sanity/                  # Sanity CMS code
 │       ├── schemaTypes/         # Content schemas
 │       │   ├── pages/
-│       │   ├── posts/
+│       │   ├── posts/           # Post + PostCategory
 │       │   └── index.ts
 │       ├── lib/
 │       │   ├── client.ts        # Sanity client
@@ -1077,6 +1280,8 @@ import { cn } from '@/lib/utils';
 
 // UI Components
 import { Button, buttonVariants } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import {
   Carousel,
   CarouselContent,
@@ -1085,13 +1290,31 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 
+// Blog Components
+import SearchInput from '@/components/blog/search-input';
+import CategoryFilter from '@/components/blog/category-filter';
+import PostsGrid from '@/components/blog/posts-grid';
+
 // Sanity
 import { sanityFetch } from '@/sanity/lib/client';
 import { urlForUncropped } from '@/sanity/lib/image';
+import { getInitialBlogPosts, getAllPostCategories } from '@/sanity/lib/queries';
 import { Image } from 'next-sanity/image';
 
+// React Query
+import { useQuery } from '@tanstack/react-query';
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
+
+// URL State Management
+import { useQueryState, parseAsString, debounce } from 'nuqs';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
+
+// Custom Hooks
+import { useBlogPosts } from '@/hooks/use-blog-posts';
+import { usePostCategories } from '@/hooks/use-post-categories';
+
 // Icons
-import { ArrowRight, Menu, X } from 'lucide-react';
+import { ArrowRight, Menu, X, Search } from 'lucide-react';
 
 // Animation
 import { motion } from 'motion/react';
@@ -1142,6 +1365,41 @@ import { cva, type VariantProps } from 'class-variance-authority';
   isActive && "active-classes",
   className
 )}>
+
+// URL State with nuqs
+const [search, setSearch] = useQueryState(
+  'search',
+  parseAsString.withDefault('').withOptions({ history: 'push' })
+);
+
+// Debounced Search
+<Input
+  value={search}
+  onChange={(e) =>
+    setSearch(e.target.value, {
+      limitUrlUpdates: e.target.value === '' ? undefined : debounce(500),
+    })
+  }
+/>
+
+// React Query Hook
+const { data, isLoading, error } = useBlogPosts(search, categoryId, sort);
+
+// Server-Side Prefetch
+export default async function Page() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['data-key'],
+    queryFn: fetchFunction,
+  });
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ClientComponents />
+    </HydrationBoundary>
+  );
+}
 ```
 
 ---
