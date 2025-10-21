@@ -15,6 +15,8 @@ This is a Next.js 15 application integrated with Sanity CMS. The project uses:
 - **pnpm** as package manager
 - **React Query (TanStack Query v5)** for server state management
 - **nuqs** for URL state management
+- **React Hook Form v7.65.0** for form handling
+- **Zod v4.1.11** for schema validation
 
 ## Commands
 
@@ -63,6 +65,7 @@ pnpx sanity@latest typegen generate                          # Generate TypeScri
   - [ui/](src/components/ui/) - shadcn/ui components
   - [blog/](src/components/blog/) - Blog-specific components
   - [sections/](src/components/sections/) - Page section components
+  - [contact-form.tsx](src/components/contact-form.tsx) - Contact form component
 - **[src/providers/](src/providers/)** - React context providers
   - [query-provider.tsx](src/providers/query-provider.tsx) - React Query provider
 - **[src/hooks/](src/hooks/)** - Custom React hooks
@@ -288,3 +291,275 @@ const { data: posts } = useBlogPosts(search, categoryId, sort);
 ```
 
 No props needed - components read/write directly to URL state.
+
+## Forms & Validation
+
+### React Hook Form with Zod v4
+
+**Installation**:
+```bash
+pnpx shadcn@latest add form label textarea radio-group
+pnpm add react-hook-form @hookform/resolvers zod
+```
+
+**Contact Form Implementation** ([src/components/contact-form.tsx](src/components/contact-form.tsx)):
+
+**Schema Definition (Zod v4 syntax)**:
+```typescript
+import * as z from 'zod';
+
+const contactFormSchema = z.object({
+  firstName: z.string().min(2, 'First name must be at least 2 characters'),
+  lastName: z.string().min(2, 'Last name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
+  country: z.string().min(1, 'Please select your country'),
+  interest: z.enum(['introduction-to-pmo', 'data-center-potentials'], {
+    error: 'Please select an area of interest',  // Zod v4 syntax
+  }),
+  message: z.string().min(10, 'Message must be at least 10 characters'),
+});
+
+type ContactFormValues = z.infer<typeof contactFormSchema>;
+```
+
+**Form Setup**:
+```typescript
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+
+const form = useForm<ContactFormValues>({
+  // @ts-expect-error - Known type incompatibility between Zod v4.1.11 and @hookform/resolvers v5.2.2
+  // See: https://github.com/react-hook-form/resolvers/issues/813
+  resolver: zodResolver(contactFormSchema),
+  defaultValues: {
+    firstName: '',
+    lastName: '',
+    email: '',
+    country: '',
+    interest: undefined,
+    message: '',
+  },
+  mode: 'onBlur',
+});
+```
+
+**Form Fields**:
+- **Text Inputs**: First Name, Last Name, Email
+- **Select Dropdown**: Country (195 countries)
+- **Radio Group**: Interest selection (2 options)
+- **Textarea**: Message field
+
+**Form Features**:
+- ✅ Zod v4 schema validation
+- ✅ Real-time validation on blur
+- ✅ Loading states during submission
+- ✅ Form reset after successful submission
+- ✅ Disabled inputs while submitting
+- ✅ Accessible with proper ARIA attributes
+- ✅ Responsive grid layout (2 columns for name fields on desktop)
+
+**Known Issue - Zod v4 Compatibility**:
+
+The `@ts-expect-error` directive is necessary due to a known type incompatibility between Zod v4 and `@hookform/resolvers` v5.2.2. This is tracked in [GitHub issue #813](https://github.com/react-hook-form/resolvers/issues/813).
+
+**Zod v4 Syntax Changes**:
+- ❌ **Zod v3**: `z.enum([...], { required_error: "..." })`
+- ✅ **Zod v4**: `z.enum([...], { error: "..." })`
+
+The `required_error` parameter has been replaced with the unified `error` parameter in Zod v4.
+
+**Integration Example**:
+
+```typescript
+// In page component
+import { ContactForm } from '@/components/contact-form';
+
+export default function ContactPage() {
+  return (
+    <main>
+      <ContactForm />
+    </main>
+  );
+}
+```
+
+## Sanity CMS Schema Patterns
+
+### Reusable Schema Types
+
+**Subtitle Type** ([src/sanity/schemaTypes/subtitleType.ts](src/sanity/schemaTypes/subtitleType.ts)):
+
+A reusable schema type for subtitles with optional highlighted text:
+
+```typescript
+import { defineField, defineType } from 'sanity';
+
+export const subtitleType = defineType({
+  name: 'subtitle',
+  title: 'Subtitle',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'text',
+      title: 'Text',
+      type: 'string',
+      validation: (rule) => rule.required().error('Text is required'),
+    }),
+    defineField({
+      name: 'highlightedText',
+      title: 'Highlighted Text',
+      type: 'string',
+    }),
+  ],
+});
+```
+
+**Usage in Other Schemas**:
+```typescript
+defineField({
+  name: 'subtitle',
+  title: 'Subtitle',
+  type: 'subtitle',  // Reference the reusable type
+  validation: (rule) => rule.required().error('Subtitle is required'),
+})
+```
+
+**Schemas Using Subtitle Type**:
+- [contactPageType.ts](src/sanity/schemaTypes/pages/contactPageType.ts)
+- [postType.ts](src/sanity/schemaTypes/posts/index.ts)
+- [blogSectionType.ts](src/sanity/schemaTypes/pages/home/blogSectionType.ts)
+- [teamSectionType.ts](src/sanity/schemaTypes/pages/home/teamSectionType.ts)
+- [heroSectionType.ts](src/sanity/schemaTypes/pages/home/heroSectionType.ts)
+- [pmoPromoSectionType.ts](src/sanity/schemaTypes/pages/home/pmoPromoSectionType.ts)
+- [aboutSectionType.ts](src/sanity/schemaTypes/pages/home/aboutSectionType.ts)
+
+### Contact Page Schema
+
+**Contact Page Type** ([src/sanity/schemaTypes/pages/contactPageType.ts](src/sanity/schemaTypes/pages/contactPageType.ts)):
+
+```typescript
+import { defineField, defineType } from 'sanity';
+
+export const contactPageType = defineType({
+  name: 'contactPage',
+  title: 'Contact Page',
+  type: 'document',
+  fields: [
+    defineField({
+      name: 'subtitle',
+      type: 'subtitle',  // Uses reusable subtitle type
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'heading',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'description',
+      type: 'blockContent',  // Rich text editor
+      validation: (rule) => rule.required(),
+    }),
+  ],
+});
+```
+
+**Fields**:
+- `subtitle` (subtitle type): Text + optional highlighted text
+- `heading` (string): Main page heading
+- `description` (blockContent): Rich text description
+
+**Querying Contact Page Data**:
+
+```typescript
+// In src/sanity/lib/queries.ts
+export const CONTACT_PAGE_QUERY = defineQuery(`{
+  "contactPage": *[_type == "contactPage"][0] {
+    subtitle {
+      text,
+      highlightedText
+    },
+    heading,
+    description[]
+  }
+}`);
+
+export const getContactPageData = async () => {
+  return await sanityFetch({
+    query: CONTACT_PAGE_QUERY,
+    tags: ['contact-page-data'],
+  });
+};
+```
+
+### Schema Best Practices
+
+1. **Extract Reusable Types**: When a field pattern repeats across schemas (like `subtitle`), extract it into a separate type definition
+2. **Use Validation**: Always add appropriate validation rules with custom error messages
+3. **Document Field Descriptions**: Add descriptions to help content editors understand field purposes
+4. **Group Related Fields**: Use `groups` to organize complex schemas (see [aboutPageType.ts](src/sanity/schemaTypes/pages/aboutPageType.ts))
+5. **Export All Types**: Always export new types through [src/sanity/schemaTypes/index.ts](src/sanity/schemaTypes/index.ts)
+
+## Troubleshooting
+
+### Zod v4 + @hookform/resolvers Compatibility
+
+**Issue**: TypeScript type errors when using Zod v4 with @hookform/resolvers
+
+**Error Message**:
+```
+Type '1' is not assignable to type '0' (_zod.version.minor incompatibility)
+Argument of type 'ZodObject<...>' is not assignable to parameter of type 'Zod3Type<...>'
+```
+
+**Root Cause**:
+- Zod v4.1.11 has breaking type changes from v3
+- `@hookform/resolvers` v5.2.2 type definitions expect Zod v3 structure
+- No runtime issues, purely TypeScript type checking problem
+- Tracked in [GitHub issue #813](https://github.com/react-hook-form/resolvers/issues/813)
+
+**Solution**:
+Use `@ts-expect-error` directive with documentation:
+
+```typescript
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+
+const form = useForm<ContactFormValues>({
+  // @ts-expect-error - Known type incompatibility between Zod v4.1.11 and @hookform/resolvers v5.2.2
+  // See: https://github.com/react-hook-form/resolvers/issues/813
+  resolver: zodResolver(contactFormSchema),
+  defaultValues: { /* ... */ },
+});
+```
+
+**Why This Works**:
+- Suppresses the specific type error only
+- Runtime behavior unaffected (libraries work perfectly)
+- Self-documenting with GitHub issue reference
+- Future-proof: Will error if issue is fixed (prompting cleanup)
+- More explicit than `as any` type assertion
+
+**Alternative Solutions** (not recommended):
+1. Downgrade to `@hookform/resolvers` v5.2.0
+2. Downgrade to Zod v3 (lose new features)
+3. Enable `skipLibCheck` in tsconfig.json (hides all library type errors)
+4. Use manual validation instead of zodResolver
+
+**Zod v4 Syntax Changes**:
+
+When migrating from Zod v3 to v4, update enum error syntax:
+
+```typescript
+// ❌ Zod v3 syntax (will not work in v4)
+z.enum(['option1', 'option2'], {
+  required_error: 'Please select an option'
+})
+
+// ✅ Zod v4 syntax (correct)
+z.enum(['option1', 'option2'], {
+  error: 'Please select an option'
+})
+```
+
+The `required_error` parameter was replaced with the unified `error` parameter in Zod v4.

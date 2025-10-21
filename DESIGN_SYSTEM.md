@@ -1,6 +1,6 @@
-# Design System Rules for Figma Integration
+# Design System & Component Library
 
-This document provides comprehensive guidelines for integrating Figma designs into the PMO Hive codebase using the Model Context Protocol (MCP).
+This document provides comprehensive design system guidelines, component patterns, and Figma integration instructions for the PMO Hive project.
 
 ---
 
@@ -329,6 +329,143 @@ opts={{
 - Override button variants: `variant` and `size` props
 
 **Standard Practice**: Use this carousel component for ALL carousel implementations in the project.
+
+### Form Components Pattern
+
+The project uses shadcn/ui form components with React Hook Form and Zod v4 validation. All forms follow a consistent pattern for styling and validation.
+
+**Contact Form Example** ([src/components/contact-form.tsx](src/components/contact-form.tsx)):
+
+**Form Field Styling**:
+```tsx
+<FormField
+  control={form.control}
+  name="firstName"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>First Name</FormLabel>
+      <FormControl>
+        <Input
+          placeholder="John"
+          {...field}
+          disabled={isSubmitting}
+        />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+```
+
+**Input Component Styling** ([src/components/ui/input.tsx](src/components/ui/input.tsx)):
+```tsx
+className={cn(
+  'flex h-11 md:h-12.5 w-full rounded-full border border-input',
+  'bg-background text-xs sm:text-sm placeholder:text-input text-white',
+  'active:border-white focus:border-white focus-visible:outline-none',
+  'px-3 py-2.5',
+  'disabled:cursor-not-allowed disabled:opacity-50',
+  className
+)}
+```
+
+**Key Styling Patterns**:
+- **Rounded Inputs**: Use `rounded-full` for text inputs and selects (matches button style)
+- **Responsive Heights**: `h-11 md:h-12.5` for consistent sizing across breakpoints
+- **Border States**:
+  - Default: `border-input` (subtle grey)
+  - Active/Focus: `border-white` (bright white)
+  - Invalid: `aria-invalid:border-destructive` (red error state)
+- **Typography**: `text-xs sm:text-sm` for responsive text sizing
+- **Spacing**: `px-3 py-2.5` for comfortable padding
+
+**Select Component Styling** ([src/components/ui/select.tsx](src/components/ui/select.tsx)):
+```tsx
+// SelectTrigger custom styling
+className={cn(
+  'cursor-pointer bg-black pl-3 pr-0.5 py-2',
+  'text-xs sm:text-sm border-input',
+  'flex w-fit items-center justify-between gap-2',
+  'rounded-full border whitespace-nowrap',
+  'data-[size=default]:h-11 md:data-[size=default]:h-12.5',
+  className
+)}
+
+// Custom dropdown icon with primary background
+<SelectPrimitive.Icon asChild>
+  <div className='bg-primary rounded-full w-9.5 h-9.5 border border-[#905C3A] flex items-center justify-center'>
+    <ChevronDownIcon className='size-5' color='#000' />
+  </div>
+</SelectPrimitive.Icon>
+```
+
+**Radio Group Styling**:
+```tsx
+<RadioGroup
+  onValueChange={field.onChange}
+  defaultValue={field.value}
+  className='flex flex-col space-y-2'
+>
+  <FormItem className='flex items-center space-x-3 space-y-0'>
+    <FormControl>
+      <RadioGroupItem value='introduction-to-pmo' />
+    </FormControl>
+    <FormLabel className='font-normal cursor-pointer'>
+      Introduction to PMO
+    </FormLabel>
+  </FormItem>
+</RadioGroup>
+```
+
+**Textarea Styling** (inherits from Input pattern):
+- Same border, focus, and color patterns as Input
+- Uses `rounded-md` instead of `rounded-full`
+- Responsive rows: typically 4-5 rows for message fields
+
+**Validation State Styling**:
+```tsx
+// Error message display
+<FormMessage className='text-destructive text-xs' />
+
+// Invalid field border (automatic via ARIA)
+'aria-invalid:border-destructive'
+
+// Loading state for submit button
+<Button type='submit' disabled={isSubmitting} className='w-full sm:w-auto'>
+  {isSubmitting ? 'Sending...' : 'Send Message'}
+</Button>
+```
+
+**Form Layout Patterns**:
+```tsx
+// Stacked layout (mobile-first)
+<form className='space-y-5 sm:space-y-3'>
+
+// Grid layout for side-by-side fields (name fields)
+<div className='grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4'>
+  <FormField name='firstName' {...} />
+  <FormField name='lastName' {...} />
+</div>
+
+// Full-width fields
+<FormField name='email' {...} />
+<FormField name='message' {...} />
+</form>
+```
+
+**Accessibility Features**:
+- All inputs have proper `<FormLabel>` associations
+- Error messages use `<FormMessage>` (automatically linked via `aria-describedby`)
+- Invalid states set `aria-invalid` automatically
+- Disabled state during submission: `disabled={isSubmitting}`
+- Focus visible outlines: `focus-visible:outline-none` with border color change
+
+**Color Palette for Forms**:
+- Background: `bg-background` (white) or `bg-black`
+- Text: `text-white` for dark backgrounds
+- Placeholder: `placeholder:text-input` (muted grey)
+- Borders: `border-input` (default), `border-white` (focus), `border-destructive` (error)
+- Primary actions: `bg-primary` (orange accent)
 
 ### Blog Components Pattern
 
