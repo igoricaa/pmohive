@@ -51,6 +51,10 @@ export type Post = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  subtitle?: {
+    text: string;
+    highlightedText?: string;
+  };
   title: string;
   slug: Slug;
   category: {
@@ -815,8 +819,34 @@ export type GENERAL_INFO_QUERYResult = {
   } | null;
 };
 // Variable: BLOG_POSTS_QUERY
-// Query: *[_type == "post"    && (!defined($search) || title match $search + "*")    && (!defined($category) || category._ref == $category)  ] | order(date desc) {    _id,    title,    "slug": slug.current,    excerpt,    featuredMedia,    date,    category->{      _id,      name,      "slug": slug.current    }  }
+// Query: *[_type == "post"    && (!defined($search) || title match $search + "*")    && (!defined($category) || category._ref == $category)  ] | order(date desc) [0...11] {    _id,    title,    "slug": slug.current,    excerpt,    featuredMedia,    date,    category->{      _id,      name,      "slug": slug.current    }  }
 export type BLOG_POSTS_QUERYResult = Array<{
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: BlockContent | null;
+  featuredMedia: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  date: string;
+  category: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
+}>;
+// Variable: BLOG_POSTS_QUERY_ASC
+// Query: *[_type == "post"    && (!defined($search) || title match $search + "*")    && (!defined($category) || category._ref == $category)  ] | order(date asc) [0...11] {    _id,    title,    "slug": slug.current,    excerpt,    featuredMedia,    date,    category->{      _id,      name,      "slug": slug.current    }  }
+export type BLOG_POSTS_QUERY_ASCResult = Array<{
   _id: string;
   title: string;
   slug: string;
@@ -847,6 +877,53 @@ export type POST_CATEGORIES_QUERYResult = Array<{
   name: string;
   slug: string;
 }>;
+// Variable: POST_QUERY
+// Query: {  "currentPost": *[_type == "post" && slug.current == $slug][0]{    _id,    title,    subtitle {      text,      highlightedText    },    "slug": slug.current,    date,    content,    excerpt,    featuredMedia,  },  "relatedPosts": *[    _type == "post"     && slug.current != $slug  ] | order(date desc)[0...3]{    _id,    title,    "slug": slug.current,    excerpt,    date,    featuredMedia  }}
+export type POST_QUERYResult = {
+  currentPost: {
+    _id: string;
+    title: string;
+    subtitle: {
+      text: string;
+      highlightedText: string | null;
+    } | null;
+    slug: string;
+    date: string;
+    content: BlockContent;
+    excerpt: BlockContent | null;
+    featuredMedia: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+  } | null;
+  relatedPosts: Array<{
+    _id: string;
+    title: string;
+    slug: string;
+    excerpt: BlockContent | null;
+    date: string;
+    featuredMedia: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+  }>;
+};
 
 // Query TypeMap
 import "@sanity/client";
@@ -855,7 +932,9 @@ declare module "@sanity/client" {
     "{\n    \"homePage\": *[_type == \"homePage\"][0] {\n      ...,\n      team {\n        ...,\n        teamMembers[]->\n      },\n      about {\n        ...,\n        understandingPMO[] {\n          subtitle {\n            text,\n            highlightedText\n          },\n          heading,\n          description[],\n          image {\n            ...,\n            alt\n          }\n        }\n      }\n    }\n  }": HOME_PAGE_QUERYResult;
     "*[_type == \"post\"] | order(_createdAt desc) [0...$limit] {\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  featuredMedia,\n  date,\n}": LATEST_POSTS_QUERYResult;
     "{\n  \"generalInfo\": *[_type == \"generalInfo\"][0],\n}": GENERAL_INFO_QUERYResult;
-    "\n  *[_type == \"post\"\n    && (!defined($search) || title match $search + \"*\")\n    && (!defined($category) || category._ref == $category)\n  ] | order(date desc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    featuredMedia,\n    date,\n    category->{\n      _id,\n      name,\n      \"slug\": slug.current\n    }\n  }\n": BLOG_POSTS_QUERYResult;
+    "\n  *[_type == \"post\"\n    && (!defined($search) || title match $search + \"*\")\n    && (!defined($category) || category._ref == $category)\n  ] | order(date desc) [0...11] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    featuredMedia,\n    date,\n    category->{\n      _id,\n      name,\n      \"slug\": slug.current\n    }\n  }\n": BLOG_POSTS_QUERYResult;
+    "\n  *[_type == \"post\"\n    && (!defined($search) || title match $search + \"*\")\n    && (!defined($category) || category._ref == $category)\n  ] | order(date asc) [0...11] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    featuredMedia,\n    date,\n    category->{\n      _id,\n      name,\n      \"slug\": slug.current\n    }\n  }\n": BLOG_POSTS_QUERY_ASCResult;
     "\n  *[_type == \"postCategory\"] | order(name asc) {\n    _id,\n    name,\n    \"slug\": slug.current\n  }\n": POST_CATEGORIES_QUERYResult;
+    "{\n  \"currentPost\": *[_type == \"post\" && slug.current == $slug][0]{\n    _id,\n    title,\n    subtitle {\n      text,\n      highlightedText\n    },\n    \"slug\": slug.current,\n    date,\n    content,\n    excerpt,\n    featuredMedia,\n  },\n  \"relatedPosts\": *[\n    _type == \"post\" \n    && slug.current != $slug\n  ] | order(date desc)[0...3]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    date,\n    featuredMedia\n  }\n}": POST_QUERYResult;
   }
 }

@@ -129,3 +129,30 @@ export async function getAllPostCategories() {
     tags: ['postCategory'],
   });
 }
+
+export const POST_QUERY = defineQuery(`{
+  "currentPost": *[_type == "post" && slug.current == $slug][0]{
+    _id,
+    title,
+    subtitle {
+      text,
+      highlightedText
+    },
+    "slug": slug.current,
+    date,
+    content,
+    excerpt,
+    featuredMedia,
+  },
+  "relatedPosts": *[
+    _type == "post" 
+    && slug.current != $slug
+  ] | order(date desc)[0...3]{
+    _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    date,
+    featuredMedia
+  }
+}`);

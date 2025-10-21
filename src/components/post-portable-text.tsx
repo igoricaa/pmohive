@@ -7,6 +7,7 @@ import {
   PortableTextComponentProps,
 } from 'next-sanity';
 import { Image } from 'next-sanity/image';
+import ImageNext from 'next/image';
 
 interface PortableTextCustomProps {
   value: PortableTextBlock[];
@@ -22,7 +23,7 @@ interface TableValue {
   }[];
 }
 
-const PortableText = ({
+const PostPortableText = ({
   value,
   className,
   paragraphClassName,
@@ -34,8 +35,8 @@ const PortableText = ({
           <Image
             src={urlFor(value).url()}
             alt={value.alt || ''}
-            width={800}
-            height={600}
+            width={1600}
+            height={1200}
             className='w-full h-auto object-cover'
           />
         </div>
@@ -150,15 +151,25 @@ const PortableText = ({
 
       highlighted: ({ value, children }) => (
         <p
-          className='text-xl md:text-2xl lg:text-2xl xl:text-3xl text-dark-blue font-medium leading-relaxed mb-2 mt-6 md:mb-4 md:mt-8'
+          className='text-3xl md:text-4xl xl:text-[42px] font-semibold xl:font-medium leading-[110%] mb-14 mt-10 sm:mb-25 sm:mt-19 xl:mb-30 xl:mt-24 2xl:mb-40 2xl:mt-35 text-center relative'
           id={value?._key}
         >
-          {children}
+          <ImageNext
+            src='/hexa-highlight.svg'
+            alt='PMO Hive logo mark'
+            width={434}
+            height={280}
+            className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-68 sm:w-88 xl:w-109 '
+          />
+          <span className='highlight'>/pmo</span> {children}
         </p>
       ),
       normal: ({ value, children }) => (
         <p
-          className={cn('font-mono text-sm 2xl:text-base', paragraphClassName)}
+          className={cn(
+            'font-mono text-sm xl:text-base mb-5 md:mb-6 xl:mb-7',
+            paragraphClassName
+          )}
           id={value?._key}
         >
           {children}
@@ -211,8 +222,12 @@ const PortableText = ({
     },
 
     listItem: {
-      bullet: ({ children }) => <li className='text-sm xl:text-base leading-normal'>{children}</li>,
-      number: ({ children }) => <li className='text-sm xl:text-base leading-normal'>{children}</li>,
+      bullet: ({ children }) => (
+        <li className='text-sm xl:text-base leading-normal'>{children}</li>
+      ),
+      number: ({ children }) => (
+        <li className='text-sm xl:text-base leading-normal'>{children}</li>
+      ),
     },
   };
 
@@ -223,4 +238,4 @@ const PortableText = ({
   );
 };
 
-export default PortableText;
+export default PostPortableText;

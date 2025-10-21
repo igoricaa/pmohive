@@ -28,14 +28,16 @@ const PostCard = ({ post, className }: { post: Post; className?: string }) => {
         </div>
 
         {/* Gradient Overlay */}
-        <div className='absolute inset-0 bg-gradient-to-b from-transparent from-50% to-black/45 -z-10' />
+        <div className='absolute inset-0 bg-gradient-to-b from-transparent from-30% to-black/65 -z-10' />
 
         {/* Content */}
         <div className='px-4 pb-4 pt-5 z-0 h-full flex flex-col justify-between'>
           <p className='text-sm'>{formatDate(post.date)}</p>
 
           <div className='xl:translate-y-25 xl:group-hover:translate-y-0 transition-[translate] duration-200'>
-            <h3 className='text-lg sm:text-3xl xl:text-2xl'>{post.title}</h3>
+            <h3 className='text-[22px] sm:text-[26px] xl:text-2xl leading-none'>
+              {post.title}
+            </h3>
 
             <div className='mt-2 sm:mt-3 xl:mt-5 z-0 max-w-md transition-opacity xl:opacity-0 xl:group-hover:opacity-100 delay-0 xl:group-hover:delay-200 duration-100 xl:group-hover:duration-200'>
               <div className='line-clamp-3 '>

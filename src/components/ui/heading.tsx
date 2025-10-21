@@ -10,7 +10,7 @@ interface HeadingProps {
     text: string;
     highlightedText?: string | null;
     isBefore?: boolean;
-  };
+  } | null;
   spacing?: string;
 }
 
