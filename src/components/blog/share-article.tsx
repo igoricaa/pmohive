@@ -33,28 +33,40 @@ export default function ShareArticle({
           href={shareLinks.facebook}
           target='_blank'
           rel='noopener noreferrer'
-          className='size-9 sm:size-12.5 bg-black-custom hover:bg-primary transition-colors duration-200 rounded-full flex items-center justify-center border border-white/35'
+          className='size-9 sm:size-12.5 bg-black-custom hover:bg-primary transition-colors duration-200 rounded-full flex items-center justify-center border border-white/35 hover:border-primary group'
           aria-label='Share on Facebook'
         >
-          <Facebook size={24} strokeWidth={2} />
+          <Facebook
+            size={24}
+            strokeWidth={2}
+            className='group-hover:stroke-black transition-colors duration-200'
+          />
         </a>
         <a
           href={shareLinks.linkedin}
           target='_blank'
           rel='noopener noreferrer'
-          className='size-9 sm:size-12.5 bg-black-custom hover:bg-primary transition-colors duration-200 rounded-full flex items-center justify-center border border-white/35'
+          className='size-9 sm:size-12.5 bg-black-custom hover:bg-primary transition-colors duration-200 rounded-full flex items-center justify-center border border-white/35 hover:border-primary group'
           aria-label='Share on LinkedIn'
         >
-          <Linkedin size={24} strokeWidth={2} />
+          <Linkedin
+            size={24}
+            strokeWidth={2}
+            className='group-hover:stroke-black transition-colors duration-200'
+          />
         </a>
         <a
           href={shareLinks.twitter}
           target='_blank'
           rel='noopener noreferrer'
-          className='size-9 sm:size-12.5 bg-black-custom hover:bg-primary transition-colors duration-200 rounded-full flex items-center justify-center border border-white/35'
+          className='size-9 sm:size-12.5 bg-black-custom hover:bg-primary transition-colors duration-200 rounded-full flex items-center justify-center border border-white/35 hover:border-primary group'
           aria-label='Share on Twitter'
         >
-          <Twitter size={24} strokeWidth={2} />
+          <Twitter
+            size={24}
+            strokeWidth={2}
+            className='group-hover:stroke-black transition-colors duration-200'
+          />
         </a>
       </div>
     </div>
