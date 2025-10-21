@@ -8,6 +8,9 @@ import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
 import { OpenPosition } from '../../../../sanity.types';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import { buttonVariants } from '@/components/ui/button';
+import { Rocket } from 'lucide-react';
 
 interface OpenPositionsSectionProps {
   positions: OpenPosition[];
@@ -17,7 +20,7 @@ export default function OpenPositionsSection({
   positions,
 }: OpenPositionsSectionProps) {
   if (!positions || positions.length === 0) {
-    return null;
+    return <NoOpenPositionsSection />;
   }
 
   return (
@@ -76,6 +79,18 @@ export default function OpenPositionsSection({
                     <PortableText
                       value={position.description as PortableTextBlock[]}
                     />
+                    <Link
+                      href={`/contact-us`}
+                      className={cn(
+                        buttonVariants({
+                          variant: 'default',
+                        }),
+                        'mt-8'
+                      )}
+                    >
+                      Apply <span className='highlight'>/now</span>
+                      <Rocket className='size-5' />
+                    </Link>
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -86,3 +101,36 @@ export default function OpenPositionsSection({
     </section>
   );
 }
+
+const NoOpenPositionsSection = () => {
+  return (
+    <section className='px-side md:grid md:grid-cols-12 gap-4 xl:gap-5 pt-16 sm:pt-15 md:pt-18 lg:pt-24 xl:pt-31'>
+      <div className='col-span-full md:col-span-10 md:col-start-2 xl:col-span-7 xl:col-start-3 3xl:col-span-5 3xl:col-start-4'>
+        <h3>
+          We're Not Hiring Right Now,
+          <br />
+          But the Future Is Always in Motion.
+        </h3>
+        <p className='text-sm font-mono mt-6'>
+          At the moment, we don't have any open positions. Still, we're always
+          interested in meeting talented professionals who share our passion for
+          reliability, precision, and innovation in digital infrastructure. If
+          you believe your expertise could strengthen our team, feel free to get
+          in touch through the contact link bellow or follow us on LinkedIn for
+          future opportunities.
+        </p>
+        <Link
+          href={`/contact-us`}
+          className={cn(
+            buttonVariants({
+              variant: 'default',
+            }),
+            'mt-8'
+          )}
+        >
+          Contact Us <span className='highlight'>/now</span>
+        </Link>
+      </div>
+    </section>
+  );
+};
