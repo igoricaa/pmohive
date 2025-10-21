@@ -250,7 +250,7 @@ export function ContactForm({ className }: { className?: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<ContactFormValues>({
-    // @ts-expect-error - Known type incompatibility between Zod v4.1.11 and @hookform/resolvers v5.2.2
+    // @ts-ignore - Known type incompatibility between Zod v4.1.11 and @hookform/resolvers v5.2.2
     // See: https://github.com/react-hook-form/resolvers/issues/813
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
