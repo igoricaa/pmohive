@@ -37,7 +37,7 @@ export default async function ContactPage() {
         <ContactForm className='mt-8 sm:mt-3 xl:mt-6' />
       </div>
       <div className='md:col-span-6 2xl:col-span-5 mt-8 md:mt-0'>
-        <GoogleMap className='hidden md:flex w-full h-120 lg:h-full rounded-2xl overflow-hidden' />
+        <GoogleMap className='hidden md:block w-full h-120 lg:h-full rounded-2xl overflow-hidden' />
       </div>
     </main>
   );
