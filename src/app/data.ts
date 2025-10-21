@@ -18,7 +18,7 @@ export const routes: Route[] = [
     label: 'Blog',
   },
   {
-    path: '/contact',
+    path: '/contact-us',
     label: 'Contact & Consultation',
   },
 ];
