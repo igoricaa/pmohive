@@ -4,10 +4,8 @@ import {
   blogSectionType,
   heroSectionType,
   homePageType,
-  pmoPromoSectionType,
   teamSectionType,
 } from './pages/home';
-import { aboutPageType } from './pages/aboutPageType';
 import { contactPageType } from './pages/contactPageType';
 import { postType } from './posts';
 import { postCategoryType } from './posts/postCategoryType';
@@ -19,6 +17,11 @@ import { serviceType } from './serviceType';
 import { projectType } from './projectType';
 import { generalInfoType } from './generalInfoType';
 import { buttonType } from './buttonType';
+import { aboutPageType } from './pages/about-us';
+import { breakSectionType } from './breakSectionType';
+import { introSectionType } from './pages/about-us/introSectionType';
+import { visionSectionType } from './pages/about-us/visionSectionType';
+import { approachSectionType } from './pages/about-us/approachSectionType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -28,7 +31,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     contactPageType,
     aboutSectionType,
     heroSectionType,
-    pmoPromoSectionType,
+    breakSectionType,
     teamSectionType,
     blogSectionType,
     teamMemberType,
@@ -39,5 +42,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     blockContentType,
     subtitleType,
     buttonType,
+    introSectionType,
+    approachSectionType,
+    visionSectionType,
   ],
 };

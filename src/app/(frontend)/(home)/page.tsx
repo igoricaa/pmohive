@@ -1,12 +1,12 @@
 import { getHomePageData, getLatestPosts } from '@/sanity/lib/queries';
 import HeroSection from '@/components/sections/home/hero-section';
 import AboutSection from '@/components/sections/home/about-section';
-import PmoPromoSection from '@/components/sections/home/pmo-promo-section';
 import { Stat } from '@/lib/types';
 import { PortableTextBlock } from 'next-sanity';
-import CareersSection from '@/components/sections/home/careers-section';
+import CareersSection from '@/components/sections/careers-section';
 import BlogSection from '@/components/sections/home/blog-section';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import BreakSection from '@/components/sections/break-section';
 
 export default async function Home() {
   const [homePageResult, latestPostsResult] = await Promise.all([
@@ -58,7 +58,7 @@ export default async function Home() {
         className='mt-12 sm:mt-24 xl:mt-27'
       />
 
-      <PmoPromoSection
+      <BreakSection
         subtitle={homePageData.pmoPromo.subtitle}
         heading={homePageData.pmoPromo.heading}
         description={homePageData.pmoPromo.description as PortableTextBlock[]}

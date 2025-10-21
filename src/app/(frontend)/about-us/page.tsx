@@ -1,0 +1,104 @@
+import ApproachSection from '@/components/sections/about/approach-section';
+import IntroSection from '@/components/sections/about/intro-section';
+import VisionSection from '@/components/sections/about/vision-section';
+import BreakSection from '@/components/sections/break-section';
+import CareersSection from '@/components/sections/careers-section';
+import BlogSection from '@/components/sections/home/blog-section';
+import { TextGradientScroll } from '@/components/text-gradient-scroll';
+import Subtitle from '@/components/ui/subtitle';
+import { getAboutPageData, getLatestPosts } from '@/sanity/lib/queries';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { PortableTextBlock } from 'next-sanity';
+import { notFound } from 'next/navigation';
+
+export default async function AboutUsPage() {
+  const [aboutPageResult, latestPostsResult] = await Promise.all([
+    getAboutPageData(),
+    getLatestPosts(12),
+  ]);
+
+  const { aboutPage: aboutPageData } = aboutPageResult;
+
+  if (!aboutPageData) {
+    return notFound();
+  }
+
+  return (
+    <main className='pt-6 sm:pt-8 xl:pt-19 pb-15 sm:pb-17 xl:pb-19 2xl:pb-24'>
+      <IntroSection
+        subtitle={aboutPageData.introSection.subtitle}
+        heading={aboutPageData.introSection.heading}
+        backgroundImage={
+          aboutPageData.introSection.backgroundImage as SanityImageSource & {
+            alt: string;
+          }
+        }
+      />
+
+      <div className='px-side flex flex-col gap-2 xl:gap-4 pt-24 pb-32 sm:py-45 xl:pt-50 xl:pb-60 lg:grid lg:grid-cols-12 lg:gap-x-4'>
+        <Subtitle
+          highlightedText={aboutPageData.introSection.subtitle.highlightedText}
+          className='lg:col-span-10 lg:col-start-2'
+        >
+          {aboutPageData.introSection.subtitle.text}
+        </Subtitle>
+        <TextGradientScroll
+          text={aboutPageData.animatedTextPart1}
+          className='justify-start lg:col-span-10 lg:col-start-2 text-[28px] sm:text-4xl 2xl:text-[40px] leading-none'
+        />
+
+        <TextGradientScroll
+          text={aboutPageData.animatedTextPart2}
+          className='justify-start lg:col-span-10 lg:col-start-2 text-[28px] sm:text-4xl 2xl:text-[40px] leading-none mt-3 sm:mt-5'
+        />
+      </div>
+
+      <BreakSection
+        subtitle={aboutPageData.break.subtitle}
+        heading={aboutPageData.break.heading}
+        backgroundImage={
+          aboutPageData.break.backgroundImage as SanityImageSource & {
+            alt: string;
+          }
+        }
+        buttons={aboutPageData.break.buttons}
+        contentClassName='sm:max-w-7/8 xl:max-w-8/12'
+      />
+
+      <CareersSection
+        subtitle={aboutPageData.team.subtitle}
+        heading={aboutPageData.team.heading}
+        description={aboutPageData.team.description as PortableTextBlock[]}
+        ctaButton={aboutPageData.team.button}
+        teamMembers={aboutPageData.team.teamMembers}
+        className='mt-12 sm:mt-24 xl:mt-27'
+      />
+
+      <ApproachSection
+        subtitle={aboutPageData.approachSection.subtitle}
+        heading={aboutPageData.approachSection.heading}
+        items={aboutPageData.approachSection.items}
+      />
+
+      <VisionSection
+        subtitle={aboutPageData.visionSection.subtitle}
+        description={
+          aboutPageData.visionSection.description as PortableTextBlock[]
+        }
+        backgroundImage={
+          aboutPageData.visionSection.backgroundImage as SanityImageSource & {
+            alt: string;
+          }
+        }
+      />
+
+      <BlogSection
+        subtitle={aboutPageData.blog.subtitle}
+        heading={aboutPageData.blog.heading}
+        description={aboutPageData.blog.description as PortableTextBlock[]}
+        ctaButton={aboutPageData.blog.button}
+        posts={latestPostsResult}
+      />
+    </main>
+  );
+}

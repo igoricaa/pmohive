@@ -9,13 +9,13 @@ import { PortableTextBlock } from 'next-sanity';
 import PortableText from '@/components/portable-text';
 import Heading from '@/components/ui/heading';
 
-interface PmoPromoSectionProps {
+interface BreakSectionSectionProps {
   subtitle: {
     text: string;
     highlightedText?: string | null;
   };
   heading: string;
-  description: PortableTextBlock[];
+  description?: PortableTextBlock[];
   backgroundImage: SanityImageSource & { alt: string };
   buttons: {
     text: string;
@@ -23,16 +23,18 @@ interface PmoPromoSectionProps {
     link: string;
   }[];
   className?: string;
+  contentClassName?: string;
 }
 
-const PmoPromoSection = ({
+const BreakSection = ({
   subtitle,
   heading,
   description,
   backgroundImage,
   buttons,
   className,
-}: PmoPromoSectionProps) => {
+  contentClassName,
+}: BreakSectionSectionProps) => {
   return (
     <section className={cn('px-side', className)}>
       <div className='relative overflow-hidden sm:h-100 xl:h-130 sm:pb-6 xl:pb-12 sm:px-4 xl:px-10 2xl:px-0 grid grid-cols-1 md:grid-cols-8 xl:grid-cols-12 gap-4 xl:gap-5 items-end'>
@@ -46,7 +48,7 @@ const PmoPromoSection = ({
         </div>
 
         <div className='relative z-10 col-span-full 2xl:col-span-10 2xl:col-start-2'>
-          <div className='sm:max-w-xl xl:max-w-3xl'>
+          <div className={cn('sm:max-w-xl xl:max-w-3xl', contentClassName)}>
             <Heading
               level='h4'
               subtitle={{
@@ -57,9 +59,11 @@ const PmoPromoSection = ({
               {heading}
             </Heading>
 
-            <div className='mt-4 sm:mt-3 xl:mt-2'>
-              <PortableText value={description} />
-            </div>
+            {description && (
+              <div className='mt-4 sm:mt-3 xl:mt-2'>
+                <PortableText value={description} />
+              </div>
+            )}
 
             {/* Buttons */}
             <div className='flex gap-2 sm:gap-4 mt-4 xl:mt-7.5'>
@@ -90,4 +94,4 @@ const PmoPromoSection = ({
   );
 };
 
-export default PmoPromoSection;
+export default BreakSection;

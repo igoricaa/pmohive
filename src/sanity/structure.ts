@@ -54,6 +54,12 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
                 .title('Posts')
                 .icon(FileIcon)
                 .child(S.documentTypeList('post').title('Posts')),
+              S.listItem()
+                .title('Post Categories')
+                .icon(FileIcon)
+                .child(
+                  S.documentTypeList('postCategory').title('Post Categories')
+                ),
             ])
         ),
       S.listItem()
@@ -114,6 +120,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
             'project',
             'teamMember',
             'generalInfo',
+            'postCategory',
           ].includes(listItem.getId()!)
       ),
     ]);

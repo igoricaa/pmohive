@@ -51,7 +51,6 @@ export const teamSectionType = defineType({
             rule.required().error('Button link is required'),
         }),
       ],
-      validation: (rule) => rule.required().error('Button is required'),
     }),
     defineField({
       name: 'teamMembers',

@@ -430,7 +430,7 @@ defineField({
 - [blogSectionType.ts](src/sanity/schemaTypes/pages/home/blogSectionType.ts)
 - [teamSectionType.ts](src/sanity/schemaTypes/pages/home/teamSectionType.ts)
 - [heroSectionType.ts](src/sanity/schemaTypes/pages/home/heroSectionType.ts)
-- [pmoPromoSectionType.ts](src/sanity/schemaTypes/pages/home/pmoPromoSectionType.ts)
+- [breakSectionType.ts](src/sanity/schemaTypes/pages/breakSectionType.ts)
 - [aboutSectionType.ts](src/sanity/schemaTypes/pages/home/aboutSectionType.ts)
 
 ### Contact Page Schema

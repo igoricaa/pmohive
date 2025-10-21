@@ -192,11 +192,96 @@ export type AboutPage = {
   _updatedAt: string;
   _rev: string;
   title: string;
-  hero: HeroSection;
-  about: AboutSection;
+  introSection: IntroSection;
+  animatedTextPart1: string;
+  animatedTextPart2: string;
+  break: BreakSection;
   team: TeamSection;
+  approachSection: ApproachSection;
+  visionSection: VisionSection;
   blog: BlogSection;
-  pmoPromo: PmoPromoSection;
+};
+
+export type VisionSection = {
+  _type: "visionSection";
+  subtitle: Subtitle;
+  description: BlockContent;
+  backgroundImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+};
+
+export type ApproachSection = {
+  _type: "approachSection";
+  subtitle: Subtitle;
+  heading: string;
+  items: Array<{
+    icon: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    title: string;
+    description: string;
+    _type: "approachItem";
+    _key: string;
+  }>;
+};
+
+export type IntroSection = {
+  _type: "introSection";
+  subtitle: Subtitle;
+  heading: string;
+  buttons?: Array<{
+    text: string;
+    hightlightedText?: string;
+    link: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    _type: "button";
+    _key: string;
+  }>;
+  backgroundImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
 };
 
 export type HomePage = {
@@ -210,14 +295,14 @@ export type HomePage = {
   about: AboutSection;
   team: TeamSection;
   blog: BlogSection;
-  pmoPromo: PmoPromoSection;
+  pmoPromo: BreakSection;
 };
 
-export type PmoPromoSection = {
-  _type: "pmoPromoSection";
+export type BreakSection = {
+  _type: "breakSection";
   subtitle: Subtitle;
   heading: string;
-  description: BlockContent;
+  description?: BlockContent;
   backgroundImage: {
     asset?: {
       _ref: string;
@@ -252,7 +337,7 @@ export type TeamSection = {
   subtitle: Subtitle;
   heading: string;
   description: BlockContent;
-  button: {
+  button?: {
     text: string;
     link: string;
   };
@@ -578,7 +663,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | ContactPage | AboutPage | HomePage | PmoPromoSection | BlogSection | TeamSection | Subtitle | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | ContactPage | AboutPage | VisionSection | ApproachSection | IntroSection | HomePage | BreakSection | BlogSection | TeamSection | Subtitle | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
@@ -694,7 +779,7 @@ export type HOME_PAGE_QUERYResult = {
       subtitle: Subtitle;
       heading: string;
       description: BlockContent;
-      button: {
+      button?: {
         text: string;
         link: string;
       };
@@ -723,7 +808,7 @@ export type HOME_PAGE_QUERYResult = {
       }>;
     };
     blog: BlogSection;
-    pmoPromo: PmoPromoSection;
+    pmoPromo: BreakSection;
   } | null;
 };
 // Variable: LATEST_POSTS_QUERY
@@ -923,6 +1008,100 @@ export type CONTACT_PAGE_QUERYResult = {
     description: BlockContent;
   } | null;
 };
+// Variable: ABOUT_PAGE_QUERY
+// Query: {  "aboutPage": *[_type == "aboutPage"][0] {    ...,    team {      ...,      teamMembers[]->    },    approachSection {      ...,      approachItems[]->    },    visionSection {      ...,      visionItems[]->    },  }}
+export type ABOUT_PAGE_QUERYResult = {
+  aboutPage: {
+    _id: string;
+    _type: "aboutPage";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    title: string;
+    introSection: IntroSection;
+    animatedTextPart1: string;
+    animatedTextPart2: string;
+    break: BreakSection;
+    team: {
+      _type: "teamSection";
+      subtitle: Subtitle;
+      heading: string;
+      description: BlockContent;
+      button?: {
+        text: string;
+        link: string;
+      };
+      teamMembers: Array<{
+        _id: string;
+        _type: "teamMember";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        name: string;
+        image: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string;
+          _type: "image";
+        };
+        specializations: Array<string>;
+        bio: BlockContent;
+      }>;
+    };
+    approachSection: {
+      _type: "approachSection";
+      subtitle: Subtitle;
+      heading: string;
+      items: Array<{
+        icon: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string;
+          _type: "image";
+        };
+        title: string;
+        description: string;
+        _type: "approachItem";
+        _key: string;
+      }>;
+      approachItems: null;
+    };
+    visionSection: {
+      _type: "visionSection";
+      subtitle: Subtitle;
+      description: BlockContent;
+      backgroundImage: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "image";
+      };
+      visionItems: null;
+    };
+    blog: BlogSection;
+  } | null;
+};
 
 // Query TypeMap
 import "@sanity/client";
@@ -936,5 +1115,6 @@ declare module "@sanity/client" {
     "\n  *[_type == \"postCategory\"] | order(name asc) {\n    _id,\n    name,\n    \"slug\": slug.current\n  }\n": POST_CATEGORIES_QUERYResult;
     "{\n  \"currentPost\": *[_type == \"post\" && slug.current == $slug][0]{\n    _id,\n    title,\n    subtitle {\n      text,\n      highlightedText\n    },\n    \"slug\": slug.current,\n    date,\n    content,\n    excerpt,\n    featuredMedia,\n  },\n  \"relatedPosts\": *[\n    _type == \"post\" \n    && slug.current != $slug\n  ] | order(date desc)[0...3]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    date,\n    featuredMedia\n  }\n}": POST_QUERYResult;
     "{\n  \"contactPage\": *[_type == \"contactPage\"][0]\n}": CONTACT_PAGE_QUERYResult;
+    "{\n  \"aboutPage\": *[_type == \"aboutPage\"][0] {\n    ...,\n    team {\n      ...,\n      teamMembers[]->\n    },\n    approachSection {\n      ...,\n      approachItems[]->\n    },\n    visionSection {\n      ...,\n      visionItems[]->\n    },\n  }\n}": ABOUT_PAGE_QUERYResult;
   }
 }

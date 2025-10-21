@@ -1,9 +1,9 @@
 import { StarIcon } from 'lucide-react';
 import { defineField, defineType } from 'sanity';
 
-export const pmoPromoSectionType = defineType({
-  name: 'pmoPromoSection',
-  title: 'PMO Promo Section',
+export const breakSectionType = defineType({
+  name: 'breakSection',
+  title: 'Break Section',
   type: 'object',
   icon: StarIcon,
   fields: [
@@ -19,24 +19,19 @@ export const pmoPromoSectionType = defineType({
       title: 'Heading',
       type: 'string',
       description: 'Main heading for the section',
-      validation: (rule) =>
-        rule
-          .required()
-          .max(120)
-          .error('Heading is required and must be 120 characters or less'),
+      validation: (rule) => rule.required().error('Heading is required'),
     }),
     defineField({
       name: 'description',
       title: 'Description',
       type: 'blockContent',
       description: 'Section description content',
-      validation: (rule) => rule.required().error('Description is required'),
     }),
     defineField({
       name: 'backgroundImage',
       title: 'Background Image',
       type: 'image',
-      description: 'Background image for the promo section',
+      description: 'Background image for the break section',
       options: {
         hotspot: true,
       },
@@ -107,8 +102,8 @@ export const pmoPromoSectionType = defineType({
     },
     prepare({ title, media }) {
       return {
-        title: title || 'PMO Promo Section',
-        subtitle: 'Promo Section',
+        title: title || 'Break Section',
+        subtitle: 'Break Section',
         media,
       };
     },

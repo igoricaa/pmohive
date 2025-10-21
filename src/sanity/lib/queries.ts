@@ -1,6 +1,7 @@
 import { defineQuery } from 'next-sanity';
 import { sanityFetch } from './client';
 import {
+  ABOUT_PAGE_QUERYResult,
   CONTACT_PAGE_QUERYResult,
   GENERAL_INFO_QUERYResult,
   HOME_PAGE_QUERYResult,
@@ -169,3 +170,28 @@ export const getContactPageData =
       tags: ['contactPage'],
     });
   };
+
+export const ABOUT_PAGE_QUERY = defineQuery(`{
+  "aboutPage": *[_type == "aboutPage"][0] {
+    ...,
+    team {
+      ...,
+      teamMembers[]->
+    },
+    approachSection {
+      ...,
+      approachItems[]->
+    },
+    visionSection {
+      ...,
+      visionItems[]->
+    },
+  }
+}`);
+
+export const getAboutPageData = async (): Promise<ABOUT_PAGE_QUERYResult> => {
+  return await sanityFetch({
+    query: ABOUT_PAGE_QUERY,
+    tags: ['aboutPage'],
+  });
+};

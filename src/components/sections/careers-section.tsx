@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
 import { urlForUncropped } from '@/sanity/lib/image';
-import { TeamMember } from '../../../../sanity.types';
+import { TeamMember } from '../../../sanity.types';
 import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
 import Link from 'next/link';
@@ -23,7 +23,7 @@ interface CareersSectionProps {
   };
   heading: string;
   description: PortableTextBlock[];
-  ctaButton: {
+  ctaButton?: {
     text: string;
     link: string;
   };
@@ -66,17 +66,19 @@ const CareersSection = ({
           </div>
         </div>
         {/* CTA Button */}
-        <Link
-          key={ctaButton.text}
-          href={ctaButton.link}
-          className={cn(
-            buttonVariants({ variant: 'default', size: 'default' }),
-            'hidden md:inline-flex w-fit xl:mt-6'
-          )}
-        >
-          {ctaButton.text}
-          <ArrowRight className='size-4! sm:size-6!' />
-        </Link>
+        {ctaButton && (
+          <Link
+            key={ctaButton.text}
+            href={ctaButton.link}
+            className={cn(
+              buttonVariants({ variant: 'default', size: 'default' }),
+              'hidden md:inline-flex w-fit xl:mt-6'
+            )}
+          >
+            {ctaButton.text}
+            <ArrowRight className='size-4! sm:size-6!' />
+          </Link>
+        )}
       </div>
 
       {/* Carousel Area */}

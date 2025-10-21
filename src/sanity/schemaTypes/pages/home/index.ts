@@ -2,7 +2,6 @@ import { defineField, defineType } from 'sanity';
 import { HomeIcon } from 'lucide-react';
 import { heroSectionType } from './heroSectionType';
 import { aboutSectionType } from './aboutSectionType';
-import { pmoPromoSectionType } from './pmoPromoSectionType';
 import { teamSectionType } from './teamSectionType';
 import { blogSectionType } from './blogSectionType';
 
@@ -70,10 +69,10 @@ export const homePageType = defineType({
     defineField({
       name: 'pmoPromo',
       title: 'PMO Promo Section',
-      type: 'pmoPromoSection',
-      description: 'Promotional section for PMO platform',
-      validation: (rule) =>
-        rule.required().error('PMO Promo section is required'),
+      type: 'breakSection',
+      description:
+        'PMO promo section with background image and call-to-action buttons',
+      validation: (rule) => rule.required().error('PMO promo section is required'),
       group: 'content',
     }),
   ],
@@ -94,6 +93,5 @@ export const homePageType = defineType({
 // Export all section types for registration
 export { heroSectionType };
 export { aboutSectionType };
-export { pmoPromoSectionType };
 export { teamSectionType };
 export { blogSectionType };
