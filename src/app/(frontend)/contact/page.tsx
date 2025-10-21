@@ -25,6 +25,9 @@ export default async function ContactPage() {
         >
           {contactPageData.heading}
         </Heading>
+        
+        <GoogleMap className='md:hidden w-full h-45 rounded-2xl overflow-hidden mt-6' />
+
         <div className='hidden md:block mt-4 xl:mt-6'>
           <PortableText
             value={contactPageData.description as PortableTextBlock[]}
@@ -34,12 +37,7 @@ export default async function ContactPage() {
         <ContactForm className='mt-8 sm:mt-3 xl:mt-6' />
       </div>
       <div className='md:col-span-6 2xl:col-span-5 mt-8 md:mt-0'>
-        <div className='md:hidden mt-6'>
-          <PortableText
-            value={contactPageData.description as PortableTextBlock[]}
-          />
-        </div>
-        <GoogleMap className='w-full h-45 md:h-120 lg:h-full rounded-2xl overflow-hidden' />
+        <GoogleMap className='hidden md:flex w-full h-120 lg:h-full rounded-2xl overflow-hidden' />
       </div>
     </main>
   );
