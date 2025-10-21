@@ -1,6 +1,7 @@
 import { defineQuery } from 'next-sanity';
 import { sanityFetch } from './client';
 import {
+  CONTACT_PAGE_QUERYResult,
   GENERAL_INFO_QUERYResult,
   HOME_PAGE_QUERYResult,
   LATEST_POSTS_QUERYResult,
@@ -156,3 +157,15 @@ export const POST_QUERY = defineQuery(`{
     featuredMedia
   }
 }`);
+
+export const CONTACT_PAGE_QUERY = defineQuery(`{
+  "contactPage": *[_type == "contactPage"][0]
+}`);
+
+export const getContactPageData =
+  async (): Promise<CONTACT_PAGE_QUERYResult> => {
+    return await sanityFetch({
+      query: CONTACT_PAGE_QUERY,
+      tags: ['contactPage'],
+    });
+  };

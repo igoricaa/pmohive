@@ -909,6 +909,20 @@ export type POST_QUERYResult = {
     };
   }>;
 };
+// Variable: CONTACT_PAGE_QUERY
+// Query: {  "contactPage": *[_type == "contactPage"][0]}
+export type CONTACT_PAGE_QUERYResult = {
+  contactPage: {
+    _id: string;
+    _type: "contactPage";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    subtitle: Subtitle;
+    heading: string;
+    description: BlockContent;
+  } | null;
+};
 
 // Query TypeMap
 import "@sanity/client";
@@ -921,5 +935,6 @@ declare module "@sanity/client" {
     "\n  *[_type == \"post\"\n    && (!defined($search) || title match $search + \"*\")\n    && (!defined($category) || category._ref == $category)\n  ] | order(date asc) [0...11] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    featuredMedia,\n    date,\n    category->{\n      _id,\n      name,\n      \"slug\": slug.current\n    }\n  }\n": BLOG_POSTS_QUERY_ASCResult;
     "\n  *[_type == \"postCategory\"] | order(name asc) {\n    _id,\n    name,\n    \"slug\": slug.current\n  }\n": POST_CATEGORIES_QUERYResult;
     "{\n  \"currentPost\": *[_type == \"post\" && slug.current == $slug][0]{\n    _id,\n    title,\n    subtitle {\n      text,\n      highlightedText\n    },\n    \"slug\": slug.current,\n    date,\n    content,\n    excerpt,\n    featuredMedia,\n  },\n  \"relatedPosts\": *[\n    _type == \"post\" \n    && slug.current != $slug\n  ] | order(date desc)[0...3]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    date,\n    featuredMedia\n  }\n}": POST_QUERYResult;
+    "{\n  \"contactPage\": *[_type == \"contactPage\"][0]\n}": CONTACT_PAGE_QUERYResult;
   }
 }
