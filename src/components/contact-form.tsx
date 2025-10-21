@@ -39,7 +39,7 @@ const contactFormSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
   country: z.string().min(1, 'Please select your country'),
   interest: z.enum(['introduction-to-pmo', 'data-center-potentials'], {
-    required_error: 'Please select an area of interest',
+    error: 'Please select an area of interest',
   }),
   message: z
     .string()
@@ -250,6 +250,8 @@ export function ContactForm({ className }: { className?: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<ContactFormValues>({
+    // @ts-expect-error - Known type incompatibility between Zod v4.1.11 and @hookform/resolvers v5.2.2
+    // See: https://github.com/react-hook-form/resolvers/issues/813
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
       firstName: '',
