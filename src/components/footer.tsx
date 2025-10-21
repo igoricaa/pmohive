@@ -20,14 +20,14 @@ export default async function Footer() {
   return (
     <footer className='bg-black relative overflow-hidden pt-6 sm:pt-10.5 xl:pt-22.5 px-side '>
       {/* Decorative hexagonal pattern - top right */}
-      <div className='absolute right-0 top-0 md:-bottom-5 md:top-auto  pointer-events-none z-0'>
+      <div className='absolute -right-30 sm:-right-40 top-0 sm:-bottom-15 sm:top-auto opacity-20 pointer-events-none z-0'>
         <Image
           src={hexagonalPattern}
           alt='Hexagonal pattern'
           width={747}
           height={531}
           unoptimized
-          className='object-contain w-118 sm:w-150'
+          className='object-contain w-118 sm:w-187'
         />
       </div>
 
