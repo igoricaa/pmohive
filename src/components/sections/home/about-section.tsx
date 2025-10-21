@@ -4,13 +4,14 @@ import StatCard from './stat-card';
 import { cn } from '@/lib/utils';
 import { HOME_PAGE_QUERYResult } from '../../../../sanity.types';
 import { Image } from 'next-sanity/image';
-import { urlFor, urlForUncropped } from '@/sanity/lib/image';
+import { urlForUncropped } from '@/sanity/lib/image';
 import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import ImageNext from 'next/image';
+
 import Subtitle from '@/components/ui/subtitle';
-import Heading from '@/components/ui/heading';
+
+import UnderstandingPmoSection from './understanding-pmo-section';
 
 type AboutSectionType = {
   heading: {
@@ -45,70 +46,20 @@ const AboutSection = ({
   className,
 }: AboutSectionType) => {
   return (
-    <section className={cn('px-side', className)}>
-      <div className='flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto pt-28 pb-16 xl:pt-32 xl:pb-40'>
+    <section className={cn(className)}>
+      <div className='px-side flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto py-32 sm:py-45 xl:pt-50 xl:pb-60'>
         <Subtitle
           highlightedText={heading.highlightedText}
           className='text-center'
         >
           {heading.text}
         </Subtitle>
-        <TextGradientScroll
-          text={animatedText}
-          className='font-semibold justify-center font-sans text-2xl sm:text-3xl xl:text-5xl 2xl:text-6xl'
-        />
+        <TextGradientScroll text={animatedText} />
       </div>
 
-      <div className='grid grid-cols-1 sm:grid-cols-6 xl:grid-cols-12 gap-4 sm:gap-3 xl:gap-6'>
-        {understandingPMOItems.map((item) => (
-          <article
-            key={item.heading}
-            className='col-span-1 sm:col-span-2 xl:col-span-4 relative px-3 pb-3 xl:px-4 xl:pb-7 flex flex-col justify-end gap-2 aspect-[447/344] group hover:-translate-y-5 transition-[translate] ease-out duration-300 overflow-hidden'
-          >
-            <div className='absolute inset-0 bg-gradient-to-b from-transparent  to-black/40 -z-5' />
-            <Image
-              src={urlFor(item.image).url()}
-              alt={item.image.alt}
-              width={447}
-              height={344}
-              className='h-full w-full object-cover absolute inset-0 -z-10'
-            />
+      <UnderstandingPmoSection understandingPMOItems={understandingPMOItems} />
 
-            <ImageNext
-              src='/arrow-top-right.svg'
-              alt='Arrow top right'
-              width={88}
-              height={88}
-              unoptimized
-              className='-z-5 object-cover absolute top-6 right-6 w-22 h-22 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-[opacity,visibility,translate] duration-200 ease-out -translate-x-5 translate-y-5 group-hover:translate-0'
-            />
-
-            <div className='transition-[max-height] duration-200 xl:max-h-25 xl:group-hover:max-h-60'>
-              <Heading
-                level='p'
-                className='text-lg sm:text-[22px] xl:text-[32px] leading-none font-bold h-fit'
-                subtitleClassName='text-sm xl:text-lg'
-                subtitle={{
-                  text: item.subtitle.text,
-                  highlightedText: item.subtitle.highlightedText,
-                }}
-              >
-                {item.heading}
-              </Heading>
-
-              <div className='transition-[opacity,max-height] xl:opacity-0 xl:group-hover:opacity-100 duration-200 xl:group-hover:duration-200 ease-out xl:max-h-0 xl:group-hover:max-h-25 overflow-hidden'>
-                <div className='pt-2'>
-                  <PortableText
-                    value={item.description as PortableTextBlock[]}
-                  />
-                </div>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7.5 sm:gap-x-4 sm:gap-y-8 lg:gap-y-0 mt-12 sm:mt-17 xl:mt-27 2xl:max-w-10/12 mx-auto'>
+      <div className='px-side grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7.5 sm:gap-x-4 sm:gap-y-8 lg:gap-y-0 mt-12 sm:mt-17 xl:mt-27 2xl:max-w-10/12 mx-auto'>
         {stats.map((stat, index) => (
           <StatCard
             key={stat.statTitle}
@@ -118,14 +69,11 @@ const AboutSection = ({
         ))}
       </div>
 
-      <div className='flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto pt-28 pb-16 xl:pt-32 xl:pb-40'>
-        <TextGradientScroll
-          text={wrapUpText}
-          className='font-semibold justify-center font-sans text-2xl sm:text-3xl xl:text-5xl 2xl:text-6xl'
-        />
+      <div className='px-side flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto py-32 sm:py-45 xl:pt-60 xl:pb-60'>
+        <TextGradientScroll text={wrapUpText} />
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-2 md:gap-4 items-center mt-16 xl:mt-40'>
+      <div className='px-side grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-2 md:gap-4 items-center'>
         <Image
           src={urlForUncropped(weAreSection.image).url()}
           alt={weAreSection.image.alt}

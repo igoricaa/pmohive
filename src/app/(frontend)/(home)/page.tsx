@@ -47,7 +47,6 @@ export default async function Home() {
         stats={homePageData.about.stats as Stat[]}
         wrapUpText={homePageData.about.wrapUpText}
         weAreSection={homePageData.about.weAreSection}
-        className='mt-12 sm:mt-24 xl:mt-27'
       />
 
       <CareersSection

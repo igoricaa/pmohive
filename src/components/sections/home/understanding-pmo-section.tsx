@@ -1,0 +1,162 @@
+import PortableText from '@/components/portable-text';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import Heading from '@/components/ui/heading';
+import { cn } from '@/lib/utils';
+import { urlFor } from '@/sanity/lib/image';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { PortableTextBlock } from 'next-sanity';
+import { Image } from 'next-sanity/image';
+import ImageNext from 'next/image';
+
+const UnderstandingPmoSection = ({
+  understandingPMOItems,
+}: {
+  understandingPMOItems: {
+    heading: string;
+    subtitle: {
+      text: string;
+      highlightedText?: string | null;
+    };
+    description: PortableTextBlock[];
+    image: SanityImageSource & { alt: string };
+  }[];
+}) => {
+  return (
+    <>
+      <div className='px-side grid sm:max-lg:hidden grid-cols-1 sm:grid-cols-6 xl:grid-cols-12 gap-4 sm:gap-3 xl:gap-6'>
+        {understandingPMOItems.map((item) => (
+          <article
+            key={item.heading}
+            className='col-span-1 sm:col-span-2 xl:col-span-4 relative px-3 pb-3 xl:px-4 xl:pb-7 flex flex-col justify-end gap-2 aspect-[447/344] group hover:-translate-y-5 transition-[translate] ease-out duration-300 overflow-hidden'
+          >
+            <div className='absolute inset-0 bg-gradient-to-b from-transparent  to-black/40 -z-5' />
+            <Image
+              src={urlFor(item.image).url()}
+              alt={item.image.alt}
+              width={447}
+              height={344}
+              className='h-full w-full object-cover absolute inset-0 -z-10'
+            />
+
+            <ImageNext
+              src='/arrow-top-right.svg'
+              alt='Arrow top right'
+              width={88}
+              height={88}
+              unoptimized
+              className='-z-5 object-cover absolute top-6 right-6 w-22 h-22 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-[opacity,visibility,translate] duration-200 ease-out -translate-x-5 translate-y-5 group-hover:translate-0'
+            />
+
+            <div className='transition-[max-height] duration-200 xl:max-h-25 xl:group-hover:max-h-60'>
+              <Heading
+                level='p'
+                className='text-lg sm:text-[22px] xl:text-[32px] leading-none font-bold h-fit'
+                subtitleClassName='text-sm xl:text-lg'
+                subtitle={{
+                  text: item.subtitle.text,
+                  highlightedText: item.subtitle.highlightedText,
+                }}
+              >
+                {item.heading}
+              </Heading>
+
+              <div className='transition-[opacity,max-height] xl:opacity-0 xl:group-hover:opacity-100 duration-200 xl:group-hover:duration-200 ease-out xl:max-h-0 xl:group-hover:max-h-25 overflow-hidden'>
+                <div className='pt-2'>
+                  <PortableText
+                    value={item.description as PortableTextBlock[]}
+                  />
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <Carousel
+        opts={{
+          align: 'start',
+        }}
+        className='hidden sm:max-lg:flex w-full order-1 flex-col md:flex-col-reverse gap-3 md:gap-2.5 xl:gap-3'
+      >
+        {/* Carousel Content */}
+        <CarouselContent className='pl-side md:pl-0'>
+          {understandingPMOItems.map((item) => (
+            <CarouselItem
+              key={`${item.heading}`}
+              className={cn(
+                'basis-[82%] sm:basis-[65%] pl-0 pr-4 sm:pl-0 sm:pr-side '
+              )}
+            >
+              <article
+                key={item.heading}
+                className='col-span-1 sm:col-span-2 xl:col-span-4 relative px-3 pb-3 xl:px-4 xl:pb-7 flex flex-col justify-end gap-2 aspect-[447/344] group hover:-translate-y-5 transition-[translate] ease-out duration-300 overflow-hidden'
+              >
+                <div className='absolute inset-0 bg-gradient-to-b from-transparent  to-black/40 -z-5' />
+                <Image
+                  src={urlFor(item.image).url()}
+                  alt={item.image.alt}
+                  width={447}
+                  height={344}
+                  className='h-full w-full object-cover absolute inset-0 -z-10'
+                />
+
+                <ImageNext
+                  src='/arrow-top-right.svg'
+                  alt='Arrow top right'
+                  width={88}
+                  height={88}
+                  unoptimized
+                  className='-z-5 object-cover absolute top-6 right-6 w-22 h-22 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-[opacity,visibility,translate] duration-200 ease-out -translate-x-5 translate-y-5 group-hover:translate-0'
+                />
+
+                <div className='transition-[max-height] duration-200 xl:max-h-25 xl:group-hover:max-h-60'>
+                  <Heading
+                    level='p'
+                    className='text-lg sm:text-[22px] xl:text-[32px] leading-none font-bold h-fit'
+                    subtitleClassName='text-sm xl:text-lg'
+                    subtitle={{
+                      text: item.subtitle.text,
+                      highlightedText: item.subtitle.highlightedText,
+                    }}
+                  >
+                    {item.heading}
+                  </Heading>
+
+                  <div className='transition-[opacity,max-height] xl:opacity-0 xl:group-hover:opacity-100 duration-200 xl:group-hover:duration-200 ease-out xl:max-h-0 xl:group-hover:max-h-25 overflow-hidden'>
+                    <div className='pt-2'>
+                      <PortableText
+                        value={item.description as PortableTextBlock[]}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+
+        {/* Custom positioned navigation - below carousel on mobile, above on tablet */}
+        <div className='flex justify-end items-center gap-3 md:z-10 pr-side'>
+          <CarouselPrevious
+            variant='navigation'
+            size='navigation'
+            className='static translate-y-0 rotate-180'
+          />
+          <CarouselNext
+            variant='navigation'
+            size='navigation'
+            className='static translate-y-0 bg-primary'
+          />
+        </div>
+      </Carousel>
+    </>
+  );
+};
+
+export default UnderstandingPmoSection;

@@ -71,7 +71,7 @@ function TextGradientScroll({
 
   return (
     <TextGradientScrollContext.Provider value={{ textOpacity, type }}>
-      <p ref={ref} className={cn('relative flex m-0 flex-wrap', className)}>
+      <p ref={ref} className={cn('relative flex m-0 flex-wrap font-semibold justify-center font-sans text-2xl sm:text-3xl xl:text-5xl 2xl:text-6xl leading-none xl:leading-[110%]', className)}>
         {words.map((word, i) => {
           const start = i / words.length;
           const end = start + 1 / words.length;
