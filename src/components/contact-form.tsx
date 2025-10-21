@@ -365,7 +365,7 @@ export function ContactForm({ className }: { className?: string }) {
                     <SelectValue placeholder='Select your country' />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                <SelectContent className='max-h-50'>
                   {COUNTRIES.map((country) => (
                     <SelectItem key={country} value={country}>
                       {country}
@@ -426,7 +426,7 @@ export function ContactForm({ className }: { className?: string }) {
                 <Textarea
                   placeholder='Tell us about your inquiry...'
                   className='resize-none'
-                  rows={5}
+                  rows={6}
                   {...field}
                   disabled={isSubmitting}
                 />

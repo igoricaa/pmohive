@@ -4,6 +4,7 @@ import { getContactPageData } from '@/sanity/lib/queries';
 import { PortableTextBlock } from 'next-sanity';
 import { notFound } from 'next/navigation';
 import { ContactForm } from '@/components/contact-form';
+import { GoogleMap } from '@/components/google-map';
 
 export default async function ContactPage() {
   const { contactPage: contactPageData } = await getContactPageData();
@@ -38,6 +39,7 @@ export default async function ContactPage() {
             value={contactPageData.description as PortableTextBlock[]}
           />
         </div>
+        <GoogleMap className='w-full h-45 md:h-120 lg:h-full rounded-2xl overflow-hidden' />
       </div>
     </main>
   );
