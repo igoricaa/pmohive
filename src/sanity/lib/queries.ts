@@ -2,6 +2,7 @@ import { defineQuery } from 'next-sanity';
 import { sanityFetch } from './client';
 import {
   ABOUT_PAGE_QUERYResult,
+  CAREERS_PAGE_QUERYResult,
   CONTACT_PAGE_QUERYResult,
   GENERAL_INFO_QUERYResult,
   HOME_PAGE_QUERYResult,
@@ -195,3 +196,18 @@ export const getAboutPageData = async (): Promise<ABOUT_PAGE_QUERYResult> => {
     tags: ['aboutPage'],
   });
 };
+
+export const CAREERS_PAGE_QUERY = defineQuery(`{
+  "careersPage": *[_type == "careersPage"][0] {
+    ...,
+    openPositions[]->
+  }
+}`);
+
+export const getCareersPageData =
+  async (): Promise<CAREERS_PAGE_QUERYResult> => {
+    return await sanityFetch({
+      query: CAREERS_PAGE_QUERY,
+      tags: ['careersPage'],
+    });
+  };

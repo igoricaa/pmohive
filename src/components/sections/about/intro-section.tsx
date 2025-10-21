@@ -27,7 +27,7 @@ const IntroSection = ({
         className
       )}
     >
-      <div className='2xl:col-span-10 2xl:col-start-2 relative'>
+      <div className='2xl:col-span-10 2xl:col-start-2 relative h-full'>
         <div className='sm:w-6/8 xl:w-9/12 h-64 w-full sm:h-full sm:aspect-[580/302] xl:aspect-[991/478] relative sm:absolute sm:right-0 sm:top-0 -z-1 '>
           <div className='absolute inset-0 bg-gradient-to-bl from-transparent from-30% to-black/60'></div>
           <Image
@@ -47,7 +47,7 @@ const IntroSection = ({
             text: subtitle.text,
             highlightedText: subtitle.highlightedText,
           }}
-          className='sm:max-w-5/8 xl:max-w-5/12 -mt-8'
+          className='sm:max-w-5/8 xl:max-w-5/12 -mt-8 sm:flex sm:flex-col sm:justify-center sm:h-full'
         >
           {heading}
         </Heading>

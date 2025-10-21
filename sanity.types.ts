@@ -13,6 +13,65 @@
  */
 
 // Source: schema.json
+export type CareersPage = {
+  _id: string;
+  _type: "careersPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  introSection: IntroSection;
+  openPositions: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "openPosition";
+  }>;
+};
+
+export type OpenPosition = {
+  _id: string;
+  _type: "openPosition";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  location: string;
+  type: string;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote" | "highlighted";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+};
+
 export type BlockContent = Array<{
   children?: Array<{
     marks?: Array<string>;
@@ -663,7 +722,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | ContactPage | AboutPage | VisionSection | ApproachSection | IntroSection | HomePage | BreakSection | BlogSection | TeamSection | Subtitle | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = CareersPage | OpenPosition | BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | ContactPage | AboutPage | VisionSection | ApproachSection | IntroSection | HomePage | BreakSection | BlogSection | TeamSection | Subtitle | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
@@ -1102,6 +1161,60 @@ export type ABOUT_PAGE_QUERYResult = {
     blog: BlogSection;
   } | null;
 };
+// Variable: CAREERS_PAGE_QUERY
+// Query: {  "careersPage": *[_type == "careersPage"][0] {    ...,    openPositions[]->  }}
+export type CAREERS_PAGE_QUERYResult = {
+  careersPage: {
+    _id: string;
+    _type: "careersPage";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    title: string;
+    introSection: IntroSection;
+    openPositions: Array<{
+      _id: string;
+      _type: "openPosition";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      title: string;
+      location: string;
+      type: string;
+      description: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "highlighted" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+    }>;
+  } | null;
+};
 
 // Query TypeMap
 import "@sanity/client";
@@ -1116,5 +1229,6 @@ declare module "@sanity/client" {
     "{\n  \"currentPost\": *[_type == \"post\" && slug.current == $slug][0]{\n    _id,\n    title,\n    subtitle {\n      text,\n      highlightedText\n    },\n    \"slug\": slug.current,\n    date,\n    content,\n    excerpt,\n    featuredMedia,\n  },\n  \"relatedPosts\": *[\n    _type == \"post\" \n    && slug.current != $slug\n  ] | order(date desc)[0...3]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    date,\n    featuredMedia\n  }\n}": POST_QUERYResult;
     "{\n  \"contactPage\": *[_type == \"contactPage\"][0]\n}": CONTACT_PAGE_QUERYResult;
     "{\n  \"aboutPage\": *[_type == \"aboutPage\"][0] {\n    ...,\n    team {\n      ...,\n      teamMembers[]->\n    },\n    approachSection {\n      ...,\n      approachItems[]->\n    },\n    visionSection {\n      ...,\n      visionItems[]->\n    },\n  }\n}": ABOUT_PAGE_QUERYResult;
+    "{\n  \"careersPage\": *[_type == \"careersPage\"][0] {\n    ...,\n    openPositions[]->\n  }\n}": CAREERS_PAGE_QUERYResult;
   }
 }

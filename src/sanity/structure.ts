@@ -34,6 +34,14 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
                   S.document().schemaType('aboutPage').documentId('aboutPage')
                 ),
               S.listItem()
+                .title('Careers Page')
+                .icon(BriefcaseIcon)
+                .child(
+                  S.document()
+                    .schemaType('careersPage')
+                    .documentId('careersPage')
+                ),
+              S.listItem()
                 .title('Contact Page')
                 .icon(MailIcon)
                 .child(
@@ -101,6 +109,21 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
                 .child(S.documentTypeList('teamMember').title('Team Members')),
             ])
         ),
+      S.listItem()
+        .title('Open Positions')
+        .icon(BriefcaseIcon)
+        .child(
+          S.list()
+            .title('Open Positions')
+            .items([
+              S.listItem()
+                .title('Open Positions')
+                .icon(BriefcaseIcon)
+                .child(
+                  S.documentTypeList('openPosition').title('Open Positions')
+                ),
+            ])
+        ),
       S.divider(),
       S.listItem()
         .title('General Info')
@@ -115,12 +138,14 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
             'homePage',
             'aboutPage',
             'contactPage',
+            'careersPage',
             'post',
             'service',
             'project',
             'teamMember',
             'generalInfo',
             'postCategory',
+            'openPosition',
           ].includes(listItem.getId()!)
       ),
     ]);

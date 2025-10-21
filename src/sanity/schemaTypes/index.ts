@@ -12,16 +12,17 @@ import { postCategoryType } from './posts/postCategoryType';
 import { blockContentType } from './blockContentType';
 import { teamMemberType } from './teamMemberType';
 import { subtitleType } from './subtitleType';
-
 import { serviceType } from './serviceType';
 import { projectType } from './projectType';
 import { generalInfoType } from './generalInfoType';
 import { buttonType } from './buttonType';
 import { aboutPageType } from './pages/about-us';
 import { breakSectionType } from './breakSectionType';
-import { introSectionType } from './pages/about-us/introSectionType';
+import { introSectionType } from './introSectionType';
 import { visionSectionType } from './pages/about-us/visionSectionType';
 import { approachSectionType } from './pages/about-us/approachSectionType';
+import { openPositionType } from './openPositionType';
+import { careersPageType } from './pages/careers';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -45,5 +46,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     introSectionType,
     approachSectionType,
     visionSectionType,
+    openPositionType,
+    careersPageType,
   ],
 };
