@@ -50,7 +50,7 @@ export default async function BlogPostPage({
         />
       </div>
 
-      <div className='-mt-8 sm:-mt-21 xl:-mt-24 2xl:-mt-28'>
+      <div className='-mt-8 sm:-mt-21 xl:-mt-24 2xl:-mt-28 z-2 relative'>
         <section className='px-side xl:grid xl:grid-cols-12 xl:gap-x-5'>
           <Heading
             level='h1'

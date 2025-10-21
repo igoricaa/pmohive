@@ -10,34 +10,34 @@ export const contactPageType = defineType({
     defineField({
       name: 'subtitle',
       title: 'Subtitle',
-      type: 'string',
-      description: 'Subtitle text for the contact page',
+      type: 'subtitle',
+      description: 'Subtitle with optional highlighted text',
       validation: (rule) => rule.required().error('Subtitle is required'),
     }),
     defineField({
-      name: 'title',
-      title: 'Title',
+      name: 'heading',
+      title: 'Heading',
       type: 'string',
-      description: 'Main title for the contact page',
-      validation: (rule) => rule.required().error('Title is required'),
+      description: 'Main heading for the contact page',
+      validation: (rule) => rule.required().error('Heading is required'),
     }),
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'string',
-      description: 'Description text for the contact page',
+      type: 'blockContent',
+      description: 'Rich text description for the contact page',
       validation: (rule) => rule.required().error('Description is required'),
     }),
   ],
   preview: {
     select: {
-      title: 'title',
-      subtitle: 'subtitle',
+      heading: 'heading',
+      subtitleText: 'subtitle.text',
     },
-    prepare({ title, subtitle }) {
+    prepare({ heading, subtitleText }) {
       return {
-        title: title || 'Contact Page',
-        subtitle: subtitle || 'No subtitle',
+        title: heading || 'Contact Page',
+        subtitle: subtitleText || 'No subtitle',
       };
     },
   },

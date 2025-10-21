@@ -12,14 +12,14 @@ import Heading from '@/components/ui/heading';
 interface PmoPromoSectionProps {
   subtitle: {
     text: string;
-    highlightedText: string;
+    highlightedText?: string | null;
   };
   heading: string;
   description: PortableTextBlock[];
   backgroundImage: SanityImageSource & { alt: string };
   buttons: {
     text: string;
-    highlightedText?: string;
+    highlightedText?: string | null;
     link: string;
   }[];
   className?: string;
@@ -51,7 +51,7 @@ const PmoPromoSection = ({
               level='h4'
               subtitle={{
                 text: subtitle.text,
-                highlightedText: subtitle.highlightedText,
+                highlightedText: subtitle.highlightedText || null,
               }}
             >
               {heading}

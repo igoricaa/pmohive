@@ -19,7 +19,7 @@ import Heading from '@/components/ui/heading';
 interface CareersSectionProps {
   subtitle: {
     text: string;
-    highlightedText: string;
+    highlightedText?: string | null;
   };
   heading: string;
   description: PortableTextBlock[];
@@ -53,7 +53,7 @@ const CareersSection = ({
             level='h2'
             subtitle={{
               text: subtitle.text,
-              highlightedText: subtitle.highlightedText,
+              highlightedText: subtitle.highlightedText || null,
             }}
             spacing='mt-4'
           >

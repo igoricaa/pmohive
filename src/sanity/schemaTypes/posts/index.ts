@@ -7,18 +7,7 @@ export const postType = defineType({
   fields: [
     defineField({
       name: 'subtitle',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'text',
-          type: 'string',
-          validation: (rule) => rule.required().error('Text is required'),
-        }),
-        defineField({
-          name: 'highlightedText',
-          type: 'string',
-        }),
-      ],
+      type: 'subtitle',
     }),
     defineField({
       name: 'title',

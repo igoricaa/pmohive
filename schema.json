@@ -308,23 +308,8 @@
       "subtitle": {
         "type": "objectAttribute",
         "value": {
-          "type": "object",
-          "attributes": {
-            "text": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "string"
-              },
-              "optional": false
-            },
-            "highlightedText": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "string"
-              },
-              "optional": true
-            }
-          }
+          "type": "inline",
+          "name": "subtitle"
         },
         "optional": true
       },
@@ -1056,11 +1041,12 @@
       "subtitle": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "inline",
+          "name": "subtitle"
         },
         "optional": false
       },
-      "title": {
+      "heading": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -1070,7 +1056,8 @@
       "description": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "inline",
+          "name": "blockContent"
         },
         "optional": false
       }
@@ -1260,23 +1247,8 @@
         "subtitle": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "highlightedText": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false
-              },
-              "text": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false
-              }
-            }
+            "type": "inline",
+            "name": "subtitle"
           },
           "optional": false
         },
@@ -1434,23 +1406,8 @@
         "subtitle": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "text": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false
-              },
-              "highlightedText": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false
-              }
-            }
+            "type": "inline",
+            "name": "subtitle"
           },
           "optional": false
         },
@@ -1496,23 +1453,8 @@
         "subtitle": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "text": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false
-              },
-              "highlightedText": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false
-              }
-            }
+            "type": "inline",
+            "name": "subtitle"
           },
           "optional": false
         },
@@ -1602,6 +1544,36 @@
     }
   },
   {
+    "name": "subtitle",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "subtitle"
+          }
+        },
+        "text": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": false
+        },
+        "highlightedText": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "aboutSection",
     "type": "type",
     "value": {
@@ -1654,23 +1626,8 @@
                 "subtitle": {
                   "type": "objectAttribute",
                   "value": {
-                    "type": "object",
-                    "attributes": {
-                      "text": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string"
-                        },
-                        "optional": false
-                      },
-                      "highlightedText": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string"
-                        },
-                        "optional": true
-                      }
-                    }
+                    "type": "inline",
+                    "name": "subtitle"
                   },
                   "optional": false
                 },
@@ -2042,23 +1999,8 @@
         "subtitle": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "text": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false
-              },
-              "highlightedText": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false
-              }
-            }
+            "type": "inline",
+            "name": "subtitle"
           },
           "optional": false
         },

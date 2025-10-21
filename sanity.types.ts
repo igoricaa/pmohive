@@ -51,10 +51,7 @@ export type Post = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  subtitle?: {
-    text: string;
-    highlightedText?: string;
-  };
+  subtitle?: Subtitle;
   title: string;
   slug: Slug;
   category: {
@@ -183,9 +180,9 @@ export type ContactPage = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  subtitle: string;
-  title: string;
-  description: string;
+  subtitle: Subtitle;
+  heading: string;
+  description: BlockContent;
 };
 
 export type AboutPage = {
@@ -218,10 +215,7 @@ export type HomePage = {
 
 export type PmoPromoSection = {
   _type: "pmoPromoSection";
-  subtitle: {
-    highlightedText: string;
-    text: string;
-  };
+  subtitle: Subtitle;
   heading: string;
   description: BlockContent;
   backgroundImage: {
@@ -247,10 +241,7 @@ export type PmoPromoSection = {
 
 export type BlogSection = {
   _type: "blogSection";
-  subtitle: {
-    text: string;
-    highlightedText: string;
-  };
+  subtitle: Subtitle;
   heading: string;
   description: BlockContent;
   button: Button;
@@ -258,10 +249,7 @@ export type BlogSection = {
 
 export type TeamSection = {
   _type: "teamSection";
-  subtitle: {
-    text: string;
-    highlightedText: string;
-  };
+  subtitle: Subtitle;
   heading: string;
   description: BlockContent;
   button: {
@@ -277,6 +265,12 @@ export type TeamSection = {
   }>;
 };
 
+export type Subtitle = {
+  _type: "subtitle";
+  text: string;
+  highlightedText?: string;
+};
+
 export type AboutSection = {
   _type: "aboutSection";
   heading: {
@@ -285,10 +279,7 @@ export type AboutSection = {
   };
   animatedText: string;
   understandingPMO: Array<{
-    subtitle: {
-      text: string;
-      highlightedText?: string;
-    };
+    subtitle: Subtitle;
     heading: string;
     description: BlockContent;
     image: {
@@ -349,10 +340,7 @@ export type AboutSection = {
 
 export type HeroSection = {
   _type: "heroSection";
-  subtitle: {
-    text: string;
-    highlightedText: string;
-  };
+  subtitle: Subtitle;
   heading: string;
   description: string;
   buttons: Array<{
@@ -590,7 +578,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | ContactPage | AboutPage | HomePage | PmoPromoSection | BlogSection | TeamSection | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | ContactPage | AboutPage | HomePage | PmoPromoSection | BlogSection | TeamSection | Subtitle | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
@@ -703,10 +691,7 @@ export type HOME_PAGE_QUERYResult = {
     };
     team: {
       _type: "teamSection";
-      subtitle: {
-        text: string;
-        highlightedText: string;
-      };
+      subtitle: Subtitle;
       heading: string;
       description: BlockContent;
       button: {

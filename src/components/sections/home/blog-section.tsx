@@ -22,7 +22,7 @@ import PostCard from '@/components/blog/post-card';
 interface BlogSectionProps {
   subtitle: {
     text: string;
-    highlightedText: string;
+    highlightedText?: string | null;
   };
   heading: string;
   description: PortableTextBlock[];
@@ -53,7 +53,7 @@ const BlogSection = ({
             level='h2'
             subtitle={{
               text: subtitle.text,
-              highlightedText: subtitle.highlightedText,
+              highlightedText: subtitle.highlightedText || null,
             }}
           >
             {heading}

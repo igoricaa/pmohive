@@ -11,13 +11,13 @@ import Heading from '@/components/ui/heading';
 interface HeroSectionProps {
   subtitle: {
     text: string;
-    highlightedText: string;
+    highlightedText?: string | null;
   };
   heading: string;
   description: string;
   buttons: {
     text: string;
-    hightlightedText?: string;
+    hightlightedText?: string | null;
     link: string;
   }[];
   images: {

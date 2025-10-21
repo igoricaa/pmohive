@@ -13,6 +13,7 @@ import { postType } from './posts';
 import { postCategoryType } from './posts/postCategoryType';
 import { blockContentType } from './blockContentType';
 import { teamMemberType } from './teamMemberType';
+import { subtitleType } from './subtitleType';
 
 import { serviceType } from './serviceType';
 import { projectType } from './projectType';
@@ -36,6 +37,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     postType,
     postCategoryType,
     blockContentType,
+    subtitleType,
     buttonType,
   ],
 };

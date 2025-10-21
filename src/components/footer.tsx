@@ -18,16 +18,16 @@ export default async function Footer() {
   const routesMidIndex = Math.ceil(routes.length / 2);
 
   return (
-    <footer className='relative overflow-hidden pt-6 sm:pt-10.5 xl:pt-22.5 px-side '>
+    <footer className='bg-black relative overflow-hidden pt-6 sm:pt-10.5 xl:pt-22.5 px-side '>
       {/* Decorative hexagonal pattern - top right */}
-      <div className='absolute right-0 -top-1.5 md:-top-26 md:-right-53 xl:-right-41 w-[747px] h-[531px] opacity-20 pointer-events-none z-0'>
+      <div className='absolute right-0 top-0 md:-bottom-5 md:top-auto  pointer-events-none z-0'>
         <Image
           src={hexagonalPattern}
           alt='Hexagonal pattern'
           width={747}
           height={531}
           unoptimized
-          className='object-contain w-118 sm:w-187'
+          className='object-contain w-118 sm:w-150'
         />
       </div>
 
