@@ -9,6 +9,7 @@ import MenuLink from '../menuLink';
 import Sidebar from './sidebar';
 import { GeneralInfo } from '../../../sanity.types';
 import MobileMenu from './mobile-menu';
+import StickyHeaderWrapper from './sticky-header-wrapper';
 
 export async function Header() {
   const { generalInfo: generalInfoData } = await getGeneralInfoData();
@@ -20,10 +21,10 @@ export async function Header() {
   const { logoFull, email, phone, socials } = generalInfoData;
 
   return (
-    <header className='px-side'>
-      <TopBar phone={phone} email={email} />
-      <MainBar logoFull={logoFull} socials={socials} />
-    </header>
+    <StickyHeaderWrapper
+      topBar={<TopBar phone={phone} email={email} />}
+      mainBar={<MainBar logoFull={logoFull} socials={socials} />}
+    />
   );
 }
 

@@ -2,9 +2,8 @@ import PostCard from '@/components/blog/post-card';
 import ShareArticle from '@/components/blog/share-article';
 import PostPortableText from '@/components/post-portable-text';
 import Heading from '@/components/ui/heading';
-import { sanityFetch } from '@/sanity/lib/client';
 import { urlForUncropped } from '@/sanity/lib/image';
-import { getPostData, POST_QUERY } from '@/sanity/lib/queries';
+import { getPostData } from '@/sanity/lib/queries';
 import { PortableTextBlock } from 'next-sanity';
 import { Image } from 'next-sanity/image';
 import { notFound } from 'next/navigation';
@@ -17,6 +16,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
+import ScrollMeter from '@/components/scroll-meter';
 
 export default async function BlogPostPage({
   params,
@@ -34,6 +34,7 @@ export default async function BlogPostPage({
 
   return (
     <main className='pt-6 pb-10 sm:pb-16 xl:pb-35 sm:pt-8 xl:pt-4'>
+      <ScrollMeter />
       <div className='relative px-side'>
         <div className='absolute inset-0 bg-gradient-to-b from-transparent from-0% to-black/65'></div>
         <Image
