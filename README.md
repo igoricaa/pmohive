@@ -14,6 +14,7 @@ A modern Next.js 15 application integrated with Sanity CMS for PMO (Project Mana
   - TanStack Query v5 (server state)
   - nuqs (URL state)
 - **Forms**: React Hook Form v7.65.0 + Zod v4.1.11
+- **Animations**: Framer Motion (motion) + lodash
 - **Deployment**: Vercel (recommended)
 
 ## Getting Started
@@ -88,6 +89,9 @@ src/
 │   ├── ui/               # shadcn/ui components
 │   ├── blog/             # Blog-specific components
 │   ├── sections/         # Page section components
+│   ├── fancy/            # Advanced UI components
+│   │   └── text/         # Text animation components
+│   ├── animated-button.tsx    # Hybrid Link/Button component
 │   └── contact-form.tsx  # Contact form
 ├── sanity/               # Sanity CMS configuration
 │   ├── schemaTypes/      # Content schemas
@@ -106,6 +110,20 @@ src/
 - **Blog system** with categories, search, and filtering
 - **Reusable content types** (subtitles, buttons, etc.)
 - **Rich text editor** support with portable text
+
+### Advanced UI Components
+- **AnimatedButton**: Hybrid Link/Button component with text animations
+  - Type-safe discriminated union (Link XOR Button)
+  - Three icon types: Lucide (by name), Sanity images, URL strings
+  - Server Component compatible (serializable icon props)
+  - Bundle size optimized (~3KB for 3 icons)
+  - Button-specific props (`disabled`, `type`) only for actions
+- **LetterSwapPingPong**: Letter-by-letter hover animation
+  - Parent-controlled hover via `isParentHovered` prop
+  - Optional text highlighting with primary color
+  - Configurable animation timing and direction
+  - Debounced hover events (100ms) for smooth UX
+  - Accessible with screen reader support
 
 ### Forms & Validation
 - **Contact form** with React Hook Form + Zod v4

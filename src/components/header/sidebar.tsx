@@ -4,14 +4,13 @@ import { cn } from '@/lib/utils';
 import Burger from './burger';
 import { useState } from 'react';
 import { Link } from 'next-view-transitions';
-import { buttonVariants } from '../ui/button';
-import { ArrowRight } from 'lucide-react';
 import { GeneralInfo } from '../../../sanity.types';
 import { Image } from 'next-sanity/image';
 import { urlFor } from '@/sanity/lib/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import hexagonalPattern from '../../../public/hexagonal-pattern.svg';
 import ImageNext from 'next/image';
+import AnimatedButton from '../animated-button';
 
 const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -71,29 +70,18 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
             control from day one.
           </p>
           <div className='flex gap-3 mt-6'>
-            <Link
+            <AnimatedButton
+              text='Learn More'
+              highlightedText='/pmo'
               href='/about-us'
-              className={cn(
-                buttonVariants({
-                  variant: 'default',
-                })
-              )}
-            >
-              Learn More
-              <span className='highlight ml-2'>/pmo</span>
-            </Link>
-
-            <Link
+              variant='default'
+            />
+            <AnimatedButton
+              text='Contact Us'
               href='/contact-us'
-              className={cn(
-                buttonVariants({
-                  variant: 'secondary',
-                })
-              )}
-            >
-              Contact Us
-              <ArrowRight />
-            </Link>
+              variant='secondary'
+              icon={{ type: 'lucide', name: 'ArrowRight' }}
+            />
           </div>
         </div>
 

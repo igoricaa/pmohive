@@ -1,6 +1,4 @@
-import { ArrowRight } from 'lucide-react';
 import { Image } from 'next-sanity/image';
-import { buttonVariants } from '@/components/ui/button';
 import {
   Carousel,
   CarouselContent,
@@ -13,8 +11,8 @@ import { urlForUncropped } from '@/sanity/lib/image';
 import { TeamMember } from '../../../sanity.types';
 import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
-import { Link } from 'next-view-transitions';
 import Heading from '@/components/ui/heading';
+import AnimatedButton from '../animated-button';
 
 interface CareersSectionProps {
   subtitle: {
@@ -68,21 +66,14 @@ const CareersSection = ({
         </div>
         {/* CTA Button */}
         {ctaButton && (
-          <Link
-            key={ctaButton.text}
+          <AnimatedButton
+            text={ctaButton.text}
             href={ctaButton.link}
-            className={cn(
-              buttonVariants({
-                variant:
-                  (ctaButton.variant as 'default' | 'secondary') || 'default',
-                size: 'default',
-              }),
-              'hidden md:inline-flex w-fit xl:mt-6'
-            )}
-          >
-            {ctaButton.text}
-            <ArrowRight className='size-4! sm:size-6!' />
-          </Link>
+            variant={ctaButton.variant as 'default' | 'secondary'}
+            className='hidden md:inline-flex w-fit xl:mt-6'
+            icon={{ type: 'lucide', name: 'ArrowRight' }}
+            iconClassName='size-4! sm:size-6!'
+          />
         )}
       </div>
 
@@ -143,16 +134,14 @@ const CareersSection = ({
                 <p className='text-center text-sm 2xl:text-base mt-3 2xl:mt-4'>
                   Keep na eye on our carrer page for future openings
                 </p>
-                <Link
+                <AnimatedButton
+                  text='Careers & Culture'
                   href='/careers-and-culture'
-                  className={cn(
-                    buttonVariants({ variant: 'secondary', size: 'default' }),
-                    'w-full mt-auto'
-                  )}
-                >
-                  Careers & Culture
-                  <ArrowRight className='size-4! sm:size-6!' />
-                </Link>
+                  variant='secondary'
+                  icon={{ type: 'lucide', name: 'ArrowRight' }}
+                  iconClassName='size-4! sm:size-6!'
+                  className='w-full mt-auto'
+                />
               </div>
             </CarouselItem>
           </CarouselContent>

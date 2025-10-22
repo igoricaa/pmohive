@@ -467,6 +467,357 @@ className={cn(
 - Borders: `border-input` (default), `border-white` (focus), `border-destructive` (error)
 - Primary actions: `bg-primary` (orange accent)
 
+### Advanced Button Components
+
+The project includes advanced button components with text animations and flexible icon support.
+
+#### AnimatedButton Component
+
+**Location**: [src/components/animated-button.tsx](src/components/animated-button.tsx)
+
+A hybrid button component that conditionally renders as either a navigation link (`<Link>`) or an action button (`<Button>`) based on props, with animated text and flexible icon support.
+
+**Key Features**:
+- Type-safe discriminated union (Link XOR Button)
+- Three icon types: Lucide (by name), Sanity images, URL strings
+- Animated text with optional highlighting
+- Parent-controlled hover animations
+- Button-specific props (`disabled`, `type`) only available for action variant
+- Bundle size optimized with explicit icon map
+
+**Type Definition**:
+
+```typescript
+// Icon types
+type IconProp =
+  | { type: 'lucide'; name: 'ArrowRight' | 'SendIcon' | 'Rocket' }
+  | { type: 'sanity'; source: SanityImageSource; alt: string }
+  | { type: 'url'; src: string; alt: string };
+
+// Discriminated union - ensures Link XOR Button
+type AnimatedButtonProps = {
+  text: string;
+  variant: 'default' | 'secondary';
+  highlightedText?: string;
+  icon?: IconProp;
+  className?: string;
+  iconClassName?: string;
+} & (
+  | {
+      href: string;           // Link variant
+      onClick?: never;
+      disabled?: never;
+      type?: never;
+    }
+  | {
+      href?: never;
+      onClick: () => void;    // Button variant
+      disabled?: boolean;
+      type?: 'button' | 'submit' | 'reset';
+    }
+);
+```
+
+**Props Table**:
+
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `text` | `string` | ✅ | Main button text |
+| `variant` | `'default' \| 'secondary'` | ✅ | Button style variant |
+| `href` | `string` | ⚠️ Link only | Navigation URL (renders `<Link>`) |
+| `onClick` | `() => void` | ⚠️ Button only | Click handler (renders `<Button>`) |
+| `highlightedText` | `string` | ❌ | Optional highlighted portion of text (primary color) |
+| `icon` | `IconProp` | ❌ | Optional icon (Lucide/Sanity/URL) |
+| `className` | `string` | ❌ | Additional CSS classes |
+| `iconClassName` | `string` | ❌ | Icon-specific CSS classes |
+| `disabled` | `boolean` | ❌ Button only | Disable button (not available for Link) |
+| `type` | `'button' \| 'submit' \| 'reset'` | ❌ Button only | HTML button type (not available for Link) |
+
+**Icon System**:
+
+The component supports three icon types with automatic rendering:
+
+1. **Lucide Icons** (by string name):
+   - Available icons: `'ArrowRight'`, `'SendIcon'`, `'Rocket'`
+   - Passed as serializable strings (Server Component safe)
+   - Bundle size: ~3KB (only 3 icons included)
+   - Resolved at runtime via explicit `ICON_MAP`
+
+2. **Sanity Images**:
+   - Uses `urlFor()` helper for image optimization
+   - Requires `SanityImageSource` and alt text
+   - Renders via Next.js `<Image>` component
+
+3. **URL Strings**:
+   - Direct image paths (e.g., `/arrow-icon.svg`)
+   - Requires alt text for accessibility
+   - Renders via Next.js `<Image>` component
+
+**Usage Examples**:
+
+```tsx
+import AnimatedButton from '@/components/animated-button';
+
+// 1. Navigation Link with Lucide icon
+<AnimatedButton
+  text="Learn More"
+  href="/about"
+  variant="default"
+  icon={{ type: 'lucide', name: 'ArrowRight' }}
+/>
+
+// 2. Navigation Link with highlighted text
+<AnimatedButton
+  text="Explore"
+  highlightedText="PMO Solutions"
+  href="/services"
+  variant="secondary"
+/>
+
+// 3. Action Button with Sanity image icon
+<AnimatedButton
+  text="Submit"
+  onClick={handleSubmit}
+  variant="default"
+  icon={{ type: 'sanity', source: iconImage, alt: 'Submit icon' }}
+/>
+
+// 4. Form Submit Button
+<AnimatedButton
+  text="Send Message"
+  onClick={handleFormSubmit}
+  variant="secondary"
+  type="submit"
+  disabled={isSubmitting}
+  icon={{ type: 'lucide', name: 'SendIcon' }}
+/>
+
+// 5. Action Button with URL icon
+<AnimatedButton
+  text="Launch"
+  onClick={() => console.log('Launched!')}
+  variant="default"
+  icon={{ type: 'url', src: '/rocket-icon.svg', alt: 'Rocket' }}
+/>
+
+// 6. Disabled Button
+<AnimatedButton
+  text="Processing..."
+  onClick={() => {}}
+  variant="default"
+  disabled={true}
+/>
+
+// 7. Link without icon
+<AnimatedButton
+  text="Contact Us"
+  href="/contact"
+  variant="secondary"
+/>
+
+// 8. Button with custom styling
+<AnimatedButton
+  text="Custom"
+  onClick={handleClick}
+  variant="default"
+  className="w-full"
+  iconClassName="size-6"
+  icon={{ type: 'lucide', name: 'Rocket' }}
+/>
+```
+
+**Type Safety**:
+
+TypeScript enforces correct usage at compile time:
+
+```tsx
+// ✅ Valid - Link with href
+<AnimatedButton text="Go" href="/page" variant="default" />
+
+// ✅ Valid - Button with onClick
+<AnimatedButton text="Click" onClick={() => {}} variant="default" />
+
+// ❌ Error - Can't have both href and onClick
+<AnimatedButton
+  text="Invalid"
+  href="/page"
+  onClick={() => {}}  // TypeScript error!
+  variant="default"
+/>
+
+// ❌ Error - Can't use disabled with Link
+<AnimatedButton
+  text="Link"
+  href="/page"
+  disabled={true}  // TypeScript error!
+  variant="default"
+/>
+
+// ❌ Error - Must have either href or onClick
+<AnimatedButton
+  text="Invalid"
+  variant="default"  // TypeScript error: missing href or onClick
+/>
+```
+
+**Bundle Size Optimization**:
+
+Icons are explicitly imported and mapped to prevent bundling all 1000+ Lucide icons:
+
+```typescript
+import { ArrowRight, Send as SendIcon, Rocket } from 'lucide-react';
+
+const ICON_MAP = {
+  ArrowRight,
+  SendIcon,
+  Rocket,
+} as const;
+```
+
+**Benefits**:
+- ✅ Only 3 icons bundled (~3KB total)
+- ✅ TypeScript autocomplete for icon names
+- ✅ Guaranteed tree-shaking
+- ✅ Easy to add new icons (import + add to map)
+
+**Server Component Compatibility**:
+
+Lucide icons are passed as **string names** (not component references) to ensure serialization from Server Components:
+
+```tsx
+// ✅ Server Component - Works!
+export default async function Page() {
+  return (
+    <AnimatedButton
+      text="Learn More"
+      href="/about"
+      variant="default"
+      icon={{ type: 'lucide', name: 'ArrowRight' }}  // String, not component
+    />
+  );
+}
+```
+
+The icon component is resolved at runtime in the Client Component.
+
+#### LetterSwapPingPong Component
+
+**Location**: [src/components/fancy/text/letter-swap-pingpong-anim.tsx](src/components/fancy/text/letter-swap-pingpong-anim.tsx)
+
+A text animation component that creates a letter-by-letter "ping-pong swap" effect on hover, with support for text highlighting.
+
+**Key Features**:
+- Letter-by-letter staggered animation using Framer Motion
+- Parent-controlled hover via `isParentHovered` prop
+- Optional text highlighting with primary color
+- Configurable animation direction, timing, and stagger
+- Debounced hover events (100ms) via lodash
+- Accessible with screen reader support
+
+**Props Interface**:
+
+```typescript
+interface TextProps {
+  label: string;                    // Main text to animate
+  highlightedText?: string;         // Optional highlighted portion (primary color)
+  reverse?: boolean;                // Animation direction (default: true)
+  transition?: AnimationOptions;    // Framer Motion transition config
+  staggerDuration?: number;         // Delay between letters (default: 0.03s)
+  staggerFrom?: 'first' | 'last' | 'center' | number;  // Stagger start point
+  className?: string;               // Additional CSS classes
+  onClick?: () => void;             // Click handler
+  isParentHovered?: boolean;        // Parent hover state (for external control)
+}
+```
+
+**Animation Behavior**:
+
+1. **Hover Start**: Letters move vertically (100% up/down) with staggered timing
+2. **Hover End**: Letters return to original position with staggered timing
+3. **Highlighted Text**: Continues animation seamlessly with primary color applied
+
+**Parent-Controlled Hover Pattern**:
+
+Used by AnimatedButton to trigger animations when hovering over the entire button area:
+
+```tsx
+// Parent component (AnimatedButton)
+const [isHovered, setIsHovered] = useState(false);
+
+<div
+  onMouseEnter={() => setIsHovered(true)}
+  onMouseLeave={() => setIsHovered(false)}
+>
+  <LetterSwapPingPong
+    label="Hover Me"
+    isParentHovered={isHovered}  // Parent controls animation
+  />
+</div>
+```
+
+The component watches `isParentHovered` via `useEffect` and triggers animations accordingly.
+
+**Usage Examples**:
+
+```tsx
+import LetterSwapPingPong from '@/components/fancy/text/letter-swap-pingpong-anim';
+
+// 1. Basic usage
+<LetterSwapPingPong label="Animate Me" />
+
+// 2. With highlighted text
+<LetterSwapPingPong
+  label="Explore"
+  highlightedText="Solutions"  // Primary color
+/>
+
+// 3. Parent-controlled (used by AnimatedButton)
+const [isHovered, setIsHovered] = useState(false);
+
+<div onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+  <LetterSwapPingPong
+    label="Hover Parent"
+    isParentHovered={isHovered}
+  />
+</div>
+
+// 4. Custom animation timing
+<LetterSwapPingPong
+  label="Slow Motion"
+  transition={{ type: 'spring', duration: 1.2 }}
+  staggerDuration={0.05}
+/>
+
+// 5. Reverse animation direction
+<LetterSwapPingPong
+  label="Upward"
+  reverse={false}  // Letters move up instead of down
+/>
+
+// 6. Stagger from center
+<LetterSwapPingPong
+  label="Center Out"
+  staggerFrom="center"
+/>
+```
+
+**Implementation Details**:
+
+- Uses Framer Motion's `useAnimate` hook for imperative animations
+- Debounces hover events (100ms) to prevent animation flicker
+- Renders two copies of each letter (primary and secondary) for swap effect
+- Screen reader accessible: includes hidden `<span className='sr-only'>` with full text
+- Visual letters marked with `aria-hidden={true}`
+
+**Accessibility**:
+
+```tsx
+<span className='sr-only'>
+  {label}{highlightedText}  // Full text for screen readers
+</span>
+{/* Visual animated letters with aria-hidden={true} */}
+```
+
 ### Blog Components Pattern
 
 The blog system demonstrates a self-contained component architecture using nuqs for URL state management and React Query for server state.
@@ -1431,6 +1782,10 @@ import {
 import SearchInput from '@/components/blog/search-input';
 import CategoryFilter from '@/components/blog/category-filter';
 import PostsGrid from '@/components/blog/posts-grid';
+
+// Advanced UI Components
+import AnimatedButton from '@/components/animated-button';
+import LetterSwapPingPong from '@/components/fancy/text/letter-swap-pingpong-anim';
 
 // Sanity
 import { sanityFetch } from '@/sanity/lib/client';

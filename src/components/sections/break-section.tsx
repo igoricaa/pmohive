@@ -2,12 +2,10 @@ import { cn } from '@/lib/utils';
 import { urlForUncropped } from '@/sanity/lib/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { Image } from 'next-sanity/image';
-import { Link } from 'next-view-transitions';
-import { ArrowRight } from 'lucide-react';
-import { buttonVariants } from '@/components/ui/button';
 import { PortableTextBlock } from 'next-sanity';
 import PortableText from '@/components/portable-text';
 import Heading from '@/components/ui/heading';
+import AnimatedButton from '../animated-button';
 
 interface BreakSectionSectionProps {
   subtitle: {
@@ -72,25 +70,20 @@ const BreakSection = ({
 
             <div className='flex gap-2 sm:gap-4 mt-4 xl:mt-7.5'>
               {buttons.map((button, index) => (
-                <Link
+                <AnimatedButton
                   key={button.text}
+                  text={button.text}
                   href={button.link}
-                  className={cn(
-                    buttonVariants({
-                      variant:
-                        (button.variant as 'default' | 'secondary') ||
-                        'default',
-                      size: 'default',
-                    }),
-                    'flex-1 sm:flex-initial sm:w-auto'
-                  )}
-                >
-                  {button.text}{' '}
-                  {button.highlightedText && (
-                    <span className='highlight'>{button.highlightedText}</span>
-                  )}
-                  {index === 1 && <ArrowRight className='size-4! sm:size-6!' />}
-                </Link>
+                  variant={button.variant as 'default' | 'secondary'}
+                  icon={
+                    index === 1
+                      ? { type: 'lucide', name: 'ArrowRight' }
+                      : undefined
+                  }
+                  highlightedText={button.highlightedText || undefined}
+                  iconClassName='size-4! sm:size-6!'
+                  className='flex-1 sm:flex-initial sm:w-auto'
+                />
               ))}
             </div>
           </div>

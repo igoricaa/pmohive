@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -24,26 +23,17 @@ import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { SendIcon } from 'lucide-react';
+import AnimatedButton from './animated-button';
 
 const contactFormSchema = z.object({
-  firstName: z
-    .string()
-    .min(2, '*min 2 chars')
-    .max(50, '*max 50 chars'),
-  lastName: z
-    .string()
-    .min(2, '*min 2 chars')
-    .max(50, '*max 50 chars'),
+  firstName: z.string().min(2, '*min 2 chars').max(50, '*max 50 chars'),
+  lastName: z.string().min(2, '*min 2 chars').max(50, '*max 50 chars'),
   email: z.string().email('*invalid email'),
   country: z.string().min(1, '*required'),
   interest: z.enum(['introduction-to-pmo', 'data-center-potentials'], {
     error: '*required',
   }),
-  message: z
-    .string()
-    .min(10, '*min 10 chars')
-    .max(1000, '*max 1000 chars'),
+  message: z.string().min(10, '*min 10 chars').max(1000, '*max 1000 chars'),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
@@ -435,15 +425,16 @@ export function ContactForm({ className }: { className?: string }) {
         />
 
         {/* Submit Button */}
-        <Button
-          type='submit'
-          disabled={isSubmitting}
-          className='font-mono flex ml-auto mt-1 sm:mt-1.5'
+        <AnimatedButton
+          text={isSubmitting ? 'Sending...' : 'Send Message'}
           variant='secondary'
-        >
-          {isSubmitting ? 'Sending...' : 'Send Message'}
-          <SendIcon size={20} color='#000' strokeWidth={2} />
-        </Button>
+          onClick={form.handleSubmit(onSubmit)}
+          icon={{ type: 'lucide', name: 'SendIcon' }}
+          iconClassName='size-5'
+          className='font-mono flex ml-auto mt-1 sm:mt-1.5'
+          disabled={isSubmitting}
+          type='submit'
+        />
       </form>
     </Form>
   );

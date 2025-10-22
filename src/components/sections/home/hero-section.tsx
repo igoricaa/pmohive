@@ -1,12 +1,8 @@
-import { cn } from '@/lib/utils';
 import { urlForUncropped } from '@/sanity/lib/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { Image } from 'next-sanity/image';
-import { Link } from 'next-view-transitions';
-
-import { ArrowRight } from 'lucide-react';
-import { buttonVariants } from '@/components/ui/button';
 import Heading from '@/components/ui/heading';
+import AnimatedButton from '@/components/animated-button';
 
 interface HeroSectionProps {
   subtitle: {
@@ -86,22 +82,16 @@ const HeroSection = ({
         <p className='mt-3 xl:mt-4 text-sm max-w-xl'>{description}</p>
         <div className='flex gap-3 mt-4'>
           {buttons.map((button, index) => (
-            <Link
+            <AnimatedButton
               key={button.text}
+              text={button.text}
               href={button.link}
-              className={cn(
-                buttonVariants({
-                  variant:
-                    (button.variant as 'default' | 'secondary') || 'default',
-                })
-              )}
-            >
-              {button.text}{' '}
-              {button.hightlightedText && (
-                <span className='highlight'>{button.hightlightedText}</span>
-              )}
-              {index === 1 && <ArrowRight />}
-            </Link>
+              variant={button.variant as 'default' | 'secondary'}
+              icon={
+                index === 1 ? { type: 'lucide', name: 'ArrowRight' } : undefined
+              }
+              highlightedText={button.hightlightedText || undefined}
+            />
           ))}
         </div>
       </div>

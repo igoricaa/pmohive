@@ -1,5 +1,3 @@
-import { ArrowRight } from 'lucide-react';
-import { buttonVariants } from '@/components/ui/button';
 import {
   Carousel,
   CarouselContent,
@@ -15,9 +13,9 @@ import {
 } from '../../../../sanity.types';
 import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
-import { Link } from 'next-view-transitions';
 import Heading from '@/components/ui/heading';
 import PostCard from '@/components/blog/post-card';
+import AnimatedButton from '@/components/animated-button';
 
 interface BlogSectionProps {
   subtitle: {
@@ -65,21 +63,14 @@ const BlogSection = ({
           </div>
         </div>
         {/* CTA Button */}
-        <Link
-          key={ctaButton.text}
+        <AnimatedButton
+          text={ctaButton.text}
           href={ctaButton.link}
-          className={cn(
-            buttonVariants({
-              variant:
-                (ctaButton.variant as 'default' | 'secondary') || 'default',
-              size: 'default',
-            }),
-            'hidden md:inline-flex w-fit xl:mt-6'
-          )}
-        >
-          {ctaButton.text}
-          <ArrowRight className='size-4! sm:size-6!' />
-        </Link>
+          variant={ctaButton.variant as 'default' | 'secondary'}
+          icon={{ type: 'lucide', name: 'ArrowRight' }}
+          iconClassName='size-4! sm:size-6!'
+          className='hidden md:inline-flex w-fit xl:mt-6'
+        />
       </div>
 
       {/* Carousel Area */}

@@ -8,9 +8,7 @@ import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
 import { OpenPosition } from '../../../../sanity.types';
 import { cn } from '@/lib/utils';
-import { Link } from 'next-view-transitions';
-import { buttonVariants } from '@/components/ui/button';
-import { Rocket } from 'lucide-react';
+import AnimatedButton from '@/components/animated-button';
 
 interface OpenPositionsSectionProps {
   positions: OpenPosition[];
@@ -79,18 +77,15 @@ export default function OpenPositionsSection({
                     <PortableText
                       value={position.description as PortableTextBlock[]}
                     />
-                    <Link
-                      href={`/contact-us`}
-                      className={cn(
-                        buttonVariants({
-                          variant: 'default',
-                        }),
-                        'mt-8'
-                      )}
-                    >
-                      Apply <span className='highlight'>/now</span>
-                      <Rocket className='size-5' />
-                    </Link>
+                    <AnimatedButton
+                      text='Apply'
+                      href='/contact-us'
+                      highlightedText='/now'
+                      variant='default'
+                      icon={{ type: 'lucide', name: 'Rocket' }}
+                      iconClassName='size-5!'
+                      className='mt-8'
+                    />
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -119,17 +114,13 @@ const NoOpenPositionsSection = () => {
           in touch through the contact link bellow or follow us on LinkedIn for
           future opportunities.
         </p>
-        <Link
-          href={`/contact-us`}
-          className={cn(
-            buttonVariants({
-              variant: 'default',
-            }),
-            'mt-8'
-          )}
-        >
-          Contact Us <span className='highlight'>/now</span>
-        </Link>
+        <AnimatedButton
+          text='Contact Us'
+          href='/contact-us'
+          variant='default'
+          highlightedText='/now'
+          className='mt-8'
+        />
       </div>
     </section>
   );

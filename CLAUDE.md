@@ -65,6 +65,10 @@ pnpx sanity@latest typegen generate                          # Generate TypeScri
   - [ui/](src/components/ui/) - shadcn/ui components
   - [blog/](src/components/blog/) - Blog-specific components
   - [sections/](src/components/sections/) - Page section components
+  - [fancy/](src/components/fancy/) - Advanced UI components with animations
+    - [text/](src/components/fancy/text/) - Text animation components
+      - [letter-swap-pingpong-anim.tsx](src/components/fancy/text/letter-swap-pingpong-anim.tsx) - Letter-by-letter hover animation
+  - [animated-button.tsx](src/components/animated-button.tsx) - Hybrid Link/Button with text animations
   - [contact-form.tsx](src/components/contact-form.tsx) - Contact form component
 - **[src/providers/](src/providers/)** - React context providers
   - [query-provider.tsx](src/providers/query-provider.tsx) - React Query provider
@@ -382,6 +386,398 @@ export default function ContactPage() {
   );
 }
 ```
+
+## Advanced UI Components
+
+### AnimatedButton Component
+
+**Location**: [src/components/animated-button.tsx](src/components/animated-button.tsx)
+
+A hybrid button component that conditionally renders as either a navigation link or an action button, with animated text and flexible icon support.
+
+**Architecture Overview**:
+
+```typescript
+'use client';
+
+import { useState } from 'react';
+import { Link } from 'next-view-transitions';
+import { Button, buttonVariants } from './ui/button';
+import { ArrowRight, Send as SendIcon, Rocket } from 'lucide-react';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { urlFor } from '@/sanity/lib/image';
+import Image from 'next/image';
+import LetterSwapPingPong from './fancy/text/letter-swap-pingpong-anim';
+
+// Explicit icon map for bundle size optimization
+const ICON_MAP = {
+  ArrowRight,
+  SendIcon,
+  Rocket,
+} as const;
+
+type IconName = keyof typeof ICON_MAP;
+
+// Icon system with three types
+type IconProp =
+  | { type: 'lucide'; name: IconName }
+  | { type: 'sanity'; source: SanityImageSource; alt: string }
+  | { type: 'url'; src: string; alt: string };
+
+// Discriminated union ensures Link XOR Button
+type AnimatedButtonProps = {
+  text: string;
+  variant: 'default' | 'secondary';
+  highlightedText?: string;
+  icon?: IconProp;
+  className?: string;
+  iconClassName?: string;
+} & (
+  | {
+      href: string;           // Link variant
+      onClick?: never;
+      disabled?: never;
+      type?: never;
+    }
+  | {
+      href?: never;
+      onClick: () => void;    // Button variant
+      disabled?: boolean;
+      type?: 'button' | 'submit' | 'reset';
+    }
+);
+```
+
+**Key Features**:
+
+1. **Type-Safe Discriminated Union**:
+   - Enforces either `href` (Link) OR `onClick` (Button), never both
+   - Button-specific props (`disabled`, `type`) only available with `onClick`
+   - TypeScript errors at compile time for invalid combinations
+
+2. **Three Icon Types**:
+   - **Lucide Icons**: Pass by string name (`'ArrowRight'`, `'SendIcon'`, `'Rocket'`)
+   - **Sanity Images**: Pass `SanityImageSource` object with alt text
+   - **URL Strings**: Pass direct image path with alt text
+
+3. **Server Component Compatibility**:
+   - Lucide icons passed as **strings** (serializable), not components
+   - Icon components resolved at runtime in Client Component
+   - Solves Next.js serialization issue with Server → Client props
+
+4. **Bundle Size Optimization**:
+   - Explicit `ICON_MAP` with only 3 icons (~3KB)
+   - Prevents bundling all 1000+ Lucide icons
+   - Easy to extend (import + add to map)
+
+5. **Parent-Controlled Hover**:
+   - Tracks hover state via `useState`
+   - Passes `isParentHovered` to LetterSwapPingPong
+   - Triggers text animation on button hover (not just text hover)
+
+**Implementation Pattern**:
+
+```typescript
+const AnimatedButton = ({
+  text,
+  href,
+  onClick,
+  variant,
+  highlightedText,
+  icon,
+  disabled,
+  type,
+  // ...
+}: AnimatedButtonProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Shared content (text animation + icon)
+  const content = (
+    <>
+      <LetterSwapPingPong
+        label={text}
+        highlightedText={highlightedText}
+        isParentHovered={isHovered}
+      />
+      {icon && (
+        {/* Icon rendering logic based on type */}
+      )}
+    </>
+  );
+
+  // Shared props
+  const commonProps = {
+    className: cn(buttonVariants({ variant }), className),
+    onMouseEnter: () => setIsHovered(true),
+    onMouseLeave: () => setIsHovered(false),
+  };
+
+  // Conditional rendering
+  if (href) {
+    return <Link href={href} {...commonProps}>{content}</Link>;
+  }
+
+  return (
+    <Button onClick={onClick} disabled={disabled} type={type} {...commonProps}>
+      {content}
+    </Button>
+  );
+};
+```
+
+**Usage Examples**:
+
+```tsx
+// Navigation link
+<AnimatedButton
+  text="Learn More"
+  href="/about"
+  variant="default"
+  icon={{ type: 'lucide', name: 'ArrowRight' }}
+/>
+
+// Form submit button
+<AnimatedButton
+  text="Send Message"
+  onClick={handleSubmit}
+  variant="secondary"
+  type="submit"
+  disabled={isSubmitting}
+  icon={{ type: 'lucide', name: 'SendIcon' }}
+/>
+
+// Button with Sanity image icon
+<AnimatedButton
+  text="View More"
+  onClick={handleClick}
+  variant="default"
+  icon={{ type: 'sanity', source: iconImage, alt: 'Icon' }}
+/>
+
+// Link with highlighted text
+<AnimatedButton
+  text="Explore"
+  highlightedText="Solutions"
+  href="/services"
+  variant="secondary"
+/>
+```
+
+**Adding New Icons**:
+
+To add a new Lucide icon:
+
+1. Import the icon:
+   ```typescript
+   import { ArrowRight, Send as SendIcon, Rocket, ChevronDown } from 'lucide-react';
+   ```
+
+2. Add to `ICON_MAP`:
+   ```typescript
+   const ICON_MAP = {
+     ArrowRight,
+     SendIcon,
+     Rocket,
+     ChevronDown,  // New icon
+   } as const;
+   ```
+
+3. TypeScript will automatically update the `IconName` type with autocomplete.
+
+### LetterSwapPingPong Component
+
+**Location**: [src/components/fancy/text/letter-swap-pingpong-anim.tsx](src/components/fancy/text/letter-swap-pingpong-anim.tsx)
+
+A text animation component that creates a letter-by-letter "ping-pong swap" effect on hover using Framer Motion.
+
+**Architecture Overview**:
+
+```typescript
+'use client';
+
+import { useEffect, useState } from 'react';
+import { debounce } from 'lodash';
+import { AnimationOptions, motion, stagger, useAnimate } from 'motion/react';
+
+interface TextProps {
+  label: string;
+  highlightedText?: string;
+  reverse?: boolean;
+  transition?: AnimationOptions;
+  staggerDuration?: number;
+  staggerFrom?: 'first' | 'last' | 'center' | number;
+  className?: string;
+  onClick?: () => void;
+  isParentHovered?: boolean;  // Parent-controlled hover
+}
+```
+
+**Key Features**:
+
+1. **Letter-by-Letter Animation**:
+   - Each letter animated independently with staggered timing
+   - Default stagger: 0.03s delay between letters
+   - Configurable animation direction (up/down)
+
+2. **Parent-Controlled Hover**:
+   - Accepts `isParentHovered` prop from parent component
+   - Watches prop changes via `useEffect`
+   - Triggers `hoverStart()` / `hoverEnd()` animations accordingly
+   - Used by AnimatedButton to animate on button hover
+
+3. **Text Highlighting**:
+   - Optional `highlightedText` prop
+   - Renders with `text-primary` color class
+   - Continues animation seamlessly from main text
+   - First character prepended with space for separation
+
+4. **Debounced Hover Events**:
+   - 100ms debounce on hover start/end
+   - Prevents animation flicker on rapid hover
+   - Uses lodash `debounce` with `leading: true, trailing: true`
+
+5. **Accessibility**:
+   - Hidden `<span className='sr-only'>` with full text for screen readers
+   - Visual animated letters marked `aria-hidden={true}`
+   - Full keyboard navigation support via parent component
+
+**Implementation Pattern**:
+
+```typescript
+const LetterSwapPingPong = ({
+  label,
+  highlightedText,
+  reverse = true,
+  transition = { type: 'spring', duration: 0.7 },
+  staggerDuration = 0.03,
+  staggerFrom = 'first',
+  isParentHovered,
+  // ...
+}: TextProps) => {
+  const [scope, animate] = useAnimate();
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Debounced animation functions
+  const hoverStart = debounce(() => {
+    if (isHovered) return;
+    setIsHovered(true);
+
+    animate('.letter', { y: reverse ? '100%' : '-100%' }, /* ... */);
+    animate('.letter-secondary', { top: '0%' }, /* ... */);
+  }, 100, { leading: true, trailing: true });
+
+  const hoverEnd = debounce(() => {
+    setIsHovered(false);
+
+    animate('.letter', { y: 0 }, /* ... */);
+    animate('.letter-secondary', { top: reverse ? '-100%' : '100%' }, /* ... */);
+  }, 100, { leading: true, trailing: true });
+
+  // Watch parent hover state
+  useEffect(() => {
+    if (isParentHovered !== undefined) {
+      if (isParentHovered) {
+        hoverStart();
+      } else {
+        hoverEnd();
+      }
+    }
+  }, [isParentHovered]);
+
+  return (
+    <motion.span ref={scope}>
+      <span className='sr-only'>{label}{highlightedText}</span>
+
+      {/* Main text letters */}
+      {label.split('').map((letter, i) => (
+        <span key={i} aria-hidden={true}>
+          <motion.span className="relative letter">{letter}</motion.span>
+          <motion.span className="absolute letter-secondary">{letter}</motion.span>
+        </span>
+      ))}
+
+      {/* Highlighted text letters */}
+      {highlightedText?.split('').map((letter, i) => (
+        <span key={label.length + i} className="text-primary" aria-hidden={true}>
+          <motion.span className="relative letter">
+            {i === 0 && ' '}{letter}
+          </motion.span>
+          <motion.span className="absolute letter-secondary">
+            {i === 0 && ' '}{letter}
+          </motion.span>
+        </span>
+      ))}
+    </motion.span>
+  );
+};
+```
+
+**Parent-Child Hover Pattern**:
+
+AnimatedButton controls the animation by passing hover state:
+
+```tsx
+// Parent (AnimatedButton)
+const [isHovered, setIsHovered] = useState(false);
+
+<Button
+  onMouseEnter={() => setIsHovered(true)}
+  onMouseLeave={() => setIsHovered(false)}
+>
+  <LetterSwapPingPong
+    label="Hover the button"
+    isParentHovered={isHovered}
+  />
+</Button>
+```
+
+**Usage Examples**:
+
+```tsx
+// Standalone with internal hover
+<LetterSwapPingPong label="Animate Me" />
+
+// With highlighted text
+<LetterSwapPingPong
+  label="Explore"
+  highlightedText="Solutions"
+/>
+
+// Parent-controlled hover
+const [isHovered, setIsHovered] = useState(false);
+
+<div onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+  <LetterSwapPingPong
+    label="Controlled"
+    isParentHovered={isHovered}
+  />
+</div>
+
+// Custom animation timing
+<LetterSwapPingPong
+  label="Slow"
+  transition={{ type: 'spring', duration: 1.2 }}
+  staggerDuration={0.05}
+  staggerFrom="center"
+/>
+```
+
+**Animation Behavior**:
+
+1. **Hover Start**:
+   - Primary letters (`.letter`) move 100% up/down (based on `reverse`)
+   - Secondary letters (`.letter-secondary`) move to 0% (visible position)
+   - Staggered timing creates wave effect
+
+2. **Hover End**:
+   - Primary letters return to 0% (original position)
+   - Secondary letters return to 100% up/down (hidden position)
+   - Reverse staggered timing
+
+3. **Highlighted Text**:
+   - Uses same `.letter` and `.letter-secondary` classes
+   - Animates simultaneously with main text
+   - Different color applied via `text-primary`
 
 ## Sanity CMS Schema Patterns
 
