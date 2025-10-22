@@ -7,7 +7,6 @@ import Lenis from '@/components/lenis';
 import BackgroundGradient from '@/components/bg-gradient';
 import QueryProvider from '@/providers/query-provider';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
-import { ViewTransitions } from 'next-view-transitions';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,23 +30,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ViewTransitions>
-      <html lang='en'>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
-        >
-          <QueryProvider>
-            <NuqsAdapter>
-              <Lenis>
-                <Header />
-                <BackgroundGradient />
-                {children}
-                <Footer />
-              </Lenis>
-            </NuqsAdapter>
-          </QueryProvider>
-        </body>
-      </html>
-    </ViewTransitions>
+    <html lang='en'>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
+      >
+        <QueryProvider>
+          <NuqsAdapter>
+            <Lenis>
+              <Header />
+              <BackgroundGradient />
+              {children}
+              <Footer />
+            </Lenis>
+          </NuqsAdapter>
+        </QueryProvider>
+      </body>
+    </html>
   );
 }

@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils';
 import Burger from './burger';
 import { useState } from 'react';
-import { Link } from 'next-view-transitions';
+import { Link } from '@/components/motion-link';
 import { GeneralInfo } from '../../../sanity.types';
 import { Image } from 'next-sanity/image';
 import { urlFor } from '@/sanity/lib/image';

@@ -2,7 +2,7 @@
 
 import { Route } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { Link } from 'next-view-transitions';
+import { Link } from '@/components/motion-link';
 import { usePathname } from 'next/navigation';
 
 const MenuLink = ({

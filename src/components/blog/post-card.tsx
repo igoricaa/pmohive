@@ -1,4 +1,4 @@
-import { Link } from 'next-view-transitions';
+import { Link } from '@/components/motion-link';
 import { Post } from '../../../sanity.types';
 import { Image } from 'next-sanity/image';
 import { urlForUncropped } from '@/sanity/lib/image';

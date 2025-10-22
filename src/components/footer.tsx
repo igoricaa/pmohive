@@ -1,4 +1,4 @@
-import { Link } from 'next-view-transitions';
+import { Link } from '@/components/motion-link';
 import Image from 'next/image';
 import { getGeneralInfoData } from '@/sanity/lib/queries';
 import { urlFor } from '@/sanity/lib/image';

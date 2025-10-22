@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Link } from 'next-view-transitions';
+import { Link } from '@/components/motion-link';
 import { Button, buttonVariants } from './ui/button';
 import { cn } from '@/lib/utils';
 import { ArrowRight, Send as SendIcon, Rocket } from 'lucide-react';
