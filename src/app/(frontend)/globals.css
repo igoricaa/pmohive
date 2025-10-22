@@ -3,10 +3,11 @@
 
 @theme inline {
   --padding-side: var(--padding-side);
-  --color-primary-rgb: 240, 154, 96;
-  --color-primary: #f09a60;
-  --color-light-grey: #e9e9e9;
-  --color-black-custom: #090909;
+  --color-primary-rgb: var(--primary-rgb);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-light-grey: var(--light-grey);
+  --color-black-custom: var(--black-custom);
   --breakpoint-2xl: 108rem;
   --breakpoint-3xl: 120rem;
   --text-xxs: 0.625rem;
@@ -54,6 +55,12 @@
 
 :root {
   --padding-side: 1rem;
+
+  --primary-rgb: 240, 154, 96;
+  --primary: #f09a60;
+  --primary-dark: #905c3a;
+  --light-grey: #e9e9e9;
+  --black-custom: #090909;
   /* Typography Variables - SM Mobile (default) */
   --h1-font-size: 2.5rem; /* 40px */
   --h1-line-height: 1;
@@ -80,7 +87,6 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -208,7 +214,7 @@
 }
 
 .highlight {
-  color: var(--color-primary);
+  color: var(--primary);
 }
 
 .burger-menu-piece {

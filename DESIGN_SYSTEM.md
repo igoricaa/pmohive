@@ -393,7 +393,7 @@ className={cn(
 
 // Custom dropdown icon with primary background
 <SelectPrimitive.Icon asChild>
-  <div className='bg-primary rounded-full w-9.5 h-9.5 border border-[#905C3A] flex items-center justify-center'>
+  <div className='bg-primary rounded-full w-9.5 h-9.5 border border-primary-dark flex items-center justify-center'>
     <ChevronDownIcon className='size-5' color='#000' />
   </div>
 </SelectPrimitive.Icon>

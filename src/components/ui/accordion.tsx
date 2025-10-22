@@ -42,13 +42,18 @@ function AccordionTrigger({
           'flex flex-1 items-center gap-4 py-10 text-left transition-all cursor-pointer',
           'outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]',
           'disabled:pointer-events-none disabled:opacity-50',
-          '[&[data-state=open]>svg]:rotate-180',
+          '[&[data-state=open]>svg]:rotate-180 [&[data-state=open]>.svg-wrapper]:rotate-180 [&[data-state=open]>.svg-wrapper]:bg-primary',
           className
         )}
         {...props}
       >
         {children}
-        <ChevronDownIcon className='pointer-events-none size-8 shrink-0 transition-transform duration-200' />
+        <div className='svg-wrapper bg-[#E8E8E8] border border-primary-dark rounded-full size-8 flex items-center justify-center transition-[rotate,background-color] duration-300'>
+          <ChevronDownIcon
+            color='#000'
+            className='pointer-events-none size-4 shrink-0 transition-transform duration-200'
+          />
+        </div>
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   );
