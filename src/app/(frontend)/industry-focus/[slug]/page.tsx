@@ -1,6 +1,6 @@
 import Heading from '@/components/ui/heading';
 import { urlForUncropped } from '@/sanity/lib/image';
-import { getServiceData } from '@/sanity/lib/queries';
+import { getAllServicesWithSlugs, getServiceData } from '@/sanity/lib/queries';
 import { Image } from 'next-sanity/image';
 import { SERVICE_QUERYResult } from '../../../../../sanity.types';
 import { notFound } from 'next/navigation';
@@ -12,6 +12,13 @@ import Subtitle from '@/components/ui/subtitle';
 import { TextGradientScroll } from '@/components/text-gradient-scroll';
 import { cn } from '@/lib/utils';
 import BreakSection from '@/components/sections/break-section';
+
+export async function generateStaticParams() {
+  const services = await getAllServicesWithSlugs();
+  return services.map((service: { slug: { current: string } }) => ({
+    slug: service.slug.current,
+  }));
+}
 
 export default async function IndustryFocusPage({
   params,

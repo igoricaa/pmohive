@@ -170,6 +170,28 @@ export const getPostData = async (slug: string): Promise<POST_QUERYResult> => {
   });
 };
 
+export const POSTS_QUERY_WITH_SLUGS = defineQuery(`*[_type == "post"]{
+  slug
+}`);
+
+export const SERVICES_QUERY_WITH_SLUGS = defineQuery(`*[_type == "service"]{
+  slug
+}`);
+
+export async function getAllServicesWithSlugs() {
+  return await sanityFetch({
+    query: SERVICES_QUERY_WITH_SLUGS,
+    tags: ['services'],
+  });
+}
+
+export async function getAllPostsWithSlugs() {
+  return await sanityFetch({
+    query: POSTS_QUERY_WITH_SLUGS,
+    tags: ['posts'],
+  });
+}
+
 export const CONTACT_PAGE_QUERY = defineQuery(`{
   "contactPage": *[_type == "contactPage"][0]
 }`);

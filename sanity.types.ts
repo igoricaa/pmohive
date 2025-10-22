@@ -1090,6 +1090,16 @@ export type POST_QUERYResult = {
     };
   }>;
 };
+// Variable: POSTS_QUERY_WITH_SLUGS
+// Query: *[_type == "post"]{  slug}
+export type POSTS_QUERY_WITH_SLUGSResult = Array<{
+  slug: Slug;
+}>;
+// Variable: SERVICES_QUERY_WITH_SLUGS
+// Query: *[_type == "service"]{  slug}
+export type SERVICES_QUERY_WITH_SLUGSResult = Array<{
+  slug: Slug;
+}>;
 // Variable: CONTACT_PAGE_QUERY
 // Query: {  "contactPage": *[_type == "contactPage"][0]}
 export type CONTACT_PAGE_QUERYResult = {
@@ -1349,6 +1359,8 @@ declare module "@sanity/client" {
     "\n  *[_type == \"post\"\n    && (!defined($search) || title match $search + \"*\")\n    && (!defined($category) || category._ref == $category)\n  ] | order(date asc) [0...11] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    featuredMedia,\n    date,\n    category->{\n      _id,\n      name,\n      \"slug\": slug.current\n    }\n  }\n": BLOG_POSTS_QUERY_ASCResult;
     "\n  *[_type == \"postCategory\"] | order(name asc) {\n    _id,\n    name,\n    \"slug\": slug.current\n  }\n": POST_CATEGORIES_QUERYResult;
     "{\n  \"currentPost\": *[_type == \"post\" && slug.current == $slug][0]{\n    _id,\n    title,\n    subtitle {\n      text,\n      highlightedText\n    },\n    \"slug\": slug.current,\n    date,\n    content,\n    excerpt,\n    featuredMedia,\n  },\n  \"relatedPosts\": *[\n    _type == \"post\" \n    && slug.current != $slug\n  ] | order(date desc)[0...3]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    date,\n    featuredMedia\n  }\n}": POST_QUERYResult;
+    "*[_type == \"post\"]{\n  slug\n}": POSTS_QUERY_WITH_SLUGSResult;
+    "*[_type == \"service\"]{\n  slug\n}": SERVICES_QUERY_WITH_SLUGSResult;
     "{\n  \"contactPage\": *[_type == \"contactPage\"][0]\n}": CONTACT_PAGE_QUERYResult;
     "{\n  \"aboutPage\": *[_type == \"aboutPage\"][0] {\n    ...,\n    team {\n      ...,\n      teamMembers[]->\n    },\n    approachSection {\n      ...,\n      approachItems[]->\n    },\n    visionSection {\n      ...,\n      visionItems[]->\n    },\n  }\n}": ABOUT_PAGE_QUERYResult;
     "{\n  \"careersPage\": *[_type == \"careersPage\"][0] {\n    ...,\n    openPositions[]->\n  }\n}": CAREERS_PAGE_QUERYResult;

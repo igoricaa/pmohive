@@ -3,7 +3,7 @@ import ShareArticle from '@/components/blog/share-article';
 import PostPortableText from '@/components/post-portable-text';
 import Heading from '@/components/ui/heading';
 import { urlForUncropped } from '@/sanity/lib/image';
-import { getPostData } from '@/sanity/lib/queries';
+import { getAllPostsWithSlugs, getPostData } from '@/sanity/lib/queries';
 import { PortableTextBlock } from 'next-sanity';
 import { Image } from 'next-sanity/image';
 import { notFound } from 'next/navigation';
@@ -17,6 +17,14 @@ import {
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
 import ScrollMeter from '@/components/scroll-meter';
+
+export async function generateStaticParams() {
+  const posts = await getAllPostsWithSlugs();
+
+  return posts.map((post: { slug: { current: string } }) => ({
+    slug: post.slug.current,
+  }));
+}
 
 export default async function BlogPostPage({
   params,
