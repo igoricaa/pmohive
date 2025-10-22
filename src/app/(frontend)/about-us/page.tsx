@@ -35,7 +35,7 @@ export default async function AboutUsPage() {
         }
       />
 
-      <div className='px-side flex flex-col gap-2 xl:gap-4 pt-24 pb-32 sm:py-45 xl:pt-50 xl:pb-60 lg:grid lg:grid-cols-12 lg:gap-x-4'>
+      <div className='px-side flex flex-col gap-2 xl:gap-4 py-20 sm:py-45 xl:pt-40 xl:pb-50 lg:grid lg:grid-cols-12 lg:gap-x-4'>
         <Subtitle
           highlightedText={aboutPageData.introSection.subtitle.highlightedText}
           className='lg:col-span-10 lg:col-start-2'
@@ -46,11 +46,13 @@ export default async function AboutUsPage() {
           text={aboutPageData.animatedTextPart1}
           highlightFirstWord={true}
           className='justify-start lg:col-span-10 lg:col-start-2 text-[28px] sm:text-4xl 2xl:text-[40px] leading-none'
+          offset={['-1 0.6', '0.3 center']}
         />
 
         <TextGradientScroll
           text={aboutPageData.animatedTextPart2}
           className='justify-start lg:col-span-10 lg:col-start-2 text-[28px] sm:text-4xl 2xl:text-[40px] leading-none mt-3 sm:mt-5'
+          offset={['-0.5 0.5', '0.7 center']}
         />
       </div>
 

@@ -72,7 +72,7 @@ export default async function IndustryFocusPage({
         className='mt-10 sm:mt-12 xl:mt-16'
       />
 
-      <section className='px-side flex flex-col sm:items-center justify-center gap-2 xl:gap-4 xl:max-w-10/12 mx-auto py-24 xl:py-30'>
+      <section className='px-side flex flex-col sm:items-center justify-center gap-2 xl:gap-4 xl:max-w-10/12 mx-auto py-20 xl:py-30'>
         <Subtitle
           highlightedText={currentService.role.subtitle.highlightedText}
           className='sm:text-center'
@@ -83,6 +83,7 @@ export default async function IndustryFocusPage({
           text={currentService.role.description}
           highlightFirstWord={true}
           className='text-2xl sm:text-3xl xl:text-4xl xl:font-medium leading-none xl:leading-[110%] justify-start sm:justify-center'
+          offset={['-0.9 center', '0.6 center']}
         />
       </section>
 
@@ -115,6 +116,7 @@ export default async function IndustryFocusPage({
         <TextGradientScroll
           text={currentService.highlightedText}
           className='text-2xl sm:text-3xl xl:text-4xl xl:font-medium leading-none xl:leading-[110%] justify-start sm:justify-center xl:col-span-10 xl:col-start-2 py-24 xl:pt-32 xl:pb-32 '
+          offset={['-0.7 center', '0.6 0.6']}
         />
       </section>
 
@@ -129,7 +131,7 @@ export default async function IndustryFocusPage({
         className='xl:col-span-10 xl:col-start-2'
       />
 
-      <section className='px-side flex flex-col sm:items-center justify-center gap-2 xl:gap-4 xl:max-w-10/12 mx-auto py-24 xl:py-32 xl:col-span-10 xl:col-start-2'>
+      <section className='px-side flex flex-col sm:items-center justify-center gap-2 xl:gap-4 xl:max-w-10/12 mx-auto py-20 xl:py-32 xl:col-span-10 xl:col-start-2'>
         <Subtitle
           highlightedText={currentService.proofPoint.subtitle.highlightedText}
           className='sm:text-center'
@@ -141,6 +143,7 @@ export default async function IndustryFocusPage({
             key={item._key}
             text={item.description}
             className='text-2xl sm:text-3xl xl:text-4xl xl:font-medium leading-none xl:leading-[110%] justify-start sm:justify-center'
+            offset={['-0.9 center', '0.6 center']}
           />
         ))}
       </section>

@@ -20,7 +20,7 @@ function slideInOutAnimation() {
       },
     ],
     {
-      duration: 1500,
+      duration: 1200,
       easing: 'cubic-bezier(0.87, 0, 0.13, 1)',
       fill: 'forwards',
       pseudoElement: '::view-transition-old(root)',
@@ -38,7 +38,7 @@ function slideInOutAnimation() {
       },
     ],
     {
-      duration: 1500,
+      duration: 1200,
       easing: 'cubic-bezier(0.87, 0, 0.13, 1)',
       fill: 'forwards',
       pseudoElement: '::view-transition-new(root)',

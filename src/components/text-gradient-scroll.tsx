@@ -2,6 +2,7 @@
 
 import {
   type MotionValue,
+  type UseScrollOptions,
   motion,
   useScroll,
   useTransform,
@@ -19,6 +20,7 @@ type TextGradientScrollType = {
   className?: string;
   textOpacity?: TextOpacityEnum;
   highlightFirstWord?: boolean;
+  offset?: UseScrollOptions['offset'];
 };
 
 type LetterType = {
@@ -65,11 +67,12 @@ function TextGradientScroll({
   type = 'letter',
   textOpacity = 'soft',
   highlightFirstWord = false,
+  offset = ['start center', 'end center'],
 }: TextGradientScrollType) {
   const ref = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start center', 'end center'],
+    offset,
   });
 
   const words = text.split(' ');

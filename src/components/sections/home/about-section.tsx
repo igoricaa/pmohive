@@ -47,14 +47,18 @@ const AboutSection = ({
 }: AboutSectionType) => {
   return (
     <section className={cn(className)}>
-      <div className='px-side flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto py-32 sm:py-45 xl:pt-50 xl:pb-60'>
+      <div className='px-side flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto py-22 sm:pt-20 sm:pb-25 xl:pt-10 xl:pb-50'>
         <Subtitle
           highlightedText={heading.highlightedText}
           className='text-center'
         >
           {heading.text}
         </Subtitle>
-        <TextGradientScroll text={animatedText} highlightFirstWord={true} />
+        <TextGradientScroll
+          text={animatedText}
+          highlightFirstWord={true}
+          offset={['-0.9 center', '0.6 center']}
+        />
       </div>
 
       <UnderstandingPmoSection understandingPMOItems={understandingPMOItems} />
@@ -69,8 +73,11 @@ const AboutSection = ({
         ))}
       </div>
 
-      <div className='px-side flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto py-32 sm:py-45 xl:pt-60 xl:pb-60'>
-        <TextGradientScroll text={wrapUpText} />
+      <div className='px-side flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto py-24 sm:py-45 xl:pt-45 xl:pb-50'>
+        <TextGradientScroll
+          text={wrapUpText}
+          offset={['-0.9 center', '0.6 0.6']}
+        />
       </div>
 
       <div className='px-side grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-2 md:gap-4 items-center'>
