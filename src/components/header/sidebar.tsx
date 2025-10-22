@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils';
 import Burger from './burger';
 import { useState } from 'react';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { buttonVariants } from '../ui/button';
 import { ArrowRight } from 'lucide-react';
 import { GeneralInfo } from '../../../sanity.types';

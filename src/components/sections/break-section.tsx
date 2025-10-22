@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import { urlForUncropped } from '@/sanity/lib/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { Image } from 'next-sanity/image';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { ArrowRight } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { PortableTextBlock } from 'next-sanity';
@@ -77,7 +77,9 @@ const BreakSection = ({
                   href={button.link}
                   className={cn(
                     buttonVariants({
-                      variant: (button.variant as 'default' | 'secondary') || 'default',
+                      variant:
+                        (button.variant as 'default' | 'secondary') ||
+                        'default',
                       size: 'default',
                     }),
                     'flex-1 sm:flex-initial sm:w-auto'

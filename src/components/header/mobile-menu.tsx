@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils';
 import Burger from './burger';
 import { useState } from 'react';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { GeneralInfo } from '../../../sanity.types';
 import hexagonalPattern from '../../../public/hexagonal-pattern.svg';
 import ImageNext from 'next/image';

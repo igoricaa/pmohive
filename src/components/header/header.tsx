@@ -3,7 +3,7 @@ import { urlFor } from '@/sanity/lib/image';
 import { getGeneralInfoData } from '@/sanity/lib/queries';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { Image } from 'next-sanity/image';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 
 import MenuLink from '../menuLink';
 import Sidebar from './sidebar';

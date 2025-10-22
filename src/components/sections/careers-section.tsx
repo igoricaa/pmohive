@@ -13,7 +13,7 @@ import { urlForUncropped } from '@/sanity/lib/image';
 import { TeamMember } from '../../../sanity.types';
 import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import Heading from '@/components/ui/heading';
 
 interface CareersSectionProps {
@@ -73,8 +73,9 @@ const CareersSection = ({
             href={ctaButton.link}
             className={cn(
               buttonVariants({
-                variant: (ctaButton.variant as 'default' | 'secondary') || 'default',
-                size: 'default'
+                variant:
+                  (ctaButton.variant as 'default' | 'secondary') || 'default',
+                size: 'default',
               }),
               'hidden md:inline-flex w-fit xl:mt-6'
             )}
