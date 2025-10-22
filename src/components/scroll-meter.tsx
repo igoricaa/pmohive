@@ -8,15 +8,10 @@ const ScrollMeter = () => {
   return (
     <motion.div
       id='scroll-indicator'
+      className='fixed top-0 left-0 right-0 h-2 bg-primary z-25'
       style={{
         scaleX: scrollYProgress,
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: 10,
         originX: 0,
-        backgroundColor: '#ff0088',
       }}
     />
   );
