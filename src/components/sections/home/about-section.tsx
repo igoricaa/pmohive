@@ -54,7 +54,7 @@ const AboutSection = ({
         >
           {heading.text}
         </Subtitle>
-        <TextGradientScroll text={animatedText} />
+        <TextGradientScroll text={animatedText} highlightFirstWord={true} />
       </div>
 
       <UnderstandingPmoSection understandingPMOItems={understandingPMOItems} />

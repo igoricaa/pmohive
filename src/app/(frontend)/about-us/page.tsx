@@ -1,6 +1,5 @@
 import ApproachSection from '@/components/sections/about/approach-section';
 import IntroSection from '@/components/sections/about/intro-section';
-import VisionSection from '@/components/sections/about/vision-section';
 import BreakSection from '@/components/sections/break-section';
 import CareersSection from '@/components/sections/careers-section';
 import BlogSection from '@/components/sections/home/blog-section';
@@ -10,6 +9,7 @@ import { getAboutPageData, getLatestPosts } from '@/sanity/lib/queries';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { PortableTextBlock } from 'next-sanity';
 import { notFound } from 'next/navigation';
+import SplitSection from '@/components/sections/split-section';
 
 export default async function AboutUsPage() {
   const [aboutPageResult, latestPostsResult] = await Promise.all([
@@ -44,6 +44,7 @@ export default async function AboutUsPage() {
         </Subtitle>
         <TextGradientScroll
           text={aboutPageData.animatedTextPart1}
+          highlightFirstWord={true}
           className='justify-start lg:col-span-10 lg:col-start-2 text-[28px] sm:text-4xl 2xl:text-[40px] leading-none'
         />
 
@@ -80,7 +81,7 @@ export default async function AboutUsPage() {
         items={aboutPageData.approachSection.items}
       />
 
-      <VisionSection
+      <SplitSection
         subtitle={aboutPageData.visionSection.subtitle}
         description={
           aboutPageData.visionSection.description as PortableTextBlock[]
@@ -90,6 +91,7 @@ export default async function AboutUsPage() {
             alt: string;
           }
         }
+        className='mt-11 sm:mt-16 xl:mt-26'
       />
 
       <BlogSection

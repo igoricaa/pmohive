@@ -7,6 +7,8 @@ import {
   GENERAL_INFO_QUERYResult,
   HOME_PAGE_QUERYResult,
   LATEST_POSTS_QUERYResult,
+  POST_QUERYResult,
+  SERVICE_QUERYResult,
 } from '../../../sanity.types';
 
 export const HOME_PAGE_QUERY = defineQuery(`{
@@ -160,6 +162,14 @@ export const POST_QUERY = defineQuery(`{
   }
 }`);
 
+export const getPostData = async (slug: string): Promise<POST_QUERYResult> => {
+  return await sanityFetch({
+    query: POST_QUERY,
+    params: { slug },
+    tags: ['post', `post-${slug}`],
+  });
+};
+
 export const CONTACT_PAGE_QUERY = defineQuery(`{
   "contactPage": *[_type == "contactPage"][0]
 }`);
@@ -211,3 +221,17 @@ export const getCareersPageData =
       tags: ['careersPage'],
     });
   };
+
+export const SERVICE_QUERY = defineQuery(`{
+  "currentService": *[_type == "service" && slug.current == $slug][0]
+}`);
+
+export const getServiceData = async (
+  slug: string
+): Promise<SERVICE_QUERYResult> => {
+  return await sanityFetch({
+    query: SERVICE_QUERY,
+    params: { slug },
+    tags: ['service'],
+  });
+};

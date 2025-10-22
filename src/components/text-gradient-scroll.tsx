@@ -18,6 +18,7 @@ type TextGradientScrollType = {
   type?: ViewTypeEnum;
   className?: string;
   textOpacity?: TextOpacityEnum;
+  highlightFirstWord?: boolean;
 };
 
 type LetterType = {
@@ -25,6 +26,7 @@ type LetterType = {
   progress: MotionValue<number>;
   range: number[];
   isFirst?: boolean;
+  highlightFirstWord?: boolean;
 };
 
 type WordType = {
@@ -32,6 +34,7 @@ type WordType = {
   progress: MotionValue<number>;
   range: number[];
   isFirst?: boolean;
+  highlightFirstWord?: boolean;
 };
 
 type CharType = {
@@ -39,6 +42,7 @@ type CharType = {
   progress: MotionValue<number>;
   range: number[];
   isFirst?: boolean;
+  highlightFirstWord?: boolean;
 };
 
 type TextGradientScrollContextType = {
@@ -60,6 +64,7 @@ function TextGradientScroll({
   className,
   type = 'letter',
   textOpacity = 'soft',
+  highlightFirstWord = false,
 }: TextGradientScrollType) {
   const ref = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress } = useScroll({
@@ -71,7 +76,13 @@ function TextGradientScroll({
 
   return (
     <TextGradientScrollContext.Provider value={{ textOpacity, type }}>
-      <p ref={ref} className={cn('relative flex m-0 flex-wrap font-semibold justify-center font-sans text-2xl sm:text-3xl xl:text-5xl 2xl:text-6xl leading-none xl:leading-[110%]', className)}>
+      <p
+        ref={ref}
+        className={cn(
+          'relative flex m-0 flex-wrap font-semibold justify-center font-sans text-2xl sm:text-3xl xl:text-5xl 2xl:text-6xl leading-none xl:leading-[110%]',
+          className
+        )}
+      >
         {words.map((word, i) => {
           const start = i / words.length;
           const end = start + 1 / words.length;
@@ -81,6 +92,7 @@ function TextGradientScroll({
               progress={scrollYProgress}
               range={[start, end]}
               isFirst={i === 0}
+              highlightFirstWord={highlightFirstWord}
             >
               {word}
             </Word>
@@ -90,6 +102,7 @@ function TextGradientScroll({
               progress={scrollYProgress}
               range={[start, end]}
               isFirst={i === 0}
+              highlightFirstWord={highlightFirstWord}
             >
               {word}
             </Letter>
@@ -102,14 +115,20 @@ function TextGradientScroll({
 
 export { TextGradientScroll };
 
-const Word = ({ children, progress, range, isFirst }: WordType) => {
+const Word = ({
+  children,
+  progress,
+  range,
+  isFirst,
+  highlightFirstWord = false,
+}: WordType) => {
   const opacity = useTransform(progress, range, [0, 1]);
 
   return (
     <span className='relative me-2 mt-2'>
       <span style={{ position: 'absolute', opacity: 0.1 }}>{children}</span>
       <motion.span
-        className={cn(isFirst && 'text-primary')}
+        className={cn(isFirst && highlightFirstWord && 'text-primary')}
         style={{ transition: 'all .5s', opacity: opacity }}
       >
         {children}
@@ -118,7 +137,13 @@ const Word = ({ children, progress, range, isFirst }: WordType) => {
   );
 };
 
-const Letter = ({ children, progress, range, isFirst }: LetterType) => {
+const Letter = ({
+  children,
+  progress,
+  range,
+  isFirst,
+  highlightFirstWord = false,
+}: LetterType) => {
   if (typeof children === 'string') {
     const amount = range[1] - range[0];
     const step = amount / children.length;
@@ -134,6 +159,7 @@ const Letter = ({ children, progress, range, isFirst }: LetterType) => {
               progress={progress}
               range={[start, end]}
               isFirst={isFirst}
+              highlightFirstWord={highlightFirstWord}
             >
               {char}
             </Char>
@@ -144,7 +170,13 @@ const Letter = ({ children, progress, range, isFirst }: LetterType) => {
   }
 };
 
-const Char = ({ children, progress, range, isFirst }: CharType) => {
+const Char = ({
+  children,
+  progress,
+  range,
+  isFirst,
+  highlightFirstWord = false,
+}: CharType) => {
   const opacity = useTransform(progress, range, [0, 1]);
   const { textOpacity } = useGradientScroll();
 
@@ -160,7 +192,10 @@ const Char = ({ children, progress, range, isFirst }: CharType) => {
         {children}
       </span>
       <motion.span
-        className={cn(isFirst && 'text-primary', 'font-sans')}
+        className={cn(
+          isFirst && highlightFirstWord && 'text-primary',
+          'font-sans'
+        )}
         style={{
           transition: 'all .5s',
           opacity: opacity,

@@ -12,7 +12,7 @@ import { postCategoryType } from './posts/postCategoryType';
 import { blockContentType } from './blockContentType';
 import { teamMemberType } from './teamMemberType';
 import { subtitleType } from './subtitleType';
-import { serviceType } from './serviceType';
+import { serviceType } from './services';
 import { projectType } from './projectType';
 import { generalInfoType } from './generalInfoType';
 import { buttonType } from './buttonType';

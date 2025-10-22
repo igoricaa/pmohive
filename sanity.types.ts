@@ -178,28 +178,81 @@ export type Service = {
   _rev: string;
   title: string;
   slug: Slug;
-  featuredImage: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  header: {
+    featuredImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
     };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt: string;
-    _type: "image";
+    subtitle: Subtitle;
+    heading: string;
+    description: BlockContent;
   };
-  descriptionPartOne: BlockContent;
-  descriptionPartTwo?: BlockContent;
-  relevantProjects?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "project";
-  }>;
+  challenge: {
+    subtitle: Subtitle;
+    heading: string;
+    description: BlockContent;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+  };
+  role: {
+    subtitle: Subtitle;
+    description: string;
+  };
+  approach: {
+    subtitle: Subtitle;
+    heading: string;
+    steps: Array<{
+      step: string;
+      _key: string;
+    }>;
+  };
+  highlightedText: string;
+  infoSection: {
+    subtitle: Subtitle;
+    heading: string;
+    description: BlockContent;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+  };
+  proofPoint: {
+    subtitle: Subtitle;
+    description: Array<{
+      description: string;
+      _key: string;
+    }>;
+  };
+  ctaSection: BreakSection;
 };
 
 export type TeamMember = {
@@ -1215,6 +1268,94 @@ export type CAREERS_PAGE_QUERYResult = {
     }>;
   } | null;
 };
+// Variable: SERVICE_QUERY
+// Query: {  "currentService": *[_type == "service" && slug.current == $slug][0]}
+export type SERVICE_QUERYResult = {
+  currentService: {
+    _id: string;
+    _type: "service";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    title: string;
+    slug: Slug;
+    header: {
+      featuredImage: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "image";
+      };
+      subtitle: Subtitle;
+      heading: string;
+      description: BlockContent;
+    };
+    challenge: {
+      subtitle: Subtitle;
+      heading: string;
+      description: BlockContent;
+      image: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "image";
+      };
+    };
+    role: {
+      subtitle: Subtitle;
+      description: string;
+    };
+    approach: {
+      subtitle: Subtitle;
+      heading: string;
+      steps: Array<{
+        step: string;
+        _key: string;
+      }>;
+    };
+    highlightedText: string;
+    infoSection: {
+      subtitle: Subtitle;
+      heading: string;
+      description: BlockContent;
+      image: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "image";
+      };
+    };
+    proofPoint: {
+      subtitle: Subtitle;
+      description: Array<{
+        description: string;
+        _key: string;
+      }>;
+    };
+    ctaSection: BreakSection;
+  } | null;
+};
 
 // Query TypeMap
 import "@sanity/client";
@@ -1230,5 +1371,6 @@ declare module "@sanity/client" {
     "{\n  \"contactPage\": *[_type == \"contactPage\"][0]\n}": CONTACT_PAGE_QUERYResult;
     "{\n  \"aboutPage\": *[_type == \"aboutPage\"][0] {\n    ...,\n    team {\n      ...,\n      teamMembers[]->\n    },\n    approachSection {\n      ...,\n      approachItems[]->\n    },\n    visionSection {\n      ...,\n      visionItems[]->\n    },\n  }\n}": ABOUT_PAGE_QUERYResult;
     "{\n  \"careersPage\": *[_type == \"careersPage\"][0] {\n    ...,\n    openPositions[]->\n  }\n}": CAREERS_PAGE_QUERYResult;
+    "{\n  \"currentService\": *[_type == \"service\" && slug.current == $slug][0]\n}": SERVICE_QUERYResult;
   }
 }

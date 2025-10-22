@@ -4,7 +4,7 @@ import PostPortableText from '@/components/post-portable-text';
 import Heading from '@/components/ui/heading';
 import { sanityFetch } from '@/sanity/lib/client';
 import { urlForUncropped } from '@/sanity/lib/image';
-import { POST_QUERY } from '@/sanity/lib/queries';
+import { getPostData, POST_QUERY } from '@/sanity/lib/queries';
 import { PortableTextBlock } from 'next-sanity';
 import { Image } from 'next-sanity/image';
 import { notFound } from 'next/navigation';
@@ -25,11 +25,8 @@ export default async function BlogPostPage({
 }) {
   const { slug } = await params;
 
-  const { currentPost, relatedPosts }: POST_QUERYResult = await sanityFetch({
-    query: POST_QUERY,
-    params: { slug },
-    tags: ['post', `post-${slug}`],
-  });
+  const { currentPost, relatedPosts }: POST_QUERYResult =
+    await getPostData(slug);
 
   if (!currentPost) {
     notFound();
