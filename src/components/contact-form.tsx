@@ -26,25 +26,24 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { SendIcon } from 'lucide-react';
 
-// Zod v4 schema
 const contactFormSchema = z.object({
   firstName: z
     .string()
-    .min(2, 'First name must be at least 2 characters')
-    .max(50, 'First name must not exceed 50 characters'),
+    .min(2, '*min 2 chars')
+    .max(50, '*max 50 chars'),
   lastName: z
     .string()
-    .min(2, 'Last name must be at least 2 characters')
-    .max(50, 'Last name must not exceed 50 characters'),
-  email: z.string().email('Please enter a valid email address'),
-  country: z.string().min(1, 'Please select your country'),
+    .min(2, '*min 2 chars')
+    .max(50, '*max 50 chars'),
+  email: z.string().email('*invalid email'),
+  country: z.string().min(1, '*required'),
   interest: z.enum(['introduction-to-pmo', 'data-center-potentials'], {
-    error: 'Please select an area of interest',
+    error: '*required',
   }),
   message: z
     .string()
-    .min(10, 'Message must be at least 10 characters')
-    .max(1000, 'Message must not exceed 1000 characters'),
+    .min(10, '*min 10 chars')
+    .max(1000, '*max 1000 chars'),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
