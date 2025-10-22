@@ -53,40 +53,7 @@ export const breakSectionType = defineType({
       title: 'Call to Action Buttons',
       type: 'array',
       description: 'CTA buttons (maximum 2)',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'text',
-              title: 'Button Text',
-              type: 'string',
-              validation: (rule) =>
-                rule.required().error('Button text is required'),
-            }),
-            defineField({
-              name: 'highlightedText',
-              title: 'Highlighted Text',
-              type: 'string',
-              description:
-                'Optional highlighted portion of text (e.g., "/pmo" in "More about /pmo")',
-            }),
-            defineField({
-              name: 'link',
-              title: 'Link',
-              type: 'string',
-              description: 'URL or path for the button',
-              validation: (rule) => rule.required().error('Link is required'),
-            }),
-          ],
-          preview: {
-            select: {
-              title: 'text',
-              subtitle: 'link',
-            },
-          },
-        },
-      ],
+      of: [{ type: 'button' }],
       validation: (rule) =>
         rule
           .required()

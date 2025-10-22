@@ -21,6 +21,7 @@ interface BreakSectionSectionProps {
     text: string;
     highlightedText?: string | null;
     link: string;
+    variant?: string;
   }[];
   className?: string;
   contentClassName?: string;
@@ -76,7 +77,7 @@ const BreakSection = ({
                   href={button.link}
                   className={cn(
                     buttonVariants({
-                      variant: index === 0 ? 'default' : 'secondary',
+                      variant: (button.variant as 'default' | 'secondary') || 'default',
                       size: 'default',
                     }),
                     'flex-1 sm:flex-initial sm:w-auto'

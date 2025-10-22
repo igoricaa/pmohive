@@ -19,6 +19,7 @@ interface HeroSectionProps {
     text: string;
     hightlightedText?: string | null;
     link: string;
+    variant?: string;
   }[];
   images: {
     image1: SanityImageSource & { alt: string };
@@ -90,7 +91,7 @@ const HeroSection = ({
               href={button.link}
               className={cn(
                 buttonVariants({
-                  variant: index === 0 ? 'default' : 'secondary',
+                  variant: (button.variant as 'default' | 'secondary') || 'default',
                 })
               )}
             >

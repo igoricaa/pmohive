@@ -284,6 +284,19 @@ export type Button = {
   text: string;
   highlightedText?: string;
   link: string;
+  variant: "default" | "secondary";
+  icon?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
 };
 
 export type ContactPage = {
@@ -363,24 +376,8 @@ export type IntroSection = {
   subtitle: Subtitle;
   heading: string;
   buttons?: Array<{
-    text: string;
-    hightlightedText?: string;
-    link: string;
-    icon?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    };
-    _type: "button";
     _key: string;
-  }>;
+  } & Button>;
   backgroundImage: {
     asset?: {
       _ref: string;
@@ -429,11 +426,8 @@ export type BreakSection = {
     _type: "image";
   };
   buttons: Array<{
-    text: string;
-    highlightedText?: string;
-    link: string;
     _key: string;
-  }>;
+  } & Button>;
 };
 
 export type BlogSection = {
@@ -449,10 +443,7 @@ export type TeamSection = {
   subtitle: Subtitle;
   heading: string;
   description: BlockContent;
-  button?: {
-    text: string;
-    link: string;
-  };
+  button?: Button;
   teamMembers: Array<{
     _ref: string;
     _type: "reference";
@@ -541,12 +532,8 @@ export type HeroSection = {
   heading: string;
   description: string;
   buttons: Array<{
-    text: string;
-    hightlightedText?: string;
-    link: string;
-    _type: "button";
     _key: string;
-  }>;
+  } & Button>;
   images: {
     image1: {
       asset?: {
@@ -891,10 +878,7 @@ export type HOME_PAGE_QUERYResult = {
       subtitle: Subtitle;
       heading: string;
       description: BlockContent;
-      button?: {
-        text: string;
-        link: string;
-      };
+      button?: Button;
       teamMembers: Array<{
         _id: string;
         _type: "teamMember";
@@ -1139,10 +1123,7 @@ export type ABOUT_PAGE_QUERYResult = {
       subtitle: Subtitle;
       heading: string;
       description: BlockContent;
-      button?: {
-        text: string;
-        link: string;
-      };
+      button?: Button;
       teamMembers: Array<{
         _id: string;
         _type: "teamMember";

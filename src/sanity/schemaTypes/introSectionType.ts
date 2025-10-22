@@ -26,43 +26,7 @@ export const introSectionType = defineType({
       title: 'Buttons',
       type: 'array',
       description: 'Buttons for the hero section',
-      of: [
-        {
-          name: 'button',
-          title: 'Button',
-          type: 'object',
-          description: 'Button for the hero section',
-          fields: [
-            defineField({
-              name: 'text',
-              title: 'Text',
-              type: 'string',
-              description: 'Text displayed on the call-to-action button',
-              validation: (rule) => rule.required(),
-            }),
-            defineField({
-              name: 'hightlightedText',
-              title: 'HightlightedText',
-              type: 'string',
-              description:
-                'Hightlighted text displayed on the call-to-action button',
-            }),
-            defineField({
-              name: 'link',
-              title: 'Link',
-              type: 'string',
-              description: 'Link used for the call-to-action button',
-              validation: (rule) => rule.required(),
-            }),
-            defineField({
-              name: 'icon',
-              title: 'Icon',
-              type: 'image',
-              description: 'Icon for the call-to-action button',
-            }),
-          ],
-        },
-      ],
+      of: [{ type: 'button' }],
     }),
     defineField({
       name: 'backgroundImage',

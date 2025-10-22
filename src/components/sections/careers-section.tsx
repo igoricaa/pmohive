@@ -26,6 +26,7 @@ interface CareersSectionProps {
   ctaButton?: {
     text: string;
     link: string;
+    variant?: string;
   };
   teamMembers: TeamMember[];
   className?: string;
@@ -71,7 +72,10 @@ const CareersSection = ({
             key={ctaButton.text}
             href={ctaButton.link}
             className={cn(
-              buttonVariants({ variant: 'default', size: 'default' }),
+              buttonVariants({
+                variant: (ctaButton.variant as 'default' | 'secondary') || 'default',
+                size: 'default'
+              }),
               'hidden md:inline-flex w-fit xl:mt-6'
             )}
           >

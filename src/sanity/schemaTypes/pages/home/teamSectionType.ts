@@ -31,26 +31,8 @@ export const teamSectionType = defineType({
     defineField({
       name: 'button',
       title: 'Button',
-      type: 'object',
+      type: 'button',
       description: 'Call-to-action button',
-      fields: [
-        defineField({
-          name: 'text',
-          title: 'Button Text',
-          type: 'string',
-          description: 'Text displayed on the button',
-          validation: (rule) =>
-            rule.required().error('Button text is required'),
-        }),
-        defineField({
-          name: 'link',
-          title: 'Button Link',
-          type: 'string',
-          description: 'URL or path for the button',
-          validation: (rule) =>
-            rule.required().error('Button link is required'),
-        }),
-      ],
     }),
     defineField({
       name: 'teamMembers',
