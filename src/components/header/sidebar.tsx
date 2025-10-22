@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import Burger from './burger';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from '@/components/motion-link';
 import { GeneralInfo } from '../../../sanity.types';
 import { Image } from 'next-sanity/image';
@@ -14,6 +14,21 @@ import AnimatedButton from '../animated-button';
 
 const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.setAttribute('data-lenis-prevent', 'true');
+    } else {
+      document.body.style.overflow = '';
+      document.body.removeAttribute('data-lenis-prevent');
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.removeAttribute('data-lenis-prevent');
+    };
+  }, [isOpen]);
 
   return (
     <div className='hidden xl:block'>

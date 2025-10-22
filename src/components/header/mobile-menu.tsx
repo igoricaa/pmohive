@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import Burger from './burger';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from '@/components/motion-link';
 import { GeneralInfo } from '../../../sanity.types';
 import hexagonalPattern from '../../../public/hexagonal-pattern.svg';
@@ -14,6 +14,21 @@ import MenuLink from '../menuLink';
 
 const MobileMenu = ({ socials }: { socials: GeneralInfo['socials'] }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.setAttribute('data-lenis-prevent', 'true');
+    } else {
+      document.body.style.overflow = '';
+      document.body.removeAttribute('data-lenis-prevent');
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.removeAttribute('data-lenis-prevent');
+    };
+  }, [isOpen]);
 
   return (
     <div className='xl:hidden'>
@@ -58,7 +73,7 @@ const MobileMenu = ({ socials }: { socials: GeneralInfo['socials'] }) => {
           src={hexagonalPattern}
           alt='Hexagonal pattern'
           unoptimized
-          className='object-contain min-w-[747px] h-[531px] -z-10 absolute -top-6 -left-50'
+          className='object-contain min-w-[595px] h-[423px] -z-10 absolute -top-6 -left-5 opacity-20'
         />
 
         <div className='flex flex-col gap-4 sm:gap-6'>
