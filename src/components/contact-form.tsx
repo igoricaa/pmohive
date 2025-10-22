@@ -266,20 +266,19 @@ export function ContactForm({ className }: { className?: string }) {
   async function onSubmit(data: ContactFormValues) {
     setIsSubmitting(true);
     try {
-      // TODO: Replace with actual API call
-      console.log('Form submitted:', data);
+      const { sendContactEmail } = await import('@/actions/contact');
+      const response = await sendContactEmail(data);
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Reset form on success
-      form.reset();
-
-      // TODO: Show success message/toast
-      alert('Thank you! Your message has been sent successfully.');
+      if (response.success) {
+        // Reset form on success
+        form.reset();
+        alert(response.message);
+      } else {
+        alert(response.message);
+        console.error('Error sending email:', response.error);
+      }
     } catch (error) {
       console.error('Form submission error:', error);
-      // TODO: Show error message/toast
       alert('Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
