@@ -3,6 +3,7 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
+    qualities: [25, 50, 75, 90, 100],
     remotePatterns: [
       {
         protocol: 'https',
@@ -10,8 +11,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  reactCompiler: true,
   experimental: {
-    reactCompiler: true,
     turbopackScopeHoisting: false,
   },
 };
