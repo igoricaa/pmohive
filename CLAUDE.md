@@ -18,6 +18,7 @@ AI Assistant Operating Manual for this Next.js 16 project.
 ## 2. Gotchas (Time-Wasters)
 
 **Zod v4 + React Hook Form**:
+
 ```typescript
 // Required due to type incompatibility (GitHub issue #813)
 const form = useForm({
@@ -25,16 +26,25 @@ const form = useForm({
   resolver: zodResolver(schema),
 });
 ```
+
 - Zod v4 syntax: `z.enum([...], { error: "..." })` (NOT `required_error`)
 
 **GROQ Query Params**:
+
 - Pass `null` for empty params (NOT `undefined`) to satisfy GROQ
 
+**Sanity Type Generation**:
+
+- Run after ANY schema changes: `pnpx sanity@latest schema extract --enforce-required-fields` and `pnpx sanity@latest typegen generate`
+- Types auto-generated in [sanity.types.ts](sanity.types.ts)
+
 **nuqs Debouncing**:
+
 - Use `debounce(500)` from nuqs for search inputs
 - Example: [src/components/blog/search-input.tsx](src/components/blog/search-input.tsx)
 
 **AnimatedButton Icons**:
+
 - Lucide icons passed as **strings** (`'ArrowRight'`), not components
 - Add new icons to ICON_MAP in [src/components/animated-button.tsx](src/components/animated-button.tsx)
 
@@ -43,21 +53,25 @@ const form = useForm({
 ## 3. Architecture Decisions (The WHY)
 
 **Hybrid Blog Caching**:
+
 - Categories: Server-side only (sanityFetch), prefetched via React Query, NO client API calls
 - Posts: Initial 12 server-prefetched, subsequent filtering via client API
 - WHY: Categories rarely change, posts need dynamic filtering
 
 **Self-Contained Components**:
+
 - Blog components use `useQueryState()` for URL params (no props)
 - WHY: Shareable URLs, browser history, no prop drilling
 - See: [src/components/blog/](src/components/blog/)
 
 **AnimatedButton Discriminated Union**:
+
 - TypeScript enforces Link XOR Button (never both)
 - WHY: Prevents invalid combinations at compile time
 - See: [src/components/animated-button.tsx](src/components/animated-button.tsx)
 
 **React Query Configuration**:
+
 - `staleTime: Infinity` (data never stale by default)
 - `gcTime: 10min`, `retry: 1`
 - WHY: Reduces unnecessary refetches
@@ -68,27 +82,32 @@ const form = useForm({
 ## 4. Tool Routing (Which Tool for What)
 
 ### Next.js Questions → Next.js MCP
+
 - Runtime diagnostics: `mcp__next-devtools__nextjs_runtime`
 - Browser testing: `mcp__next-devtools__browser_eval`
 - Next.js 16 docs: `mcp__next-devtools__nextjs_docs`
 - **When**: Before implementing changes, diagnosing issues, verifying pages
 
 ### Library Documentation → Context7 MCP
+
 - React Hook Form: `mcp__context7__resolve-library-id({ libraryName: 'react-hook-form' })`
 - shadcn/ui: `mcp__context7__get-library-docs({ context7CompatibleLibraryID: '/shadcn/ui' })`
 - Tailwind CSS, Zod, TanStack Query, etc.
 - **When**: Need API docs, usage examples, latest features
 
 ### Framer Motion Questions → Motion MCP
+
 - Motion/Framer Motion docs: `mcp__motion__*`
 - **When**: Animation questions, spring physics, motion patterns
 
 ### Figma Designs → Figma MCP
+
 - Screenshot: `mcp__figma-dev-mode-mcp-server__get_screenshot`
 - Code generation: `mcp__figma-dev-mode-mcp-server__get_code`
 - **When**: Converting designs to code
 
 ### File Operations → Read/Edit/Glob/Grep
+
 - **When**: Need to see actual code, not documentation
 
 ---
@@ -96,11 +115,13 @@ const form = useForm({
 ## 5. File Locations (Key Paths)
 
 **Pages & Layouts**:
-- Frontend routes: [src/app/(frontend)/](src/app/(frontend)/)
+
+- Frontend routes: [src/app/(frontend)/](<src/app/(frontend)/>)
 - API routes: [src/app/api/blog/](src/app/api/blog/)
 - Sanity Studio: [src/app/studio/[[...tool]]/](src/app/studio/[[...tool]]/)
 
 **Components**:
+
 - UI library: [src/components/ui/](src/components/ui/)
 - Blog: [src/components/blog/](src/components/blog/)
 - Animations: [src/components/fancy/text/](src/components/fancy/text/)
@@ -108,16 +129,20 @@ const form = useForm({
 - Header: [src/components/header/sticky-header-wrapper.tsx](src/components/header/sticky-header-wrapper.tsx)
 
 **Sanity CMS**:
-- Schemas: [src/sanity/schemaTypes/](src/sanity/schemaTypes/) (pages/, posts/)
+
+- Schemas: [src/sanity/schemaTypes/](src/sanity/schemaTypes/) (pages/, posts/, case-study/)
 - Client & queries: [src/sanity/lib/](src/sanity/lib/) (client.ts, queries.ts, image.ts)
 - Config: [sanity.config.ts](sanity.config.ts)
+- Case studies: [src/app/(frontend)/case-study/](<src/app/(frontend)/case-study/>), [src/components/case-study/](src/components/case-study/)
 
 **State & Utils**:
+
 - Providers: [src/providers/](src/providers/)
 - Hooks: [src/hooks/](src/hooks/)
 - Utils: [src/lib/utils.ts](src/lib/utils.ts)
 
 **Styles**:
+
 - Global CSS & tokens: [src/app/(frontend)/globals.css](<src/app/(frontend)/globals.css>)
 
 ---
@@ -125,26 +150,35 @@ const form = useForm({
 ## 6. Key Patterns (Non-Obvious)
 
 **Server-Side React Query Prefetch**:
+
 ```typescript
 // In page.tsx
 const queryClient = new QueryClient();
 await queryClient.prefetchQuery({ queryKey: [...], queryFn: ... });
 return <HydrationBoundary state={dehydrate(queryClient)}><Client /></HydrationBoundary>;
 ```
-See: [src/app/(frontend)/blog/page.tsx](src/app/(frontend)/blog/page.tsx)
+
+See: [src/app/(frontend)/blog/page.tsx](<src/app/(frontend)/blog/page.tsx>)
 
 **URL State with nuqs**:
+
 ```typescript
-const [search, setSearch] = useQueryState('search', parseAsString.withDefault(''));
+const [search, setSearch] = useQueryState(
+  'search',
+  parseAsString.withDefault('')
+);
 ```
-Setup: [src/app/(frontend)/layout.tsx](src/app/(frontend)/layout.tsx) wraps with `<NuqsAdapter>`
+
+Setup: [src/app/(frontend)/layout.tsx](<src/app/(frontend)/layout.tsx>) wraps with `<NuqsAdapter>`
 
 **Page Transitions**:
+
 - Link: Use `Link` from [src/components/motion-link.tsx](src/components/motion-link.tsx) (NOT `next/link`)
 - Programmatic: `useMotionRouter()` from [src/hooks/use-motion-router.tsx](src/hooks/use-motion-router.tsx)
 - Falls back gracefully for unsupported browsers
 
 **Sanity Image Optimization**:
+
 ```typescript
 import { urlForUncropped } from '@/sanity/lib/image';
 <Image src={urlForUncropped(image).url()} ... />
@@ -155,15 +189,18 @@ import { urlForUncropped } from '@/sanity/lib/image';
 ## 7. MCP Workflow
 
 **Before ANY changes to app**:
+
 1. `mcp__next-devtools__nextjs_runtime(action: 'discover_servers')`
 2. `mcp__next-devtools__nextjs_runtime(action: 'list_tools', port: 3000)`
 3. `mcp__next-devtools__nextjs_runtime(action: 'call_tool', toolName: 'get-errors')`
 
 **For diagnostic questions** ("What's wrong?"):
+
 - Check Next.js runtime first (get-errors, get-routes)
 - Use browser automation for page verification
 
 **For library questions**:
+
 - Use Context7 MCP, NOT web search
 - Example: `mcp__context7__resolve-library-id({ libraryName: 'react-hook-form' })`
 

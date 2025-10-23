@@ -97,6 +97,19 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
             ])
         ),
       S.listItem()
+        .title('Case Studies')
+        .icon(BriefcaseIcon)
+        .child(
+          S.list()
+            .title('Case Studies')
+            .items([
+              S.listItem()
+                .title('Case Studies')
+                .icon(BriefcaseIcon)
+                .child(S.documentTypeList('caseStudy').title('Case Studies')),
+            ])
+        ),
+      S.listItem()
         .title('Team')
         .icon(UserIcon)
         .child(
@@ -146,6 +159,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
             'generalInfo',
             'postCategory',
             'openPosition',
+            'caseStudy',
           ].includes(listItem.getId()!)
       ),
     ]);

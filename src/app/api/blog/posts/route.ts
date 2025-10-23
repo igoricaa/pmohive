@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { client } from '@/sanity/lib/client';
-import {
-  BLOG_POSTS_QUERY,
-  BLOG_POSTS_QUERY_ASC,
-} from '@/sanity/lib/queries';
+import { sanityFetch } from '@/sanity/lib/client';
+import { BLOG_POSTS_QUERY, BLOG_POSTS_QUERY_ASC } from '@/sanity/lib/queries';
 
 export async function GET(request: NextRequest) {
   try {
@@ -15,9 +12,13 @@ export async function GET(request: NextRequest) {
     // Select query based on sort order
     const query = sort === 'asc' ? BLOG_POSTS_QUERY_ASC : BLOG_POSTS_QUERY;
 
-    const posts = await client.fetch(query, {
-      search,
-      category,
+    const posts = await sanityFetch({
+      query,
+      params: {
+        search,
+        category,
+      },
+      tags: ['posts'],
     });
 
     return NextResponse.json(posts);

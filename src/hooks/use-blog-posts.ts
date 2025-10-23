@@ -20,7 +20,7 @@ export function useBlogPosts(
   sortOrder?: string
 ) {
   return useQuery<BlogPost[]>({
-    queryKey: ['blog-posts', search, categoryId, sortOrder],
+    queryKey: ['posts', search, categoryId, sortOrder],
     queryFn: async () => {
       const params = new URLSearchParams();
       if (search) params.set('search', search);

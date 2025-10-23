@@ -13,6 +13,271 @@
  */
 
 // Source: schema.json
+export type DividerBlock = {
+  _type: "dividerBlock";
+  height: number;
+};
+
+export type SpacerBlock = {
+  _type: "spacerBlock";
+  height: number;
+};
+
+export type TextGridItem = {
+  _type: "textGridItem";
+  heading?: {
+    subtitle?: Subtitle;
+    highlightedText?: string;
+    text: string;
+    level: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+    alignment: "start" | "center" | "end";
+  };
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote" | "highlighted";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  indicatorType?: "number" | "icon";
+  number?: string;
+  icon?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+};
+
+export type TextGridBlock = {
+  _type: "textGridBlock";
+  heading?: {
+    subtitle?: Subtitle;
+    highlightedText?: string;
+    text: string;
+    level: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+    alignment: "start" | "center" | "end";
+  };
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote" | "highlighted";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  items: Array<{
+    _key: string;
+  } & TextGridItem>;
+};
+
+export type ImageBlock = {
+  _type: "imageBlock";
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  subtitle?: string;
+  aspectRatio?: {
+    width: number;
+    height: number;
+  };
+};
+
+export type TextareaBlock = {
+  _type: "textareaBlock";
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote" | "highlighted";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+};
+
+export type HeadingTextBlock = {
+  _type: "headingTextBlock";
+  heading: {
+    subtitle?: Subtitle;
+    highlightedText?: string;
+    text: string;
+    level: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+    alignment: "start" | "center" | "end";
+  };
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote" | "highlighted";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+};
+
+export type HeadingBlock = {
+  _type: "headingBlock";
+  heading: {
+    subtitle?: Subtitle;
+    highlightedText?: string;
+    text: string;
+    level: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+    alignment: "start" | "center" | "end";
+  };
+};
+
+export type CaseStudy = {
+  _id: string;
+  _type: "caseStudy";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  mainInfo: {
+    title: string;
+    client: string;
+    projectDescription: string;
+    featuredImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+  };
+  slug: Slug;
+  content?: Array<{
+    _key: string;
+  } & HeadingBlock | {
+    _key: string;
+  } & HeadingTextBlock | {
+    _key: string;
+  } & TextareaBlock | {
+    _key: string;
+  } & ImageBlock | {
+    _key: string;
+  } & TextGridBlock | {
+    _key: string;
+  } & SpacerBlock | {
+    _key: string;
+  } & DividerBlock>;
+  blog: BlogSection;
+};
+
 export type CareersPage = {
   _id: string;
   _type: "careersPage";
@@ -762,7 +1027,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = CareersPage | OpenPosition | BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | ContactPage | AboutPage | VisionSection | ApproachSection | IntroSection | HomePage | BreakSection | BlogSection | TeamSection | Subtitle | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = DividerBlock | SpacerBlock | TextGridItem | TextGridBlock | ImageBlock | TextareaBlock | HeadingTextBlock | HeadingBlock | CaseStudy | CareersPage | OpenPosition | BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | ContactPage | AboutPage | VisionSection | ApproachSection | IntroSection | HomePage | BreakSection | BlogSection | TeamSection | Subtitle | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
@@ -1347,6 +1612,57 @@ export type SERVICE_QUERYResult = {
     ctaSection: BreakSection;
   } | null;
 };
+// Variable: CASE_STUDY_QUERY
+// Query: {  "caseStudy": *[_type == "caseStudy" && slug.current == $slug][0]}
+export type CASE_STUDY_QUERYResult = {
+  caseStudy: {
+    _id: string;
+    _type: "caseStudy";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    mainInfo: {
+      title: string;
+      client: string;
+      projectDescription: string;
+      featuredImage: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "image";
+      };
+    };
+    slug: Slug;
+    content?: Array<{
+      _key: string;
+    } & DividerBlock | {
+      _key: string;
+    } & HeadingBlock | {
+      _key: string;
+    } & HeadingTextBlock | {
+      _key: string;
+    } & ImageBlock | {
+      _key: string;
+    } & SpacerBlock | {
+      _key: string;
+    } & TextareaBlock | {
+      _key: string;
+    } & TextGridBlock>;
+    blog: BlogSection;
+  } | null;
+};
+// Variable: CASE_STUDIES_QUERY_WITH_SLUGS
+// Query: *[_type == "caseStudy"]{  slug}
+export type CASE_STUDIES_QUERY_WITH_SLUGSResult = Array<{
+  slug: Slug;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -1365,5 +1681,7 @@ declare module "@sanity/client" {
     "{\n  \"aboutPage\": *[_type == \"aboutPage\"][0] {\n    ...,\n    team {\n      ...,\n      teamMembers[]->\n    },\n    approachSection {\n      ...,\n      approachItems[]->\n    },\n    visionSection {\n      ...,\n      visionItems[]->\n    },\n  }\n}": ABOUT_PAGE_QUERYResult;
     "{\n  \"careersPage\": *[_type == \"careersPage\"][0] {\n    ...,\n    openPositions[]->\n  }\n}": CAREERS_PAGE_QUERYResult;
     "{\n  \"currentService\": *[_type == \"service\" && slug.current == $slug][0]\n}": SERVICE_QUERYResult;
+    "{\n  \"caseStudy\": *[_type == \"caseStudy\" && slug.current == $slug][0]\n}": CASE_STUDY_QUERYResult;
+    "*[_type == \"caseStudy\"]{\n  slug\n}": CASE_STUDIES_QUERY_WITH_SLUGSResult;
   }
 }

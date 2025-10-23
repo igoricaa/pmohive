@@ -45,7 +45,7 @@ SANITY_API_TOKEN=your_token                       # Optional (write operations)
 
 ## Key Features
 
-- **CMS**: Sanity with blog system, categories, search, filtering
+- **CMS**: Sanity with blog system, categories, search, filtering, modular case studies
 - **UI**: Advanced components (AnimatedButton, LetterSwapPingPong, motion-based page transitions)
 - **Header**: Scroll-responsive sticky header with intelligent hide/show
 - **Forms**: React Hook Form + Zod v4 validation

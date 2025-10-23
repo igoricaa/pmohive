@@ -43,7 +43,7 @@ const BreakSection = ({
             alt={backgroundImage.alt}
             fill
             sizes='100vw'
-            quality={90}
+            quality={85}
             className='w-full h-full object-cover'
           />
         </div>

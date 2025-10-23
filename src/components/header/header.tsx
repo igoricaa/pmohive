@@ -75,7 +75,8 @@ const MainBar = ({
           width={246}
           height={126}
           unoptimized
-          priority
+          preload={true}
+          fetchPriority='high'
           className='h-full w-20 sm:w-23 lg:w-31'
         />
       </Link>

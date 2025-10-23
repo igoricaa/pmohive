@@ -16,7 +16,7 @@ export default async function Blog() {
   // Prefetch data using React Query's prefetchQuery
   await Promise.all([
     queryClient.prefetchQuery({
-      queryKey: ['blog-posts', '', '', 'desc'],
+      queryKey: ['posts', '', '', 'desc'],
       queryFn: getInitialBlogPosts,
     }),
     queryClient.prefetchQuery({

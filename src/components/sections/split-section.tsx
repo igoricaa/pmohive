@@ -40,7 +40,7 @@ const SplitSection = ({
           alt={backgroundImage.alt}
           width={560}
           height={681}
-          quality={100}
+          quality={85}
           className='w-full h-full object-cover'
         />
       </div>

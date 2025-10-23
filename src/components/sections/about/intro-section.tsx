@@ -35,8 +35,8 @@ const IntroSection = ({
             alt={backgroundImage.alt}
             width={991}
             height={478}
-            quality={100}
-            priority
+            quality={85}
+            preload={true}
             className='object-cover w-full h-full'
           />
         </div>

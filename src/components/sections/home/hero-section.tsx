@@ -41,6 +41,8 @@ const HeroSection = ({
             alt={images.image1.alt}
             width={473}
             height={546}
+            loading='eager'
+            fetchPriority='high'
             className='w-full h-auto object-cover'
           />
           <Image
@@ -48,6 +50,8 @@ const HeroSection = ({
             alt={images.image2.alt}
             width={473}
             height={546}
+            loading='eager'
+            fetchPriority='high'
             className='w-full h-auto object-cover'
           />
         </div>
@@ -57,6 +61,8 @@ const HeroSection = ({
             alt={images.image3.alt}
             width={473}
             height={546}
+            loading='eager'
+            fetchPriority='high'
             className='w-full m h-auto object-cover'
           />
           <Image
@@ -64,6 +70,8 @@ const HeroSection = ({
             alt={images.image4.alt}
             width={473}
             height={546}
+            loading='eager'
+            fetchPriority='high'
             className='w-full h-auto object-cover'
           />
         </div>

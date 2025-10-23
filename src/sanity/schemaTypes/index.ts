@@ -23,6 +23,17 @@ import { visionSectionType } from './pages/about-us/visionSectionType';
 import { approachSectionType } from './pages/about-us/approachSectionType';
 import { openPositionType } from './openPositionType';
 import { careersPageType } from './pages/careers';
+import {
+  caseStudyType,
+  headingBlockType,
+  headingTextBlockType,
+  textareaBlockType,
+  imageBlockType,
+  textGridBlockType,
+  textGridItemType,
+  spacerBlockType,
+  dividerBlockType,
+} from './case-study';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -48,5 +59,14 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     visionSectionType,
     openPositionType,
     careersPageType,
+    caseStudyType,
+    headingBlockType,
+    headingTextBlockType,
+    textareaBlockType,
+    imageBlockType,
+    textGridBlockType,
+    textGridItemType,
+    spacerBlockType,
+    dividerBlockType,
   ],
 };

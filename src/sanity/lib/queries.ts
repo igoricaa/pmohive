@@ -3,6 +3,8 @@ import { sanityFetch } from './client';
 import {
   ABOUT_PAGE_QUERYResult,
   CAREERS_PAGE_QUERYResult,
+  CASE_STUDIES_QUERY_WITH_SLUGSResult,
+  CASE_STUDY_QUERYResult,
   CONTACT_PAGE_QUERYResult,
   GENERAL_INFO_QUERYResult,
   HOME_PAGE_QUERYResult,
@@ -257,3 +259,30 @@ export const getServiceData = async (
     tags: ['service'],
   });
 };
+
+export const CASE_STUDY_QUERY = defineQuery(`{
+  "caseStudy": *[_type == "caseStudy" && slug.current == $slug][0]
+}`);
+
+export const getCaseStudyData = async (
+  slug: string
+): Promise<CASE_STUDY_QUERYResult> => {
+  return await sanityFetch({
+    query: CASE_STUDY_QUERY,
+    params: { slug },
+    tags: ['caseStudy', `caseStudy-${slug}`],
+  });
+};
+
+export const CASE_STUDIES_QUERY_WITH_SLUGS =
+  defineQuery(`*[_type == "caseStudy"]{
+  slug
+}`);
+
+export const getAllCaseStudiesWithSlugs =
+  async (): Promise<CASE_STUDIES_QUERY_WITH_SLUGSResult> => {
+    return await sanityFetch({
+      query: CASE_STUDIES_QUERY_WITH_SLUGS,
+      tags: ['caseStudies'],
+    });
+  };
