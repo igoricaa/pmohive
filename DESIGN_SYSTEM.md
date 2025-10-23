@@ -1,1937 +1,239 @@
 # Design System & Component Library
 
-This document provides comprehensive design system guidelines, component patterns, and Figma integration instructions for the PMO Hive project.
+Design rules and conventions for PMO Hive project.
 
 ---
 
-## 1. Design Token Definitions
+## 1. Design Rules (Must Follow)
 
-### Color Tokens
+**Styling**:
+- ALWAYS use `cn()` utility for className merging
+- Mobile-first responsive design
+- Grid: 8 columns (tablet), 12 columns (desktop)
+- File naming: kebab-case files, PascalCase exports
 
-**Location**: [src/app/(frontend)/globals.css](<src/app/(frontend)/globals.css>) (lines 47-94)
+**Forms**:
+- Inputs: `rounded-full`, `h-11 md:h-12.5`, `text-xs sm:text-sm`
+- Borders: `border-input` (default), `border-white` (focus), `border-destructive` (error)
+- Validation: Use `<FormMessage>` + `aria-invalid`
 
-**Format**: CSS Custom Properties using OKLCH color space
+**Components**:
+- Always support `className` prop
+- Use CVA for variants
+- Export component + variants if reusable
 
-```css
-:root {
-  /* Brand Colors */
-  --color-primary: #f09a60; /* Orange accent */
-  --color-light-grey: #e9e9e9;
+---
 
-  /* Semantic Colors (OKLCH format) */
-  --background: oklch(1 0 0); /* White */
-  --foreground: oklch(0.145 0 0); /* Near black */
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-
-  /* Chart Colors */
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  /* ... etc */
-}
-```
-
-**Usage in Tailwind v4**: Tokens are mapped via `@theme inline` directive (lines 4-45)
-
-```css
-@theme inline {
-  --color-primary: #f09a60;
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  /* ... */
-}
-```
-
-**Utility Classes**:
-
-- `.highlight` - Applies primary color (`var(--color-primary)`)
-- Background: `bg-black`, `bg-primary`
-- Text: `text-white`, `text-black`, `text-primary`
-
-### Typography Tokens
-
-**Location**: [src/app/(frontend)/globals.css](<src/app/(frontend)/globals.css>) (lines 49-132)
-
-**Responsive Scale**: Mobile-first with breakpoint overrides
-
-```css
-:root {
-  /* SM Mobile (default) */
-  --h1-font-size: 2.5rem; /* 40px */
-  --h1-line-height: 1;
-
-  /* MD Tablet (768px+) */
-  @media (min-width: 768px) {
-    --h1-font-size: 3.25rem; /* 52px */
-  }
-
-  /* LG Desktop (1024px+) */
-  @media (min-width: 1024px) {
-    --h1-font-size: 4rem; /* 64px */
-    --h1-line-height: 0.912;
-  }
-
-  /* XL Desktop (1920px+) */
-  @media (min-width: 1920px) {
-    --h1-font-size: 5rem; /* 80px */
-  }
-}
-```
-
-**Font Families**:
-
-- **Sans**: `Geist Sans` - Used for headings (variable: `--font-geist-sans`)
-- **Mono**: `Geist Mono` - Default body font (variable: `--font-geist-mono`)
-
-**Implementation**: [src/app/(frontend)/layout.tsx](<src/app/(frontend)/layout.tsx>)
-
-```tsx
-import { Geist, Geist_Mono } from 'next/font/google';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
-```
-
-**Typography Styles**: All headings (h1-h6) have predefined responsive styles (lines 144-190)
-
-### Spacing Tokens
+## 2. Token Reference
 
 **Location**: [src/app/(frontend)/globals.css](<src/app/(frontend)/globals.css>)
 
-```css
-:root {
-  --padding-side: 1rem; /* SM Mobile */
+**Key Colors**:
+- Primary: `#f09a60` (orange accent)
+- Background: `oklch(1 0 0)` (white)
+- Foreground: `oklch(0.145 0 0)` (near black)
 
-  @media (min-width: 768px) {
-    --padding-side: 1.5rem; /* MD Tablet */
-  }
+**Typography** (responsive CSS variables):
+| Element | Mobile | Tablet | Desktop | XL |
+|---------|--------|--------|---------|-----|
+| H1 | 2.5rem | 3.25rem | 4rem | 5rem |
+| H2 | 2rem | 2.5rem | 3rem | 3.75rem |
 
-  @media (min-width: 1024px) {
-    --padding-side: 2rem; /* LG Desktop */
-  }
-}
-```
+**Fonts**:
+- Sans: `Geist Sans` (headings) - `--font-geist-sans`
+- Mono: `Geist Mono` (body) - `--font-geist-mono`
 
-**Tailwind Standard Scale**: Use Tailwind's default spacing (0.25rem increments)
+**Spacing**:
+- Side padding: `--padding-side` (1rem → 1.5rem → 2rem)
+- Use Tailwind default scale otherwise (0.25rem increments)
 
-- `gap-2`, `gap-3`, `gap-4`, `mt-2`, `mt-3`, `mt-4`, etc.
-
-### Border Radius Tokens
-
-```css
-:root {
-  --radius: 0.625rem; /* 10px base */
-}
-
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px); /* 6px */
-  --radius-md: calc(var(--radius) - 2px); /* 8px */
-  --radius-lg: var(--radius); /* 10px */
-  --radius-xl: calc(var(--radius) + 4px); /* 14px */
-}
-```
-
-**Component Usage**:
-
+**Radius**:
+- Base: `--radius` (10px)
 - Buttons: `rounded-[44px]` (pill shape)
-- Cards/General: Use `--radius-*` variables
 
 ---
 
-## 2. Component Library
+## 3. Component Conventions
 
-### Component Location Structure
-
-```
-src/components/
-├── ui/                          # shadcn/ui components
-│   ├── button.tsx              # Core button component
-│   ├── carousel.tsx            # Carousel component (Embla-based)
-│   ├── input.tsx               # Input component
-│   └── select.tsx              # Select dropdown component
-├── blog/                        # Blog-specific components
-│   ├── search-input.tsx        # Search with debouncing + nuqs
-│   ├── category-filter.tsx     # Category dropdown + nuqs
-│   ├── sort-select.tsx         # Sort dropdown + nuqs
-│   ├── posts-grid.tsx          # Posts grid with React Query
-│   └── post-card.tsx           # Individual post card
-├── sections/                    # Page section components
-│   └── home/
-│       ├── hero-section.tsx
-│       ├── about-section.tsx
-│       └── stat-card.tsx
-├── header.tsx                   # Layout components
-├── footer.tsx
-├── menuLink.tsx                 # Navigation components
-├── lenis.tsx                    # Third-party wrappers
-├── portable-text.tsx            # CMS content renderers
-└── text-gradient-scroll.tsx     # Custom UI components
-```
-
-### Component Architecture Pattern
-
-**Base Pattern**: Functional components with TypeScript interfaces
-
+**Base Pattern**:
 ```tsx
-// Example: src/components/sections/home/hero-section.tsx
-interface HeroSectionProps {
-  subtitle: {
-    text: string;
-    highlightedText: string;
-  };
-  heading: string;
-  description: string;
-  buttons: Array<{
-    text: string;
-    hightlightedText?: string;
-    link: string;
-  }>;
-  images: {
-    image1: SanityImageSource & { alt: string };
-    image2: SanityImageSource & { alt: string };
-    // ...
-  };
-}
-
-const HeroSection = ({
-  subtitle,
-  heading,
-  description,
-  buttons,
-  images,
-}: HeroSectionProps) => {
-  return <section>{/* Component JSX */}</section>;
-};
-
-export default HeroSection;
-```
-
-### shadcn/ui Component Pattern
-
-**Configuration**: [components.json](components.json)
-
-- Style: `new-york`
-- Base color: `neutral`
-- CSS Variables: Enabled
-- Icon library: `lucide-react`
-
-**Button Component Example**: [src/components/ui/button.tsx](src/components/ui/button.tsx)
-
-```tsx
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
-const buttonVariants = cva('base-classes', {
-  variants: {
-    variant: {
-      default: 'bg-black text-white border-1 border-white/40',
-      secondary: 'bg-primary text-black border-1 border-black/40',
-      link: 'text-primary underline-offset-4 hover:underline',
-    },
-    size: {
-      default: 'h-12 px-6 xl:px-7',
-      sm: 'h-8 rounded-md gap-1.5 px-3',
-      lg: 'h-10 rounded-md px-6',
-      icon: 'size-9',
-    },
-  },
-  defaultVariants: {
-    variant: 'default',
-    size: 'default',
-  },
-});
-
-function Button({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
-}: Props) {
-  const Comp = asChild ? Slot : 'button';
-  return (
-    <Comp
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  );
-}
-```
-
-**Key Patterns**:
-
-1. Use `class-variance-authority` for variant management
-2. Use `cn()` utility for class merging (from [src/lib/utils.ts](src/lib/utils.ts))
-3. Support `asChild` prop via `@radix-ui/react-slot`
-4. Export both component and variants for external usage
-
-### Carousel Component
-
-**Location**: [src/components/ui/carousel.tsx](src/components/ui/carousel.tsx)
-
-**Underlying Library**: `embla-carousel-react` v8.6.0
-
-**Usage Pattern**:
-
-```tsx
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
-
-<Carousel opts={{ loop: true }}>
-  <CarouselContent>
-    <CarouselItem>Item 1</CarouselItem>
-    <CarouselItem>Item 2</CarouselItem>
-    <CarouselItem>Item 3</CarouselItem>
-  </CarouselContent>
-  <CarouselPrevious />
-  <CarouselNext />
-</Carousel>;
-```
-
-**Key Features**:
-
-- Horizontal/vertical orientation support
-- Keyboard navigation (Arrow keys)
-- Accessible (ARIA roles)
-- Embla carousel options via `opts` prop
-- Plugin support via `plugins` prop
-- Built-in Previous/Next buttons with ArrowLeft/ArrowRight icons
-
-**Common Options**:
-
-```tsx
-opts={{
-  loop: true,           // Enable infinite loop
-  align: "start",       // Alignment: start | center | end
-  slidesToScroll: 1,    // Number of slides to scroll
-}}
-```
-
-**Custom Styling**:
-
-- Use `className` prop on any component
-- Navigation buttons positioned absolutely by default
-- Override button variants: `variant` and `size` props
-
-**Standard Practice**: Use this carousel component for ALL carousel implementations in the project.
-
-### Form Components Pattern
-
-The project uses shadcn/ui form components with React Hook Form and Zod v4 validation. All forms follow a consistent pattern for styling and validation.
-
-**Contact Form Example** ([src/components/contact-form.tsx](src/components/contact-form.tsx)):
-
-**Form Field Styling**:
-```tsx
-<FormField
-  control={form.control}
-  name="firstName"
-  render={({ field }) => (
-    <FormItem>
-      <FormLabel>First Name</FormLabel>
-      <FormControl>
-        <Input
-          placeholder="John"
-          {...field}
-          disabled={isSubmitting}
-        />
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
-```
-
-**Input Component Styling** ([src/components/ui/input.tsx](src/components/ui/input.tsx)):
-```tsx
-className={cn(
-  'flex h-11 md:h-12.5 w-full rounded-full border border-input',
-  'bg-background text-xs sm:text-sm placeholder:text-input text-white',
-  'active:border-white focus:border-white focus-visible:outline-none',
-  'px-3 py-2.5',
-  'disabled:cursor-not-allowed disabled:opacity-50',
-  className
-)}
-```
-
-**Key Styling Patterns**:
-- **Rounded Inputs**: Use `rounded-full` for text inputs and selects (matches button style)
-- **Responsive Heights**: `h-11 md:h-12.5` for consistent sizing across breakpoints
-- **Border States**:
-  - Default: `border-input` (subtle grey)
-  - Active/Focus: `border-white` (bright white)
-  - Invalid: `aria-invalid:border-destructive` (red error state)
-- **Typography**: `text-xs sm:text-sm` for responsive text sizing
-- **Spacing**: `px-3 py-2.5` for comfortable padding
-
-**Select Component Styling** ([src/components/ui/select.tsx](src/components/ui/select.tsx)):
-```tsx
-// SelectTrigger custom styling
-className={cn(
-  'cursor-pointer bg-black pl-3 pr-0.5 py-2',
-  'text-xs sm:text-sm border-input',
-  'flex w-fit items-center justify-between gap-2',
-  'rounded-full border whitespace-nowrap',
-  'data-[size=default]:h-11 md:data-[size=default]:h-12.5',
-  className
-)}
-
-// Custom dropdown icon with primary background
-<SelectPrimitive.Icon asChild>
-  <div className='bg-primary rounded-full w-9.5 h-9.5 border border-primary-dark flex items-center justify-center'>
-    <ChevronDownIcon className='size-5' color='#000' />
-  </div>
-</SelectPrimitive.Icon>
-```
-
-**Radio Group Styling**:
-```tsx
-<RadioGroup
-  onValueChange={field.onChange}
-  defaultValue={field.value}
-  className='flex flex-col space-y-2'
->
-  <FormItem className='flex items-center space-x-3 space-y-0'>
-    <FormControl>
-      <RadioGroupItem value='introduction-to-pmo' />
-    </FormControl>
-    <FormLabel className='font-normal cursor-pointer'>
-      Introduction to PMO
-    </FormLabel>
-  </FormItem>
-</RadioGroup>
-```
-
-**Textarea Styling** (inherits from Input pattern):
-- Same border, focus, and color patterns as Input
-- Uses `rounded-md` instead of `rounded-full`
-- Responsive rows: typically 4-5 rows for message fields
-
-**Validation State Styling**:
-```tsx
-// Error message display
-<FormMessage className='text-destructive text-xs' />
-
-// Invalid field border (automatic via ARIA)
-'aria-invalid:border-destructive'
-
-// Loading state for submit button
-<Button type='submit' disabled={isSubmitting} className='w-full sm:w-auto'>
-  {isSubmitting ? 'Sending...' : 'Send Message'}
-</Button>
-```
-
-**Form Layout Patterns**:
-```tsx
-// Stacked layout (mobile-first)
-<form className='space-y-5 sm:space-y-3'>
-
-// Grid layout for side-by-side fields (name fields)
-<div className='grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4'>
-  <FormField name='firstName' {...} />
-  <FormField name='lastName' {...} />
-</div>
-
-// Full-width fields
-<FormField name='email' {...} />
-<FormField name='message' {...} />
-</form>
-```
-
-**Accessibility Features**:
-- All inputs have proper `<FormLabel>` associations
-- Error messages use `<FormMessage>` (automatically linked via `aria-describedby`)
-- Invalid states set `aria-invalid` automatically
-- Disabled state during submission: `disabled={isSubmitting}`
-- Focus visible outlines: `focus-visible:outline-none` with border color change
-
-**Color Palette for Forms**:
-- Background: `bg-background` (white) or `bg-black`
-- Text: `text-white` for dark backgrounds
-- Placeholder: `placeholder:text-input` (muted grey)
-- Borders: `border-input` (default), `border-white` (focus), `border-destructive` (error)
-- Primary actions: `bg-primary` (orange accent)
-
-### Advanced Button Components
-
-The project includes advanced button components with text animations and flexible icon support.
-
-#### AnimatedButton Component
-
-**Location**: [src/components/animated-button.tsx](src/components/animated-button.tsx)
-
-A hybrid button component that conditionally renders as either a navigation link (`<Link>`) or an action button (`<Button>`) based on props, with animated text and flexible icon support.
-
-**Key Features**:
-- Type-safe discriminated union (Link XOR Button)
-- Three icon types: Lucide (by name), Sanity images, URL strings
-- Animated text with optional highlighting
-- Parent-controlled hover animations
-- Button-specific props (`disabled`, `type`) only available for action variant
-- Bundle size optimized with explicit icon map
-
-**Type Definition**:
-
-```typescript
-// Icon types
-type IconProp =
-  | { type: 'lucide'; name: 'ArrowRight' | 'SendIcon' | 'Rocket' }
-  | { type: 'sanity'; source: SanityImageSource; alt: string }
-  | { type: 'url'; src: string; alt: string };
-
-// Discriminated union - ensures Link XOR Button
-type AnimatedButtonProps = {
-  text: string;
-  variant: 'default' | 'secondary';
-  highlightedText?: string;
-  icon?: IconProp;
+interface ComponentProps {
   className?: string;
-  iconClassName?: string;
-} & (
-  | {
-      href: string;           // Link variant
-      onClick?: never;
-      disabled?: never;
-      type?: never;
-    }
-  | {
-      href?: never;
-      onClick: () => void;    // Button variant
-      disabled?: boolean;
-      type?: 'button' | 'submit' | 'reset';
-    }
+}
+
+const Component = ({ className }: ComponentProps) => (
+  <div className={cn('base-classes responsive-classes', className)}>
+    {/* content */}
+  </div>
 );
+
+export default Component;
 ```
 
-**Props Table**:
-
-| Prop | Type | Required | Description |
-|------|------|----------|-------------|
-| `text` | `string` | ✅ | Main button text |
-| `variant` | `'default' \| 'secondary'` | ✅ | Button style variant |
-| `href` | `string` | ⚠️ Link only | Navigation URL (renders `<Link>`) |
-| `onClick` | `() => void` | ⚠️ Button only | Click handler (renders `<Button>`) |
-| `highlightedText` | `string` | ❌ | Optional highlighted portion of text (primary color) |
-| `icon` | `IconProp` | ❌ | Optional icon (Lucide/Sanity/URL) |
-| `className` | `string` | ❌ | Additional CSS classes |
-| `iconClassName` | `string` | ❌ | Icon-specific CSS classes |
-| `disabled` | `boolean` | ❌ Button only | Disable button (not available for Link) |
-| `type` | `'button' \| 'submit' \| 'reset'` | ❌ Button only | HTML button type (not available for Link) |
-
-**Icon System**:
-
-The component supports three icon types with automatic rendering:
-
-1. **Lucide Icons** (by string name):
-   - Available icons: `'ArrowRight'`, `'SendIcon'`, `'Rocket'`
-   - Passed as serializable strings (Server Component safe)
-   - Bundle size: ~3KB (only 3 icons included)
-   - Resolved at runtime via explicit `ICON_MAP`
-
-2. **Sanity Images**:
-   - Uses `urlFor()` helper for image optimization
-   - Requires `SanityImageSource` and alt text
-   - Renders via Next.js `<Image>` component
-
-3. **URL Strings**:
-   - Direct image paths (e.g., `/arrow-icon.svg`)
-   - Requires alt text for accessibility
-   - Renders via Next.js `<Image>` component
-
-**Usage Examples**:
-
-```tsx
-import AnimatedButton from '@/components/animated-button';
-
-// 1. Navigation Link with Lucide icon
-<AnimatedButton
-  text="Learn More"
-  href="/about"
-  variant="default"
-  icon={{ type: 'lucide', name: 'ArrowRight' }}
-/>
-
-// 2. Navigation Link with highlighted text
-<AnimatedButton
-  text="Explore"
-  highlightedText="PMO Solutions"
-  href="/services"
-  variant="secondary"
-/>
-
-// 3. Action Button with Sanity image icon
-<AnimatedButton
-  text="Submit"
-  onClick={handleSubmit}
-  variant="default"
-  icon={{ type: 'sanity', source: iconImage, alt: 'Submit icon' }}
-/>
-
-// 4. Form Submit Button
-<AnimatedButton
-  text="Send Message"
-  onClick={handleFormSubmit}
-  variant="secondary"
-  type="submit"
-  disabled={isSubmitting}
-  icon={{ type: 'lucide', name: 'SendIcon' }}
-/>
-
-// 5. Action Button with URL icon
-<AnimatedButton
-  text="Launch"
-  onClick={() => console.log('Launched!')}
-  variant="default"
-  icon={{ type: 'url', src: '/rocket-icon.svg', alt: 'Rocket' }}
-/>
-
-// 6. Disabled Button
-<AnimatedButton
-  text="Processing..."
-  onClick={() => {}}
-  variant="default"
-  disabled={true}
-/>
-
-// 7. Link without icon
-<AnimatedButton
-  text="Contact Us"
-  href="/contact"
-  variant="secondary"
-/>
-
-// 8. Button with custom styling
-<AnimatedButton
-  text="Custom"
-  onClick={handleClick}
-  variant="default"
-  className="w-full"
-  iconClassName="size-6"
-  icon={{ type: 'lucide', name: 'Rocket' }}
-/>
-```
-
-**Type Safety**:
-
-TypeScript enforces correct usage at compile time:
-
-```tsx
-// ✅ Valid - Link with href
-<AnimatedButton text="Go" href="/page" variant="default" />
-
-// ✅ Valid - Button with onClick
-<AnimatedButton text="Click" onClick={() => {}} variant="default" />
-
-// ❌ Error - Can't have both href and onClick
-<AnimatedButton
-  text="Invalid"
-  href="/page"
-  onClick={() => {}}  // TypeScript error!
-  variant="default"
-/>
-
-// ❌ Error - Can't use disabled with Link
-<AnimatedButton
-  text="Link"
-  href="/page"
-  disabled={true}  // TypeScript error!
-  variant="default"
-/>
-
-// ❌ Error - Must have either href or onClick
-<AnimatedButton
-  text="Invalid"
-  variant="default"  // TypeScript error: missing href or onClick
-/>
-```
-
-**Bundle Size Optimization**:
-
-Icons are explicitly imported and mapped to prevent bundling all 1000+ Lucide icons:
-
-```typescript
-import { ArrowRight, Send as SendIcon, Rocket } from 'lucide-react';
-
-const ICON_MAP = {
-  ArrowRight,
-  SendIcon,
-  Rocket,
-} as const;
-```
-
-**Benefits**:
-- ✅ Only 3 icons bundled (~3KB total)
-- ✅ TypeScript autocomplete for icon names
-- ✅ Guaranteed tree-shaking
-- ✅ Easy to add new icons (import + add to map)
-
-**Server Component Compatibility**:
-
-Lucide icons are passed as **string names** (not component references) to ensure serialization from Server Components:
-
-```tsx
-// ✅ Server Component - Works!
-export default async function Page() {
-  return (
-    <AnimatedButton
-      text="Learn More"
-      href="/about"
-      variant="default"
-      icon={{ type: 'lucide', name: 'ArrowRight' }}  // String, not component
-    />
-  );
-}
-```
-
-The icon component is resolved at runtime in the Client Component.
-
-#### LetterSwapPingPong Component
-
-**Location**: [src/components/fancy/text/letter-swap-pingpong-anim.tsx](src/components/fancy/text/letter-swap-pingpong-anim.tsx)
-
-A text animation component that creates a letter-by-letter "ping-pong swap" effect on hover, with support for text highlighting.
-
-**Key Features**:
-- Letter-by-letter staggered animation using Framer Motion
-- Parent-controlled hover via `isParentHovered` prop
-- Optional text highlighting with primary color
-- Configurable animation direction, timing, and stagger
-- Debounced hover events (100ms) via lodash
-- Accessible with screen reader support
-
-**Props Interface**:
-
-```typescript
-interface TextProps {
-  label: string;                    // Main text to animate
-  highlightedText?: string;         // Optional highlighted portion (primary color)
-  reverse?: boolean;                // Animation direction (default: true)
-  transition?: AnimationOptions;    // Framer Motion transition config
-  staggerDuration?: number;         // Delay between letters (default: 0.03s)
-  staggerFrom?: 'first' | 'last' | 'center' | number;  // Stagger start point
-  className?: string;               // Additional CSS classes
-  onClick?: () => void;             // Click handler
-  isParentHovered?: boolean;        // Parent hover state (for external control)
-}
-```
-
-**Animation Behavior**:
-
-1. **Hover Start**: Letters move vertically (100% up/down) with staggered timing
-2. **Hover End**: Letters return to original position with staggered timing
-3. **Highlighted Text**: Continues animation seamlessly with primary color applied
-
-**Parent-Controlled Hover Pattern**:
-
-Used by AnimatedButton to trigger animations when hovering over the entire button area:
-
-```tsx
-// Parent component (AnimatedButton)
-const [isHovered, setIsHovered] = useState(false);
-
-<div
-  onMouseEnter={() => setIsHovered(true)}
-  onMouseLeave={() => setIsHovered(false)}
->
-  <LetterSwapPingPong
-    label="Hover Me"
-    isParentHovered={isHovered}  // Parent controls animation
-  />
-</div>
-```
-
-The component watches `isParentHovered` via `useEffect` and triggers animations accordingly.
-
-**Usage Examples**:
-
-```tsx
-import LetterSwapPingPong from '@/components/fancy/text/letter-swap-pingpong-anim';
-
-// 1. Basic usage
-<LetterSwapPingPong label="Animate Me" />
-
-// 2. With highlighted text
-<LetterSwapPingPong
-  label="Explore"
-  highlightedText="Solutions"  // Primary color
-/>
-
-// 3. Parent-controlled (used by AnimatedButton)
-const [isHovered, setIsHovered] = useState(false);
-
-<div onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-  <LetterSwapPingPong
-    label="Hover Parent"
-    isParentHovered={isHovered}
-  />
-</div>
-
-// 4. Custom animation timing
-<LetterSwapPingPong
-  label="Slow Motion"
-  transition={{ type: 'spring', duration: 1.2 }}
-  staggerDuration={0.05}
-/>
-
-// 5. Reverse animation direction
-<LetterSwapPingPong
-  label="Upward"
-  reverse={false}  // Letters move up instead of down
-/>
-
-// 6. Stagger from center
-<LetterSwapPingPong
-  label="Center Out"
-  staggerFrom="center"
-/>
-```
-
-**Implementation Details**:
-
-- Uses Framer Motion's `useAnimate` hook for imperative animations
-- Debounces hover events (100ms) to prevent animation flicker
-- Renders two copies of each letter (primary and secondary) for swap effect
-- Screen reader accessible: includes hidden `<span className='sr-only'>` with full text
-- Visual letters marked with `aria-hidden={true}`
-
-**Accessibility**:
-
-```tsx
-<span className='sr-only'>
-  {label}{highlightedText}  // Full text for screen readers
-</span>
-{/* Visual animated letters with aria-hidden={true} */}
-```
-
-### Blog Components Pattern
-
-The blog system demonstrates a self-contained component architecture using nuqs for URL state management and React Query for server state.
-
-**SearchInput** ([src/components/blog/search-input.tsx](src/components/blog/search-input.tsx)):
-
-```tsx
-'use client';
-
-import { useQueryState, parseAsString, debounce } from 'nuqs';
-import { Input } from '@/components/ui/input';
-
-export default function SearchInput() {
-  const [search, setSearch] = useQueryState(
-    'search',
-    parseAsString.withDefault('').withOptions({ history: 'push' })
-  );
-
-  return (
-    <Input
-      type='text'
-      value={search}
-      onChange={(e) =>
-        setSearch(e.target.value, {
-          limitUrlUpdates: e.target.value === '' ? undefined : debounce(500),
-        })
-      }
-    />
-  );
-}
-```
-
-**Key Features**:
-- Manages own state via useQueryState
-- 500ms debounce to prevent excessive requests
-- Instant clear when empty
-- No props needed
-
-**CategoryFilter** ([src/components/blog/category-filter.tsx](src/components/blog/category-filter.tsx)):
-
-```tsx
-'use client';
-
-import { useQueryState, parseAsString } from 'nuqs';
-import { usePostCategories } from '@/hooks/use-post-categories';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
-export default function CategoryFilter() {
-  const [category, setCategory] = useQueryState(
-    'category',
-    parseAsString.withDefault('all').withOptions({ history: 'push' })
-  );
-  const { data: categories, isLoading } = usePostCategories();
-
-  return (
-    <Select value={category} onValueChange={setCategory}>
-      <SelectTrigger>
-        <SelectValue placeholder='All Categories' />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value='all'>All Categories</SelectItem>
-        {categories?.map((cat) => (
-          <SelectItem key={cat._id} value={cat._id}>{cat.name}</SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  );
-}
-```
-
-**Key Features**:
-- Reads categories from server-hydrated React Query cache
-- URL state synchronized with dropdown selection
-- Self-contained with no props
-
-**PostsGrid** ([src/components/blog/posts-grid.tsx](src/components/blog/posts-grid.tsx)):
-
-```tsx
-'use client';
-
-import { useQueryState, parseAsString } from 'nuqs';
-import { useBlogPosts } from '@/hooks/use-blog-posts';
-import PostCard from './post-card';
-
-export default function PostsGrid() {
-  const [search] = useQueryState('search', parseAsString.withDefault(''));
-  const [category] = useQueryState('category', parseAsString.withDefault('all'));
-  const [sort] = useQueryState('sort', parseAsString.withDefault('desc'));
-
-  const categoryId = category === 'all' ? '' : category;
-  const { data: posts, isLoading, error } = useBlogPosts(search, categoryId, sort);
-
-  if (isLoading) {
-    return (
-      <div className='grid grid-cols-1 sm:grid-cols-8 lg:grid-cols-12 gap-4 xl:gap-5'>
-        {[...Array(12)].map((_, i) => (
-          <div key={i} className='col-span-full sm:col-span-4 xl:col-span-3 aspect-[285/372] animate-pulse bg-muted' />
-        ))}
-      </div>
-    );
-  }
-
-  if (error) return <div>Error loading posts</div>;
-  if (!posts || posts.length === 0) return <div>No posts found</div>;
-
-  return (
-    <div className='grid grid-cols-1 sm:grid-cols-8 lg:grid-cols-12 gap-4 xl:gap-5'>
-      {posts.map((post) => (
-        <PostCard key={post._id} post={post} className='col-span-full sm:col-span-4 xl:col-span-3' />
-      ))}
-    </div>
-  );
-}
-```
-
-**Key Features**:
-- Reads all filters from URL state
-- React Query handles data fetching and caching
-- Skeleton loading state matching final layout
-- Error and empty states
-- Responsive grid layout
-
-**Pattern Benefits**:
-1. **Self-Contained**: Each component manages its own state
-2. **No Props**: No prop drilling or state lifting needed
-3. **Shareable URLs**: URL reflects filter state
-4. **Browser Integration**: Back/forward buttons work
-5. **Type-Safe**: nuqs provides TypeScript types for URL params
-
-### Component Documentation
-
-**Currently**: No Storybook or component documentation
-**Future**: Consider adding Storybook for component catalog
-
----
-
-## 3. Frameworks & Libraries
-
-### Core Stack
-
-**Framework**: Next.js 15.5.4
-
-- App Router architecture
-- React Server Components (RSC) enabled
-- Turbopack for dev/build
-
-**React**: 19.1.0
-
-- React Compiler enabled (`babel-plugin-react-compiler`)
-
-**TypeScript**: v5
-
-- Strict mode enabled
-- Path alias: `@/*` → `src/*`
-
-### Styling Stack
-
-**Primary**: Tailwind CSS v4
-
-- PostCSS integration: `@tailwindcss/postcss`
-- Utility-first CSS
-- Custom `@theme inline` directive
-
-**CSS Methodology**: Utility-first with CSS variables
-
-- No CSS Modules
-- No Styled Components for styling (installed but not used)
-- Global styles in [src/app/(frontend)/globals.css](<src/app/(frontend)/globals.css>)
-
-**Utility Libraries**:
-
-- `clsx` - Conditional class names
-- `tailwind-merge` - Merge Tailwind classes without conflicts
-- `class-variance-authority` (CVA) - Component variants
-
-**Animation & Interaction**:
-
-- `tw-animate-css` - Tailwind animation utilities
-- `motion` (Framer Motion) - Advanced animations
-- `lenis` - Smooth scrolling
-- `embla-carousel-react` - Carousel functionality (via shadcn/ui carousel component)
-
-### UI Component Libraries
-
-**shadcn/ui**: Component collection (New York style)
-
+**shadcn/ui**:
+- Config: [components.json](components.json) (New York style)
 - Install: `pnpx shadcn@latest add [component]`
-- Components stored in `src/components/ui/`
+- Location: [src/components/ui/](src/components/ui/)
 
-**Radix UI**: Headless UI primitives
+**Advanced Components** (see files for implementation):
+- **AnimatedButton**: [src/components/animated-button.tsx](src/components/animated-button.tsx)
+  - Link XOR Button (discriminated union)
+  - Icon types: Lucide (string name), Sanity, URL
+- **LetterSwapPingPong**: [src/components/fancy/text/letter-swap-pingpong-anim.tsx](src/components/fancy/text/letter-swap-pingpong-anim.tsx)
+  - Letter-by-letter hover animation
+  - Parent-controlled via `isParentHovered` prop
+- **Link**: [src/components/motion-link.tsx](src/components/motion-link.tsx)
+  - View Transitions API integration
+  - Use instead of `next/link`
+- **StickyHeaderWrapper**: [src/components/header/sticky-header-wrapper.tsx](src/components/header/sticky-header-wrapper.tsx)
+  - Hides while scrolling, shows after 300ms pause
 
-- `@radix-ui/react-slot` - Composition primitive
-
-**Icons**: `lucide-react`
-
-- Import pattern: `import { IconName } from 'lucide-react'`
-
-### Build System
-
-**Package Manager**: **pnpm** (REQUIRED)
-
-- Use `pnpm` instead of `npm`
-- Use `pnpx` instead of `npx`
-
-**Commands**:
-
-```bash
-pnpm dev           # Turbopack dev server
-pnpm build         # Production build with Turbopack
-pnpm start         # Production server
-```
-
-### State Management
-
-**React Query (TanStack Query v5)**: Server state management
-
-- Package: `@tanstack/react-query`
-- Provider: [src/providers/query-provider.tsx](src/providers/query-provider.tsx)
-- Configuration:
-  - `staleTime: Infinity` - Data never stale by default
-  - `gcTime: 10 * 60 * 1000` - 10 minutes garbage collection
-  - `retry: 1` - Single retry on failure
-  - All refetch options disabled by default
-
-**nuqs**: URL state management
-
-- Package: `nuqs`
-- Adapter: `nuqs/adapters/next/app` (NuqsAdapter)
-- Type-safe URL search params
-- Browser history integration
-- Pattern: `useQueryState('paramName', parseAsString.withDefault('default'))`
-
-**Server-Side Prefetching Pattern**:
-
-```tsx
-import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
-
-export default async function Page() {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: ['data-key'],
-    queryFn: fetchDataFunction,
-  });
-
-  return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <ClientComponents />
-    </HydrationBoundary>
-  );
-}
-```
-
-**Benefits**:
-- Instant initial page load (server-rendered)
-- Client components read from hydrated cache
-- Subsequent updates via client-side queries
-- SEO-friendly with pre-rendered content
-
-## 4. Asset Management
-
-### Static Assets
-
-**Location**: `/public/`
-
-**Current Assets**:
-
-- `/public/hexagonal-pattern.svg` - Background pattern
-- `/public/burger.svg` - Menu icon
-
-**Reference Pattern**: Absolute path from public root
-
-```tsx
-// In JSX
-<img src='/hexagonal-pattern.svg' alt='Pattern' />
-```
-
-### CMS Images (Sanity)
-
-**Location**: [src/sanity/lib/image.ts](src/sanity/lib/image.ts)
-
-**Image URL Builder Utilities**:
-
-```typescript
-import {
-  urlFor,
-  urlForUncropped,
-  urlForFill,
-  urlForClip,
-  urlForWithHotspot,
-} from '@/sanity/lib/image';
-
-// Uncropped with auto format
-urlForUncropped(image).url();
-
-// Fill to dimensions
-urlForFill(image, 800, 600).url();
-
-// Clip to dimensions
-urlForClip(image, 800, 600).url();
-
-// Crop with hotspot
-urlForWithHotspot(image, 800, 600).url();
-```
-
-**Next.js Image Integration**:
-
-```tsx
-import { Image } from 'next-sanity/image';
-import { urlForUncropped } from '@/sanity/lib/image';
-
-<Image
-  src={urlForUncropped(images.image1).url()}
-  alt={images.image1.alt}
-  width={1000}
-  height={1000}
-  className='w-full h-auto object-cover'
-/>;
-```
-
-**Best Practices**:
-
-1. Always provide `alt` text from CMS
-2. Use `width`/`height` for aspect ratio
-3. Use Tailwind classes for sizing (`w-full`, `h-auto`)
-4. Auto format enabled for optimization
-
-### Asset Optimization
-
-**Techniques**:
-
-- Sanity CDN automatic image optimization
-- `auto('format')` - Serves WebP/AVIF when supported
-- `fit()` methods - Cropping strategies
-- Next.js Image component - Lazy loading, srcset generation
-
-**CDN**: Sanity's built-in CDN (configured via env vars)
+**Blog Components**:
+- Self-contained with `useQueryState()` for URL params
+- Location: [src/components/blog/](src/components/blog/)
+- No props needed (URL state synced)
 
 ---
 
-## 5. Icon System
+## 4. Styling Rules
 
-### Icon Library
-
-**Primary**: `lucide-react` v0.544.0
-
-**Storage**: npm package (not local files)
-
-**Import Pattern**:
-
-```tsx
-import { ArrowRight, Menu, X, Github } from 'lucide-react';
-
-// Usage
-<ArrowRight className='size-4' />;
-```
-
-### Icon Usage in Components
-
-**Button Example**: [src/components/ui/button.tsx](src/components/ui/button.tsx)
-
-```tsx
-// SVG sizing handled automatically
-const buttonVariants = cva(
-  "[&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0"
-  // ...
-);
-
-// Usage
-<Button>
-  Click me <ArrowRight />
-</Button>;
-```
-
-**Sizing Classes**:
-
-- `size-4` (16px) - Default in buttons
-- `size-5` (20px)
-- `size-6` (24px)
-- `size-8` (32px)
-
-### Icon Naming Convention
-
-**Pattern**: PascalCase matching Lucide's naming
-
-- `ArrowRight`, `Menu`, `X`, `Github`, `ChevronDown`, etc.
-
-**Finding Icons**: Use Context7 MCP to query lucide-react documentation
-
----
-
-## 6. Styling Approach
-
-### CSS Methodology
-
-**Primary**: Tailwind Utility-First
-
-**Global Styles**: [src/app/(frontend)/globals.css](<src/app/(frontend)/globals.css>)
-
-```css
-@layer base {
-  * {
-    @apply font-mono;
-  }
-  body {
-    @apply bg-black text-white;
-  }
-
-  /* Responsive Typography - H Tags */
-  h1 {
-    font-family: var(--font-geist-sans);
-    font-size: var(--h1-font-size);
-    line-height: var(--h1-line-height);
-    letter-spacing: 0;
-    font-weight: 700;
-  }
-  /* ... h2-h6 */
-}
-```
-
-**Custom Utilities**:
-
-```css
-.highlight {
-  color: var(--color-primary);
-}
-```
-
-### Component Styling Pattern
-
-**Recommended Approach**:
-
+**Class Merging**:
 ```tsx
 import { cn } from '@/lib/utils';
-
-const Component = ({ className, ...props }: Props) => {
-  return (
-    <div className={cn('base-classes', 'responsive-classes', className)}>
-      {/* Content */}
-    </div>
-  );
-};
+<div className={cn('base', 'responsive', className)}>
 ```
 
-**Class Merging**: Always use `cn()` utility from [src/lib/utils.ts](src/lib/utils.ts)
-
-```typescript
-import { clsx, type ClassValue } from "clsx"
-import { tailwind-merge } from "tailwind-merge"
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
+**Responsive Pattern**:
+```tsx
+className="grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-2 md:gap-4"
 ```
 
-### Responsive Design Implementation
-
-**Breakpoints** (Tailwind defaults):
-
+**Breakpoints**:
 - `sm`: 640px
-- `md`: 768px
-- `lg`: 1024px
+- `md`: 768px (tablet)
+- `lg`: 1024px (desktop)
 - `xl`: 1280px
 - `2xl`: 1536px
-- Custom: `1920px` for XL typography scaling
 
-**Mobile-First Pattern**:
-
-```tsx
-<div className="
-  grid grid-cols-1           {/* Mobile: 1 column */}
-  md:grid-cols-8             {/* Tablet: 8 columns */}
-  lg:grid-cols-12            {/* Desktop: 12 columns */}
-  gap-2 md:gap-4             {/* Responsive gaps */}
-">
-```
-
-**Responsive Typography**:
-
-- Use CSS variables that change per breakpoint
-- Or Tailwind responsive classes: `text-sm md:text-base lg:text-lg`
-
-**Responsive Spacing**:
-
-```tsx
-<div className="
-  mt-3 xl:mt-4               {/* Responsive margin */}
-  px-4 md:px-6 lg:px-8       {/* Responsive padding */}
-">
-```
-
-### Layout System
-
-**Grid**: Preferred for page layouts
-
-```tsx
-<section className='grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-4'>
-  <div className='md:col-span-4 lg:col-span-5'>...</div>
-  <div className='md:col-span-4 lg:col-span-7'>...</div>
-</section>
-```
-
-**Flexbox**: Used for component-level layouts
-
-```tsx
-<div className="flex gap-3 items-center justify-between">
-```
-
-**Container**: No explicit container component
-
-- Use `max-w-*` utilities directly
-- Example: `max-w-xl`, `max-w-7xl`
+**Layout**:
+- Grid for pages
+- Flexbox for components
+- No container component (use `max-w-*`)
 
 ---
 
-## 7. Project Structure
+## 5. Asset Management
 
-### Directory Architecture
+**Static Assets**:
+- Location: `/public/`
+- Reference: `<img src="/file.svg" />`
 
+**Sanity Images**:
+```typescript
+import { urlForUncropped } from '@/sanity/lib/image';
+import { Image } from 'next-sanity/image';
+
+<Image
+  src={urlForUncropped(image).url()}
+  alt={image.alt}
+  width={1000}
+  height={1000}
+  className="w-full h-auto"
+/>
 ```
-pmohive/
-├── public/                      # Static assets
-│   ├── hexagonal-pattern.svg
-│   └── burger.svg
-├── src/
-│   ├── app/                     # Next.js App Router
-│   │   ├── (frontend)/          # Route group: frontend routes
-│   │   │   ├── (home)/          # Nested route group: home page
-│   │   │   │   └── page.tsx
-│   │   │   ├── blog/            # Blog page
-│   │   │   │   └── page.tsx
-│   │   │   ├── layout.tsx       # Frontend layout
-│   │   │   └── globals.css      # Global styles
-│   │   ├── api/                 # API routes
-│   │   │   └── blog/
-│   │   │       └── posts/
-│   │   │           └── route.ts # Blog posts API
-│   │   └── studio/              # Sanity Studio route
-│   │       └── [[...tool]]/
-│   │           └── page.tsx
-│   ├── components/              # React components
-│   │   ├── ui/                  # shadcn/ui components
-│   │   │   ├── button.tsx
-│   │   │   ├── carousel.tsx    # Embla-based carousel
-│   │   │   ├── input.tsx
-│   │   │   └── select.tsx
-│   │   ├── blog/                # Blog components
-│   │   │   ├── search-input.tsx
-│   │   │   ├── category-filter.tsx
-│   │   │   ├── sort-select.tsx
-│   │   │   ├── posts-grid.tsx
-│   │   │   └── post-card.tsx
-│   │   ├── sections/            # Page section components
-│   │   │   └── home/
-│   │   │       ├── hero-section.tsx
-│   │   │       ├── about-section.tsx
-│   │   │       └── stat-card.tsx
-│   │   ├── header.tsx
-│   │   ├── footer.tsx
-│   │   ├── menuLink.tsx
-│   │   ├── lenis.tsx            # Smooth scroll wrapper
-│   │   ├── portable-text.tsx    # Sanity PortableText renderer
-│   │   └── text-gradient-scroll.tsx # Custom UI components
-│   ├── hooks/                   # Custom React hooks
-│   │   ├── use-blog-posts.ts   # Blog posts query
-│   │   └── use-post-categories.ts # Categories query
-│   ├── providers/               # React context providers
-│   │   └── query-provider.tsx  # React Query provider
-│   ├── lib/                     # Shared utilities
-│   │   └── utils.ts             # cn() helper
-│   └── sanity/                  # Sanity CMS code
-│       ├── schemaTypes/         # Content schemas
-│       │   ├── pages/
-│       │   ├── posts/           # Post + PostCategory
-│       │   └── index.ts
-│       ├── lib/
-│       │   ├── client.ts        # Sanity client
-│       │   ├── queries.ts       # GROQ queries
-│       │   └── image.ts         # Image URL builders
-│       ���── env.ts               # Environment validation
-│       └── structure.ts         # Studio structure
-├── components.json              # shadcn/ui config
-├── package.json
-├── tsconfig.json
-├── CLAUDE.md                    # AI assistant instructions
-└── DESIGN_SYSTEM.md             # This file
+Helpers: `urlForUncropped()`, `urlForFill()`, `urlForClip()`, `urlForWithHotspot()`
+
+---
+
+## 6. MCP Tool Usage
+
+### For Library Documentation → Context7 MCP
+```typescript
+// 1. Resolve library ID
+mcp__context7__resolve-library-id({ libraryName: 'shadcn/ui' });
+
+// 2. Get docs
+mcp__context7__get-library-docs({
+  context7CompatibleLibraryID: '/shadcn/ui',
+  topic: 'button component'
+});
 ```
 
-### Feature Organization Pattern
+Libraries: shadcn/ui, tailwindcss, lucide-react, framer-motion, react-hook-form, zod
 
-**Page-Specific Components**: Organized by route
+### For Framer Motion → Motion MCP
+- Spring animations: `mcp__motion__generate-css-spring`
+- Bounce easing: `mcp__motion__generate-css-bounce-easing`
+- Docs: Query motion MCP tools
 
+### For Figma Designs → Figma MCP
+**Workflow**:
+1. Screenshot: `mcp__figma-dev-mode-mcp-server__get_screenshot(nodeId, fileKey)`
+2. Metadata: `mcp__figma-dev-mode-mcp-server__get_metadata(nodeId, fileKey)`
+3. Code: `mcp__figma-dev-mode-mcp-server__get_code(nodeId, fileKey, clientFrameworks: 'react')`
+4. Adapt: Replace inline styles with Tailwind, add `cn()`, TypeScript types
+5. Place: Determine location (ui/, sections/, components/)
+
+---
+
+## 7. Figma → Tailwind Mapping
+
+| Figma | Tailwind | Notes |
+|-------|----------|-------|
+| Width | `w-full`, `max-w-*` | Semantic |
+| Height | `h-auto` | Responsive |
+| Padding | `p-4`, `px-6` | 4 = 1rem |
+| Gap | `gap-2`, `gap-4` | Flex/Grid |
+| Font Size | `text-sm`, `text-lg` | Or h1-h6 |
+| Color | `bg-primary`, `text-white` | Semantic |
+| Radius | `rounded-md`, `rounded-[44px]` | Or variables |
+
+---
+
+## 8. Quick Lookup
+
+**Key Files**:
+- Tokens: [src/app/(frontend)/globals.css](<src/app/(frontend)/globals.css>)
+- Utils: [src/lib/utils.ts](src/lib/utils.ts) (`cn()`)
+- Config: [components.json](components.json)
+- Patterns: [CLAUDE.md](CLAUDE.md)
+
+**Commands**:
+```bash
+pnpm dev                        # Dev server
+pnpm build                      # Production
+pnpx shadcn@latest add button   # Add component
+pnpx sanity@latest typegen      # Generate types
 ```
-src/components/sections/
-└── home/                        # Home page sections
-    ├── hero-section.tsx
-    ├── about-section.tsx
-    └── stat-card.tsx
-```
 
-**Shared Components**: Top-level `src/components/`
-
-- Layout: `header.tsx`, `footer.tsx`
-- Navigation: `menuLink.tsx`
-- Wrappers: `lenis.tsx`
-- Custom UI: `text-gradient-scroll.tsx`
-
-**UI Components**: `src/components/ui/`
-
-- shadcn/ui components
-- Custom reusable UI elements
-
-### Path Aliases
-
-**Primary Alias**: `@/*` → `src/*`
-
-**Configured in**:
-
-- [tsconfig.json](tsconfig.json): TypeScript resolution
-- [components.json](components.json): shadcn/ui paths
-
-**shadcn/ui Aliases**:
-
-```json
-{
-  "components": "@/components",
-  "utils": "@/lib/utils",
-  "ui": "@/components/ui",
-  "lib": "@/lib",
-  "hooks": "@/hooks"
-}
-```
-
-**Usage Examples**:
-
+**Common Imports**:
 ```typescript
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import Header from '@/components/header';
-import { sanityFetch } from '@/sanity/lib/client';
-import TextGradientScroll from '@/components/text-gradient-scroll';
-```
-
-### File Naming Conventions
-
-**Components**: kebab-case
-
-- `hero-section.tsx`, `stat-card.tsx`, `text-gradient-scroll.tsx`
-
-**Utilities**: kebab-case
-
-- `utils.ts`, `image.ts`, `client.ts`
-
-**React Components**: PascalCase export names
-
-- `export default HeroSection`
-
----
-
-## 8. Figma-to-Code Integration Guidelines
-
-### When Importing Figma Designs
-
-#### 1. **Extract Design Tokens First**
-
-**Colors**:
-
-- Add to `:root` in [src/app/(frontend)/globals.css](<src/app/(frontend)/globals.css>)
-- Use OKLCH format for semantic colors
-- Use hex for brand colors
-- Add to `@theme inline` for Tailwind access
-
-**Typography**:
-
-- Update responsive CSS variables if scales differ
-- Use `--h1-font-size` pattern for consistency
-- Maintain mobile-first responsive breakpoints
-
-**Spacing**:
-
-- Prefer Tailwind's default scale (0.25rem increments)
-- Add custom variables only if truly unique
-
-#### 2. **Component Creation Process**
-
-**Step 1: Analyze Component Complexity**
-
-- Simple UI element → `src/components/ui/`
-- Page section → `src/components/sections/{page}/`
-- Custom reusable UI → `src/components/`
-- Layout element → `src/components/`
-
-**Step 2: Create TypeScript Interface**
-
-```tsx
-interface ComponentNameProps {
-  // Define all props with proper types
-  heading: string;
-  description?: string;
-  items: Array<{ title: string; value: number }>;
-}
-```
-
-**Step 3: Build Component with Utilities**
-
-```tsx
-import { cn } from '@/lib/utils';
-
-const ComponentName = ({ className, ...props }: ComponentNameProps) => {
-  return (
-    <div className={cn('base-classes', className)}>
-      {/* Component content */}
-    </div>
-  );
-};
-
-export default ComponentName;
-```
-
-**Step 4: Use CVA for Variants (if needed)**
-
-```tsx
-import { cva } from 'class-variance-authority';
-
-const componentVariants = cva('base-classes', {
-  variants: {
-    size: { sm: '...', lg: '...' },
-    variant: { primary: '...', secondary: '...' },
-  },
-  defaultVariants: { size: 'sm', variant: 'primary' },
-});
-```
-
-#### 3. **Styling Translation**
-
-**Figma → Tailwind Mapping**:
-
-| Figma Property | Tailwind Class                         | Notes                              |
-| -------------- | -------------------------------------- | ---------------------------------- |
-| Width          | `w-[value]`, `w-full`, `max-w-*`       | Use semantic classes when possible |
-| Height         | `h-[value]`, `h-auto`                  | Prefer `h-auto` for responsive     |
-| Padding        | `p-4`, `px-6`, `py-3`                  | Use scale: 4 = 1rem                |
-| Margin         | `m-4`, `mt-3`, `mb-6`                  | Use scale: 4 = 1rem                |
-| Gap            | `gap-2`, `gap-4`                       | For flex/grid                      |
-| Font Size      | `text-sm`, `text-base`, `text-lg`      | Or use h1-h6 for headings          |
-| Font Weight    | `font-medium`, `font-bold`             |                                    |
-| Color          | `text-white`, `bg-black`, `bg-primary` | Use semantic names                 |
-| Border Radius  | `rounded-md`, `rounded-[44px]`         | Or use --radius-\*                 |
-| Opacity        | `opacity-50`, `bg-white/40`            | Prefer alpha notation              |
-
-**Responsive Breakpoints**:
-
-```
-Mobile:  Base classes (no prefix)
-Tablet:  md: (768px)
-Desktop: lg: (1024px)
-Large:   xl: (1280px)
-XL:      2xl: (1536px)
-```
-
-#### 4. **Image Handling**
-
-**Static Images**:
-
-1. Export from Figma → Place in `/public/`
-2. Reference: `<img src="/image-name.svg" alt="..." />`
-
-**CMS Images**:
-
-1. Upload to Sanity
-2. Use `urlForUncropped()` or appropriate helper
-3. Wrap in `next-sanity/image` component
-
-```tsx
-import { Image } from 'next-sanity/image';
+import { Link } from '@/components/motion-link';
 import { urlForUncropped } from '@/sanity/lib/image';
-
-<Image
-  src={urlForUncropped(image).url()}
-  alt={image.alt}
-  width={1000}
-  height={1000}
-  className='w-full h-auto'
-/>;
+import { useQueryState, parseAsString } from 'nuqs';
+import { motion } from 'motion/react';
 ```
 
-#### 5. **Grid Layout Translation**
-
-Figma Auto Layout → Tailwind Grid/Flex
-
+**Common Patterns**:
 ```tsx
-// Figma: Horizontal Auto Layout
-<div className="flex gap-4 items-center">
-
-// Figma: Vertical Auto Layout
-<div className="flex flex-col gap-2">
-
-// Figma: Grid (8 columns on tablet, 12 on desktop)
+// Grid
 <div className="grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-4">
-  <div className="md:col-span-4 lg:col-span-6">...</div>
-</div>
-```
 
-#### 6. **Animation & Interaction**
+// URL State
+const [search, setSearch] = useQueryState('search', parseAsString.withDefault(''));
 
-**Hover States**:
+// Button
+<Button><ArrowRight /></Button>
 
-```tsx
-<button className="hover:bg-primary hover:text-black transition-all">
-```
-
-**Advanced Animations**:
-
-```tsx
-import { motion } from 'motion/react';
-
-<motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.5 }}
->
-```
-
-**Scroll Effects**: Use `lenis` for smooth scrolling (already configured)
-
-#### 7. **Code Quality Checklist**
-
-Before committing:
-
-- [ ] Verify TypeScript types (no `any`)
-- [ ] Ensure responsive behavior on all breakpoints
-- [ ] Test with actual CMS data (if applicable)
-- [ ] Verify accessibility (alt text, ARIA labels)
-
----
-
-## 9. MCP Figma Integration Workflow
-
-### Recommended Process
-
-1. **Get Figma Node**:
-
-   ```
-   Use mcp__figma-dev-mode-mcp-server__get_screenshot
-   Parameters: { nodeId: "1:2", fileKey: "abc123" }
-   ```
-
-2. **Extract Metadata** (structure overview):
-
-   ```
-   Use mcp__figma-dev-mode-mcp-server__get_metadata
-   Parameters: { nodeId: "1:2", fileKey: "abc123" }
-   ```
-
-3. **Generate Code**:
-
-   ```
-   Use mcp__figma-dev-mode-mcp-server__get_code
-   Parameters: {
-     nodeId: "1:2",
-     fileKey: "abc123",
-     clientFrameworks: "react",
-     clientLanguages: "typescript"
-   }
-   ```
-
-4. **Adapt Generated Code**:
-   - Replace inline styles with Tailwind classes
-   - Extract colors/fonts to design tokens (if new)
-   - Convert to component pattern (interface + export)
-   - Add `cn()` for class merging
-   - Import required utilities/components
-   - Add TypeScript types
-
-5. **Place Component**:
-   - Determine location based on type
-   - Create file with kebab-case name
-   - Export component with PascalCase name
-
-6. **Integrate**:
-   - Import in page/parent component
-   - Connect to CMS data (if needed)
-   - Test responsiveness
-
-### Example: Converting Generated Code
-
-**Generated (inline styles)**:
-
-```tsx
-<div style={{ display: 'flex', gap: '16px', backgroundColor: '#f09a60' }}>
-  <h1 style={{ fontSize: '64px', fontWeight: 700 }}>Title</h1>
-</div>
-```
-
-**Adapted (PMO Hive style)**:
-
-```tsx
-import { cn } from '@/lib/utils';
-
-interface HeroProps {
-  title: string;
-  className?: string;
-}
-
-const Hero = ({ title, className }: HeroProps) => {
-  return (
-    <div className={cn('flex gap-4 bg-primary', className)}>
-      <h1>{title}</h1>
-    </div>
-  );
-};
-
-export default Hero;
+// Sanity Image
+<Image src={urlForUncropped(image).url()} alt={image.alt} width={1000} height={1000} />
 ```
 
 ---
 
-## 10. Quick Reference
-
-### Essential Commands
-
-```bash
-# Development
-pnpm dev                        # Start dev server
-pnpm build                      # Production build
-
-# shadcn/ui
-pnpx shadcn@latest add button   # Add component
-pnpx shadcn@latest add          # List available
-
-# Sanity
-pnpx sanity@latest schema extract  # Extract schema
-pnpx sanity@latest typegen generate # Generate types
-```
-
-### Key Files
-
-- [src/app/(frontend)/globals.css](<src/app/(frontend)/globals.css>) - Design tokens & global styles
-- [src/lib/utils.ts](src/lib/utils.ts) - `cn()` utility
-- [components.json](components.json) - shadcn/ui config
-- [CLAUDE.md](CLAUDE.md) - Project overview
-
-### Import Patterns
-
-```typescript
-// Utilities
-import { cn } from '@/lib/utils';
-
-// UI Components
-import { Button, buttonVariants } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
-
-// Blog Components
-import SearchInput from '@/components/blog/search-input';
-import CategoryFilter from '@/components/blog/category-filter';
-import PostsGrid from '@/components/blog/posts-grid';
-
-// Advanced UI Components
-import AnimatedButton from '@/components/animated-button';
-import LetterSwapPingPong from '@/components/fancy/text/letter-swap-pingpong-anim';
-
-// Sanity
-import { sanityFetch } from '@/sanity/lib/client';
-import { urlForUncropped } from '@/sanity/lib/image';
-import { getInitialBlogPosts, getAllPostCategories } from '@/sanity/lib/queries';
-import { Image } from 'next-sanity/image';
-
-// React Query
-import { useQuery } from '@tanstack/react-query';
-import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
-
-// URL State Management
-import { useQueryState, parseAsString, debounce } from 'nuqs';
-import { NuqsAdapter } from 'nuqs/adapters/next/app';
-
-// Custom Hooks
-import { useBlogPosts } from '@/hooks/use-blog-posts';
-import { usePostCategories } from '@/hooks/use-post-categories';
-
-// Icons
-import { ArrowRight, Menu, X, Search } from 'lucide-react';
-
-// Animation
-import { motion } from 'motion/react';
-
-// Variants
-import { cva, type VariantProps } from 'class-variance-authority';
-```
-
-### Common Tailwind Patterns
-
-```tsx
-// Responsive Grid
-<div className="grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-2 md:gap-4">
-
-// Responsive Typography
-<h1 className="text-2xl md:text-4xl lg:text-5xl">
-
-// Responsive Spacing
-<div className="px-4 md:px-6 lg:px-8 py-6 md:py-10">
-
-// Button w/ Icon
-<Button>
-  Click me <ArrowRight />
-</Button>
-
-// Carousel
-<Carousel opts={{ loop: true }}>
-  <CarouselContent>
-    <CarouselItem>Slide 1</CarouselItem>
-    <CarouselItem>Slide 2</CarouselItem>
-  </CarouselContent>
-  <CarouselPrevious />
-  <CarouselNext />
-</Carousel>
-
-// Image w/ Sanity
-<Image
-  src={urlForUncropped(image).url()}
-  alt={image.alt}
-  width={1000}
-  height={1000}
-  className="w-full h-auto object-cover"
-/>
-
-// Conditional Classes
-<div className={cn(
-  "base-classes",
-  isActive && "active-classes",
-  className
-)}>
-
-// URL State with nuqs
-const [search, setSearch] = useQueryState(
-  'search',
-  parseAsString.withDefault('').withOptions({ history: 'push' })
-);
-
-// Debounced Search
-<Input
-  value={search}
-  onChange={(e) =>
-    setSearch(e.target.value, {
-      limitUrlUpdates: e.target.value === '' ? undefined : debounce(500),
-    })
-  }
-/>
-
-// React Query Hook
-const { data, isLoading, error } = useBlogPosts(search, categoryId, sort);
-
-// Server-Side Prefetch
-export default async function Page() {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: ['data-key'],
-    queryFn: fetchFunction,
-  });
-
-  return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <ClientComponents />
-    </HydrationBoundary>
-  );
-}
-```
-
----
-
-## Support & Documentation
-
-### Context7 MCP Integration
-
-For up-to-date library documentation, use Context7 MCP tools:
-
-```typescript
-// Step 1: Resolve library ID
-mcp__context7__resolve - library - id({ libraryName: 'shadcn/ui' });
-
-// Step 2: Get documentation
-mcp__context7__get -
-  library -
-  docs({
-    context7CompatibleLibraryID: '/shadcn/ui',
-    topic: 'button component',
-    tokens: 5000,
-  });
-```
-
-**Supported Libraries**:
-
-- **shadcn/ui** - UI component documentation
-- **tailwindcss** - Utility class reference
-- **next.js** - Framework documentation
-- **framer-motion** - Animation library
-- **lucide-react** - Icon library
-
-### Additional Resources
-
-1. Review this document for design system patterns
-2. Check [CLAUDE.md](CLAUDE.md) for project-specific instructions
-3. Reference existing components in `src/components/`
-4. Use Context7 MCP for library-specific questions
-
----
-
-**Last Updated**: 2025-10-14
-**Version**: 1.0.0
+**Version**: 1.1.0 (Next.js 16)
+**Last Updated**: 2025-10-23
