@@ -34,7 +34,7 @@ export default async function IndustryFocusPage({
   }
 
   return (
-    <main className='pt-6 sm:pt-8 xl:pt-4 pb-15 sm:pb-0'>
+    <main className='pt-28 sm:pt-34 lg:pt-40 pb-15 sm:pb-0'>
       <div className='relative px-side'>
         <div className='absolute inset-0 bg-gradient-to-b from-transparent from-0% to-black/65'></div>
         <Image

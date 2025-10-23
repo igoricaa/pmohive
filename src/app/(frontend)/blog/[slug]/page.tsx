@@ -41,7 +41,7 @@ export default async function BlogPostPage({
   }
 
   return (
-    <main className='pt-6 pb-10 sm:pb-16 xl:pb-35 sm:pt-8 xl:pt-4'>
+    <main className='pb-10 sm:pb-16 xl:pb-35 pt-28 sm:pt-34 lg:pt-40'>
       <ScrollMeter />
       <div className='relative px-side'>
         <div className='absolute inset-0 bg-gradient-to-b from-transparent from-0% to-black/65'></div>

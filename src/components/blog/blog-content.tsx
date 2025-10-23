@@ -8,7 +8,7 @@ import PostsGrid from '@/components/blog/posts-grid';
 
 export default function BlogContent() {
   return (
-    <main className='px-side pt-6 pb-35 sm:pt-16 sm:pb-42 xl:pt-19 xl:pb-57'>
+    <main className='px-side pb-35 sm:pb-42 xl:pb-57 pt-28 sm:pt-34 lg:pt-40'>
       <div className='grid grid-cols-1 sm:grid-cols-8 xl:grid-cols-12 gap-4 xl:gap-5'>
         <Heading
           level='h1'

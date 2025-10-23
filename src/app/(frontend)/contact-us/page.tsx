@@ -14,7 +14,7 @@ export default async function ContactPage() {
   }
 
   return (
-    <main className='pt-8 xl:pt-16 pb-16 sm:pb-18 xl:pb-21 2xl:pb-25 px-side md:grid md:grid-cols-12 md:gap-x-4 xl:gap-x-5'>
+    <main className='pt-30 sm:pt-38 lg:pt-44 pb-16 sm:pb-18 xl:pb-21 2xl:pb-25 px-side md:grid md:grid-cols-12 md:gap-x-4 xl:gap-x-5'>
       <div className='md:col-span-6 2xl:col-span-5 2xl:col-start-2'>
         <Heading
           level='h1'
@@ -25,7 +25,7 @@ export default async function ContactPage() {
         >
           {contactPageData.heading}
         </Heading>
-        
+
         <GoogleMap className='md:hidden w-full h-45 rounded-2xl overflow-hidden mt-6' />
 
         <div className='hidden md:block mt-4 xl:mt-6'>

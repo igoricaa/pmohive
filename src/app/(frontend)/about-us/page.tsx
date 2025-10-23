@@ -24,7 +24,7 @@ export default async function AboutUsPage() {
   }
 
   return (
-    <main className='pt-6 sm:pt-8 xl:pt-19 pb-15 sm:pb-17 xl:pb-19 2xl:pb-24'>
+    <main className='pt-28 sm:pt-34 lg:pt-40 pb-15 sm:pb-17 xl:pb-19 2xl:pb-24'>
       <IntroSection
         subtitle={aboutPageData.introSection.subtitle}
         heading={aboutPageData.introSection.heading}
