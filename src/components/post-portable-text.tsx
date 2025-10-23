@@ -84,37 +84,34 @@ const PostPortableText = ({
     block: {
       h1: ({ value, children }) => (
         <h1
-          className='text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-medium leading-[1.1] mb-7 mt-13 md:mb-11 md:mt-20'
+          className='text-[32px] md:text-[40px] xl:text-5xl 2xl:text-[56px] font-medium leading-[1.1] mb-7 mt-13 md:mb-11 md:mt-18 2xl:mt-20'
           id={value?._key}
         >
           {children}
         </h1>
       ),
 
-      // H2 Headline: 24px → 30px → 36px → 48px
       h2: ({ value, children }) => (
         <h2
-          className='text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-medium leading-[1.1] mb-5 mt-11 md:mb-9 md:mt-18'
+          className='text-[28px] md:text-[32px] xl:text-4xl 2xl:text-[44px] font-medium leading-[1.1] mb-5 mt-11 md:mb-9 md:mt-16 2xl:mt-18'
           id={value?._key}
         >
           {children}
         </h2>
       ),
 
-      // H3 Headline: 20px → 24px → 24px → 36px
       h3: ({ value, children }) => (
         <h3
-          className='text-xl md:text-2xl lg:text-2xl xl:text-4xl font-medium leading-[1.1] mb-4 mt-10 md:mb-3 md:mt-16'
+          className='text-2xl md:text-[26px] xl:text-[28px] 2xl:text-[32px] font-medium leading-[1.1] mb-4 mt-10 md:mb-3 md:mt-14 2xl:mt-16'
           id={value?._key}
         >
           {children}
         </h3>
       ),
 
-      // H4 Headline: 18px → 20px → 20px → 32px
       h4: ({ value, children }) => (
         <h4
-          className='text-lg md:text-xl lg:text-xl xl:text-3xl font-medium leading-[1.1] mb-3 mt-9 md:mb-5 md:mt-13'
+          className='text-xl md:text-[22px] xl:text-2xl 2xl:text-[28px] font-medium leading-[1.1] mb-3 mt-9 md:mb-5 md:mt-12 2xl:mt-14'
           id={value?._key}
         >
           {children}
@@ -123,7 +120,7 @@ const PostPortableText = ({
 
       h5: ({ value, children }) => (
         <h5
-          className='text-base md:text-lg lg:text-lg xl:text-2xl font-medium leading-[1.1] mb-2 mt-8 md:mb-4 md:mt-12'
+          className='text-lg md:text-xl 2xl:text-2xl font-medium leading-[1.1] mb-2 mt-8 md:mb-4 md:mt-10 2xl:mt-12'
           id={value?._key}
         >
           {children}
@@ -132,7 +129,7 @@ const PostPortableText = ({
 
       h6: ({ value, children }) => (
         <h6
-          className='text-sm md:text-base lg:text-base xl:text-xl font-medium leading-[1.1] mb-2 mt-8 md:mb-3 md:mt-11'
+          className='md:text-lg 2xl:text-xl font-medium leading-[1.1] mb-2 mt-8 md:mb-3 md:mt-11'
           id={value?._key}
         >
           {children}
