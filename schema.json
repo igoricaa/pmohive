@@ -5839,6 +5839,14 @@
         },
         "optional": false
       },
+      "googleMapCoordinates": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "geopoint"
+        },
+        "optional": false
+      },
       "socials": {
         "type": "objectAttribute",
         "value": {

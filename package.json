@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
     "build:analyze": "next build --experimental-debug-memory-usage",
     "build:heap": "next build node --heap-prof node_modules/next/dist/bin/next build",
     "start": "next start",
@@ -42,6 +42,7 @@
     "sanity": "^4.10.2",
     "styled-components": "^6.1.19",
     "tailwind-merge": "^3.3.1",
+    "tempus": "1.0.0-dev.15",
     "zod": "^4.1.11"
   },
   "devDependencies": {

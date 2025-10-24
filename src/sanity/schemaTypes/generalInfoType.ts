@@ -83,6 +83,15 @@ export const generalInfoType = defineType({
       group: 'contact',
     }),
     defineField({
+      name: 'googleMapCoordinates',
+      title: 'Google Map Coordinates',
+      type: 'geopoint',
+      description: 'Google map coordinates',
+      validation: (rule) =>
+        rule.required().error('Google map coordinates are required'),
+      group: 'contact',
+    }),
+    defineField({
       name: 'socials',
       title: 'Social Media',
       type: 'array',

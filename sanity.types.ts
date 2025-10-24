@@ -889,6 +889,7 @@ export type GeneralInfo = {
   };
   email: string;
   phone: string;
+  googleMapCoordinates: Geopoint;
   socials?: Array<{
     title: string;
     url: string;
@@ -1229,6 +1230,7 @@ export type GENERAL_INFO_QUERYResult = {
     };
     email: string;
     phone: string;
+    googleMapCoordinates: Geopoint;
     socials?: Array<{
       title: string;
       url: string;

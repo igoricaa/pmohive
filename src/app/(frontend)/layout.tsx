@@ -7,6 +7,7 @@ import Lenis from '@/components/lenis';
 import BackgroundGradient from '@/components/bg-gradient';
 import QueryProvider from '@/providers/query-provider';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { ReactTempus } from 'tempus/react';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -44,6 +45,7 @@ export default function RootLayout({
             </Lenis>
           </NuqsAdapter>
         </QueryProvider>
+        <ReactTempus patch={true} />
       </body>
     </html>
   );

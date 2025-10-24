@@ -134,7 +134,7 @@ interface GoogleMapProps {
 
 export function GoogleMap({
   className,
-  center = { lat: 40.7128, lng: -74.006 }, // Default to New York City
+  center = { lat: 51.47844937642928, lng: -0.18384444417501233 },
   zoom = 12,
 }: GoogleMapProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;

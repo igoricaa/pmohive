@@ -100,8 +100,9 @@ const CareersSection = ({
                     <Image
                       src={urlForUncropped(member.image).url()}
                       alt={member.image.alt}
-                      width={285}
-                      height={372}
+                      width={448}
+                      height={585}
+                      quality={85}
                       className='w-full h-full object-cover'
                     />
                   </div>
