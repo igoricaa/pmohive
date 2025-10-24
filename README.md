@@ -37,10 +37,20 @@ pnpx sanity@latest typegen generate
 ## Environment Variables
 
 ```bash
+# Sanity CMS
 NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id    # Required (Sanity dashboard)
 NEXT_PUBLIC_SANITY_DATASET=production             # Required (default: production)
 NEXT_PUBLIC_SANITY_API_VERSION=2025-10-06        # Required (YYYY-MM-DD format)
 SANITY_API_TOKEN=your_token                       # Optional (write operations)
+
+# Contact Form
+RESEND_API_KEY=your_resend_api_key                # Email delivery (https://resend.com)
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_site_key      # reCAPTCHA v3 (https://google.com/recaptcha)
+RECAPTCHA_SECRET_KEY=your_secret_key              # reCAPTCHA v3 server-side
+
+# Analytics & GDPR
+NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX                    # Google Tag Manager
+NEXT_PUBLIC_TERMLY_UUID=xxxxxxxx-xxxx-xxxx        # Termly consent management
 ```
 
 ## Key Features
@@ -48,8 +58,9 @@ SANITY_API_TOKEN=your_token                       # Optional (write operations)
 - **CMS**: Sanity with blog system, categories, search, filtering, modular case studies
 - **UI**: Advanced components (AnimatedButton, LetterSwapPingPong, motion-based page transitions)
 - **Header**: Scroll-responsive sticky header with intelligent hide/show
-- **Forms**: React Hook Form + Zod v4 validation
+- **Forms**: React Hook Form + Zod v4 validation, reCAPTCHA v3, GDPR consent checkboxes
 - **State**: TanStack Query (server), nuqs (URL), React Hook Form (forms)
+- **GDPR**: Termly cookie consent, GTM Consent Mode v2, legal pages (Sanity CMS)
 
 ## Project Structure
 

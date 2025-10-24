@@ -20,219 +20,86 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { useState } from 'react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import AnimatedButton from './animated-button';
+import Link from 'next/link';
+import { toast } from 'sonner';
+import { executeRecaptcha, loadRecaptchaScript } from '@/lib/recaptcha';
 
 const contactFormSchema = z.object({
-  firstName: z.string().min(2, '*min 2 chars').max(50, '*max 50 chars'),
-  lastName: z.string().min(2, '*min 2 chars').max(50, '*max 50 chars'),
+  fullName: z.string().min(2, '*min 2 chars').max(100, '*max 100 chars'),
   email: z.string().email('*invalid email'),
-  country: z.string().min(1, '*required'),
-  interest: z.enum(['introduction-to-pmo', 'data-center-potentials'], {
-    error: '*required',
+  company: z.string().max(100, '*max 100 chars').optional().or(z.literal('')),
+  phone: z.string().max(20, '*max 20 chars').optional().or(z.literal('')),
+  industrySector: z
+    .enum([
+      'data-centres',
+      'oil-gas',
+      'chemicals',
+      'energy-infrastructure',
+      'utilities',
+      'other',
+      '',
+    ])
+    .optional(),
+  projectType: z
+    .enum([
+      'programme-management',
+      'project-controls',
+      'commissioning-support',
+      'pmo-advisory',
+      'cmms-implementation',
+      'project-audit',
+      'other',
+      '',
+    ])
+    .optional(),
+  message: z.string().min(10, '*min 10 chars').max(2000, '*max 2000 chars'),
+  referralSource: z
+    .enum([
+      'linkedin',
+      'referral',
+      'search-engine',
+      'industry-event',
+      'other',
+      '',
+    ])
+    .optional(),
+  gdprConsent: z.boolean().refine((val) => val === true, {
+    message: '*You must consent to data processing',
   }),
-  message: z.string().min(10, '*min 10 chars').max(1000, '*max 1000 chars'),
+  marketingConsent: z.boolean().default(false),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
-const COUNTRIES = [
-  'Afghanistan',
-  'Albania',
-  'Algeria',
-  'Andorra',
-  'Angola',
-  'Argentina',
-  'Armenia',
-  'Australia',
-  'Austria',
-  'Azerbaijan',
-  'Bahamas',
-  'Bahrain',
-  'Bangladesh',
-  'Barbados',
-  'Belarus',
-  'Belgium',
-  'Belize',
-  'Benin',
-  'Bhutan',
-  'Bolivia',
-  'Bosnia and Herzegovina',
-  'Botswana',
-  'Brazil',
-  'Brunei',
-  'Bulgaria',
-  'Burkina Faso',
-  'Burundi',
-  'Cambodia',
-  'Cameroon',
-  'Canada',
-  'Cape Verde',
-  'Central African Republic',
-  'Chad',
-  'Chile',
-  'China',
-  'Colombia',
-  'Comoros',
-  'Congo',
-  'Costa Rica',
-  'Croatia',
-  'Cuba',
-  'Cyprus',
-  'Czech Republic',
-  'Denmark',
-  'Djibouti',
-  'Dominica',
-  'Dominican Republic',
-  'East Timor',
-  'Ecuador',
-  'Egypt',
-  'El Salvador',
-  'Equatorial Guinea',
-  'Eritrea',
-  'Estonia',
-  'Ethiopia',
-  'Fiji',
-  'Finland',
-  'France',
-  'Gabon',
-  'Gambia',
-  'Georgia',
-  'Germany',
-  'Ghana',
-  'Greece',
-  'Grenada',
-  'Guatemala',
-  'Guinea',
-  'Guinea-Bissau',
-  'Guyana',
-  'Haiti',
-  'Honduras',
-  'Hungary',
-  'Iceland',
-  'India',
-  'Indonesia',
-  'Iran',
-  'Iraq',
-  'Ireland',
-  'Israel',
-  'Italy',
-  'Jamaica',
-  'Japan',
-  'Jordan',
-  'Kazakhstan',
-  'Kenya',
-  'Kiribati',
-  'North Korea',
-  'South Korea',
-  'Kosovo',
-  'Kuwait',
-  'Kyrgyzstan',
-  'Laos',
-  'Latvia',
-  'Lebanon',
-  'Lesotho',
-  'Liberia',
-  'Libya',
-  'Liechtenstein',
-  'Lithuania',
-  'Luxembourg',
-  'North Macedonia',
-  'Madagascar',
-  'Malawi',
-  'Malaysia',
-  'Maldives',
-  'Mali',
-  'Malta',
-  'Marshall Islands',
-  'Mauritania',
-  'Mauritius',
-  'Mexico',
-  'Micronesia',
-  'Moldova',
-  'Monaco',
-  'Mongolia',
-  'Montenegro',
-  'Morocco',
-  'Mozambique',
-  'Myanmar',
-  'Namibia',
-  'Nauru',
-  'Nepal',
-  'Netherlands',
-  'New Zealand',
-  'Nicaragua',
-  'Niger',
-  'Nigeria',
-  'Norway',
-  'Oman',
-  'Pakistan',
-  'Palau',
-  'Palestine',
-  'Panama',
-  'Papua New Guinea',
-  'Paraguay',
-  'Peru',
-  'Philippines',
-  'Poland',
-  'Portugal',
-  'Qatar',
-  'Romania',
-  'Russia',
-  'Rwanda',
-  'Saint Kitts and Nevis',
-  'Saint Lucia',
-  'Saint Vincent and the Grenadines',
-  'Samoa',
-  'San Marino',
-  'Sao Tome and Principe',
-  'Saudi Arabia',
-  'Senegal',
-  'Serbia',
-  'Seychelles',
-  'Sierra Leone',
-  'Singapore',
-  'Slovakia',
-  'Slovenia',
-  'Solomon Islands',
-  'Somalia',
-  'South Africa',
-  'South Sudan',
-  'Spain',
-  'Sri Lanka',
-  'Sudan',
-  'Suriname',
-  'Swaziland',
-  'Sweden',
-  'Switzerland',
-  'Syria',
-  'Taiwan',
-  'Tajikistan',
-  'Tanzania',
-  'Thailand',
-  'Togo',
-  'Tonga',
-  'Trinidad and Tobago',
-  'Tunisia',
-  'Turkey',
-  'Turkmenistan',
-  'Tuvalu',
-  'Uganda',
-  'Ukraine',
-  'United Arab Emirates',
-  'United Kingdom',
-  'United States',
-  'Uruguay',
-  'Uzbekistan',
-  'Vanuatu',
-  'Vatican City',
-  'Venezuela',
-  'Vietnam',
-  'Yemen',
-  'Zambia',
-  'Zimbabwe',
+const INDUSTRY_SECTORS = [
+  { value: 'data-centres', label: 'Data Centres' },
+  { value: 'oil-gas', label: 'Oil & Gas' },
+  { value: 'chemicals', label: 'Chemicals' },
+  { value: 'energy-infrastructure', label: 'Energy Infrastructure' },
+  { value: 'utilities', label: 'Utilities' },
+  { value: 'other', label: 'Other' },
+];
+
+const PROJECT_TYPES = [
+  { value: 'programme-management', label: 'Programme Management' },
+  { value: 'project-controls', label: 'Project Controls' },
+  { value: 'commissioning-support', label: 'Commissioning Support' },
+  { value: 'pmo-advisory', label: 'PMO Advisory' },
+  { value: 'cmms-implementation', label: 'CMMS Implementation' },
+  { value: 'project-audit', label: 'Project Audit' },
+  { value: 'other', label: 'Other' },
+];
+
+const REFERRAL_SOURCES = [
+  { value: 'linkedin', label: 'LinkedIn' },
+  { value: 'referral', label: 'Referral' },
+  { value: 'search-engine', label: 'Search Engine' },
+  { value: 'industry-event', label: 'Industry Event' },
+  { value: 'other', label: 'Other' },
 ];
 
 export function ContactForm({ className }: { className?: string }) {
@@ -243,55 +110,114 @@ export function ContactForm({ className }: { className?: string }) {
     // See: https://github.com/react-hook-form/resolvers/issues/813
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
-      firstName: '',
-      lastName: '',
+      fullName: '',
       email: '',
-      country: '',
-      interest: undefined,
+      company: '',
+      phone: '',
+      industrySector: '',
+      projectType: '',
       message: '',
+      referralSource: '',
+      gdprConsent: false,
+      marketingConsent: false,
     },
     mode: 'onBlur',
   });
 
-  async function onSubmit(data: ContactFormValues) {
+  // Load reCAPTCHA script on mount
+  useEffect(() => {
+    loadRecaptchaScript().catch((error) => {
+      console.error('Failed to load reCAPTCHA:', error);
+    });
+  }, []);
+
+  const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
     try {
+      // Generate reCAPTCHA token
+      const recaptchaToken = await executeRecaptcha('contact_form');
+
+      // Prepare submission data with metadata
+      const submissionData = {
+        fullName: data.fullName,
+        email: data.email,
+        message: data.message,
+        gdprConsent: data.gdprConsent,
+        marketingConsent: data.marketingConsent,
+        // Convert empty strings to undefined for optional fields
+        company: data.company || undefined,
+        phone: data.phone || undefined,
+        industrySector: data.industrySector || undefined,
+        projectType: data.projectType || undefined,
+        referralSource: data.referralSource || undefined,
+        // Add metadata
+        recaptchaToken,
+        timestamp: new Date().toISOString(),
+        userAgent:
+          typeof navigator !== 'undefined' ? navigator.userAgent : undefined,
+      };
+
       const { sendContactEmail } = await import('@/actions/contact');
-      const response = await sendContactEmail(data);
+      const response = await sendContactEmail(submissionData);
 
       if (response.success) {
-        // Reset form on success
         form.reset();
-        alert(response.message);
+        toast.success(response.message);
       } else {
-        alert(response.message);
+        toast.error(response.message);
         console.error('Error sending email:', response.error);
       }
     } catch (error) {
       console.error('Form submission error:', error);
-      alert('Something went wrong. Please try again.');
+      toast.error('Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit as any)}
         className={cn('space-y-5 sm:space-y-3', className)}
       >
-        {/* First Name & Last Name - Grid on desktop */}
+        {/* Full Name */}
+        <FormField
+          // @ts-expect-error - Known incompatibility between Zod v4.1.11 and @hookform/resolvers v5.2.2
+          control={form.control}
+          name='fullName'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Full Name <span className='text-destructive'>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder='John Doe'
+                  {...field}
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Email & Phone - Grid on desktop */}
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6'>
           <FormField
+            // @ts-expect-error - Zod v4 type incompatibility
             control={form.control}
-            name='firstName'
+            name='email'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>First Name</FormLabel>
+                <FormLabel>
+                  Email Address <span className='text-destructive'>*</span>
+                </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder='John'
+                    type='email'
+                    placeholder='john.doe@example.com'
                     {...field}
                     disabled={isSubmitting}
                   />
@@ -302,13 +228,19 @@ export function ContactForm({ className }: { className?: string }) {
           />
 
           <FormField
+            // @ts-expect-error - Zod v4 type incompatibility
             control={form.control}
-            name='lastName'
+            name='phone'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Last Name</FormLabel>
+                <FormLabel>Phone Number</FormLabel>
                 <FormControl>
-                  <Input placeholder='Doe' {...field} disabled={isSubmitting} />
+                  <Input
+                    type='tel'
+                    placeholder='+44 20 1234 5678'
+                    {...field}
+                    disabled={isSubmitting}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -316,17 +248,17 @@ export function ContactForm({ className }: { className?: string }) {
           />
         </div>
 
-        {/* Email */}
+        {/* Company Name */}
         <FormField
+          // @ts-expect-error - Zod v4 type incompatibility
           control={form.control}
-          name='email'
+          name='company'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Company Name</FormLabel>
               <FormControl>
                 <Input
-                  type='email'
-                  placeholder='john.doe@example.com'
+                  placeholder='Your company'
                   {...field}
                   disabled={isSubmitting}
                 />
@@ -336,80 +268,80 @@ export function ContactForm({ className }: { className?: string }) {
           )}
         />
 
-        {/* Country */}
-        <FormField
-          control={form.control}
-          name='country'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Country</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-                disabled={isSubmitting}
-              >
-                <FormControl>
-                  <SelectTrigger className='w-full'>
-                    <SelectValue placeholder='Select your country' />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent className='max-h-50'>
-                  {COUNTRIES.map((country) => (
-                    <SelectItem key={country} value={country}>
-                      {country}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Interest - Radio Group */}
-        <FormField
-          control={form.control}
-          name='interest'
-          render={({ field }) => (
-            <FormItem className='space-y-3'>
-              <FormLabel className='text-2xl mt-8'>Area of Interest</FormLabel>
-              <FormControl>
-                <RadioGroup
+        {/* Industry Sector & Project Type - Grid on desktop */}
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6'>
+          <FormField
+            // @ts-expect-error - Zod v4 type incompatibility
+            control={form.control}
+            name='industrySector'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Industry Sector</FormLabel>
+                <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
-                  className='flex flex-col space-y-1'
                   disabled={isSubmitting}
                 >
-                  <FormItem className='flex items-center space-x-3 space-y-0'>
-                    <FormControl>
-                      <RadioGroupItem value='introduction-to-pmo' />
-                    </FormControl>
-                    <FormLabel className='font-normal cursor-pointer'>
-                      Introduction to PMO
-                    </FormLabel>
-                  </FormItem>
-                  <FormItem className='flex items-center space-x-3 space-y-0'>
-                    <FormControl>
-                      <RadioGroupItem value='data-center-potentials' />
-                    </FormControl>
-                    <FormLabel className='font-normal cursor-pointer'>
-                      Data Center Potentials
-                    </FormLabel>
-                  </FormItem>
-                </RadioGroup>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                  <FormControl>
+                    <SelectTrigger className='w-full'>
+                      <SelectValue placeholder='Select industry sector' />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className='max-h-50'>
+                    {INDUSTRY_SECTORS.map((sector) => (
+                      <SelectItem key={sector.value} value={sector.value}>
+                        {sector.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            // @ts-expect-error - Zod v4 type incompatibility
+            control={form.control}
+            name='projectType'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Project Type</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  disabled={isSubmitting}
+                >
+                  <FormControl>
+                    <SelectTrigger className='w-full'>
+                      <SelectValue placeholder='Select project type' />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className='max-h-50'>
+                    {PROJECT_TYPES.map((type) => (
+                      <SelectItem key={type.value} value={type.value}>
+                        {type.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         {/* Message */}
         <FormField
+          // @ts-expect-error - Zod v4 type incompatibility
           control={form.control}
           name='message'
           render={({ field }) => (
             <FormItem className='mt-3 sm:mt-6'>
-              <FormLabel>Message</FormLabel>
+              <FormLabel>
+                Message / Enquiry Details{' '}
+                <span className='text-destructive'>*</span>
+              </FormLabel>
               <FormControl>
                 <Textarea
                   placeholder='Tell us about your inquiry...'
@@ -424,11 +356,98 @@ export function ContactForm({ className }: { className?: string }) {
           )}
         />
 
+        {/* How did you hear about us? */}
+        <FormField
+          // @ts-expect-error - Zod v4 type incompatibility
+          control={form.control}
+          name='referralSource'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>How did you hear about us?</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                disabled={isSubmitting}
+              >
+                <FormControl>
+                  <SelectTrigger className='w-full'>
+                    <SelectValue placeholder='Select source' />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent className='max-h-50'>
+                  {REFERRAL_SOURCES.map((source) => (
+                    <SelectItem key={source.value} value={source.value}>
+                      {source.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* GDPR Consent (Required) */}
+        <FormField
+          // @ts-expect-error - Zod v4 type incompatibility
+          control={form.control}
+          name='gdprConsent'
+          render={({ field }) => (
+            <FormItem className='flex flex-row items-start space-x-3 space-y-0 mt-6'>
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <div className='space-y-1 leading-none'>
+                <FormLabel className='font-normal cursor-pointer'>
+                  I consent to PMO Hive processing my information to respond to
+                  this enquiry. View our{' '}
+                  <Link
+                    href='/privacy-policy'
+                    className='text-primary underline underline-offset-2 hover:text-primary/80'
+                  >
+                    Privacy Policy
+                  </Link>
+                  . <span className='text-destructive'>*</span>
+                </FormLabel>
+                <FormMessage />
+              </div>
+            </FormItem>
+          )}
+        />
+
+        {/* Marketing Consent (Optional) */}
+        <FormField
+          // @ts-expect-error - Zod v4 type incompatibility
+          control={form.control}
+          name='marketingConsent'
+          render={({ field }) => (
+            <FormItem className='flex flex-row items-start space-x-3 space-y-0'>
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <div className='space-y-1 leading-none'>
+                <FormLabel className='font-normal cursor-pointer'>
+                  I would like to receive updates and insights from PMO Hive
+                  (you can unsubscribe at any time).
+                </FormLabel>
+              </div>
+            </FormItem>
+          )}
+        />
+
         {/* Submit Button */}
         <AnimatedButton
           text={isSubmitting ? 'Sending...' : 'Send Message'}
           variant='secondary'
-          onClick={form.handleSubmit(onSubmit)}
+          onClick={form.handleSubmit(onSubmit as any)}
           icon={{ type: 'lucide', name: 'SendIcon' }}
           iconClassName='size-5'
           className='font-mono flex ml-auto mt-1 sm:mt-1.5'

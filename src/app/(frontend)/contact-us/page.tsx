@@ -30,8 +30,8 @@ export default async function ContactPage() {
         <GoogleMap
           className='md:hidden w-full h-45 rounded-2xl overflow-hidden mt-6'
           center={{
-            lat: generalInfoData.googleMapCoordinates.lat ?? 0,
-            lng: generalInfoData.googleMapCoordinates.lng ?? 0,
+            lat: generalInfoData.googleMapCoordinates?.lat ?? 0,
+            lng: generalInfoData.googleMapCoordinates?.lng ?? 0,
           }}
         />
 
@@ -47,8 +47,8 @@ export default async function ContactPage() {
         <GoogleMap
           className='hidden md:block w-full h-120 lg:h-full rounded-2xl overflow-hidden'
           center={{
-            lat: generalInfoData.googleMapCoordinates.lat ?? 0,
-            lng: generalInfoData.googleMapCoordinates.lng ?? 0,
+            lat: generalInfoData.googleMapCoordinates?.lat ?? 0,
+            lng: generalInfoData.googleMapCoordinates?.lng ?? 0,
           }}
         />
       </div>

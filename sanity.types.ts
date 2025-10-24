@@ -564,6 +564,51 @@ export type Button = {
   };
 };
 
+export type TermsOfUse = {
+  _id: string;
+  _type: "termsOfUse";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  lastUpdated: string;
+  version: string;
+  termlyEmbedUrl?: string;
+  introContent?: BlockContent;
+  content: BlockContent;
+};
+
+export type CookiePolicy = {
+  _id: string;
+  _type: "cookiePolicy";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  lastUpdated: string;
+  version: string;
+  termlyEmbedUrl?: string;
+  introContent?: BlockContent;
+  content: BlockContent;
+};
+
+export type PrivacyPolicy = {
+  _id: string;
+  _type: "privacyPolicy";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  lastUpdated: string;
+  version: string;
+  termlyEmbedUrl?: string;
+  introContent?: BlockContent;
+  content: BlockContent;
+};
+
 export type ContactPage = {
   _id: string;
   _type: "contactPage";
@@ -1028,7 +1073,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = DividerBlock | SpacerBlock | TextGridItem | TextGridBlock | ImageBlock | TextareaBlock | HeadingTextBlock | HeadingBlock | CaseStudy | CareersPage | OpenPosition | BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | ContactPage | AboutPage | VisionSection | ApproachSection | IntroSection | HomePage | BreakSection | BlogSection | TeamSection | Subtitle | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = DividerBlock | SpacerBlock | TextGridItem | TextGridBlock | ImageBlock | TextareaBlock | HeadingTextBlock | HeadingBlock | CaseStudy | CareersPage | OpenPosition | BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | TermsOfUse | CookiePolicy | PrivacyPolicy | ContactPage | AboutPage | VisionSection | ApproachSection | IntroSection | HomePage | BreakSection | BlogSection | TeamSection | Subtitle | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
@@ -1665,6 +1710,45 @@ export type CASE_STUDY_QUERYResult = {
 export type CASE_STUDIES_QUERY_WITH_SLUGSResult = Array<{
   slug: Slug;
 }>;
+// Variable: PRIVACY_POLICY_QUERY
+// Query: {  "privacyPolicy": *[_type == "privacyPolicy"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    introContent,    content  }}
+export type PRIVACY_POLICY_QUERYResult = {
+  privacyPolicy: {
+    title: string;
+    slug: string;
+    lastUpdated: string;
+    version: string;
+    termlyEmbedUrl: string | null;
+    introContent: BlockContent | null;
+    content: BlockContent;
+  } | null;
+};
+// Variable: COOKIE_POLICY_QUERY
+// Query: {  "cookiePolicy": *[_type == "cookiePolicy"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    introContent,    content  }}
+export type COOKIE_POLICY_QUERYResult = {
+  cookiePolicy: {
+    title: string;
+    slug: string;
+    lastUpdated: string;
+    version: string;
+    termlyEmbedUrl: string | null;
+    introContent: BlockContent | null;
+    content: BlockContent;
+  } | null;
+};
+// Variable: TERMS_OF_USE_QUERY
+// Query: {  "termsOfUse": *[_type == "termsOfUse"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    introContent,    content  }}
+export type TERMS_OF_USE_QUERYResult = {
+  termsOfUse: {
+    title: string;
+    slug: string;
+    lastUpdated: string;
+    version: string;
+    termlyEmbedUrl: string | null;
+    introContent: BlockContent | null;
+    content: BlockContent;
+  } | null;
+};
 
 // Query TypeMap
 import "@sanity/client";
@@ -1685,5 +1769,8 @@ declare module "@sanity/client" {
     "{\n  \"currentService\": *[_type == \"service\" && slug.current == $slug][0]\n}": SERVICE_QUERYResult;
     "{\n  \"caseStudy\": *[_type == \"caseStudy\" && slug.current == $slug][0]\n}": CASE_STUDY_QUERYResult;
     "*[_type == \"caseStudy\"]{\n  slug\n}": CASE_STUDIES_QUERY_WITH_SLUGSResult;
+    "{\n  \"privacyPolicy\": *[_type == \"privacyPolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content\n  }\n}": PRIVACY_POLICY_QUERYResult;
+    "{\n  \"cookiePolicy\": *[_type == \"cookiePolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content\n  }\n}": COOKIE_POLICY_QUERYResult;
+    "{\n  \"termsOfUse\": *[_type == \"termsOfUse\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content\n  }\n}": TERMS_OF_USE_QUERYResult;
   }
 }

@@ -322,5 +322,41 @@ const [search, setSearch] = useQueryState('search', parseAsString.withDefault(''
 
 ---
 
+## 10. Legal & Compliance
+
+**Cookie Consent Button** (Footer):
+
+- Component: [cookie-settings-button.tsx](src/components/cookie-settings-button.tsx)
+- Pattern: Client component with `onClick` handler
+- API: `window.displayPreferenceModal()` (Termly)
+- Styling: Matches footer links (`.font-sans .font-semibold .text-light-grey`)
+
+**Legal Page Layout**:
+
+- Structure: `<main>` → centered container (`max-w-4xl`) → heading + metadata + content
+- Heading: Use `<Heading level='h1'>` from [ui/heading.tsx](src/components/ui/heading.tsx)
+- Metadata: Version + Last Updated (`.text-sm .text-foreground/60`)
+- Content: `<PortableText>` for Sanity blockContent rendering
+- Optional: `termlyEmbedUrl` for iframe embed (`.h-96 .w-full .rounded-lg .border-border`)
+
+**Sanity Legal Schemas**:
+
+- Fields: title, slug, lastUpdated, version, termlyEmbedUrl (optional), introContent (optional), content
+- Icons: ShieldCheckIcon (privacy), CookieIcon (cookie), FileTextIcon (terms)
+- Preview: Shows version + lastUpdated in subtitle
+
+**Contact Form GDPR Pattern**:
+
+- Two checkboxes (NEVER pre-ticked):
+  - Processing consent: Required field, Zod `.refine(val => val === true)`
+  - Marketing consent: Optional field, `.default(false)`
+- Consent metadata in email:
+  - Timestamp (British format)
+  - IP address (hashed for privacy)
+  - User agent string
+- Privacy Policy link: `<Link href='/privacy-policy'>` in checkbox label
+
+---
+
 **Version**: 1.1.0 (Next.js 16)
 **Last Updated**: 2025-10-23

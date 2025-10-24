@@ -6,11 +6,14 @@ import {
   CASE_STUDIES_QUERY_WITH_SLUGSResult,
   CASE_STUDY_QUERYResult,
   CONTACT_PAGE_QUERYResult,
+  COOKIE_POLICY_QUERYResult,
   GENERAL_INFO_QUERYResult,
   HOME_PAGE_QUERYResult,
   LATEST_POSTS_QUERYResult,
   POST_QUERYResult,
+  PRIVACY_POLICY_QUERYResult,
   SERVICE_QUERYResult,
+  TERMS_OF_USE_QUERYResult,
 } from '../../../sanity.types';
 
 export const HOME_PAGE_QUERY = defineQuery(`{
@@ -286,3 +289,62 @@ export const getAllCaseStudiesWithSlugs =
       tags: ['caseStudies'],
     });
   };
+
+export const PRIVACY_POLICY_QUERY = defineQuery(`{
+  "privacyPolicy": *[_type == "privacyPolicy"][0] {
+    title,
+    "slug": slug.current,
+    lastUpdated,
+    version,
+    termlyEmbedUrl,
+    introContent,
+    content
+  }
+}`);
+
+export const getPrivacyPolicyData =
+  async (): Promise<PRIVACY_POLICY_QUERYResult> => {
+    return await sanityFetch({
+      query: PRIVACY_POLICY_QUERY,
+      tags: ['privacyPolicy'],
+    });
+  };
+
+export const COOKIE_POLICY_QUERY = defineQuery(`{
+  "cookiePolicy": *[_type == "cookiePolicy"][0] {
+    title,
+    "slug": slug.current,
+    lastUpdated,
+    version,
+    termlyEmbedUrl,
+    introContent,
+    content
+  }
+}`);
+
+export const getCookiePolicyData =
+  async (): Promise<COOKIE_POLICY_QUERYResult> => {
+    return await sanityFetch({
+      query: COOKIE_POLICY_QUERY,
+      tags: ['cookiePolicy'],
+    });
+  };
+
+export const TERMS_OF_USE_QUERY = defineQuery(`{
+  "termsOfUse": *[_type == "termsOfUse"][0] {
+    title,
+    "slug": slug.current,
+    lastUpdated,
+    version,
+    termlyEmbedUrl,
+    introContent,
+    content
+  }
+}`);
+
+export const getTermsOfUseData = async (): Promise<TERMS_OF_USE_QUERYResult> => {
+  return await sanityFetch({
+    query: TERMS_OF_USE_QUERY,
+    tags: ['termsOfUse'],
+  });
+};

@@ -5,6 +5,7 @@ import { urlFor } from '@/sanity/lib/image';
 import { routes } from '@/app/data';
 import MenuLink from './menuLink';
 import hexagonalPattern from '../../public/hexagonal-pattern.svg';
+import { CookieSettingsButton } from './cookie-settings-button';
 
 export default async function Footer() {
   const { generalInfo: generalInfoData } = await getGeneralInfoData();
@@ -13,7 +14,7 @@ export default async function Footer() {
     return <footer>Loading...</footer>;
   }
 
-  const { logoFull, email, phone, socials } = generalInfoData;
+  const { logoFull, socials } = generalInfoData;
 
   const routesMidIndex = Math.ceil(routes.length / 2);
 
@@ -97,36 +98,40 @@ export default async function Footer() {
         {/* Bottom section with copyright and legal links */}
         <div className='flex flex-col sm:flex-row-reverse justify-between pt-4 pb-4.5 sm:pt-5 sm:pb-5 sm:items-center gap-2 border-t-1 border-white/30 mt-8 sm:mt-6 xl:mt-7'>
           {/* Legal links */}
-          <nav className='flex items-center gap-3 justify-between'>
+          <nav className='flex items-center gap-3 justify-between flex-wrap'>
             <Link
-              href='/data-protection'
+              href='/privacy-policy'
               className='font-sans font-semibold text-sm sm:text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
             >
-              Data Protection
+              Privacy Policy
             </Link>
             <span className='font-light text-base tracking-[0.1px] text-light-grey'>
               |
             </span>
             <Link
-              href='/terms'
+              href='/cookie-policy'
               className='font-sans font-semibold text-sm sm:text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
             >
-              Terms &amp; Conditions
+              Cookie Policy
             </Link>
             <span className='text-base tracking-[0.1px] text-light-grey'>
               |
             </span>
             <Link
-              href='/imprint'
+              href='/terms-of-use'
               className='font-sans font-semibold text-sm sm:text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
             >
-              Imprint
+              Terms of Use
             </Link>
+            <span className='text-base tracking-[0.1px] text-light-grey'>
+              |
+            </span>
+            <CookieSettingsButton />
           </nav>
 
           {/* Copyright */}
           <p className='font-mono font-light tracking-[0.1px] sm:mt-0 text-white/40 sm:text-white'>
-            � Copyright 2025 /pmohive
+            © Copyright 2025 /pmohive
           </p>
         </div>
       </div>

@@ -206,6 +206,44 @@ import { urlForUncropped } from '@/sanity/lib/image';
 
 ---
 
+## 8. GDPR & Analytics
+
+**GTM + GA4 with Consent Mode v2**:
+
+- Consent init: [gtm-consent-init.tsx](src/components/gtm-consent-init.tsx) - Sets default to 'denied' BEFORE GTM loads
+- GTM integration: [layout.tsx](<src/app/(frontend)/layout.tsx:48>) via `@next/third-parties`
+- Termly CMP: [termly-cmp.tsx](src/components/sections/termly-cmp.tsx) - Auto-blocks cookies, reinitializes on route changes, updates consent via dataLayer
+- **Critical order**: GTMConsentInit → GoogleTagManager → TermlyCMP
+
+**Environment Variables**:
+
+- `NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX` (Google Tag Manager)
+- `NEXT_PUBLIC_TERMLY_UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` (Termly website UUID)
+
+**Legal Pages** (Sanity CMS-driven):
+
+- Privacy Policy: [/privacy-policy/page.tsx](<src/app/(frontend)/privacy-policy/page.tsx>)
+- Cookie Policy: [/cookie-policy/page.tsx](<src/app/(frontend)/cookie-policy/page.tsx>)
+- Terms of Use: [/terms-of-use/page.tsx](<src/app/(frontend)/terms-of-use/page.tsx>)
+- Schemas: [src/sanity/schemaTypes/pages/](src/sanity/schemaTypes/pages/) (privacyPolicyType, cookiePolicyType, termsOfUseType)
+- Queries: [queries.ts:293](src/sanity/lib/queries.ts:293) (getPrivacyPolicyData, getCookiePolicyData, getTermsOfUseData)
+
+**Contact Form GDPR**:
+
+- Two consent checkboxes: [contact-form.tsx](src/components/contact-form.tsx)
+  - Processing consent (required, unchecked default)
+  - Marketing consent (optional, unchecked default)
+- reCAPTCHA v3: [recaptcha.ts](src/lib/recaptcha.ts) - Score-based spam protection (threshold 0.5)
+- Email consent logging: [contact-email.tsx](src/components/emails/contact-email.tsx) - Includes timestamp, IP, user agent
+
+**Footer Integration**:
+
+- Cookie Settings button: [cookie-settings-button.tsx](src/components/cookie-settings-button.tsx)
+- Calls `window.displayPreferenceModal()` to reopen Termly banner
+- CMP loads via [termly-cmp.tsx](src/components/sections/termly-cmp.tsx) with `autoBlock={true}` (blocks cookies before consent)
+
+---
+
 ## Commands
 
 ```bash

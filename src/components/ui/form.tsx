@@ -148,12 +148,15 @@ function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
     return null;
   }
 
+  console.log(error);
+
   return (
     <p
       data-slot='form-message'
       id={formMessageId}
       className={cn(
         'absolute top-0.25 right-0 font-mono text-[10px] text-destructive font-medium',
+        error?.ref?.name === 'gdprConsent' ? '-top-3.5' : '',
         className
       )}
       {...props}

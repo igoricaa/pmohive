@@ -7,6 +7,9 @@ import {
   teamSectionType,
 } from './pages/home';
 import { contactPageType } from './pages/contactPageType';
+import { privacyPolicyType } from './pages/privacyPolicyType';
+import { cookiePolicyType } from './pages/cookiePolicyType';
+import { termsOfUseType } from './pages/termsOfUseType';
 import { postType } from './posts';
 import { postCategoryType } from './posts/postCategoryType';
 import { blockContentType } from './blockContentType';
@@ -41,6 +44,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     homePageType,
     aboutPageType,
     contactPageType,
+    privacyPolicyType,
+    cookiePolicyType,
+    termsOfUseType,
     aboutSectionType,
     heroSectionType,
     breakSectionType,
