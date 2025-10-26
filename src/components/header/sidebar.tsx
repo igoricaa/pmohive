@@ -73,7 +73,7 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
           src={hexagonalPattern}
           alt='Hexagonal pattern'
           unoptimized
-          className='object-contain min-w-[747px] h-[531px] -z-10 absolute -top-6 -left-42'
+          className='object-contain min-w-[747px] h-[531px] -z-10 absolute -top-6 -left-42 opacity-20'
         />
 
         <div>

@@ -269,7 +269,7 @@ export function ContactForm({ className }: { className?: string }) {
         />
 
         {/* Industry Sector & Project Type - Grid on desktop */}
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6'>
           <FormField
             // @ts-expect-error - Zod v4 type incompatibility
             control={form.control}
@@ -402,7 +402,7 @@ export function ContactForm({ className }: { className?: string }) {
                 />
               </FormControl>
               <div className='space-y-1 leading-none'>
-                <FormLabel className='font-normal cursor-pointer'>
+                <FormLabel className='font-normal cursor-pointer block'>
                   I consent to PMO Hive processing my information to respond to
                   this enquiry. View our{' '}
                   <Link

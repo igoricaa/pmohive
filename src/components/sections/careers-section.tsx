@@ -13,6 +13,7 @@ import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
 import Heading from '@/components/ui/heading';
 import AnimatedButton from '../animated-button';
+import { AnimateInView } from '../animate-in-view';
 
 interface CareersSectionProps {
   subtitle: {
@@ -46,36 +47,43 @@ const CareersSection = ({
       )}
     >
       {/* Content Area */}
-      <div className='md:col-span-4 2xl:col-span-3 2xl:col-start-2 px-side md:pr-0 flex flex-col md:max-xl:justify-between'>
-        <div>
-          <Heading
-            level='h2'
-            subtitle={{
-              text: subtitle.text,
-              highlightedText: subtitle.highlightedText || null,
-            }}
-            spacing='mt-4'
-          >
-            {heading}
-          </Heading>
+      <AnimateInView
+        offset={80}
+        direction='right'
+        inViewMargin='-200px'
+        className='md:col-span-4 2xl:col-span-3 2xl:col-start-2'
+      >
+        <div className='md:col-span-4 2xl:col-span-3 2xl:col-start-2 px-side md:pr-0 flex flex-col md:max-xl:justify-between'>
+          <div>
+            <Heading
+              level='h2'
+              subtitle={{
+                text: subtitle.text,
+                highlightedText: subtitle.highlightedText || null,
+              }}
+              spacing='mt-4'
+            >
+              {heading}
+            </Heading>
 
-          {/* Description */}
-          <div className='mt-3 sm:mt-4'>
-            <PortableText value={description} />
+            {/* Description */}
+            <div className='mt-3 sm:mt-4'>
+              <PortableText value={description} />
+            </div>
           </div>
+          {/* CTA Button */}
+          {ctaButton && (
+            <AnimatedButton
+              text={ctaButton.text}
+              href={ctaButton.link}
+              variant={ctaButton.variant as 'default' | 'secondary'}
+              className='hidden md:inline-flex w-fit xl:mt-6'
+              icon={{ type: 'lucide', name: 'ArrowRight' }}
+              iconClassName='size-4! sm:size-6!'
+            />
+          )}
         </div>
-        {/* CTA Button */}
-        {ctaButton && (
-          <AnimatedButton
-            text={ctaButton.text}
-            href={ctaButton.link}
-            variant={ctaButton.variant as 'default' | 'secondary'}
-            className='hidden md:inline-flex w-fit xl:mt-6'
-            icon={{ type: 'lucide', name: 'ArrowRight' }}
-            iconClassName='size-4! sm:size-6!'
-          />
-        )}
-      </div>
+      </AnimateInView>
 
       {/* Carousel Area */}
       <div className='md:col-span-4 xl:col-span-8'>
@@ -94,33 +102,43 @@ const CareersSection = ({
                   'basis-[82%] sm:basis-[70%] xl:basis-1/2 pl-0 pr-4 sm:pl-0 sm:pr-side'
                 )}
               >
-                <div className='relative h-full aspect-[285/372] overflow-hidden group'>
-                  {/* Background Image */}
-                  <div className='absolute inset-0 -z-20'>
-                    <Image
-                      src={urlForUncropped(member.image).url()}
-                      alt={member.image.alt}
-                      width={448}
-                      height={585}
-                      quality={85}
-                      className='w-full h-full object-cover'
-                    />
-                  </div>
+                <AnimateInView
+                  offset={80}
+                  direction='left'
+                  inViewMargin='-200px'
+                  delay={index * 0.3}
+                  disableOnMobile={true}
+                >
+                  <div className='relative h-full aspect-[285/372] overflow-hidden group'>
+                    {/* Background Image */}
+                    <div className='absolute inset-0 -z-20'>
+                      <Image
+                        src={urlForUncropped(member.image).url()}
+                        alt={member.image.alt}
+                        width={448}
+                        height={585}
+                        quality={85}
+                        className='w-full h-full object-cover'
+                      />
+                    </div>
 
-                  {/* Gradient Overlay */}
-                  <div className='absolute inset-0 bg-gradient-to-b from-transparent from-50% to-black/45 -z-10' />
+                    {/* Gradient Overlay */}
+                    <div className='absolute inset-0 bg-gradient-to-b from-transparent from-50% to-black/45 -z-10' />
 
-                  {/* Content */}
-                  <div className='pl-4 pr-5 xl:pl-8 xl:pr-11 pb-4 xl:pb-7 z-0 h-full flex flex-col justify-end'>
-                    <h3 className='text-lg sm:text-3xl xl:text-2xl'>
-                      {member.name}
-                    </h3>
+                    {/* Content */}
+                    <div className='pl-4 pr-5 xl:pl-8 xl:pr-11 pb-4 xl:pb-7 z-0 h-full flex flex-col justify-end'>
+                      <h3 className='text-lg sm:text-3xl xl:text-2xl'>
+                        {member.name}
+                      </h3>
 
-                    <div className='mt-2 sm:mt-3 xl:mt-5 z-0 max-w-md'>
-                      <PortableText value={member.bio as PortableTextBlock[]} />
+                      <div className='mt-2 sm:mt-3 xl:mt-5 z-0 max-w-md'>
+                        <PortableText
+                          value={member.bio as PortableTextBlock[]}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
+                </AnimateInView>
               </CarouselItem>
             ))}
             <CarouselItem

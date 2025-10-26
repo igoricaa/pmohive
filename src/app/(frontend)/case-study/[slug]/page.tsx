@@ -18,6 +18,9 @@ import SpacerBlock from '@/components/case-study/spacer-block';
 import DividerBlock from '@/components/case-study/divider-block';
 import BlogSection from '@/components/sections/home/blog-section';
 import { PortableTextBlock } from 'next-sanity';
+import { AnimateInView } from '@/components/animate-in-view';
+import { UseInViewOptions } from 'motion/react';
+type MarginType = UseInViewOptions['margin'];
 
 export async function generateStaticParams() {
   const caseStudies = await getAllCaseStudiesWithSlugs();
@@ -61,60 +64,92 @@ export default async function CaseStudyPage({
       </section>
 
       <section className='px-side xl:grid xl:grid-cols-12 xl:gap-x-5 -mt-8 sm:-mt-21 xl:-mt-24 2xl:-mt-28 z-2 relative'>
-        <Heading level='h1' className='xl:col-span-10 xl:col-start-2'>
-          {data.mainInfo.title}
-        </Heading>
+        <AnimateInView
+          offset={80}
+          direction='up'
+          className='xl:col-span-10 xl:col-start-2'
+        >
+          <Heading level='h1'>{data.mainInfo.title}</Heading>
+        </AnimateInView>
 
         <div className='border-b border-white/30 pb-6 xl:pb-8 mt-4 sm:mt-6 xl:mt-8 xl:col-span-10 xl:col-start-2'>
-          <p className='font-mono font-sm sm:font-base'>
-            <span className='highlight font-bold sm:font-lg'>Client:</span>{' '}
-            {data.mainInfo.client}
-          </p>
-          <p className='font-mono font-sm sm:font-base mt-2'>
-            <span className='highlight font-bold sm:font-lg'>Project:</span>{' '}
-            {data.mainInfo.projectDescription}
-          </p>
+          <AnimateInView offset={80} direction='up' delay={0.3}>
+            <p className='font-mono font-sm sm:font-base'>
+              <span className='highlight font-bold sm:font-lg'>Client:</span>{' '}
+              {data.mainInfo.client}
+            </p>
+          </AnimateInView>
+
+          <AnimateInView
+            offset={80}
+            direction='up'
+            className='mt-2'
+            delay={0.6}
+          >
+            <p className='font-mono font-sm sm:font-base '>
+              <span className='highlight font-bold sm:font-lg'>Project:</span>{' '}
+              {data.mainInfo.projectDescription}
+            </p>
+          </AnimateInView>
         </div>
       </section>
 
       <section className='px-side xl:grid xl:grid-cols-12 xl:gap-x-5 mt-10'>
         <div className='xl:col-span-10 xl:col-start-2'>
           {data.content?.map((block, index) => {
+            const animationProps = {
+              offset: 80,
+              direction: 'up' as const,
+              inViewMargin: '-100px' as MarginType,
+              delay: index * 0.15,
+            };
+
             switch (block._type) {
               case 'headingBlock':
-                return <HeadingBlock key={index} heading={block.heading} />;
+                return (
+                  <AnimateInView key={index} {...animationProps}>
+                    <HeadingBlock heading={block.heading} />
+                  </AnimateInView>
+                );
 
               case 'headingTextBlock':
                 return (
-                  <HeadingTextBlock
-                    key={index}
-                    heading={block.heading}
-                    content={block.content}
-                  />
+                  <AnimateInView key={index} {...animationProps}>
+                    <HeadingTextBlock
+                      heading={block.heading}
+                      content={block.content}
+                    />
+                  </AnimateInView>
                 );
 
               case 'textareaBlock':
-                return <TextareaBlock key={index} content={block.content} />;
+                return (
+                  <AnimateInView key={index} {...animationProps}>
+                    <TextareaBlock content={block.content} />
+                  </AnimateInView>
+                );
 
               case 'imageBlock':
                 return (
-                  <ImageBlock
-                    key={index}
-                    _type={block._type}
-                    image={block.image}
-                    subtitle={block.subtitle}
-                    aspectRatio={block.aspectRatio}
-                  />
+                  <AnimateInView key={index} {...animationProps}>
+                    <ImageBlock
+                      _type={block._type}
+                      image={block.image}
+                      subtitle={block.subtitle}
+                      aspectRatio={block.aspectRatio}
+                    />
+                  </AnimateInView>
                 );
 
               case 'textGridBlock':
                 return (
-                  <TextGridBlock
-                    key={index}
-                    heading={block.heading}
-                    content={block.content}
-                    items={block.items}
-                  />
+                  <AnimateInView key={index} {...animationProps}>
+                    <TextGridBlock
+                      heading={block.heading}
+                      content={block.content}
+                      items={block.items}
+                    />
+                  </AnimateInView>
                 );
 
               case 'spacerBlock':

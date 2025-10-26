@@ -16,6 +16,7 @@ import { PortableTextBlock } from 'next-sanity';
 import Heading from '@/components/ui/heading';
 import PostCard from '@/components/blog/post-card';
 import AnimatedButton from '@/components/animated-button';
+import { AnimateInView } from '@/components/animate-in-view';
 
 interface BlogSectionProps {
   subtitle: {
@@ -46,31 +47,33 @@ const BlogSection = ({
     >
       {/* Content Area */}
       <div className='md:col-span-3 2xl:col-start-2 px-side md:pr-0 flex flex-col md:max-xl:justify-between'>
-        <div>
-          <Heading
-            level='h2'
-            subtitle={{
-              text: subtitle.text,
-              highlightedText: subtitle.highlightedText || null,
-            }}
-          >
-            {heading}
-          </Heading>
+        <AnimateInView offset={40} direction='right' inViewMargin='-200px'>
+          <div>
+            <Heading
+              level='h2'
+              subtitle={{
+                text: subtitle.text,
+                highlightedText: subtitle.highlightedText || null,
+              }}
+            >
+              {heading}
+            </Heading>
 
-          {/* Description */}
-          <div className='mt-3 sm:mt-4'>
-            <PortableText value={description} />
+            {/* Description */}
+            <div className='mt-3 sm:mt-4'>
+              <PortableText value={description} />
+            </div>
           </div>
-        </div>
-        {/* CTA Button */}
-        <AnimatedButton
-          text={ctaButton.text}
-          href={ctaButton.link}
-          variant={ctaButton.variant as 'default' | 'secondary'}
-          icon={{ type: 'lucide', name: 'ArrowRight' }}
-          iconClassName='size-4! sm:size-6!'
-          className='hidden md:inline-flex w-fit xl:mt-6'
-        />
+          {/* CTA Button */}
+          <AnimatedButton
+            text={ctaButton.text}
+            href={ctaButton.link}
+            variant={ctaButton.variant as 'default' | 'secondary'}
+            icon={{ type: 'lucide', name: 'ArrowRight' }}
+            iconClassName='size-4! sm:size-6!'
+            className='hidden md:inline-flex w-fit xl:mt-6'
+          />
+        </AnimateInView>
       </div>
 
       {/* Carousel Area */}
@@ -90,7 +93,15 @@ const BlogSection = ({
                   'basis-[82%] sm:basis-[65%] xl:basis-1/3 pl-0 pr-4 sm:pl-0 sm:pr-side '
                 )}
               >
-                <PostCard post={post as unknown as Post} />
+                <AnimateInView
+                  offset={80}
+                  direction='left'
+                  inViewMargin='-200px'
+                  delay={index * 0.3}
+                  disableOnMobile={true}
+                >
+                  <PostCard post={post as unknown as Post} />
+                </AnimateInView>
               </CarouselItem>
             ))}
           </CarouselContent>

@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
 import ScrollMeter from '@/components/scroll-meter';
+import { AnimateInView } from '@/components/animate-in-view';
 
 export async function generateStaticParams() {
   const posts = await getAllPostsWithSlugs();
@@ -58,21 +59,30 @@ export default async function BlogPostPage({
 
       <div className='-mt-8 sm:-mt-21 xl:-mt-24 2xl:-mt-28 z-2 relative'>
         <section className='px-side xl:grid xl:grid-cols-12 xl:gap-x-5'>
-          <Heading
-            level='h1'
-            subtitle={currentPost.subtitle || null}
-            spacing='mt-4 sm:mt-1 xl:mt-2'
+          <AnimateInView
+            offset={80}
+            direction='up'
             className='xl:col-span-6 xl:col-start-2'
           >
-            {currentPost.title}
-          </Heading>
+            <Heading
+              level='h1'
+              subtitle={currentPost.subtitle || null}
+              spacing='mt-4 sm:mt-1 xl:mt-2'
+            >
+              {currentPost.title}
+            </Heading>
+          </AnimateInView>
 
-          <div className='xl:col-span-9 xl:col-start-2 mt-4 xl:mt-6'>
+          <AnimateInView
+            offset={80}
+            direction='up'
+            delay={0.3}
+            className='xl:col-span-9 xl:col-start-2 mt-4 xl:mt-6'
+          >
             <PostPortableText
               value={currentPost.content as PortableTextBlock[]}
             />
-          </div>
-
+          </AnimateInView>
           <ShareArticle
             title={currentPost.title}
             slug={currentPost.slug}
@@ -81,21 +91,32 @@ export default async function BlogPostPage({
         </section>
 
         <section className='mt-10 sm:mt-11 xl:mt-14 xl:grid xl:grid-cols-12 xl:gap-x-5'>
-          <p className='text-[34px] sm:text-[44px] xl:text-5xl font-bold px-side xl:col-span-full xl:col-start-2'>
-            Related Posts
-          </p>
+          <AnimateInView
+            offset={80}
+            direction='up'
+            className='xl:col-span-full xl:col-start-2'
+            inViewMargin='-150px'
+          >
+            <p className='text-[34px] sm:text-[44px] xl:text-5xl font-bold px-side'>
+              Related Posts
+            </p>
+          </AnimateInView>
 
           <div className='hidden md:grid grid-cols-12 gap-4 xl:gap-5 mt-8 sm:mt-6 xl:mt-12 px-side xl:col-span-9 xl:col-start-2'>
-            {relatedPosts.map((post) => (
-              <PostCard
-                key={post._id}
-                post={post as unknown as Post}
+            {relatedPosts.map((post, index) => (
+              <AnimateInView
+                offset={80}
+                direction='up'
+                inViewMargin='-50px'
+                delay={index * 0.3}
                 className='col-span-4'
-              />
+              >
+                <PostCard key={post._id} post={post as unknown as Post} />
+              </AnimateInView>
             ))}
           </div>
 
-          <div className='md:hidden md:col-span-5 xl:col-span-9 2xl:col-span-8'>
+          <div className='md:hidden md:col-span-5 xl:col-span-9 2xl:col-span-8 mt-8'>
             <Carousel
               opts={{
                 align: 'start',

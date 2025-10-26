@@ -1407,6 +1407,92 @@ export type POST_QUERYResult = {
 export type POSTS_QUERY_WITH_SLUGSResult = Array<{
   slug: Slug;
 }>;
+// Variable: SERVICES_QUERY
+// Query: *[_type == "service"]
+export type SERVICES_QUERYResult = Array<{
+  _id: string;
+  _type: "service";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  header: {
+    featuredImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    subtitle: Subtitle;
+    heading: string;
+    description: BlockContent;
+  };
+  challenge: {
+    subtitle: Subtitle;
+    heading: string;
+    description: BlockContent;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+  };
+  role: {
+    subtitle: Subtitle;
+    description: string;
+  };
+  approach: {
+    subtitle: Subtitle;
+    heading: string;
+    steps: Array<{
+      step: string;
+      _key: string;
+    }>;
+  };
+  highlightedText: string;
+  infoSection: {
+    subtitle: Subtitle;
+    heading: string;
+    description: BlockContent;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+  };
+  proofPoint: {
+    subtitle: Subtitle;
+    description: Array<{
+      description: string;
+      _key: string;
+    }>;
+  };
+  ctaSection: BreakSection;
+}>;
 // Variable: SERVICES_QUERY_WITH_SLUGS
 // Query: *[_type == "service"]{  slug}
 export type SERVICES_QUERY_WITH_SLUGSResult = Array<{
@@ -1762,6 +1848,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"postCategory\"] | order(name asc) {\n    _id,\n    name,\n    \"slug\": slug.current\n  }\n": POST_CATEGORIES_QUERYResult;
     "{\n  \"currentPost\": *[_type == \"post\" && slug.current == $slug][0]{\n    _id,\n    title,\n    subtitle {\n      text,\n      highlightedText\n    },\n    \"slug\": slug.current,\n    date,\n    content,\n    excerpt,\n    featuredMedia,\n  },\n  \"relatedPosts\": *[\n    _type == \"post\" \n    && slug.current != $slug\n  ] | order(date desc)[0...3]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    date,\n    featuredMedia\n  }\n}": POST_QUERYResult;
     "*[_type == \"post\"]{\n  slug\n}": POSTS_QUERY_WITH_SLUGSResult;
+    "*[_type == \"service\"]": SERVICES_QUERYResult;
     "*[_type == \"service\"]{\n  slug\n}": SERVICES_QUERY_WITH_SLUGSResult;
     "{\n  \"contactPage\": *[_type == \"contactPage\"][0]\n}": CONTACT_PAGE_QUERYResult;
     "{\n  \"aboutPage\": *[_type == \"aboutPage\"][0] {\n    ...,\n    team {\n      ...,\n      teamMembers[]->\n    },\n    approachSection {\n      ...,\n      approachItems[]->\n    },\n    visionSection {\n      ...,\n      visionItems[]->\n    },\n  }\n}": ABOUT_PAGE_QUERYResult;

@@ -6,6 +6,7 @@ import { PortableTextBlock } from 'next-sanity';
 import PortableText from '@/components/portable-text';
 import Heading from '@/components/ui/heading';
 import AnimatedButton from '../animated-button';
+import { AnimateInView } from '../animate-in-view';
 
 interface BreakSectionSectionProps {
   subtitle: {
@@ -46,44 +47,64 @@ const BreakSection = ({
             quality={85}
             className='w-full h-full object-cover'
           />
+          <div className='absolute inset-0 bg-gradient-to-b from-transparent from-0% to-black'></div>
         </div>
-
-        <div className='absolute inset-0 bg-gradient-to-b from-transparent from-0% to-black'></div>
 
         <div className='relative z-10 col-span-full 2xl:col-span-10 2xl:col-start-2'>
           <div className={cn('sm:max-w-xl xl:max-w-3xl', contentClassName)}>
-            <Heading
-              level='h4'
-              subtitle={{
-                text: subtitle.text,
-                highlightedText: subtitle.highlightedText || null,
-              }}
+            <AnimateInView
+              offset={40}
+              direction='up'
+              inViewMargin='-250px'
+              disableOnMobile={true}
             >
-              {heading}
-            </Heading>
+              <Heading
+                level='h4'
+                subtitle={{
+                  text: subtitle.text,
+                  highlightedText: subtitle.highlightedText || null,
+                }}
+              >
+                {heading}
+              </Heading>
+            </AnimateInView>
 
             {description && (
-              <div className='mt-4 sm:mt-3 xl:mt-2'>
+              <AnimateInView
+                offset={40}
+                direction='up'
+                inViewMargin='-250px'
+                className='mt-4 sm:mt-3 xl:mt-2'
+                disableOnMobile={true}
+              >
                 <PortableText value={description} />
-              </div>
+              </AnimateInView>
             )}
 
             <div className='flex gap-2 sm:gap-4 mt-4 xl:mt-7.5'>
               {buttons.map((button, index) => (
-                <AnimatedButton
-                  key={button.text}
-                  text={button.text}
-                  href={button.link}
-                  variant={button.variant as 'default' | 'secondary'}
-                  icon={
-                    index === 1
-                      ? { type: 'lucide', name: 'ArrowRight' }
-                      : undefined
-                  }
-                  highlightedText={button.highlightedText || undefined}
-                  iconClassName='size-4! sm:size-6!'
-                  className='flex-1 sm:flex-initial sm:w-auto'
-                />
+                <AnimateInView
+                  offset={40}
+                  direction='up'
+                  inViewMargin='-250px'
+                  delay={index * 0.3}
+                  disableOnMobile={true}
+                >
+                  <AnimatedButton
+                    key={button.text}
+                    text={button.text}
+                    href={button.link}
+                    variant={button.variant as 'default' | 'secondary'}
+                    icon={
+                      index === 1
+                        ? { type: 'lucide', name: 'ArrowRight' }
+                        : undefined
+                    }
+                    highlightedText={button.highlightedText || undefined}
+                    iconClassName='size-4! sm:size-6!'
+                    className='flex-1 sm:flex-initial sm:w-auto'
+                  />
+                </AnimateInView>
               ))}
             </div>
           </div>

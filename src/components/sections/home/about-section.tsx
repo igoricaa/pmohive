@@ -8,10 +8,9 @@ import { urlForUncropped } from '@/sanity/lib/image';
 import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-
 import Subtitle from '@/components/ui/subtitle';
-
 import UnderstandingPmoSection from './understanding-pmo-section';
+import { AnimateInView } from '@/components/animate-in-view';
 
 type AboutSectionType = {
   heading: {
@@ -65,11 +64,16 @@ const AboutSection = ({
 
       <div className='px-side grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7.5 sm:gap-x-4 sm:gap-y-8 lg:gap-y-0 mt-12 sm:mt-17 xl:mt-27 2xl:max-w-10/12 mx-auto'>
         {stats.map((stat, index) => (
-          <StatCard
+          <AnimateInView
             key={stat.statTitle}
-            stat={stat}
             className={cn((index === 1 || index === 3) && 'lg:mt-10')}
-          />
+            offset={40}
+            direction='up'
+            delay={index * 0.2}
+            inViewMargin='-200px'
+          >
+            <StatCard stat={stat} />
+          </AnimateInView>
         ))}
       </div>
 
@@ -81,14 +85,26 @@ const AboutSection = ({
       </div>
 
       <div className='px-side grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-2 md:gap-4 items-center'>
-        <Image
-          src={urlForUncropped(weAreSection.image).url()}
-          alt={weAreSection.image.alt}
-          width={566}
-          height={420}
-          className='h-auto w-full object-cover col-span-1 xl:col-span-5 xl:col-start-2'
-        />
-        <div className='col-span-1 xl:col-span-5'>
+        <AnimateInView
+          offset={80}
+          direction='right'
+          inViewMargin='-200px'
+          className='col-span-1 xl:col-span-5 xl:col-start-2'
+        >
+          <Image
+            src={urlForUncropped(weAreSection.image).url()}
+            alt={weAreSection.image.alt}
+            width={566}
+            height={420}
+            className='h-auto w-full object-cover'
+          />
+        </AnimateInView>
+        <AnimateInView
+          offset={80}
+          direction='left'
+          inViewMargin='-200px'
+          className='col-span-1 xl:col-span-5'
+        >
           <h2 className='mt-4 md:mt-0 mb-3 sm:mb-5 xl:mb-4'>
             {weAreSection.heading}{' '}
             <span className='font-mono highlight'>
@@ -99,7 +115,7 @@ const AboutSection = ({
           <PortableText
             value={weAreSection.description as PortableTextBlock[]}
           />
-        </div>
+        </AnimateInView>
       </div>
     </section>
   );

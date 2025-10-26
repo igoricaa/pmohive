@@ -12,6 +12,7 @@ import Subtitle from '@/components/ui/subtitle';
 import { TextGradientScroll } from '@/components/text-gradient-scroll';
 import { cn } from '@/lib/utils';
 import BreakSection from '@/components/sections/break-section';
+import { AnimateInView } from '@/components/animate-in-view';
 
 export async function generateStaticParams() {
   const services = await getAllServicesWithSlugs();
@@ -50,19 +51,30 @@ export default async function IndustryFocusPage({
 
       <div className='-mt-8 sm:-mt-21 xl:-mt-24 2xl:-mt-28 z-2 relative'>
         <section className='px-side xl:grid xl:grid-cols-12 xl:gap-x-5'>
-          <Heading
-            level='h1'
-            subtitle={currentService.header.subtitle || null}
-            spacing='mt-4 sm:mt-1 xl:mt-2'
-            className='xl:col-span-8 xl:col-start-2'
+          <AnimateInView
+            offset={80}
+            direction='up'
+            className='xl:col-span-6 xl:col-start-2'
           >
-            {currentService.header.heading}
-          </Heading>
-          <div className='mt-3 sm:mt-6 xl:mt-8 xl:col-span-10 xl:col-start-2'>
+            <Heading
+              level='h1'
+              subtitle={currentService.header.subtitle || null}
+              spacing='mt-4 sm:mt-1 xl:mt-2'
+            >
+              {currentService.header.heading}
+            </Heading>
+          </AnimateInView>
+
+          <AnimateInView
+            offset={80}
+            direction='up'
+            delay={0.3}
+            className='mt-3 sm:mt-6 xl:mt-8 xl:col-span-10 xl:col-start-2'
+          >
             <PortableText
               value={currentService.header.description as PortableTextBlock[]}
             />
-          </div>
+          </AnimateInView>
         </section>
       </div>
 
@@ -95,28 +107,40 @@ export default async function IndustryFocusPage({
       </section>
 
       <section className='px-side xl:grid xl:grid-cols-12 xl:gap-x-5'>
-        <Heading
-          level='h2'
-          subtitle={currentService.approach.subtitle}
+        <AnimateInView
+          offset={80}
+          direction='up'
           className='xl:col-span-10 xl:col-start-2'
         >
-          {currentService.approach.heading}
-        </Heading>
+          <Heading
+            level='h2'
+            subtitle={currentService.approach.subtitle}
+            className='xl:col-span-10 xl:col-start-2'
+          >
+            {currentService.approach.heading}
+          </Heading>
+        </AnimateInView>
 
         <div className='grid grid-cols-2 sm:grid-cols-8 xl:grid-cols-10 gap-4 xl:gap-5 xl:col-span-10 xl:col-start-2'>
           {currentService.approach.steps.map((step, index) => (
-            <div
+            <AnimateInView
               key={step._key}
               className={cn(
                 'mt-6 xl:mt-9 col-span-1 sm:col-span-2',
                 index === 2 && 'sm:max-xl:col-start-3'
               )}
+              offset={40}
+              direction='up'
+              delay={index * 0.2}
+              inViewMargin='-200px'
             >
-              <span className='text-primary font-bold text-[42px]'>
-                0{index + 1}
-              </span>
-              <p className='sm:text-lg font-bold mt-2 xl:mt-3'>{step.step}</p>
-            </div>
+              <div>
+                <span className='text-primary font-bold text-[42px]'>
+                  0{index + 1}
+                </span>
+                <p className='sm:text-lg font-bold mt-2 xl:mt-3'>{step.step}</p>
+              </div>
+            </AnimateInView>
           ))}
         </div>
 

@@ -12,6 +12,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { GTMConsentInit } from '@/components/gtm-consent-init';
 import { GoogleTagManager } from '@next/third-parties/google';
 import TermlyCMP from '@/components/sections/termly-cmp';
+import { Suspense } from 'react';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -45,14 +46,16 @@ export default async function RootLayout({
         <GTMConsentInit />
         {gtmId && <GoogleTagManager gtmId={gtmId} />}
         {termlyUuid && (
-          <TermlyCMP
-            autoBlock={true}
-            masterConsentsOrigin={
-              process.env.NEXT_PUBLIC_TERMLY_MASTER_CONSENTS_ORIGIN ||
-              'https://www.pmohive.com'
-            }
-            websiteUUID={termlyUuid}
-          />
+          <Suspense fallback={null}>
+            <TermlyCMP
+              autoBlock={true}
+              masterConsentsOrigin={
+                process.env.NEXT_PUBLIC_TERMLY_MASTER_CONSENTS_ORIGIN ||
+                'https://www.pmohive.com'
+              }
+              websiteUUID={termlyUuid}
+            />
+          </Suspense>
         )}
 
         <QueryProvider>

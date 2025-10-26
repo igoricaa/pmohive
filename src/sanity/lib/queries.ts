@@ -13,6 +13,8 @@ import {
   POST_QUERYResult,
   PRIVACY_POLICY_QUERYResult,
   SERVICE_QUERYResult,
+  SERVICES_QUERY_WITH_SLUGSResult,
+  SERVICES_QUERYResult,
   TERMS_OF_USE_QUERYResult,
 } from '../../../sanity.types';
 
@@ -179,11 +181,20 @@ export const POSTS_QUERY_WITH_SLUGS = defineQuery(`*[_type == "post"]{
   slug
 }`);
 
+export const SERVICES_QUERY = defineQuery(`*[_type == "service"]`);
+
+export async function getAllServices(): Promise<SERVICES_QUERYResult> {
+  return await sanityFetch({
+    query: SERVICES_QUERY,
+    tags: ['services'],
+  });
+}
+
 export const SERVICES_QUERY_WITH_SLUGS = defineQuery(`*[_type == "service"]{
   slug
 }`);
 
-export async function getAllServicesWithSlugs() {
+export async function getAllServicesWithSlugs(): Promise<SERVICES_QUERY_WITH_SLUGSResult> {
   return await sanityFetch({
     query: SERVICES_QUERY_WITH_SLUGS,
     tags: ['services'],
@@ -342,9 +353,10 @@ export const TERMS_OF_USE_QUERY = defineQuery(`{
   }
 }`);
 
-export const getTermsOfUseData = async (): Promise<TERMS_OF_USE_QUERYResult> => {
-  return await sanityFetch({
-    query: TERMS_OF_USE_QUERY,
-    tags: ['termsOfUse'],
-  });
-};
+export const getTermsOfUseData =
+  async (): Promise<TERMS_OF_USE_QUERYResult> => {
+    return await sanityFetch({
+      query: TERMS_OF_USE_QUERY,
+      tags: ['termsOfUse'],
+    });
+  };

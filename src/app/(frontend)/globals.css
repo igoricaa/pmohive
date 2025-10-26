@@ -365,6 +365,14 @@
   }
 }
 
+.ellipse-gradient {
+  background: radial-gradient(
+    48.15% 48.15% at 50% 50%,
+    rgba(247, 158, 98, 0.8) 0%,
+    rgba(247, 158, 98, 0) 100%
+  );
+}
+
 /* ============================================
    View Transitions API - Motion-powered animations
    ============================================ */
