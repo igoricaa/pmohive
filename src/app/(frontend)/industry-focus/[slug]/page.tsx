@@ -13,6 +13,7 @@ import { TextGradientScroll } from '@/components/text-gradient-scroll';
 import { cn } from '@/lib/utils';
 import BreakSection from '@/components/sections/break-section';
 import { AnimateInView } from '@/components/animate-in-view';
+import React from 'react';
 
 export async function generateStaticParams() {
   const services = await getAllServicesWithSlugs();
@@ -170,12 +171,14 @@ export default async function IndustryFocusPage({
           {currentService.proofPoint.subtitle.text}
         </Subtitle>
         {currentService.proofPoint.description.map((item) => (
-          <TextGradientScroll
-            key={item._key}
-            text={item.description}
-            className='text-2xl sm:text-3xl xl:text-4xl xl:font-medium leading-none xl:leading-[110%] justify-start sm:justify-center'
-            offset={['-0.9 center', '0.6 center']}
-          />
+          <React.Fragment key={item._key}>
+            <TextGradientScroll
+              // key={item._key}
+              text={item.description}
+              className='text-2xl sm:text-3xl xl:text-4xl xl:font-medium leading-none xl:leading-[110%] justify-start sm:justify-center'
+              offset={['-0.9 center', '0.6 center']}
+            />
+          </React.Fragment>
         ))}
       </section>
 
