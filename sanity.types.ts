@@ -1759,7 +1759,7 @@ export type CASE_STUDIES_QUERY_WITH_SLUGSResult = Array<{
   slug: Slug;
 }>;
 // Variable: CASE_STUDIES_QUERY
-// Query: *[_type == "caseStudy"] {  mainInfo {    title,    featuredImage {    ...,    alt    },  },}
+// Query: *[_type == "caseStudy"] {  mainInfo {    title,    featuredImage {    ...,    alt    },  },  "slug": slug.current,}
 export type CASE_STUDIES_QUERYResult = Array<{
   mainInfo: {
     title: string;
@@ -1777,6 +1777,7 @@ export type CASE_STUDIES_QUERYResult = Array<{
       _type: "image";
     };
   };
+  slug: string;
 }>;
 // Variable: PRIVACY_POLICY_QUERY
 // Query: {  "privacyPolicy": *[_type == "privacyPolicy"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    introContent,    content  }}
@@ -1838,7 +1839,7 @@ declare module "@sanity/client" {
     "{\n  \"currentService\": *[_type == \"service\" && slug.current == $slug][0]\n}": SERVICE_QUERYResult;
     "{\n  \"caseStudy\": *[_type == \"caseStudy\" && slug.current == $slug][0]\n}": CASE_STUDY_QUERYResult;
     "*[_type == \"caseStudy\"]{\n  slug\n}": CASE_STUDIES_QUERY_WITH_SLUGSResult;
-    "*[_type == \"caseStudy\"] {\n  mainInfo {\n    title,\n    featuredImage {\n    ...,\n    alt\n    },\n  },\n}": CASE_STUDIES_QUERYResult;
+    "*[_type == \"caseStudy\"] {\n  mainInfo {\n    title,\n    featuredImage {\n    ...,\n    alt\n    },\n  },\n  \"slug\": slug.current,\n}": CASE_STUDIES_QUERYResult;
     "{\n  \"privacyPolicy\": *[_type == \"privacyPolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content\n  }\n}": PRIVACY_POLICY_QUERYResult;
     "{\n  \"cookiePolicy\": *[_type == \"cookiePolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content\n  }\n}": COOKIE_POLICY_QUERYResult;
     "{\n  \"termsOfUse\": *[_type == \"termsOfUse\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content\n  }\n}": TERMS_OF_USE_QUERYResult;

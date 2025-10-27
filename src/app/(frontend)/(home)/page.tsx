@@ -55,7 +55,7 @@ export default async function Home() {
         description={homePageData.team.description as PortableTextBlock[]}
         ctaButton={homePageData.team.button}
         teamMembers={homePageData.team.teamMembers}
-        className='mt-12 sm:mt-24 xl:mt-27'
+        className='mt-12 sm:mt-24 xl:mt-27 2xl:mt-45'
       />
 
       <BreakSection
@@ -64,7 +64,7 @@ export default async function Home() {
         description={homePageData.pmoPromo.description as PortableTextBlock[]}
         backgroundImage={homePageData.pmoPromo.backgroundImage}
         buttons={homePageData.pmoPromo.buttons}
-        className='mt-12 sm:mt-16 xl:mt-8.5 2xl:mt-16'
+        className='mt-12 sm:mt-16 xl:mt-8.5 2xl:mt-24'
       />
 
       <BlogSection

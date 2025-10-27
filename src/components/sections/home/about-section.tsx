@@ -46,7 +46,7 @@ const AboutSection = ({
 }: AboutSectionType) => {
   return (
     <section className={cn(className)}>
-      <div className='px-side flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto py-22 sm:pt-20 sm:pb-25 xl:pt-10 xl:pb-50'>
+      <div className='px-side flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto py-22 sm:pt-20 sm:pb-25 xl:pt-10 xl:pb-50 2xl:pt-20 2xl:pb-70'>
         <Subtitle
           highlightedText={heading.highlightedText}
           className='text-center'
@@ -62,7 +62,7 @@ const AboutSection = ({
 
       <ServicesSection serviceItems={serviceItems} />
 
-      <div className='px-side grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7.5 sm:gap-x-4 sm:gap-y-8 lg:gap-y-0 mt-12 sm:mt-17 xl:mt-27 2xl:max-w-10/12 mx-auto'>
+      <div className='px-side grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7.5 sm:gap-x-4 sm:gap-y-8 lg:gap-y-0 mt-12 sm:mt-17 xl:mt-27 2xl:mt-40 2xl:max-w-10/12 mx-auto'>
         {stats.map((stat, index) => (
           <AnimateInView
             key={stat.statTitle}
@@ -77,7 +77,7 @@ const AboutSection = ({
         ))}
       </div>
 
-      <div className='px-side flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto py-24 sm:py-45 xl:pt-45 xl:pb-50'>
+      <div className='px-side flex flex-col items-center justify-center gap-2 xl:gap-4 max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto py-24 sm:py-45 xl:pt-45 xl:pb-50 2xl:pt-60 2xl:pb-70'>
         <TextGradientScroll
           text={wrapUpText}
           offset={['-0.9 center', '0.6 0.6']}

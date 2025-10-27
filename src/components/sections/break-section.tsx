@@ -86,8 +86,8 @@ const BreakSection = ({
                 <AnimateInView
                   offset={40}
                   direction='up'
-                  inViewMargin='-250px'
-                  delay={index * 0.3}
+                  inViewMargin='-150px'
+                  delay={index * 0.2}
                   disableOnMobile={true}
                 >
                   <AnimatedButton

@@ -312,6 +312,7 @@ export const CASE_STUDIES_QUERY = defineQuery(`*[_type == "caseStudy"] {
     alt
     },
   },
+  "slug": slug.current,
 }`);
 
 export async function getAllCaseStudies(): Promise<CASE_STUDIES_QUERYResult> {

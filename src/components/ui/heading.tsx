@@ -37,7 +37,6 @@ const Heading = ({
           {subtitle.text}
         </Subtitle>
       )}
-      {/* xl:mt-4.5 */}
       <Tag className={cn(spacing, headingClassName)}>{children}</Tag>
     </div>
   );

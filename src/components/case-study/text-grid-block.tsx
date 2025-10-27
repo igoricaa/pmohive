@@ -5,15 +5,24 @@ import { Image } from 'next-sanity/image';
 import { cn } from '@/lib/utils';
 import type { TextGridBlock as TextGridBlockType } from '../../../sanity.types';
 import { PortableTextBlock } from 'next-sanity';
+import { AnimateInView } from '../animate-in-view';
+import { UseInViewOptions } from 'motion/react';
+type MarginType = UseInViewOptions['margin'];
 
 export default function TextGridBlock({
   heading,
   content,
   items,
+  animationProps,
 }: {
   heading?: TextGridBlockType['heading'];
   content?: TextGridBlockType['content'];
   items: TextGridBlockType['items'];
+  animationProps: {
+    offset: number;
+    direction: 'up' | 'down';
+    inViewMargin: MarginType;
+  };
 }) {
   const alignmentClass = heading
     ? {
@@ -35,28 +44,33 @@ export default function TextGridBlock({
     <div className='mb-6 sm:mb-8 xl:mb-12 2xl:mb-16'>
       {/* Grid-level Heading */}
       {heading && heading.text && (
-        <Heading
-          level={level}
-          spacing='mt-0'
-          className={cn(alignmentClass)}
-          subtitle={heading.subtitle}
-        >
-          {heading.highlightedText && (
-            <span className='highlight'>{heading.highlightedText} </span>
-          )}
-          {heading.text}
-        </Heading>
+        <AnimateInView {...animationProps}>
+          <Heading
+            level={level}
+            spacing='mt-0'
+            className={cn(alignmentClass)}
+            subtitle={heading.subtitle}
+          >
+            {heading.highlightedText && (
+              <span className='highlight'>{heading.highlightedText} </span>
+            )}
+            {heading.text}
+          </Heading>
+        </AnimateInView>
       )}
 
       {/* Grid-level Content */}
       {content && (
-        <div className='mt-5 sm:mt-6'>
+        <AnimateInView {...animationProps} className='mt-5 sm:mt-6'>
           <PortableText value={content as PortableTextBlock[]} />
-        </div>
+        </AnimateInView>
       )}
 
       {/* Grid Items */}
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 xl:gap-x-6 mt-6 sm:mt-8'>
+      <AnimateInView
+        {...animationProps}
+        className='grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 xl:gap-x-6 mt-6 sm:mt-8'
+      >
         {items?.map((item, index) => {
           const itemAlignmentClass = {
             start: 'text-left',
@@ -116,7 +130,7 @@ export default function TextGridBlock({
             </div>
           );
         })}
-      </div>
+      </AnimateInView>
     </div>
   );
 }

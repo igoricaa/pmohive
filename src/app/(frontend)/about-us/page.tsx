@@ -35,7 +35,7 @@ export default async function AboutUsPage() {
         }
       />
 
-      <div className='px-side flex flex-col gap-2 xl:gap-4 py-20 sm:py-45 xl:pt-40 xl:pb-50 lg:grid lg:grid-cols-12 lg:gap-x-4'>
+      <div className='px-side flex flex-col gap-2 xl:gap-4 py-20 sm:py-45 xl:pt-40 xl:pb-50 2xl:pt-50 2xl:pb-60 lg:grid lg:grid-cols-12 lg:gap-x-4'>
         <Subtitle
           highlightedText={aboutPageData.introSection.subtitle.highlightedText}
           className='lg:col-span-10 lg:col-start-2'
@@ -74,7 +74,7 @@ export default async function AboutUsPage() {
         description={aboutPageData.team.description as PortableTextBlock[]}
         ctaButton={aboutPageData.team.button}
         teamMembers={aboutPageData.team.teamMembers}
-        className='mt-12 sm:mt-24 xl:mt-27'
+        className='mt-12 sm:mt-24 xl:mt-27 2xl:mt-40'
       />
 
       <ApproachSection
@@ -93,7 +93,7 @@ export default async function AboutUsPage() {
             alt: string;
           }
         }
-        className='mt-11 sm:mt-16 xl:mt-26'
+        className='mt-11 sm:mt-16 xl:mt-26 2xl:mt-35'
       />
 
       <BlogSection

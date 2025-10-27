@@ -27,7 +27,7 @@ export default function ApproachSection({
   className,
 }: ApproachSectionProps) {
   return (
-    <section className='px-side grid grid-cols-1 md:grid-cols-8 xl:grid-cols-12 gap-4 xl:gap-5 mt-9 sm:mt-13 xl:mt-18 2xl:mt-20 '>
+    <section className='px-side grid grid-cols-1 md:grid-cols-8 xl:grid-cols-12 gap-4 xl:gap-5 mt-9 sm:mt-13 xl:mt-18 2xl:mt-35'>
       <Heading
         level='h2'
         subtitle={{

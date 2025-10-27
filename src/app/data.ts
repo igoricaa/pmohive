@@ -14,6 +14,10 @@ export const routes: Route[] = [
     label: 'Industry Focus',
   },
   {
+    path: '/projects',
+    label: 'Projects',
+  },
+  {
     path: '/blog',
     label: 'Blog',
   },
