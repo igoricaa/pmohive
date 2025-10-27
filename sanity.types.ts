@@ -443,6 +443,7 @@ export type Service = {
   _rev: string;
   title: string;
   slug: Slug;
+  excerpt: string;
   header: {
     featuredImage: {
       asset?: {
@@ -620,6 +621,12 @@ export type ContactPage = {
   description: BlockContent;
 };
 
+export type Subtitle = {
+  _type: "subtitle";
+  text: string;
+  highlightedText?: string;
+};
+
 export type AboutPage = {
   _id: string;
   _type: "aboutPage";
@@ -763,12 +770,6 @@ export type TeamSection = {
   }>;
 };
 
-export type Subtitle = {
-  _type: "subtitle";
-  text: string;
-  highlightedText?: string;
-};
-
 export type AboutSection = {
   _type: "aboutSection";
   heading: {
@@ -776,25 +777,12 @@ export type AboutSection = {
     highlightedText: string;
   };
   animatedText: string;
-  understandingPMO: Array<{
-    subtitle: Subtitle;
-    heading: string;
-    description: BlockContent;
-    image: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt: string;
-      _type: "image";
-    };
-    _type: "item";
+  services: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
     _key: string;
+    [internalGroqTypeReferenceTo]?: "service";
   }>;
   stats: Array<{
     statTitle: string;
@@ -1073,11 +1061,11 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = DividerBlock | SpacerBlock | TextGridItem | TextGridBlock | ImageBlock | TextareaBlock | HeadingTextBlock | HeadingBlock | CaseStudy | CareersPage | OpenPosition | BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | TermsOfUse | CookiePolicy | PrivacyPolicy | ContactPage | AboutPage | VisionSection | ApproachSection | IntroSection | HomePage | BreakSection | BlogSection | TeamSection | Subtitle | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = DividerBlock | SpacerBlock | TextGridItem | TextGridBlock | ImageBlock | TextareaBlock | HeadingTextBlock | HeadingBlock | CaseStudy | CareersPage | OpenPosition | BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | TermsOfUse | CookiePolicy | PrivacyPolicy | ContactPage | Subtitle | AboutPage | VisionSection | ApproachSection | IntroSection | HomePage | BreakSection | BlogSection | TeamSection | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
-// Query: {    "homePage": *[_type == "homePage"][0] {      ...,      team {        ...,        teamMembers[]->      },      about {        ...,        understandingPMO[] {          subtitle {            text,            highlightedText          },          heading,          description[],          image {            ...,            alt          }        }      }    }  }
+// Query: {    "homePage": *[_type == "homePage"][0] {      ...,      team {        ...,        teamMembers[]->      },      about {        ...,        services[]-> {          header {            subtitle {              text,              highlightedText            },            heading,            featuredImage {              ...,              alt            }          },          excerpt,        }      }    }  }
 export type HOME_PAGE_QUERYResult = {
   homePage: {
     _id: string;
@@ -1094,56 +1082,28 @@ export type HOME_PAGE_QUERYResult = {
         highlightedText: string;
       };
       animatedText: string;
-      understandingPMO: Array<{
-        subtitle: {
-          text: string;
-          highlightedText: string | null;
-        };
-        heading: string;
-        description: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "highlighted" | "normal";
-          listItem?: "bullet" | "number";
-          markDefs?: Array<{
-            href?: string;
-            _type: "link";
-            _key: string;
-          }>;
-          level?: number;
-          _type: "block";
-          _key: string;
-        } | {
-          asset?: {
-            _ref: string;
-            _type: "reference";
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      services: Array<{
+        header: {
+          subtitle: {
+            text: string;
+            highlightedText: string | null;
           };
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          alt?: string;
-          _type: "image";
-          _key: string;
-        }>;
-        image: {
-          asset?: {
-            _ref: string;
-            _type: "reference";
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          heading: string;
+          featuredImage: {
+            asset?: {
+              _ref: string;
+              _type: "reference";
+              _weak?: boolean;
+              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+            };
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            alt: string;
+            _type: "image";
           };
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          alt: string;
-          _type: "image";
         };
+        excerpt: string;
       }>;
       stats: Array<{
         statTitle: string;
@@ -1417,6 +1377,7 @@ export type SERVICES_QUERYResult = Array<{
   _rev: string;
   title: string;
   slug: Slug;
+  excerpt: string;
   header: {
     featuredImage: {
       asset?: {
@@ -1668,6 +1629,7 @@ export type SERVICE_QUERYResult = {
     _rev: string;
     title: string;
     slug: Slug;
+    excerpt: string;
     header: {
       featuredImage: {
         asset?: {
@@ -1796,6 +1758,26 @@ export type CASE_STUDY_QUERYResult = {
 export type CASE_STUDIES_QUERY_WITH_SLUGSResult = Array<{
   slug: Slug;
 }>;
+// Variable: CASE_STUDIES_QUERY
+// Query: *[_type == "caseStudy"] {  mainInfo {    title,    featuredImage {    ...,    alt    },  },}
+export type CASE_STUDIES_QUERYResult = Array<{
+  mainInfo: {
+    title: string;
+    featuredImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+  };
+}>;
 // Variable: PRIVACY_POLICY_QUERY
 // Query: {  "privacyPolicy": *[_type == "privacyPolicy"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    introContent,    content  }}
 export type PRIVACY_POLICY_QUERYResult = {
@@ -1840,7 +1822,7 @@ export type TERMS_OF_USE_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "{\n    \"homePage\": *[_type == \"homePage\"][0] {\n      ...,\n      team {\n        ...,\n        teamMembers[]->\n      },\n      about {\n        ...,\n        understandingPMO[] {\n          subtitle {\n            text,\n            highlightedText\n          },\n          heading,\n          description[],\n          image {\n            ...,\n            alt\n          }\n        }\n      }\n    }\n  }": HOME_PAGE_QUERYResult;
+    "{\n    \"homePage\": *[_type == \"homePage\"][0] {\n      ...,\n      team {\n        ...,\n        teamMembers[]->\n      },\n      about {\n        ...,\n        services[]-> {\n          header {\n            subtitle {\n              text,\n              highlightedText\n            },\n            heading,\n            featuredImage {\n              ...,\n              alt\n            }\n          },\n          excerpt,\n        }\n      }\n    }\n  }": HOME_PAGE_QUERYResult;
     "*[_type == \"post\"] | order(_createdAt desc) [0...$limit] {\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  featuredMedia,\n  date,\n}": LATEST_POSTS_QUERYResult;
     "{\n  \"generalInfo\": *[_type == \"generalInfo\"][0],\n}": GENERAL_INFO_QUERYResult;
     "\n  *[_type == \"post\"\n    && (!defined($search) || title match $search + \"*\")\n    && (!defined($category) || category._ref == $category)\n  ] | order(date desc) [0...11] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    featuredMedia,\n    date,\n    category->{\n      _id,\n      name,\n      \"slug\": slug.current\n    }\n  }\n": BLOG_POSTS_QUERYResult;
@@ -1856,6 +1838,7 @@ declare module "@sanity/client" {
     "{\n  \"currentService\": *[_type == \"service\" && slug.current == $slug][0]\n}": SERVICE_QUERYResult;
     "{\n  \"caseStudy\": *[_type == \"caseStudy\" && slug.current == $slug][0]\n}": CASE_STUDY_QUERYResult;
     "*[_type == \"caseStudy\"]{\n  slug\n}": CASE_STUDIES_QUERY_WITH_SLUGSResult;
+    "*[_type == \"caseStudy\"] {\n  mainInfo {\n    title,\n    featuredImage {\n    ...,\n    alt\n    },\n  },\n}": CASE_STUDIES_QUERYResult;
     "{\n  \"privacyPolicy\": *[_type == \"privacyPolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content\n  }\n}": PRIVACY_POLICY_QUERYResult;
     "{\n  \"cookiePolicy\": *[_type == \"cookiePolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content\n  }\n}": COOKIE_POLICY_QUERYResult;
     "{\n  \"termsOfUse\": *[_type == \"termsOfUse\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content\n  }\n}": TERMS_OF_USE_QUERYResult;

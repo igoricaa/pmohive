@@ -41,7 +41,7 @@ const BlogSection = ({
   return (
     <section
       className={cn(
-        'py-12 sm:pb-15 sm:mt-8 xl:pb-19 xl:pt-8.5 grid grid-cols-1 md:grid-cols-8 xl:grid-cols-12 gap-4 xl:gap-5',
+        'py-12 sm:pb-15 sm:mt-8 xl:pb-19 xl:pt-8.5 grid grid-cols-1 md:grid-cols-8 xl:grid-cols-12 gap-6 xl:gap-5',
         className
       )}
     >
@@ -107,17 +107,27 @@ const BlogSection = ({
           </CarouselContent>
 
           {/* Custom positioned navigation - below carousel on mobile, above on tablet */}
-          <div className='flex justify-end items-center gap-3 md:z-10 pr-side'>
-            <CarouselPrevious
-              variant='navigation'
-              size='navigation'
-              className='static translate-y-0 rotate-180'
+          <div className='flex justify-between items-center gap-3 md:z-10 px-side'>
+            <AnimatedButton
+              text={ctaButton.text}
+              href={ctaButton.link}
+              variant={ctaButton.variant as 'default' | 'secondary'}
+              icon={{ type: 'lucide', name: 'ArrowRight' }}
+              iconClassName='size-4! sm:size-6!'
+              className='w-fit'
             />
-            <CarouselNext
-              variant='navigation'
-              size='navigation'
-              className='static translate-y-0 bg-primary'
-            />
+            <div className='flex justify-end items-center gap-3'>
+              <CarouselPrevious
+                variant='navigation'
+                size='navigation'
+                className='static translate-y-0 rotate-180'
+              />
+              <CarouselNext
+                variant='navigation'
+                size='navigation'
+                className='static translate-y-0 bg-primary'
+              />
+            </div>
           </div>
         </Carousel>
       </div>

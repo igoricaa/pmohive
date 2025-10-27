@@ -9,7 +9,7 @@ import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import Subtitle from '@/components/ui/subtitle';
-import UnderstandingPmoSection from './understanding-pmo-section';
+import ServicesSection from './services-section';
 import { AnimateInView } from '@/components/animate-in-view';
 
 type AboutSectionType = {
@@ -18,13 +18,13 @@ type AboutSectionType = {
     highlightedText: string;
   };
   animatedText: string;
-  understandingPMOItems: {
+  serviceItems: {
     heading: string;
     subtitle: {
       text: string;
       highlightedText?: string | null;
     };
-    description: PortableTextBlock[];
+    excerpt: string;
     image: SanityImageSource & { alt: string };
   }[];
   stats: Stat[];
@@ -38,7 +38,7 @@ type AboutSectionType = {
 const AboutSection = ({
   heading,
   animatedText,
-  understandingPMOItems,
+  serviceItems,
   stats,
   wrapUpText,
   weAreSection,
@@ -60,7 +60,7 @@ const AboutSection = ({
         />
       </div>
 
-      <UnderstandingPmoSection understandingPMOItems={understandingPMOItems} />
+      <ServicesSection serviceItems={serviceItems} />
 
       <div className='px-side grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7.5 sm:gap-x-4 sm:gap-y-8 lg:gap-y-0 mt-12 sm:mt-17 xl:mt-27 2xl:max-w-10/12 mx-auto'>
         {stats.map((stat, index) => (

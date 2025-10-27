@@ -14,28 +14,28 @@ import { PortableTextBlock } from 'next-sanity';
 import { Image } from 'next-sanity/image';
 import ImageNext from 'next/image';
 
-const UnderstandingPmoSection = ({
-  understandingPMOItems,
+const ServicesSection = ({
+  serviceItems,
 }: {
-  understandingPMOItems: {
+  serviceItems: {
     heading: string;
     subtitle: {
       text: string;
       highlightedText?: string | null;
     };
-    description: PortableTextBlock[];
     image: SanityImageSource & { alt: string };
+    excerpt: string;
   }[];
 }) => {
   return (
     <>
-      <div className='px-side grid sm:max-lg:hidden grid-cols-1 sm:grid-cols-6 xl:grid-cols-12 gap-4 sm:gap-3 xl:gap-6'>
-        {understandingPMOItems.map((item) => (
+      <div className='px-side grid sm:max-lg:hidden grid-cols-1 sm:grid-cols-4 xl:grid-cols-12 gap-4 sm:gap-3 xl:gap-6'>
+        {serviceItems.map((item, index) => (
           <article
-            key={item.heading}
-            className='col-span-1 sm:col-span-2 xl:col-span-4 relative px-3 pb-3 xl:px-4 xl:pb-7 flex flex-col justify-end gap-2 aspect-[447/344] group hover:-translate-y-5 transition-[translate] ease-out duration-300 overflow-hidden'
+            key={`${item.heading}-${index}`}
+            className='col-span-1 sm:col-span-2 xl:col-span-3 relative px-3 pb-3 xl:px-4 xl:pb-7 flex flex-col justify-end gap-2 aspect-[447/344] group hover:-translate-y-5 transition-[translate] ease-out duration-300 overflow-hidden'
           >
-            <div className='absolute inset-0 bg-gradient-to-b from-transparent  to-black/40 -z-5' />
+            <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black/65 -z-5' />
             <Image
               src={urlFor(item.image).url()}
               alt={item.image.alt}
@@ -50,7 +50,7 @@ const UnderstandingPmoSection = ({
               width={88}
               height={88}
               unoptimized
-              className='-z-5 object-cover absolute top-6 right-6 w-22 h-22 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-[opacity,visibility,translate] duration-200 ease-out -translate-x-5 translate-y-5 group-hover:translate-0'
+              className='-z-5 object-cover absolute top-2 lg:top-6 right-2 lg:right-6 size-16 lg:size-22 2xl:size-28 lg:opacity-0 lg:invisible group-hover:visible group-hover:opacity-100 transition-[opacity,visibility,translate] duration-200 ease-out lg:-translate-x-5 lg:translate-y-5 group-hover:translate-0'
             />
 
             <div className='transition-[max-height] duration-200 xl:max-h-25 xl:group-hover:max-h-60'>
@@ -63,15 +63,13 @@ const UnderstandingPmoSection = ({
                   highlightedText: item.subtitle.highlightedText,
                 }}
               >
-                {item.heading}
+                {item.subtitle.text} Centres
               </Heading>
 
-              <div className='transition-[opacity,max-height] xl:opacity-0 xl:group-hover:opacity-100 duration-200 xl:group-hover:duration-200 ease-out xl:max-h-0 xl:group-hover:max-h-25 overflow-hidden'>
-                <div className='pt-2'>
-                  <PortableText
-                    value={item.description as PortableTextBlock[]}
-                  />
-                </div>
+              <div className='transition-[opacity,max-height] xl:opacity-0 xl:group-hover:opacity-100 duration-200 xl:group-hover:duration-200 ease-out xl:max-h-0 xl:group-hover:max-h-50 overflow-hidden'>
+                <p className='pt-2 font-mono text-sm 2xl:text-base'>
+                  {item.excerpt}
+                </p>
               </div>
             </div>
           </article>
@@ -86,18 +84,15 @@ const UnderstandingPmoSection = ({
       >
         {/* Carousel Content */}
         <CarouselContent className='pl-side md:pl-0'>
-          {understandingPMOItems.map((item) => (
+          {serviceItems.map((item, index) => (
             <CarouselItem
-              key={`${item.heading}`}
+              key={`${item.heading}-${index}`}
               className={cn(
                 'basis-[82%] sm:basis-[65%] pl-0 pr-4 sm:pl-0 sm:pr-side '
               )}
             >
-              <article
-                key={item.heading}
-                className='col-span-1 sm:col-span-2 xl:col-span-4 relative px-3 pb-3 xl:px-4 xl:pb-7 flex flex-col justify-end gap-2 aspect-[447/344] group hover:-translate-y-5 transition-[translate] ease-out duration-300 overflow-hidden'
-              >
-                <div className='absolute inset-0 bg-gradient-to-b from-transparent  to-black/40 -z-5' />
+              <article className='col-span-1 sm:col-span-2 xl:col-span-4 relative px-3 pb-3 xl:px-4 xl:pb-7 flex flex-col justify-end gap-2 aspect-[447/344] group hover:-translate-y-5 transition-[translate] ease-out duration-300 overflow-hidden'>
+                <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black/65 -z-5' />
                 <Image
                   src={urlFor(item.image).url()}
                   alt={item.image.alt}
@@ -112,7 +107,7 @@ const UnderstandingPmoSection = ({
                   width={88}
                   height={88}
                   unoptimized
-                  className='-z-5 object-cover absolute top-6 right-6 w-22 h-22 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-[opacity,visibility,translate] duration-200 ease-out -translate-x-5 translate-y-5 group-hover:translate-0'
+                  className='-z-5 object-cover absolute top-6 right-6 w-22 h-22'
                 />
 
                 <div className='transition-[max-height] duration-200 xl:max-h-25 xl:group-hover:max-h-60'>
@@ -129,11 +124,9 @@ const UnderstandingPmoSection = ({
                   </Heading>
 
                   <div className='transition-[opacity,max-height] xl:opacity-0 xl:group-hover:opacity-100 duration-200 xl:group-hover:duration-200 ease-out xl:max-h-0 xl:group-hover:max-h-25 overflow-hidden'>
-                    <div className='pt-2'>
-                      <PortableText
-                        value={item.description as PortableTextBlock[]}
-                      />
-                    </div>
+                    <p className='pt-2 font-mono text-sm 2xl:text-base'>
+                      {item.excerpt}
+                    </p>
                   </div>
                 </div>
               </article>
@@ -159,4 +152,4 @@ const UnderstandingPmoSection = ({
   );
 };
 
-export default UnderstandingPmoSection;
+export default ServicesSection;

@@ -4,6 +4,7 @@ import {
   ABOUT_PAGE_QUERYResult,
   CAREERS_PAGE_QUERYResult,
   CASE_STUDIES_QUERY_WITH_SLUGSResult,
+  CASE_STUDIES_QUERYResult,
   CASE_STUDY_QUERYResult,
   CONTACT_PAGE_QUERYResult,
   COOKIE_POLICY_QUERYResult,
@@ -27,17 +28,19 @@ export const HOME_PAGE_QUERY = defineQuery(`{
       },
       about {
         ...,
-        understandingPMO[] {
-          subtitle {
-            text,
-            highlightedText
+        services[]-> {
+          header {
+            subtitle {
+              text,
+              highlightedText
+            },
+            heading,
+            featuredImage {
+              ...,
+              alt
+            }
           },
-          heading,
-          description[],
-          image {
-            ...,
-            alt
-          }
+          excerpt,
         }
       }
     }
@@ -300,6 +303,23 @@ export const getAllCaseStudiesWithSlugs =
       tags: ['caseStudies'],
     });
   };
+
+export const CASE_STUDIES_QUERY = defineQuery(`*[_type == "caseStudy"] {
+  mainInfo {
+    title,
+    featuredImage {
+    ...,
+    alt
+    },
+  },
+}`);
+
+export async function getAllCaseStudies(): Promise<CASE_STUDIES_QUERYResult> {
+  return await sanityFetch({
+    query: CASE_STUDIES_QUERY,
+    tags: ['caseStudies'],
+  });
+}
 
 export const PRIVACY_POLICY_QUERY = defineQuery(`{
   "privacyPolicy": *[_type == "privacyPolicy"][0] {

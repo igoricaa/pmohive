@@ -41,7 +41,7 @@ export function AnimateInView({
 }: AnimateInViewProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: inViewMargin });
-  const isDesktop = useMediaQuery('(min-width: 1024px)');
+  const isDesktop = useMediaQuery('(min-width: 1280px)');
 
   const defaultVariants: Variants = {
     hidden: {

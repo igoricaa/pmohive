@@ -32,6 +32,18 @@ export const serviceType = defineType({
       validation: (rule) => rule.required().error('Slug is required'),
     }),
     defineField({
+      name: 'excerpt',
+      title: 'Excerpt',
+      type: 'string',
+      description: 'Short excerpt for the service (used in homepage cards)',
+      validation: (rule) =>
+        rule
+          .required()
+          .error('Excerpt is required')
+          .max(190)
+          .warning('Keep excerpt under 190 characters'),
+    }),
+    defineField({
       name: 'header',
       title: 'Header Section',
       type: 'object',

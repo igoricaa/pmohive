@@ -44,61 +44,17 @@ export const aboutSectionType = defineType({
       validation: (rule) => rule.required().error('Animated text is required'),
     }),
     defineField({
-      name: 'understandingPMO',
-      title: 'Understanding PMO',
+      name: 'services',
+      title: 'Services',
       type: 'array',
       of: [
-        defineField({
-          name: 'item',
-          title: 'Item',
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'subtitle',
-              title: 'Subtitle',
-              type: 'subtitle',
-              validation: (rule) =>
-                rule.required().error('Subtitle is required'),
-            }),
-            defineField({
-              name: 'heading',
-              title: 'Heading',
-              type: 'string',
-              validation: (rule) =>
-                rule.required().error('Heading is required'),
-            }),
-            defineField({
-              name: 'description',
-              title: 'Description',
-              type: 'blockContent',
-              validation: (rule) =>
-                rule.required().error('Description is required'),
-            }),
-            defineField({
-              name: 'image',
-              title: 'Image',
-              type: 'image',
-              validation: (rule) => rule.required().error('Image is required'),
-              options: {
-                hotspot: true,
-              },
-              fields: [
-                defineField({
-                  name: 'alt',
-                  title: 'Alt Text',
-                  type: 'string',
-                  validation: (rule) =>
-                    rule.required().error('Alt text is required'),
-                  description: 'Alternative text for accessibility',
-                }),
-              ],
-            }),
-          ],
-          validation: (rule) => rule.required().error('Item is required'),
-        }),
+        {
+          type: 'reference',
+          to: [{ type: 'service' }],
+        },
       ],
       validation: (rule) =>
-        rule.required().min(3).max(3).error('Exactly 3 items are required'),
+        rule.required().min(4).max(4).error('Exactly 4 services are required'),
     }),
     defineField({
       name: 'stats',

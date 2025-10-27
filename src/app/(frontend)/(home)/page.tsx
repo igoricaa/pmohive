@@ -33,17 +33,17 @@ export default async function Home() {
       <AboutSection
         heading={homePageData.about.heading}
         animatedText={homePageData.about.animatedText}
-        understandingPMOItems={homePageData.about.understandingPMO.map(
-          (item) => ({
-            subtitle: {
-              text: item.subtitle.text,
-              highlightedText: item.subtitle.highlightedText || null,
-            },
-            heading: item.heading,
-            description: item.description as PortableTextBlock[],
-            image: item.image as SanityImageSource & { alt: string },
-          })
-        )}
+        serviceItems={homePageData.about.services.map((item) => ({
+          subtitle: {
+            text: item.header.subtitle.text,
+            highlightedText: item.header.subtitle.highlightedText || null,
+          },
+          heading: item.header.heading,
+          excerpt: item.excerpt,
+          image: item.header.featuredImage as SanityImageSource & {
+            alt: string;
+          },
+        }))}
         stats={homePageData.about.stats as Stat[]}
         wrapUpText={homePageData.about.wrapUpText}
         weAreSection={homePageData.about.weAreSection}
