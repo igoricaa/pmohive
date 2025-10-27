@@ -139,21 +139,36 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
         ),
       S.divider(),
       S.listItem()
-        .title('Privacy Policy')
+        .title('Legal Pages')
         .icon(FileIcon)
         .child(
-          S.document().schemaType('privacyPolicy').documentId('privacyPolicy')
+          S.list()
+            .title('Legal Pages')
+            .items([
+              S.listItem()
+                .title('Privacy Policy')
+                .icon(FileIcon)
+                .child(
+                  S.document()
+                    .schemaType('privacyPolicy')
+                    .documentId('privacyPolicy')
+                ),
+              S.listItem()
+                .title('Cookie Policy')
+                .icon(FileIcon)
+                .child(
+                  S.document()
+                    .schemaType('cookiePolicy')
+                    .documentId('cookiePolicy')
+                ),
+              S.listItem()
+                .title('Terms of Use')
+                .icon(FileIcon)
+                .child(
+                  S.document().schemaType('termsOfUse').documentId('termsOfUse')
+                ),
+            ])
         ),
-      S.listItem()
-        .title('Cookie Policy')
-        .icon(FileIcon)
-        .child(
-          S.document().schemaType('cookiePolicy').documentId('cookiePolicy')
-        ),
-      S.listItem()
-        .title('Terms of Use')
-        .icon(FileIcon)
-        .child(S.document().schemaType('termsOfUse').documentId('termsOfUse')),
       S.divider(),
       S.listItem()
         .title('General Info')

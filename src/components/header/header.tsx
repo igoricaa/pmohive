@@ -1,4 +1,4 @@
-import { routes } from '@/app/data';
+import { getRoutes } from '@/app/data';
 import { urlFor } from '@/sanity/lib/image';
 import { getGeneralInfoData } from '@/sanity/lib/queries';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
@@ -10,9 +10,11 @@ import Sidebar from './sidebar';
 import { GeneralInfo } from '../../../sanity.types';
 import MobileMenu from './mobile-menu';
 import StickyHeaderWrapper from './sticky-header-wrapper';
+import { Route } from '@/lib/types';
 
 export async function Header() {
   const { generalInfo: generalInfoData } = await getGeneralInfoData();
+  const routes = await getRoutes();
 
   if (!generalInfoData) {
     return <header>Loading...</header>;
@@ -23,7 +25,7 @@ export async function Header() {
   return (
     <StickyHeaderWrapper
       topBar={<TopBar phone={phone} email={email} />}
-      mainBar={<MainBar logoFull={logoFull} socials={socials} />}
+      mainBar={<MainBar logoFull={logoFull} socials={socials} routes={routes} />}
     />
   );
 }
@@ -62,9 +64,11 @@ const TopBar = ({ phone, email }: { phone: string; email: string }) => {
 const MainBar = ({
   logoFull,
   socials,
+  routes,
 }: {
   logoFull: SanityImageSource;
   socials: GeneralInfo['socials'];
+  routes: Route[];
 }) => {
   return (
     <div className='flex justify-between items-center pt-3 pb-2 sm:pt-4 sm:pb-0'>
@@ -89,7 +93,7 @@ const MainBar = ({
         </div>
 
         <Sidebar socials={socials} />
-        <MobileMenu socials={socials} />
+        <MobileMenu socials={socials} routes={routes} />
       </div>
     </div>
   );

@@ -9,11 +9,25 @@ import hexagonalPattern from '../../../public/hexagonal-pattern.svg';
 import ImageNext from 'next/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { urlFor } from '@/sanity/lib/image';
-import { routes } from '@/app/data';
-import MenuLink from '../menuLink';
+import { Route } from '@/lib/types';
+import { usePathname } from 'next/navigation';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { ChevronDown } from 'lucide-react';
 
-const MobileMenu = ({ socials }: { socials: GeneralInfo['socials'] }) => {
+const MobileMenu = ({
+  socials,
+  routes,
+}: {
+  socials: GeneralInfo['socials'];
+  routes: Route[];
+}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (isOpen) {
@@ -77,9 +91,91 @@ const MobileMenu = ({ socials }: { socials: GeneralInfo['socials'] }) => {
         />
 
         <div className='flex flex-col gap-4 sm:gap-6'>
-          {routes.map((route) => (
-            <MenuLink key={route.path} route={route} variant='mobile-menu' />
-          ))}
+          {routes.map((route) => {
+            // Check if this route or any of its children is active
+            const isActive =
+              pathname === route.path ||
+              (route.children &&
+                route.children.some((child) => pathname === child.path));
+
+            // If route has children, render as accordion
+            if (route.children && route.children.length > 0) {
+              return (
+                <Accordion
+                  key={route.path}
+                  type='single'
+                  collapsible
+                  className='border-none'
+                >
+                  <AccordionItem value={route.path} className='border-none'>
+                    <AccordionTrigger
+                      className={cn(
+                        'text-2xl sm:text-4xl font-semibold hover:no-underline py-0 group/trigger relative',
+                        isActive && 'text-primary translate-x-6 sm:translate-x-8'
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          'text-primary text-2xl sm:text-4xl font-semibold opacity-0 invisible group-hover/trigger:opacity-100 group-hover/trigger:visible absolute -left-6 sm:-left-8 transition-[opacity,visibility]',
+                          isActive && 'opacity-100 visible'
+                        )}
+                      >
+                        /
+                      </span>
+                      {route.label}
+                    </AccordionTrigger>
+                    <AccordionContent className='pb-0 pt-4'>
+                      <div className='flex flex-col gap-3 pl-6 sm:pl-8'>
+                        {route.children.map((child) => (
+                          <Link
+                            key={child.path}
+                            href={child.path}
+                            className={cn(
+                              'text-lg sm:text-xl font-medium hover:text-primary transition-colors relative group/child pl-4',
+                              pathname === child.path && 'text-primary'
+                            )}
+                          >
+                            <span
+                              className={cn(
+                                'text-primary text-lg sm:text-xl opacity-0 invisible group-hover/child:opacity-100 group-hover/child:visible absolute -left-0 transition-[opacity,visibility]',
+                                pathname === child.path && 'opacity-100 visible'
+                              )}
+                            >
+                              /
+                            </span>
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              );
+            }
+
+            // Default link without accordion
+            return (
+              <Link
+                key={route.path}
+                href={route.path}
+                className={cn(
+                  'text-2xl sm:text-4xl font-semibold hover:text-primary transition-colors group relative',
+                  pathname === route.path &&
+                    'text-primary translate-x-6 sm:translate-x-8'
+                )}
+              >
+                <span
+                  className={cn(
+                    'text-primary text-2xl sm:text-4xl font-semibold opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute -left-6 sm:-left-8 transition-[opacity,visibility]',
+                    pathname === route.path && 'opacity-100 visible'
+                  )}
+                >
+                  /
+                </span>
+                {route.label}
+              </Link>
+            );
+          })}
         </div>
 
         <div className='flex flex-col-reverse sm:flex-col gap-4'>

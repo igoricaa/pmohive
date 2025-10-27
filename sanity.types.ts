@@ -1459,6 +1459,12 @@ export type SERVICES_QUERYResult = Array<{
 export type SERVICES_QUERY_WITH_SLUGSResult = Array<{
   slug: Slug;
 }>;
+// Variable: SERVICES_QUERY_FOR_NAV
+// Query: *[_type == "service"] | order(title asc) {  title,  "slug": slug.current}
+export type SERVICES_QUERY_FOR_NAVResult = Array<{
+  title: string;
+  slug: string;
+}>;
 // Variable: CONTACT_PAGE_QUERY
 // Query: {  "contactPage": *[_type == "contactPage"][0]}
 export type CONTACT_PAGE_QUERYResult = {
@@ -1833,6 +1839,7 @@ declare module "@sanity/client" {
     "*[_type == \"post\"]{\n  slug\n}": POSTS_QUERY_WITH_SLUGSResult;
     "*[_type == \"service\"]": SERVICES_QUERYResult;
     "*[_type == \"service\"]{\n  slug\n}": SERVICES_QUERY_WITH_SLUGSResult;
+    "*[_type == \"service\"] | order(title asc) {\n  title,\n  \"slug\": slug.current\n}": SERVICES_QUERY_FOR_NAVResult;
     "{\n  \"contactPage\": *[_type == \"contactPage\"][0]\n}": CONTACT_PAGE_QUERYResult;
     "{\n  \"aboutPage\": *[_type == \"aboutPage\"][0] {\n    ...,\n    team {\n      ...,\n      teamMembers[]->\n    },\n    approachSection {\n      ...,\n      approachItems[]->\n    },\n    visionSection {\n      ...,\n      visionItems[]->\n    },\n  }\n}": ABOUT_PAGE_QUERYResult;
     "{\n  \"careersPage\": *[_type == \"careersPage\"][0] {\n    ...,\n    openPositions[]->\n  }\n}": CAREERS_PAGE_QUERYResult;

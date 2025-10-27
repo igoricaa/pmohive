@@ -14,6 +14,7 @@ import {
   POST_QUERYResult,
   PRIVACY_POLICY_QUERYResult,
   SERVICE_QUERYResult,
+  SERVICES_QUERY_FOR_NAVResult,
   SERVICES_QUERY_WITH_SLUGSResult,
   SERVICES_QUERYResult,
   TERMS_OF_USE_QUERYResult,
@@ -200,6 +201,18 @@ export const SERVICES_QUERY_WITH_SLUGS = defineQuery(`*[_type == "service"]{
 export async function getAllServicesWithSlugs(): Promise<SERVICES_QUERY_WITH_SLUGSResult> {
   return await sanityFetch({
     query: SERVICES_QUERY_WITH_SLUGS,
+    tags: ['services'],
+  });
+}
+
+export const SERVICES_QUERY_FOR_NAV = defineQuery(`*[_type == "service"] | order(title asc) {
+  title,
+  "slug": slug.current
+}`);
+
+export async function getAllServicesForNav(): Promise<SERVICES_QUERY_FOR_NAVResult> {
+  return await sanityFetch({
+    query: SERVICES_QUERY_FOR_NAV,
     tags: ['services'],
   });
 }
