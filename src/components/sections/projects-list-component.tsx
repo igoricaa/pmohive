@@ -2,11 +2,22 @@
 
 import { ViewTransition } from 'react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { CASE_STUDIES_QUERYResult } from '../../../sanity.types';
 import { Image } from 'next-sanity/image';
 import { urlFor } from '@/sanity/lib/image';
 import { cn } from '@/lib/utils';
+import { useMediaQuery } from '@/hooks/use-media-query';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from '@/components/ui/carousel';
+import { ArrowRightIcon } from 'lucide-react';
+import { buttonVariants } from '../ui/button';
 
 const ProjectsListComponent = ({
   projects,
@@ -16,6 +27,28 @@ const ProjectsListComponent = ({
   className?: string;
 }) => {
   const [isHoveredIndex, setIsHoveredIndex] = useState(0);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
+
+  // Sync carousel index to state when swiping
+  useEffect(() => {
+    if (!carouselApi) return;
+
+    carouselApi.on('select', () => {
+      setIsHoveredIndex(carouselApi.selectedScrollSnap());
+    });
+  }, [carouselApi]);
+
+  // Handle list item click on mobile/tablet
+  const handleProjectClick = useCallback(
+    (index: number) => {
+      if (isDesktop) return; // Desktop uses hover, not click
+
+      setIsHoveredIndex(index);
+      carouselApi?.scrollTo(index);
+    },
+    [isDesktop, carouselApi]
+  );
 
   return (
     <ViewTransition>
@@ -25,20 +58,69 @@ const ProjectsListComponent = ({
           className
         )}
       >
-        {/* Featured Image */}
-        <ViewTransition name={`project-image-${projects[isHoveredIndex].slug}`}>
-          <div className='aspect-[343/161] sm:aspect-[786/422] xl:aspect-[1375/700] col-span-full sm:col-span-4 xl:col-span-6 sm:col-start-5 xl:col-start-7'>
-            <Image
-              src={urlFor(
-                projects[isHoveredIndex].mainInfo.featuredImage
-              ).url()}
-              alt={projects[isHoveredIndex].mainInfo.featuredImage.alt}
-              width={678}
-              height={463}
-              className='h-full w-full object-cover'
-            />
+        {/* Featured Image - Desktop: Static, Mobile/Tablet: Carousel */}
+        {isDesktop ? (
+          <ViewTransition
+            name={`project-image-${projects[isHoveredIndex].slug}`}
+          >
+            <div className='aspect-[343/161] sm:aspect-[786/422] xl:aspect-[1375/700] col-span-full sm:col-span-4 xl:col-span-6 sm:col-start-5 xl:col-start-7'>
+              <Image
+                src={urlFor(
+                  projects[isHoveredIndex].mainInfo.featuredImage
+                ).url()}
+                alt={projects[isHoveredIndex].mainInfo.featuredImage.alt}
+                width={678}
+                height={463}
+                className='h-full w-full object-cover'
+              />
+            </div>
+          </ViewTransition>
+        ) : (
+          <div className='col-span-full sm:col-span-4 xl:col-span-6 sm:col-start-5 xl:col-start-7'>
+            <Carousel
+              setApi={setCarouselApi}
+              opts={{
+                loop: true,
+                align: 'start',
+              }}
+              className='w-full'
+            >
+              <CarouselContent>
+                {projects.map((project) => (
+                  <CarouselItem key={project.slug}>
+                    <ViewTransition name={`project-image-${project.slug}`}>
+                      <div className='aspect-[343/161] sm:aspect-[786/422]'>
+                        <Image
+                          src={urlFor(project.mainInfo.featuredImage).url()}
+                          alt={project.mainInfo.featuredImage.alt}
+                          width={678}
+                          height={463}
+                          className='h-full w-full object-cover'
+                        />
+                      </div>
+                    </ViewTransition>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className='flex justify-between items-center mt-4'>
+                <Link
+                  href={`/projects/${projects[isHoveredIndex].slug}`}
+                  className={cn(
+                    buttonVariants({ variant: 'default' }),
+                    'flex items-center gap-2.5'
+                  )}
+                >
+                  View Case
+                  <ArrowRightIcon color='#fff' size={16} />
+                </Link>
+                <div className='flex items-center gap-1.5'>
+                  <CarouselPrevious className='relative translate-none left-auto rotate-180' />
+                  <CarouselNext className='relative translate-none right-auto' />
+                </div>
+              </div>
+            </Carousel>
           </div>
-        </ViewTransition>
+        )}
 
         {/* Projects List */}
         <ul className='absolute bottom-12 left-[var(--padding-side)] flex flex-col gap-2 sm:w-[calc(50%-var(--padding-side))]'>
@@ -58,13 +140,24 @@ const ProjectsListComponent = ({
                 'hover:text-primary',
                 isHoveredIndex === index && 'text-primary'
               )}
-              onMouseEnter={() => setIsHoveredIndex(index)}
+              onMouseEnter={
+                isDesktop ? () => setIsHoveredIndex(index) : undefined
+              }
+              onClick={!isDesktop ? () => handleProjectClick(index) : undefined}
             >
-              <Link href={`/projects/${project.slug}`}>
+              {isDesktop ? (
+                <Link href={`/projects/${project.slug}`}>
+                  <ViewTransition name={`project-title-${project.slug}`}>
+                    <span className='inline-block'>
+                      {project.mainInfo.title}
+                    </span>
+                  </ViewTransition>
+                </Link>
+              ) : (
                 <ViewTransition name={`project-title-${project.slug}`}>
                   <span className='inline-block'>{project.mainInfo.title}</span>
                 </ViewTransition>
-              </Link>
+              )}
             </li>
           ))}
         </ul>

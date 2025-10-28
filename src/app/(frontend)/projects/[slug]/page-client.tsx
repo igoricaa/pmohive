@@ -62,7 +62,7 @@ export default function ProjectDetailClient({
               <ViewTransition name={`project-title-${slug}`}>
                 <Heading
                   level='h1'
-                  headingClassName='xl:text-[54px] 2xl:text-[64px]'
+                  headingClassName='text-3xl sm:text-[40px] lg:text-[44px] xl:text-[54px] 2xl:text-[64px]'
                 >
                   {project.mainInfo.title}
                 </Heading>

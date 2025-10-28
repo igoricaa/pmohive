@@ -7,7 +7,6 @@ import Lenis from '@/components/lenis';
 import BackgroundGradient from '@/components/bg-gradient';
 import QueryProvider from '@/providers/query-provider';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
-import { ReactTempus } from 'tempus/react';
 import { Toaster } from '@/components/ui/sonner';
 import { GTMConsentInit } from '@/components/gtm-consent-init';
 import { GoogleTagManager } from '@next/third-parties/google';
@@ -69,7 +68,6 @@ export default async function RootLayout({
           </NuqsAdapter>
         </QueryProvider>
         <Toaster />
-        <ReactTempus patch={true} />
       </body>
     </html>
   );
