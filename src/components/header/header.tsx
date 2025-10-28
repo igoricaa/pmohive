@@ -12,7 +12,7 @@ import MobileMenu from './mobile-menu';
 import StickyHeaderWrapper from './sticky-header-wrapper';
 import { Route } from '@/lib/types';
 
-export async function Header() {
+export default async function Header() {
   const { generalInfo: generalInfoData } = await getGeneralInfoData();
   const routes = await getRoutes();
 
@@ -31,8 +31,6 @@ export async function Header() {
     />
   );
 }
-
-export default Header;
 
 const TopBar = ({ phone, email }: { phone: string; email: string }) => {
   return (

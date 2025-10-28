@@ -7,6 +7,7 @@ import CareersSection from '@/components/sections/careers-section';
 import BlogSection from '@/components/sections/home/blog-section';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import BreakSection from '@/components/sections/break-section';
+import { notFound } from 'next/navigation';
 
 export default async function Home() {
   const [homePageResult, latestPostsResult] = await Promise.all([
@@ -15,6 +16,10 @@ export default async function Home() {
   ]);
 
   const { homePage: homePageData } = homePageResult;
+
+  if (!homePageData) {
+    notFound();
+  }
 
   if (!homePageData?.hero) {
     return <main>Loading...</main>;

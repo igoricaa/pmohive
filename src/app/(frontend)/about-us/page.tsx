@@ -20,7 +20,7 @@ export default async function AboutUsPage() {
   const { aboutPage: aboutPageData } = aboutPageResult;
 
   if (!aboutPageData) {
-    return notFound();
+    notFound();
   }
 
   return (

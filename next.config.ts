@@ -11,9 +11,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  experimental: {
-    globalNotFound: true,
-  },
   reactCompiler: true,
 };
 

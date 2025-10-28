@@ -11,7 +11,7 @@ export default async function ContactPage() {
     await Promise.all([getContactPageData(), getGeneralInfoData()]);
 
   if (!contactPageData || !generalInfoData) {
-    return notFound();
+    notFound();
   }
 
   return (

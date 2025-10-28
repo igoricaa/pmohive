@@ -10,7 +10,7 @@ export default async function CareersAndCulturePage() {
   const { careersPage: careersPageData } = careersPageResult;
 
   if (!careersPageData) {
-    return notFound();
+    notFound();
   }
   return (
     <main className='pt-6 sm:pt-8 xl:pt-19 pb-15 sm:pb-17 xl:pb-19 2xl:pb-24'>

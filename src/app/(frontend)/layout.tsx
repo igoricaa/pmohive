@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     'PMO Hive is a platform for PMO professionals to connect, learn, and grow',
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
