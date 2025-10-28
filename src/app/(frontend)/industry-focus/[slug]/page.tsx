@@ -133,7 +133,7 @@ export default async function IndustryFocusPage({
               offset={40}
               direction='up'
               delay={index * 0.2}
-              inViewMargin='-200px'
+              inViewMargin='-100px'
             >
               <div>
                 <span className='text-primary font-bold text-[42px]'>

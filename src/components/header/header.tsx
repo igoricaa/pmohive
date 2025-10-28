@@ -25,7 +25,9 @@ export async function Header() {
   return (
     <StickyHeaderWrapper
       topBar={<TopBar phone={phone} email={email} />}
-      mainBar={<MainBar logoFull={logoFull} socials={socials} routes={routes} />}
+      mainBar={
+        <MainBar logoFull={logoFull} socials={socials} routes={routes} />
+      }
     />
   );
 }
@@ -45,16 +47,25 @@ const TopBar = ({ phone, email }: { phone: string; email: string }) => {
       <div className='flex gap-3 items-center'>
         <Link
           href={'tel:' + phone}
-          className='font-semibold text-light-grey text-xs sm:text-sm lg:text-base whitespace-nowrap'
+          className='hidden sm:block font-semibold text-light-grey text-xs sm:text-sm lg:text-base whitespace-nowrap'
         >
           {phone}
         </Link>
-        <span className='text-light-grey text-base font-light'>|</span>
+        <span className='hidden sm:block text-light-grey text-base font-light'>
+          |
+        </span>
         <Link
           href={'mailto:' + email}
-          className='font-semibold text-light-grey text-xs sm:text-sm lg:text-base whitespace-nowrap'
+          className='hidden sm:block font-semibold text-light-grey text-xs sm:text-sm lg:text-base whitespace-nowrap'
         >
           {email}
+        </Link>
+
+        <Link
+          href='/contact-us'
+          className='sm:hidden font-semibold text-light-grey text-xs sm:text-sm lg:text-base whitespace-nowrap'
+        >
+          Contact
         </Link>
       </div>
     </div>

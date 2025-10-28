@@ -47,13 +47,14 @@ const CareersSection = ({
       )}
     >
       {/* Content Area */}
-      <AnimateInView
-        offset={80}
-        direction='right'
-        inViewMargin='-200px'
-        className='md:col-span-4 2xl:col-span-3 2xl:col-start-2'
-      >
-        <div className='md:col-span-4 2xl:col-span-3 2xl:col-start-2 px-side md:pr-0 flex flex-col md:max-xl:justify-between'>
+
+      <div className='md:col-span-4 2xl:col-span-3 2xl:col-start-2 px-side md:pr-0 flex flex-col md:max-xl:justify-between overflow-hidden'>
+        <AnimateInView
+          offset={80}
+          direction='right'
+          inViewMargin='-100px'
+          className='md:col-span-4 2xl:col-span-3 2xl:col-start-2'
+        >
           <div>
             <Heading
               level='h2'
@@ -82,8 +83,8 @@ const CareersSection = ({
               iconClassName='size-4! sm:size-6!'
             />
           )}
-        </div>
-      </AnimateInView>
+        </AnimateInView>
+      </div>
 
       {/* Carousel Area */}
       <div className='md:col-span-4 xl:col-span-8'>
@@ -105,7 +106,7 @@ const CareersSection = ({
                 <AnimateInView
                   offset={80}
                   direction='left'
-                  inViewMargin='-200px'
+                  inViewMargin='-100px'
                   delay={index * 0.3}
                   disableOnMobile={true}
                 >

@@ -29,17 +29,17 @@ type AnimatedButtonProps = {
   highlightedText?: string;
   icon?: IconProp;
   className?: string;
+  onClick?: (e?: React.MouseEvent) => void;
   iconClassName?: string;
+  delayMs?: number;
 } & (
   | {
       href: string;
-      onClick?: never;
       disabled?: never;
       type?: never;
     }
   | {
       href?: never;
-      onClick: () => void;
       disabled?: boolean;
       type?: 'button' | 'submit' | 'reset';
     }
@@ -56,6 +56,7 @@ const AnimatedButton = ({
   iconClassName,
   disabled,
   type,
+  delayMs,
 }: AnimatedButtonProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -106,7 +107,7 @@ const AnimatedButton = ({
 
   if (href) {
     return (
-      <Link href={href} {...commonProps}>
+      <Link href={href} {...commonProps} onClick={onClick} delayMs={delayMs}>
         {content}
       </Link>
     );

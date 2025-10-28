@@ -35,8 +35,13 @@ const SplitSection = ({
         className
       )}
     >
-      <div className='col-span-1 xl:col-span-5 xl:col-start-2 2xl:col-span-4 2xl:col-start-3 w-full h-55 md:h-full xl:aspect-[580/681]'>
-        <AnimateInView offset={80} direction='right' inViewMargin='-200px' className='h-full'>
+      <div className='col-span-1 xl:col-span-5 xl:col-start-2 2xl:col-span-4 2xl:col-start-3 w-full h-55 md:h-full xl:aspect-[580/681] overflow-hidden'>
+        <AnimateInView
+          offset={80}
+          direction='right'
+          inViewMargin='-100px'
+          className='h-full'
+        >
           <Image
             src={urlForUncropped(backgroundImage).url()}
             alt={backgroundImage.alt}
@@ -47,12 +52,8 @@ const SplitSection = ({
           />
         </AnimateInView>
       </div>
-      <div className='col-span-1 xl:col-span-5 2xl:col-span-4 mt-3 sm:mt-0  justify-center flex flex-col'>
-        <AnimateInView
-          offset={80}
-          direction='left'
-          inViewMargin='-200px'
-        >
+      <div className='col-span-1 xl:col-span-5 2xl:col-span-4 mt-3 sm:mt-0 justify-center flex flex-col overflow-hidden'>
+        <AnimateInView offset={80} direction='left' inViewMargin='-100px'>
           {heading ? (
             <Heading level='h5' subtitle={subtitle}>
               {heading}

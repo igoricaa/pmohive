@@ -35,7 +35,7 @@ const HeroSection = ({
   return (
     <section className='px-side relative grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 items-center gap-2 md:gap-4 pt-25 sm:pt-30 lg:pt-34 xl:pt-36'>
       <div className='md:col-span-4 md:order-2 z-0 lg:col-span-7 2xl:col-span-6'>
-        <div className='flex gap-2 max-w-[calc(80%)] md:max-w-full xl:max-w-[calc(82%)] ml-auto translate-x-0.5 md:translate-x-0'>
+        <div className='grid grid-cols-2 gap-2 max-w-[calc(80%)] md:max-w-full xl:max-w-[calc(82%)] ml-auto translate-x-0.5 md:translate-x-0'>
           <Image
             src={urlForUncropped(images.image1).url()}
             alt={images.image1.alt}
@@ -55,7 +55,7 @@ const HeroSection = ({
             className='w-full h-auto object-cover'
           />
         </div>
-        <div className='flex gap-2 mt-2 md:mt-4 max-w-[calc(80%)] md:max-w-full xl:max-w-[calc(82%)] md:ml-auto -translate-y-[calc(25%+2px)] md:-translate-y-[calc(25%+8px)] md:-translate-x-[calc(25%+2px)] xl:-translate-x-[calc(25%+2px)]'>
+        <div className='grid grid-cols-2 gap-2 mt-2 md:mt-4 max-w-[calc(80%)] md:max-w-full xl:max-w-[calc(82%)] md:ml-auto -translate-y-[calc(25%+2px)] md:-translate-y-[calc(25%+8px)] md:-translate-x-[calc(25%+2px)] xl:-translate-x-[calc(25%+2px)]'>
           <Image
             src={urlForUncropped(images.image3).url()}
             alt={images.image3.alt}

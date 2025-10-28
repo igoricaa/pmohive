@@ -32,8 +32,13 @@ function AccordionItem({
 function AccordionTrigger({
   className,
   children,
+  iconWrapperClassName,
+  iconClassName,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+}: React.ComponentProps<typeof AccordionPrimitive.Trigger> & {
+  iconWrapperClassName?: string;
+  iconClassName?: string;
+}) {
   return (
     <AccordionPrimitive.Header className='flex'>
       <AccordionPrimitive.Trigger
@@ -48,10 +53,18 @@ function AccordionTrigger({
         {...props}
       >
         {children}
-        <div className='svg-wrapper bg-[#E8E8E8] border border-primary-dark rounded-full size-8 flex items-center justify-center transition-[rotate,background-color] duration-300'>
+        <div
+          className={cn(
+            'svg-wrapper bg-[#E8E8E8] border border-primary-dark rounded-full size-8 flex items-center justify-center transition-[rotate,background-color] duration-300',
+            iconWrapperClassName
+          )}
+        >
           <ChevronDownIcon
             color='#000'
-            className='pointer-events-none size-4 shrink-0 transition-transform duration-200'
+            className={cn(
+              'pointer-events-none size-4 shrink-0 transition-transform duration-200',
+              iconClassName
+            )}
           />
         </div>
       </AccordionPrimitive.Trigger>

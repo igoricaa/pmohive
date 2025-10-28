@@ -70,7 +70,7 @@ const AboutSection = ({
             offset={40}
             direction='up'
             delay={index * 0.2}
-            inViewMargin='-200px'
+            inViewMargin='-100px'
           >
             <StatCard stat={stat} />
           </AnimateInView>
@@ -84,11 +84,11 @@ const AboutSection = ({
         />
       </div>
 
-      <div className='px-side grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-2 md:gap-4 items-center'>
+      <div className='px-side grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-2 md:gap-4 items-center overflow-hidden'>
         <AnimateInView
           offset={80}
           direction='right'
-          inViewMargin='-200px'
+          inViewMargin='-100px'
           className='col-span-1 xl:col-span-5 xl:col-start-2'
         >
           <Image
@@ -102,7 +102,7 @@ const AboutSection = ({
         <AnimateInView
           offset={80}
           direction='left'
-          inViewMargin='-200px'
+          inViewMargin='-100px'
           className='col-span-1 xl:col-span-5'
         >
           <h2 className='mt-4 md:mt-0 mb-3 sm:mb-5 xl:mb-4'>

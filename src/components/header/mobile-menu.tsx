@@ -17,7 +17,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { ChevronDown } from 'lucide-react';
+import { CookieSettingsButton } from '../cookie-settings-button';
 
 const MobileMenu = ({
   socials,
@@ -107,12 +107,18 @@ const MobileMenu = ({
                   collapsible
                   className='border-none'
                 >
-                  <AccordionItem value={route.path} className='border-none'>
+                  <AccordionItem
+                    value={route.path}
+                    className='border-none before:hidden!'
+                  >
                     <AccordionTrigger
                       className={cn(
-                        'text-2xl sm:text-4xl font-semibold hover:no-underline py-0 group/trigger relative',
-                        isActive && 'text-primary translate-x-6 sm:translate-x-8'
+                        'text-2xl sm:text-4xl font-semibold hover:no-underline py-0 group/trigger relative gap-2',
+                        isActive &&
+                          'text-primary translate-x-6 sm:translate-x-8'
                       )}
+                      iconWrapperClassName='bg-transparent! border-none'
+                      iconClassName='size-8.5 stroke-primary border-none'
                     >
                       <span
                         className={cn(
@@ -125,24 +131,18 @@ const MobileMenu = ({
                       {route.label}
                     </AccordionTrigger>
                     <AccordionContent className='pb-0 pt-4'>
-                      <div className='flex flex-col gap-3 pl-6 sm:pl-8'>
+                      <div className='flex flex-col gap-3'>
                         {route.children.map((child) => (
                           <Link
                             key={child.path}
                             href={child.path}
                             className={cn(
-                              'text-lg sm:text-xl font-medium hover:text-primary transition-colors relative group/child pl-4',
+                              'text-lg sm:text-xl font-medium hover:text-primary transition-colors relative group/child pl-7',
                               pathname === child.path && 'text-primary'
                             )}
+                            onClick={() => setIsOpen(false)}
+                            delayMs={200}
                           >
-                            <span
-                              className={cn(
-                                'text-primary text-lg sm:text-xl opacity-0 invisible group-hover/child:opacity-100 group-hover/child:visible absolute -left-0 transition-[opacity,visibility]',
-                                pathname === child.path && 'opacity-100 visible'
-                              )}
-                            >
-                              /
-                            </span>
                             {child.label}
                           </Link>
                         ))}
@@ -163,6 +163,8 @@ const MobileMenu = ({
                   pathname === route.path &&
                     'text-primary translate-x-6 sm:translate-x-8'
                 )}
+                onClick={() => setIsOpen(false)}
+                delayMs={200}
               >
                 <span
                   className={cn(
@@ -205,29 +207,39 @@ const MobileMenu = ({
 
           <nav className='flex flex-col sm:flex-row sm:items-center gap-3'>
             <Link
-              href='/data-protection'
+              href='/privacy-policy'
               className='font-sans font-semibold text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
+              onClick={() => setIsOpen(false)}
+              delayMs={200}
             >
-              Data Protection
+              Privacy Policy
             </Link>
             <span className='font-light text-base tracking-[0.1px] text-light-grey hidden sm:block'>
               |
             </span>
             <Link
-              href='/terms'
+              href='/cookie-policy'
               className='font-sans font-semibold text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
+              onClick={() => setIsOpen(false)}
+              delayMs={200}
             >
-              Terms &amp; Conditions
+              Cookie Policy
+            </Link>
+            <span className='font-light text-base tracking-[0.1px] text-light-grey hidden sm:block'>
+              |
+            </span>
+            <Link
+              href='/terms-of-use'
+              className='font-sans font-semibold text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
+              onClick={() => setIsOpen(false)}
+              delayMs={200}
+            >
+              Terms of Use
             </Link>
             <span className='text-base tracking-[0.1px] text-light-grey hidden sm:block'>
               |
             </span>
-            <Link
-              href='/imprint'
-              className='font-sans font-semibold text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
-            >
-              Imprint
-            </Link>
+            <CookieSettingsButton className='w-fit font-sans font-semibold text-base tracking-[0.1px] text-light-grey whitespace-nowrap' />
           </nav>
         </div>
       </div>

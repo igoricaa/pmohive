@@ -64,7 +64,7 @@ interface TransitionOptions {
  * ```tsx
  * const router = useMotionRouter();
  *
- * router.push('/about', {
+ * router.push('/about-us', {
  *   onTransitionReady: () => {
  *     // Custom animation logic
  *   }

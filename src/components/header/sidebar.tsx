@@ -90,12 +90,16 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
               highlightedText='/pmo'
               href='/about-us'
               variant='default'
+              onClick={() => setIsOpen(false)}
+              delayMs={200}
             />
             <AnimatedButton
               text='Contact Us'
               href='/contact-us'
               variant='secondary'
               icon={{ type: 'lucide', name: 'ArrowRight' }}
+              onClick={() => setIsOpen(false)}
+              delayMs={200}
             />
           </div>
         </div>
@@ -129,6 +133,8 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
             <Link
               href='/data-protection'
               className='font-sans font-semibold text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
+              onClick={() => setIsOpen(false)}
+              delayMs={200}
             >
               Data Protection
             </Link>
@@ -138,6 +144,8 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
             <Link
               href='/terms'
               className='font-sans font-semibold text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
+              onClick={() => setIsOpen(false)}
+              delayMs={200}
             >
               Terms &amp; Conditions
             </Link>
@@ -147,6 +155,8 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
             <Link
               href='/imprint'
               className='font-sans font-semibold text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
+              onClick={() => setIsOpen(false)}
+              delayMs={200}
             >
               Imprint
             </Link>

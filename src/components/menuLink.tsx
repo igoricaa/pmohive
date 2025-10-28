@@ -12,6 +12,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
+import { ArrowUpRight } from 'lucide-react';
 
 const MenuLink = ({
   route,
@@ -88,21 +89,29 @@ const MenuLink = ({
               </span>
               {route.label}
             </NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className='grid gap-1 p-1 py-2'>
+            <NavigationMenuContent className='bg-black-custom p-0'>
+              <ul className='grid gap-4 px-6 pt-4 pb-6 has-[li:hover]:[&>li]:opacity-50'>
                 {route.children.map((child) => (
-                  <li key={child.path}>
+                  <li key={child.path} className='transition-opacity hover:opacity-100!'>
                     <NavigationMenuLink asChild className='bg-transparent!'>
                       <Link
                         href={child.path}
                         className={cn(
-                          'whitespace-nowrap block select-none rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-primary',
+                          'text-white whitespace-nowrap flex flex-row items-center gap-2 select-none rounded-md p-0! leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-primary group',
                           pathname === child.path && 'bg-accent text-primary'
                         )}
                       >
                         <div className='text-base font-semibold leading-none'>
                           {child.label}
                         </div>
+                        <ArrowUpRight
+                          color='#F09A60'
+                          size={24}
+                          className={cn(
+                            'size-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-[opacity,visibility]',
+                            pathname === child.path && 'opacity-100 visible'
+                          )}
+                        />
                       </Link>
                     </NavigationMenuLink>
                   </li>

@@ -47,7 +47,7 @@ const BlogSection = ({
     >
       {/* Content Area */}
       <div className='md:col-span-3 2xl:col-start-2 px-side md:pr-0 flex flex-col md:max-xl:justify-between'>
-        <AnimateInView offset={40} direction='right' inViewMargin='-200px'>
+        <AnimateInView offset={40} direction='up' inViewMargin='-100px'>
           <div>
             <Heading
               level='h2'
@@ -96,7 +96,7 @@ const BlogSection = ({
                 <AnimateInView
                   offset={80}
                   direction='left'
-                  inViewMargin='-200px'
+                  inViewMargin='-100px'
                   delay={index * 0.3}
                   disableOnMobile={true}
                 >

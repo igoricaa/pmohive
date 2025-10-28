@@ -51,7 +51,7 @@ export default function ApproachSection({
             direction='left'
             offset={0}
             duration={1}
-            inViewMargin='-200px'
+            inViewMargin='-100px'
             delay={index * 0.3}
           >
             <article key={item._key}>
