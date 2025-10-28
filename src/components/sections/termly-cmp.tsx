@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useTermlyModalDetector } from '@/hooks/use-termly-modal-detector';
+import { useAppContext } from '../providers/app-ready-provider';
 
 const SCRIPT_SRC_BASE = 'https://app.termly.io';
 
@@ -27,15 +28,17 @@ export default function TermlyCMP({
     return src.toString();
   }, [autoBlock, masterConsentsOrigin, websiteUUID]);
 
+  const { isAppReady } = useAppContext();
+
   const isScriptAdded = useRef(false);
 
   useEffect(() => {
-    if (isScriptAdded.current) return;
+    if (isScriptAdded.current || !isAppReady) return;
     const script = document.createElement('script');
     script.src = scriptSrc;
     document.head.appendChild(script);
     isScriptAdded.current = true;
-  }, [scriptSrc]);
+  }, [scriptSrc, isAppReady]);
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
