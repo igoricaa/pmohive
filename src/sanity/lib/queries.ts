@@ -41,6 +41,7 @@ export const HOME_PAGE_QUERY = defineQuery(`{
               alt
             }
           },
+          "slug": slug.current,
           excerpt,
         }
       }
@@ -205,7 +206,8 @@ export async function getAllServicesWithSlugs(): Promise<SERVICES_QUERY_WITH_SLU
   });
 }
 
-export const SERVICES_QUERY_FOR_NAV = defineQuery(`*[_type == "service"] | order(title asc) {
+export const SERVICES_QUERY_FOR_NAV =
+  defineQuery(`*[_type == "service"] | order(title asc) {
   title,
   "slug": slug.current
 }`);

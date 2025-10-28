@@ -24,6 +24,7 @@ type AboutSectionType = {
       text: string;
       highlightedText?: string | null;
     };
+    slug: string;
     excerpt: string;
     image: SanityImageSource & { alt: string };
   }[];

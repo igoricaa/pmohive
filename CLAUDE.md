@@ -184,6 +184,26 @@ import { urlForUncropped } from '@/sanity/lib/image';
 <Image src={urlForUncropped(image).url()} ... />
 ```
 
+**Progress Bar with Synchronized Completion**:
+
+```typescript
+// Random chunk loading with guaranteed 3s completion
+const progress = useSpring(0, { stiffness: 80, damping: 25 });
+
+// Adaptive random jumps ensure completion
+const baseJump = remaining / intervalsLeft;
+const jump = baseJump * (0.6 + Math.random() * 0.8); // ±40% variance
+
+// Listen for completion
+progress.on('change', (latest) => {
+  if (latest >= 0.99) {
+    setTimeout(() => setShowLoader(false), 300);
+  }
+});
+```
+
+See: [src/components/progress-bar.tsx](src/components/progress-bar.tsx)
+
 ---
 
 ## 7. MCP Workflow

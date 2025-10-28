@@ -97,6 +97,11 @@ export default Component;
 - **Link**: [src/components/motion-link.tsx](src/components/motion-link.tsx)
   - View Transitions API integration
   - Use instead of `next/link`
+- **LoadingProgressBar**: [src/components/progress-bar.tsx](src/components/progress-bar.tsx)
+  - Random chunk loading with guaranteed 3s completion
+  - Spring physics: `stiffness: 80, damping: 25`
+  - Completion listener: Hides loader when `progress >= 0.99`
+  - Adaptive jumps: ±40% variance around calculated base
 - **StickyHeaderWrapper**: [src/components/header/sticky-header-wrapper.tsx](src/components/header/sticky-header-wrapper.tsx)
   - Hides while scrolling, shows after 300ms pause
 

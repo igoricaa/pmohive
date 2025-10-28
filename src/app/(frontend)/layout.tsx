@@ -12,6 +12,7 @@ import { GTMConsentInit } from '@/components/gtm-consent-init';
 import { GoogleTagManager } from '@next/third-parties/google';
 import TermlyCMP from '@/components/sections/termly-cmp';
 import { Suspense } from 'react';
+import { AppProvider } from '@/components/providers/app-ready-provider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -42,32 +43,34 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
-        <GTMConsentInit />
-        {gtmId && <GoogleTagManager gtmId={gtmId} />}
-        {termlyUuid && (
-          <Suspense fallback={null}>
-            <TermlyCMP
-              autoBlock={true}
-              masterConsentsOrigin={
-                process.env.NEXT_PUBLIC_TERMLY_MASTER_CONSENTS_ORIGIN ||
-                'https://www.pmohive.com'
-              }
-              websiteUUID={termlyUuid}
-            />
-          </Suspense>
-        )}
+        <AppProvider>
+          <GTMConsentInit />
+          {gtmId && <GoogleTagManager gtmId={gtmId} />}
+          {termlyUuid && (
+            <Suspense fallback={null}>
+              <TermlyCMP
+                autoBlock={true}
+                masterConsentsOrigin={
+                  process.env.NEXT_PUBLIC_TERMLY_MASTER_CONSENTS_ORIGIN ||
+                  'https://www.pmohive.com'
+                }
+                websiteUUID={termlyUuid}
+              />
+            </Suspense>
+          )}
 
-        <QueryProvider>
-          <NuqsAdapter>
-            <Lenis>
-              <Header />
-              <BackgroundGradient />
-              {children}
-              <Footer />
-            </Lenis>
-          </NuqsAdapter>
-        </QueryProvider>
-        <Toaster />
+          <QueryProvider>
+            <NuqsAdapter>
+              <Lenis>
+                <Header />
+                <BackgroundGradient />
+                {children}
+                <Footer />
+              </Lenis>
+            </NuqsAdapter>
+          </QueryProvider>
+          <Toaster />
+        </AppProvider>
       </body>
     </html>
   );
