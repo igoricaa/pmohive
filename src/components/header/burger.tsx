@@ -46,14 +46,14 @@ const Burger = ({
     <div
       onClick={handleClick}
       className={cn(
-        'relative w-10 h-7.5 cursor-pointer z-50',
+        'relative w-9 h-6 cursor-pointer z-50',
         isOpen && 'active',
         isClosing && 'closing'
       )}
     >
-      <span className='absolute w-8.5 md:w-10 border-t-3 border-white origin-center block burger-menu-piece top-0'></span>
-      <span className='absolute w-8.5 md:w-10 border-t-3 border-white origin-center block burger-menu-piece top-3'></span>
-      <span className='absolute w-8.5 md:w-10 border-t-3 border-white origin-center block burger-menu-piece top-6'></span>
+      <span className='absolute w-8.5 md:w-9 border-t-3 border-white origin-center block burger-menu-piece top-0'></span>
+      <span className='absolute w-8.5 md:w-9 border-t-3 border-white origin-center block burger-menu-piece top-2.5'></span>
+      <span className='absolute w-8.5 md:w-9 border-t-3 border-white origin-center block burger-menu-piece top-5'></span>
     </div>
   );
 };

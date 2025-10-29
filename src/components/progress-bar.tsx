@@ -4,14 +4,11 @@ import { AnimatePresence, easeOut, motion, useSpring } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { useAppContext } from './providers/app-ready-provider';
 
+let isInitialLoad = true;
+
 function LoadingProgressBar() {
   const progress = useMockLoading();
-  const [showLoader, setShowLoader] = useState(() => {
-    // Check if this is truly the initial load
-    if (typeof window === 'undefined') return true;
-    const hasLoaded = sessionStorage.getItem('hasLoaded');
-    return !hasLoaded;
-  });
+  const [showLoader, setShowLoader] = useState(isInitialLoad);
   const { setAppIsReady } = useAppContext();
 
   const toggleScroll = (value: boolean) => {
@@ -25,22 +22,18 @@ function LoadingProgressBar() {
   };
 
   useEffect(() => {
-    // If we're not showing the loader, we've already loaded - mark it immediately
-    if (!showLoader) {
-      sessionStorage.setItem('hasLoaded', 'true');
-      setAppIsReady(true);
-      return;
-    }
+    return () => {
+      isInitialLoad = false;
+    };
+  }, []);
 
+  useEffect(() => {
     toggleScroll(true);
 
     // Listen for progress completion
     const unsubscribe = progress.on('change', (latest) => {
       if (latest >= 0.99) {
-        // Mark as loaded BEFORE hiding the loader
-        sessionStorage.setItem('hasLoaded', 'true');
-
-        // Wait 150ms to show completed bar before hiding
+        // Wait 300ms to show completed bar before hiding
         setTimeout(() => {
           setShowLoader(false);
           toggleScroll(false);
@@ -52,7 +45,7 @@ function LoadingProgressBar() {
       unsubscribe();
       toggleScroll(false);
     };
-  }, [showLoader, progress, setAppIsReady]);
+  }, [setAppIsReady]);
 
   const loaderVariants = {
     initial: { y: 0 },

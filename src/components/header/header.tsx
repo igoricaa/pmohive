@@ -94,7 +94,7 @@ const MainBar = ({
         />
       </Link>
 
-      <div className='flex items-center gap-4'>
+      <div className='flex items-center gap-8'>
         <div className='hidden lg:flex items-center gap-9'>
           {routes.map((route) => (
             <MenuLink key={route.path} route={route} />

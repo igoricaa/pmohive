@@ -268,28 +268,28 @@
 
 @keyframes burger-open-top {
   50% {
-    transform: translate3d(0, 12px, 0);
+    transform: translate3d(0, 10px, 0);
   }
   100% {
-    transform: translate3d(0, 12px, 0) rotate(45deg);
+    transform: translate3d(0, 10px, 0) rotate(45deg);
   }
 }
 
 @keyframes burger-open-bot {
   50% {
-    transform: translate3d(0, -12px, 0);
+    transform: translate3d(0, -10px, 0);
   }
   100% {
-    transform: translate3d(0, -12px, 0) rotate(-45deg);
+    transform: translate3d(0, -10px, 0) rotate(-45deg);
   }
 }
 
 @keyframes burger-close-top {
   0% {
-    transform: translate3d(0, 12px, 0) rotate(45deg);
+    transform: translate3d(0, 10px, 0) rotate(45deg);
   }
   50% {
-    transform: translate3d(0, 12px, 0) rotate(0deg);
+    transform: translate3d(0, 10px, 0) rotate(0deg);
   }
   100% {
     transform: translate3d(0, 0, 0);
@@ -298,10 +298,10 @@
 
 @keyframes burger-close-bot {
   0% {
-    transform: translate3d(0, -12px, 0) rotate(-45deg);
+    transform: translate3d(0, -10px, 0) rotate(-45deg);
   }
   50% {
-    transform: translate3d(0, -12px, 0) rotate(0deg);
+    transform: translate3d(0, -10px, 0) rotate(0deg);
   }
   100% {
     transform: translate3d(0, 0, 0);
