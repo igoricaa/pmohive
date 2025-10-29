@@ -84,6 +84,7 @@ const BreakSection = ({
             <div className='flex gap-2 sm:gap-4 mt-4 xl:mt-7.5'>
               {buttons.map((button, index) => (
                 <AnimateInView
+                  key={`${button.text}-${index}`}
                   offset={40}
                   direction='up'
                   inViewMargin='-150px'

@@ -33,7 +33,7 @@ const ServicesSection = ({
         {serviceItems.map((item, index) => (
           <article
             key={`${item.heading}-${index}`}
-            className='col-span-1 sm:col-span-4 xl:col-span-6 3xl:col-span-3 relative px-3 pb-3 xl:px-4 xl:pb-7 flex flex-col justify-end gap-2 aspect-[447/344] group hover:-translate-y-5 transition-[translate] ease-out duration-300 overflow-hidden'
+            className='col-span-1 sm:col-span-4 xl:col-span-6 3xl:col-span-3 relative px-3 pb-3 xl:px-4 xl:pb-7 flex flex-col justify-end gap-2 aspect-[447/344] group hover:-translate-y-5 transition-[translate] ease-out duration-300 overflow-hidden hover:will-change-transform'
           >
             <Link href={`/industry-focus/${item.slug}`}>
               <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black/65 -z-5' />
@@ -93,7 +93,7 @@ const ServicesSection = ({
                 'basis-[82%] sm:basis-[65%] pl-0 pr-4 sm:pl-0 sm:pr-side '
               )}
             >
-              <article className='col-span-1 sm:col-span-2 xl:col-span-4 relative px-3 pb-3 xl:px-4 xl:pb-7 flex flex-col justify-end gap-2 aspect-[447/344] group hover:-translate-y-5 transition-[translate] ease-out duration-300 overflow-hidden'>
+              <article className='col-span-1 sm:col-span-2 xl:col-span-4 relative px-3 pb-3 xl:px-4 xl:pb-7 flex flex-col justify-end gap-2 aspect-[447/344] group hover:-translate-y-5 transition-[translate] ease-out duration-300 overflow-hidden hover:will-change-transform'>
                 <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black/65 -z-5' />
                 <Image
                   src={urlFor(item.image).url()}

@@ -13,6 +13,7 @@ import { GoogleTagManager } from '@next/third-parties/google';
 import TermlyCMP from '@/components/sections/termly-cmp';
 import { Suspense } from 'react';
 import { AppProvider } from '@/components/providers/app-ready-provider';
+import LoadingProgressBar from '@/components/progress-bar';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -62,6 +63,7 @@ export default function RootLayout({
           <QueryProvider>
             <NuqsAdapter>
               <Lenis>
+                <LoadingProgressBar />
                 <Header />
                 <BackgroundGradient />
                 {children}

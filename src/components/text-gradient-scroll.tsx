@@ -132,7 +132,7 @@ const Word = ({
       <span style={{ position: 'absolute', opacity: 0.1 }}>{children}</span>
       <motion.span
         className={cn(isFirst && highlightFirstWord && 'text-primary')}
-        style={{ transition: 'all .5s', opacity: opacity }}
+        style={{ transition: 'all .5s', opacity: opacity, willChange: 'opacity' }}
       >
         {children}
       </motion.span>
@@ -202,6 +202,7 @@ const Char = ({
         style={{
           transition: 'all .5s',
           opacity: opacity,
+          willChange: 'opacity',
         }}
       >
         {children}

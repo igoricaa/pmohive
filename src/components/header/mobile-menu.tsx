@@ -81,6 +81,7 @@ const MobileMenu = ({
           'before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-gradient-to-b before:from-black before:from-5% before:via-[#F79E62] before:via-50% before:to-black before:to-95%',
           isOpen && 'translate-x-0'
         )}
+        style={{ willChange: 'transform' }}
         onClick={(e) => e.stopPropagation()}
       >
         <ImageNext

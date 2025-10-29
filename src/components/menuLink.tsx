@@ -81,7 +81,7 @@ const MenuLink = ({
             >
               <span
                 className={cn(
-                  'text-primary text-xl opacity-0 invisible group-hover/trigger:opacity-100 group-hover/trigger:visible absolute -left-4 transition-[opacity,visibility]',
+                  'text-primary text-xl opacity-0 invisible group-hover/trigger:opacity-100 group-hover/trigger:visible absolute -left-4 transition-[opacity,visibility] hover:will-change-[opacity]',
                   isActive && 'opacity-100 visible'
                 )}
               >
@@ -136,7 +136,7 @@ const MenuLink = ({
     >
       <span
         className={cn(
-          'text-primary text-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute -left-4 transition-[opacity,visibility]',
+          'text-primary text-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute -left-4 transition-[opacity,visibility] hover:will-change-[opacity]',
           pathname === route.path && 'opacity-100 visible'
         )}
       >

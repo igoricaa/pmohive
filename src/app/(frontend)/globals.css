@@ -225,6 +225,7 @@
 .burger-menu-piece {
   transition: transform var(--menu-animation-duration)
     var(--menu-animation-timing);
+  will-change: transform;
 
   &:nth-child(2) {
     opacity: 1;
@@ -365,6 +366,7 @@
 
     transform-origin: calc(50% + 400px);
     animation: moveInCircle 20s linear infinite;
+    will-change: transform;
 
     opacity: 1;
   }

@@ -74,6 +74,7 @@ export default function StickyHeaderWrapper({
       initial={{ y: 0 }}
       animate={{ y: isVisible ? 0 : '-100%' }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
+      style={{ willChange: 'transform' }}
     >
       <AnimatePresence>
         {!isScrolled && (

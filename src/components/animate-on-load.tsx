@@ -24,6 +24,7 @@ export function AnimateOnLoad({
       initial={{ opacity: 0, y: 40 }}
       animate={isAppReady ? { opacity: 1, y: 0 } : undefined}
       transition={{ duration: 0.3, ease: 'easeOut', delay }}
+      style={{ willChange: isAppReady ? 'transform, opacity' : 'auto' }}
       {...motionProps}
     >
       {children}

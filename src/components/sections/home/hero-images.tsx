@@ -38,6 +38,7 @@ export function HeroImages({ images }: HeroImagesProps) {
             ease: 'easeOut',
             delay: imageAnimations[0].delay,
           }}
+          style={{ willChange: isAppReady ? 'transform, opacity' : 'auto' }}
         >
           <Image
             src={urlForUncropped(images.image1).url()}
@@ -59,6 +60,7 @@ export function HeroImages({ images }: HeroImagesProps) {
             ease: 'easeOut',
             delay: imageAnimations[1].delay,
           }}
+          style={{ willChange: isAppReady ? 'transform, opacity' : 'auto' }}
         >
           <Image
             src={urlForUncropped(images.image2).url()}
@@ -82,6 +84,7 @@ export function HeroImages({ images }: HeroImagesProps) {
             ease: 'easeOut',
             delay: imageAnimations[2].delay,
           }}
+          style={{ willChange: isAppReady ? 'transform, opacity' : 'auto' }}
         >
           <Image
             src={urlForUncropped(images.image3).url()}
@@ -103,6 +106,7 @@ export function HeroImages({ images }: HeroImagesProps) {
             ease: 'easeOut',
             delay: imageAnimations[3].delay,
           }}
+          style={{ willChange: isAppReady ? 'transform, opacity' : 'auto' }}
         >
           <Image
             src={urlForUncropped(images.image4).url()}

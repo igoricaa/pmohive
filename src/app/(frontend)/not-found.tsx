@@ -19,7 +19,7 @@ export default function NotFound() {
 
         <div className='absolute inset-0 w-full h-full ellipse-gradient'></div>
 
-        <main className='relative z-10 flex flex-col items-start justify-end min-h-screen px-side pt-32 sm:pt-36 xl:pt-40 pb-16'>
+        <div className='relative z-10 flex flex-col items-start justify-end min-h-screen px-side pt-32 sm:pt-36 xl:pt-40 pb-16'>
           <div className='w-full 2xl:max-w-10/12 mx-auto'>
             <p className='font-mono font-medium text-lg text-white mb-2 sm:mb-3 xl:mb-1'>
               uups <span className='text-primary'>/pmo</span>
@@ -65,7 +65,7 @@ export default function NotFound() {
               </Link>
             </div>
           </div>
-        </main>
+        </div>
       </div>
     </main>
   );

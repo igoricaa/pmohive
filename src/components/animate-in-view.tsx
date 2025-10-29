@@ -76,6 +76,7 @@ export function AnimateInView({
         duration,
         ease: 'easeOut',
       }}
+      style={{ willChange: isInView ? 'transform, opacity' : 'auto' }}
       className={className}
       {...props}
     >

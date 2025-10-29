@@ -104,6 +104,7 @@ const LetterSwapPingPong = ({
       className={`flex justify-center items-center relative overflow-hidden  ${className} `}
       onClick={onClick}
       ref={scope}
+      style={{ willChange: isHovered ? 'transform' : 'auto' }}
       {...props}
     >
       <span className='sr-only'>
@@ -117,12 +118,18 @@ const LetterSwapPingPong = ({
             key={i}
             aria-hidden={true}
           >
-            <motion.span className={`relative letter`} style={{ top: 0 }}>
+            <motion.span
+              className={`relative letter`}
+              style={{ top: 0, willChange: isHovered ? 'transform' : 'auto' }}
+            >
               {letter}
             </motion.span>
             <motion.span
               className='absolute letter-secondary '
-              style={{ top: reverse ? '-100%' : '100%' }}
+              style={{
+                top: reverse ? '-100%' : '100%',
+                willChange: isHovered ? 'transform' : 'auto',
+              }}
             >
               {letter}
             </motion.span>
@@ -136,13 +143,19 @@ const LetterSwapPingPong = ({
             key={label.length + i}
             aria-hidden={true}
           >
-            <motion.span className={`relative letter`} style={{ top: 0 }}>
+            <motion.span
+              className={`relative letter`}
+              style={{ top: 0, willChange: isHovered ? 'transform' : 'auto' }}
+            >
               {i === 0 && ' '}
               {letter}
             </motion.span>
             <motion.span
               className='absolute letter-secondary '
-              style={{ top: reverse ? '-100%' : '100%' }}
+              style={{
+                top: reverse ? '-100%' : '100%',
+                willChange: isHovered ? 'transform' : 'auto',
+              }}
             >
               {i === 0 && ' '}
               {letter}

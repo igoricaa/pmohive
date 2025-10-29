@@ -12,6 +12,7 @@ const ScrollMeter = () => {
       style={{
         scaleX: scrollYProgress,
         originX: 0,
+        willChange: 'transform',
       }}
     />
   );
