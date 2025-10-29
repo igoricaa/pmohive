@@ -123,44 +123,49 @@ const ProjectsListComponent = ({
         )}
 
         {/* Projects List */}
-        <ul className='absolute bottom-12 left-[var(--padding-side)] flex flex-col gap-2 sm:w-[calc(50%-var(--padding-side))]'>
-          <li className='flex w-full items-center gap-3 text-sm xl:text-base font-mono mb-2 xl:mb-3'>
-            case studies
-            <span className='bg-foreground h-px flex-1 opacity-50'></span>
-          </li>
 
-          {projects.map((project, index) => (
-            <li
-              key={project.mainInfo.title}
-              style={{
-                opacity: isHoveredIndex === index ? 1 : 0.5,
-              }}
-              className={cn(
-                'font-sans relative flex w-fit cursor-pointer items-center text-xl sm:text-2xl xl:text-[32px] leading-none font-semibold text-white transition-opacity duration-300',
-                'hover:text-primary',
-                isHoveredIndex === index && 'text-primary'
-              )}
-              onMouseEnter={
-                isDesktop ? () => setIsHoveredIndex(index) : undefined
-              }
-              onClick={!isDesktop ? () => handleProjectClick(index) : undefined}
-            >
-              {isDesktop ? (
-                <Link href={`/projects/${project.slug}`}>
+        <div className='absolute bottom-12 left-[var(--padding-side)] sm:w-[calc(50%-var(--padding-side))]'>
+          <p className='flex w-full items-center gap-3 text-sm xl:text-base font-mono mb-2 xl:mb-3'>
+            case studies
+          </p>
+          <ul className='flex flex-col gap-5 '>
+            {projects.map((project, index) => (
+              <li
+                key={project.mainInfo.title}
+                style={{
+                  opacity: isHoveredIndex === index ? 1 : 0.5,
+                }}
+                className={cn(
+                  'font-sans relative flex w-fit cursor-pointer items-center text-xl sm:text-2xl xl:text-3xl 2xl:text-4xl leading-none font-semibold text-white transition-opacity duration-300',
+                  'hover:text-primary',
+                  isHoveredIndex === index && 'text-primary'
+                )}
+                onMouseEnter={
+                  isDesktop ? () => setIsHoveredIndex(index) : undefined
+                }
+                onClick={
+                  !isDesktop ? () => handleProjectClick(index) : undefined
+                }
+              >
+                {isDesktop ? (
+                  <Link href={`/projects/${project.slug}`}>
+                    <ViewTransition name={`project-title-${project.slug}`}>
+                      <span className='inline-block'>
+                        {project.mainInfo.title}
+                      </span>
+                    </ViewTransition>
+                  </Link>
+                ) : (
                   <ViewTransition name={`project-title-${project.slug}`}>
                     <span className='inline-block'>
                       {project.mainInfo.title}
                     </span>
                   </ViewTransition>
-                </Link>
-              ) : (
-                <ViewTransition name={`project-title-${project.slug}`}>
-                  <span className='inline-block'>{project.mainInfo.title}</span>
-                </ViewTransition>
-              )}
-            </li>
-          ))}
-        </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </ViewTransition>
   );
