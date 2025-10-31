@@ -37,7 +37,7 @@ const SNAZZY_ORANGE_STYLE = [
   {
     featureType: 'administrative.country',
     elementType: 'labels.text.fill',
-    stylers: [{ color: '#e5bc01' }],
+    stylers: [{ color: '#f09a60' }],
   },
   {
     featureType: 'administrative.locality',
@@ -47,7 +47,7 @@ const SNAZZY_ORANGE_STYLE = [
   {
     featureType: 'administrative.neighborhood',
     elementType: 'labels.text.fill',
-    stylers: [{ color: '#e5bc01' }],
+    stylers: [{ color: '#f09a60' }],
   },
   {
     featureType: 'landscape',
@@ -67,7 +67,7 @@ const SNAZZY_ORANGE_STYLE = [
   {
     featureType: 'road.highway',
     elementType: 'geometry.fill',
-    stylers: [{ color: '#e5bc01' }, { lightness: '0' }],
+    stylers: [{ color: '#f09a60' }, { lightness: '0' }],
   },
   {
     featureType: 'road.highway',
@@ -82,7 +82,7 @@ const SNAZZY_ORANGE_STYLE = [
   {
     featureType: 'road.highway',
     elementType: 'labels.text.stroke',
-    stylers: [{ color: '#e5bc01' }],
+    stylers: [{ color: '#f09a60' }],
   },
   {
     featureType: 'road.arterial',
