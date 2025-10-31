@@ -33,7 +33,7 @@ const HeroSection = ({
   images,
 }: HeroSectionProps) => {
   return (
-    <section className='px-side relative grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 items-center gap-2 md:gap-4 pt-25 sm:pt-30 lg:pt-34 xl:pt-36'>
+    <section className='px-side relative grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 items-center gap-2 md:gap-4 pt-25 sm:pt-30 lg:pt-34 xl:pt-36 min-h-screen pb-10 overflow-hidden'>
       <HeroImages images={images} />
       <AnimateOnLoad className='md:col-span-4 lg:col-span-5 2xl:col-span-4 2xl:col-start-2 md:order-1 z-1 md:pt-17 lg:pt-0'>
         <Heading

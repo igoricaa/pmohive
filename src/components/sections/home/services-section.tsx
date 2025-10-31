@@ -33,7 +33,7 @@ const ServicesSection = ({
         {serviceItems.map((item, index) => (
           <article
             key={`${item.heading}-${index}`}
-            className='col-span-1 sm:col-span-4 xl:col-span-6 3xl:col-span-3 relative px-3 pb-3 xl:px-4 xl:pb-7 flex flex-col justify-end gap-2 aspect-[447/344] group hover:-translate-y-5 transition-[translate] ease-out duration-300 overflow-hidden hover:will-change-transform'
+            className='col-span-1 sm:col-span-4 xl:col-span-6 3xl:col-span-3 relative px-3 pb-3 xl:px-4 xl:pb-7 flex flex-col justify-end gap-2 aspect-[447/344] group hover:-translate-y-5 transition-[translate] ease-out duration-500 overflow-hidden hover:will-change-transform'
           >
             <Link href={`/industry-focus/${item.slug}`}>
               <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black/65 -z-5' />
@@ -51,23 +51,23 @@ const ServicesSection = ({
                 width={88}
                 height={88}
                 unoptimized
-                className='-z-5 object-cover absolute top-2 lg:top-6 right-2 lg:right-6 size-16 lg:size-22 2xl:size-28 lg:opacity-0 lg:invisible group-hover:visible group-hover:opacity-100 transition-[opacity,visibility,translate] duration-300 ease-out lg:-translate-x-5 lg:translate-y-5 group-hover:translate-0'
+                className='-z-5 object-cover absolute top-2 lg:top-6 right-2 lg:right-6 size-16 lg:size-22 2xl:size-28 lg:opacity-0 lg:invisible group-hover:visible group-hover:opacity-100 transition-[opacity,visibility,translate] duration-500 ease-out lg:-translate-x-5 lg:translate-y-5 group-hover:translate-0'
               />
 
-              <div className='transition-[max-height] duration-300 xl:max-h-25 xl:group-hover:max-h-60'>
+              <div className='transition-[max-height] duration-2000 xl:max-h-full xl:group-hover:max-h-60'>
                 <Heading
                   level='p'
-                  className='text-lg sm:text-[22px] xl:text-[32px] 2xl:text-[40px] leading-none font-bold h-fit'
+                  className='text-lg sm:text-[22px] xl:text-[32px] 2xl:text-3xl leading-none font-bold h-fit'
                   subtitleClassName='text-sm xl:text-lg'
                   subtitle={{
                     text: item.subtitle.text,
                     highlightedText: item.subtitle.highlightedText,
                   }}
                 >
-                  {item.subtitle.text} Centres
+                  {item.heading}
                 </Heading>
 
-                <div className='transition-[opacity,max-height] xl:opacity-0 xl:group-hover:opacity-100 duration-300 xl:group-hover:duration-300 ease-out xl:max-h-0 xl:group-hover:max-h-50 overflow-hidden'>
+                <div className='transition-[opacity,max-height] xl:opacity-0 xl:group-hover:opacity-100 duration-500 xl:group-hover:duration-1000 ease-out xl:max-h-0 xl:group-hover:max-h-50 overflow-hidden'>
                   <p className='pt-2 font-mono text-sm 2xl:text-base'>
                     {item.excerpt}
                   </p>

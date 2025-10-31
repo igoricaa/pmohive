@@ -3,6 +3,7 @@
 import { AnimatePresence, easeOut, motion, useSpring } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { useAppContext } from './providers/app-ready-provider';
+import { useLenis } from 'lenis/react';
 
 let isInitialLoad = true;
 
@@ -10,16 +11,7 @@ function LoadingProgressBar() {
   const progress = useMockLoading();
   const [showLoader, setShowLoader] = useState(isInitialLoad);
   const { setAppIsReady } = useAppContext();
-
-  const toggleScroll = (value: boolean) => {
-    const body = document.body as HTMLElement;
-    body.style.overflow = value ? 'hidden' : '';
-    if (value) {
-      body.setAttribute('data-lenis-prevent', 'true');
-    } else {
-      body.removeAttribute('data-lenis-prevent');
-    }
-  };
+  const lenis = useLenis();
 
   useEffect(() => {
     return () => {
@@ -27,25 +19,30 @@ function LoadingProgressBar() {
     };
   }, []);
 
+  // Control scroll based on showLoader state
   useEffect(() => {
-    toggleScroll(true);
+    if (showLoader) {
+      lenis?.stop();
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      lenis?.start();
+    }
+  }, [showLoader, lenis]);
 
-    // Listen for progress completion
+  // Listen for progress completion
+  useEffect(() => {
     const unsubscribe = progress.on('change', (latest) => {
       if (latest >= 0.99) {
-        // Wait 300ms to show completed bar before hiding
+        // Wait 150ms to show completed bar before hiding
         setTimeout(() => {
           setShowLoader(false);
-          toggleScroll(false);
         }, 150);
       }
     });
 
-    return () => {
-      unsubscribe();
-      toggleScroll(false);
-    };
-  }, [setAppIsReady]);
+    return () => unsubscribe();
+  }, [progress]);
 
   const loaderVariants = {
     initial: { y: 0 },

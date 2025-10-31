@@ -3,18 +3,19 @@
 import { useEffect } from 'react';
 
 /**
- * Hook that detects when Termly's cookie settings modal is open
+ * Hook that detects when Termly's cookie preferences modal is open
+ * (NOT the consent banner, only the large preferences modal)
  * and disables Lenis smooth scroll by setting data-lenis-prevent on body.
  *
- * Mirrors the pattern used in mobile-menu.tsx and sidebar.tsx.
+ * Uses the 't-preference-modal' class to specifically target the preferences modal.
  */
 export function useTermlyModalDetector() {
   useEffect(() => {
-    const modalId = 'termly-code-snippet-support';
     let isModalOpen = false;
 
     const checkModalVisibility = () => {
-      const modal = document.getElementById(modalId);
+      // Look for the preferences modal specifically (not the consent banner)
+      const modal = document.querySelector('.t-preference-modal');
       if (!modal) {
         if (isModalOpen) {
           // Modal was open but now removed from DOM
@@ -24,9 +25,9 @@ export function useTermlyModalDetector() {
         return;
       }
 
-      // Check if modal is visible
+      // Check if preferences modal is visible
       const isVisible =
-        modal.offsetParent !== null && // Not display: none
+        (modal as HTMLElement).offsetParent !== null && // Not display: none
         window.getComputedStyle(modal).visibility !== 'hidden' &&
         modal.getAttribute('aria-hidden') !== 'true';
 
@@ -41,12 +42,12 @@ export function useTermlyModalDetector() {
       }
     };
 
-    // Initial check
-    checkModalVisibility();
-
     // Watch for DOM changes
     const observer = new MutationObserver(() => {
-      checkModalVisibility();
+      // Use requestAnimationFrame to ensure Termly's styles/classes are applied
+      requestAnimationFrame(() => {
+        checkModalVisibility();
+      });
     });
 
     // Observe entire document for modal appearing/disappearing

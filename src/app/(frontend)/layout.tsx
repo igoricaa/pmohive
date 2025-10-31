@@ -45,6 +45,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
         <AppProvider>
+          <LoadingProgressBar />
           <GTMConsentInit />
           {gtmId && <GoogleTagManager gtmId={gtmId} />}
           {termlyUuid && (
@@ -63,7 +64,6 @@ export default function RootLayout({
           <QueryProvider>
             <NuqsAdapter>
               <Lenis>
-                <LoadingProgressBar />
                 <Header />
                 <BackgroundGradient />
                 {children}
