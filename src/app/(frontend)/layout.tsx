@@ -14,6 +14,7 @@ import TermlyCMP from '@/components/sections/termly-cmp';
 import { Suspense } from 'react';
 import { AppProvider } from '@/components/providers/app-ready-provider';
 import LoadingProgressBar from '@/components/progress-bar';
+import Script from 'next/script';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -41,6 +42,18 @@ export default function RootLayout({
 
   return (
     <html lang='en'>
+      <head>
+        {/* Custom Blocking Map must load BEFORE Termly script */}
+        {termlyUuid && (
+          <Script id='termly-custom-blocking-map' strategy='beforeInteractive'>
+            {`
+              window.TERMLY_CUSTOM_BLOCKING_MAP = {
+                "cdn.sanity.io": "essential"
+              };
+            `}
+          </Script>
+        )}
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
