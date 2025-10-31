@@ -138,8 +138,9 @@ export function GoogleMap({
   zoom = 15,
 }: GoogleMapProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+  const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID;
 
-  if (!apiKey) {
+  if (!apiKey || !mapId) {
     return (
       <div
         className={cn(
@@ -147,7 +148,11 @@ export function GoogleMap({
           className
         )}
       >
-        <p>Google Maps API key not configured</p>
+        <p>
+          {!apiKey && 'Google Maps API key not configured'}
+          {!apiKey && !mapId && ' and '}
+          {!mapId && 'Map ID not configured'}
+        </p>
       </div>
     );
   }
@@ -155,6 +160,7 @@ export function GoogleMap({
   return (
     <APIProvider apiKey={apiKey}>
       <Map
+        mapId={mapId}
         defaultCenter={center}
         defaultZoom={zoom}
         className={cn('w-full h-full', className)}
