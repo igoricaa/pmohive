@@ -63,7 +63,7 @@ const ProjectsListComponent = ({
           <ViewTransition
             name={`project-image-${projects[isHoveredIndex].slug}`}
           >
-            <div className='aspect-[343/161] sm:aspect-[786/422] xl:aspect-[1375/700] col-span-full sm:col-span-4 xl:col-span-6 sm:col-start-5 xl:col-start-7'>
+            <div className='hidden lg:block aspect-[343/161] sm:aspect-[786/422] xl:aspect-[1375/700] col-span-full sm:col-span-4 xl:col-span-6 sm:col-start-5 xl:col-start-7'>
               <Image
                 src={urlFor(
                   projects[isHoveredIndex].mainInfo.featuredImage
@@ -76,7 +76,7 @@ const ProjectsListComponent = ({
             </div>
           </ViewTransition>
         ) : (
-          <div className='col-span-full sm:col-span-4 xl:col-span-6 sm:col-start-5 xl:col-start-7'>
+          <div className='lg:hidden col-span-full sm:col-span-4 xl:col-span-6 sm:col-start-5 xl:col-start-7'>
             <Carousel
               setApi={setCarouselApi}
               opts={{
@@ -124,7 +124,8 @@ const ProjectsListComponent = ({
 
         {/* Projects List */}
 
-        <div className='absolute bottom-12 left-[var(--padding-side)] sm:w-[calc(50%-var(--padding-side))]'>
+        
+        <div className='absolute bottom-12 left-0 col-span-full sm:w-[calc(50%-var(--padding-side))]'>
           <p className='flex w-full items-center gap-3 text-sm xl:text-base font-mono mb-2 xl:mb-3'>
             case studies
           </p>
@@ -136,7 +137,7 @@ const ProjectsListComponent = ({
                   opacity: isHoveredIndex === index ? 1 : 0.5,
                 }}
                 className={cn(
-                  'font-sans relative flex w-fit cursor-pointer items-center text-xl sm:text-2xl xl:text-3xl 2xl:text-4xl leading-none font-semibold text-white transition-opacity duration-300',
+                  'font-sans relative flex w-fit cursor-pointer items-center text-xl sm:text-2xl xl:text-2xl 2xl:text-4xl leading-none font-semibold text-white transition-opacity duration-300',
                   'hover:text-primary',
                   isHoveredIndex === index && 'text-primary'
                 )}

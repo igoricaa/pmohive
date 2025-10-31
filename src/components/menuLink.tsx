@@ -92,12 +92,15 @@ const MenuLink = ({
             <NavigationMenuContent className='bg-black-custom p-0'>
               <ul className='grid gap-4 px-6 pt-4 pb-6 has-[li:hover]:[&>li]:opacity-50'>
                 {route.children.map((child) => (
-                  <li key={child.path} className='transition-opacity hover:opacity-100!'>
+                  <li
+                    key={child.path}
+                    className='transition-opacity hover:opacity-100!'
+                  >
                     <NavigationMenuLink asChild className='bg-transparent!'>
                       <Link
                         href={child.path}
                         className={cn(
-                          'text-white whitespace-nowrap flex flex-row items-center gap-2 select-none rounded-md p-0! leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-primary group',
+                          'text-white whitespace-nowrap flex flex-row items-center gap-2 select-none rounded-md p-0! leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-primary active:text-primary focus:text-primary group',
                           pathname === child.path && 'bg-accent text-primary'
                         )}
                       >

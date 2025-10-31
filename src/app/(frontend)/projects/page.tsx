@@ -8,7 +8,7 @@ export default async function ProjectsPage() {
     <main className='pt-28 sm:pt-34 lg:pt-40'>
       <ProjectsListComponent
         projects={projects}
-        className='min-h-[calc(100vh-100px)] sm:min-h-[calc(100vh-120px)] lg:min-h-[calc(100vh-144px)]'
+        className='min-h-[calc(100vh-100px)] sm:min-h-[calc(100vh-120px)] lg:min-h-[calc(100vh-136px)] xl:min-h-[calc(100vh-144px)]'
       />
     </main>
   );
