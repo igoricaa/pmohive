@@ -1,6 +1,6 @@
 'use client';
 
-import { APIProvider, Map } from '@vis.gl/react-google-maps';
+import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps';
 import { cn } from '@/lib/utils';
 
 const SNAZZY_ORANGE_STYLE = [
@@ -161,7 +161,9 @@ export function GoogleMap({
         disableDefaultUI={false}
         gestureHandling='greedy'
         styles={SNAZZY_ORANGE_STYLE}
-      />
+      >
+        <AdvancedMarker position={center} />
+      </Map>
     </APIProvider>
   );
 }
