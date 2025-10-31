@@ -1,6 +1,6 @@
 'use client';
 
-import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps';
+import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
 import { cn } from '@/lib/utils';
 
 const SNAZZY_ORANGE_STYLE = [
@@ -138,9 +138,8 @@ export function GoogleMap({
   zoom = 15,
 }: GoogleMapProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-  const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID;
 
-  if (!apiKey || !mapId) {
+  if (!apiKey) {
     return (
       <div
         className={cn(
@@ -148,11 +147,7 @@ export function GoogleMap({
           className
         )}
       >
-        <p>
-          {!apiKey && 'Google Maps API key not configured'}
-          {!apiKey && !mapId && ' and '}
-          {!mapId && 'Map ID not configured'}
-        </p>
+        <p>{!apiKey && 'Google Maps API key not configured'}</p>
       </div>
     );
   }
@@ -160,7 +155,6 @@ export function GoogleMap({
   return (
     <APIProvider apiKey={apiKey}>
       <Map
-        mapId={mapId}
         defaultCenter={center}
         defaultZoom={zoom}
         className={cn('w-full h-full', className)}
@@ -168,7 +162,7 @@ export function GoogleMap({
         gestureHandling='greedy'
         styles={SNAZZY_ORANGE_STYLE}
       >
-        <AdvancedMarker position={center} />
+        <Marker position={center} />
       </Map>
     </APIProvider>
   );
