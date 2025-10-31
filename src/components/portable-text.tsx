@@ -217,7 +217,7 @@ const PortableText = ({
   };
 
   return (
-    <div className={cn('prose prose-lg max-w-none', className)}>
+    <div className={cn('prose prose-lg max-w-none [&>p:nth-of-type(2)]:mt-5', className)}>
       <PortableTextSanity value={value} components={components} />
     </div>
   );

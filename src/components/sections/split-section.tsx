@@ -66,7 +66,6 @@ const SplitSection = ({
           <div className='mt-3 xl:mt-8'>
             <PortableText
               value={description}
-              className='[&>p:nth-of-type(2)]:mt-6'
               paragraphClassName={cn(
                 'text-2xl sm:text-[26px] 2xl:text-[32px] font-semibold leading-none',
                 descriptionClassName
