@@ -48,6 +48,24 @@ const form = useForm({
 - Lucide icons passed as **strings** (`'ArrowRight'`), not components
 - Add new icons to ICON_MAP in [src/components/animated-button.tsx](src/components/animated-button.tsx)
 
+**Google Maps Advanced Markers**:
+
+- Advanced Markers REQUIRE a Map ID (Vector type)
+- Component: [src/components/google-map.tsx](src/components/google-map.tsx)
+- Create Map ID: [Google Cloud Console](https://console.cloud.google.com/google/maps-apis/studio/maps)
+  - Map type: JavaScript
+  - Rendering: Vector (not Raster)
+- WHY: Advanced Markers API needs vector rendering for custom pins/HTML content
+- Env vars: `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` + `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID`
+
+**CRITICAL Styling Limitation**:
+
+- When using a Map ID, the `styles` prop is **completely ignored**
+- All map styling MUST be configured in Google Cloud Console
+- Cloud-based styling takes precedence over programmatic styles
+- No way to use both programmatic styles AND Advanced Markers
+- Solution: Apply your custom JSON styling to the Map ID in Cloud Console
+
 ---
 
 ## 3. Architecture Decisions (The WHY)
@@ -77,6 +95,15 @@ const form = useForm({
 - WHY: Reduces unnecessary refetches
 - See: [src/providers/query-provider.tsx](src/providers/query-provider.tsx)
 
+**Google Maps Sticky Layout (Contact Page)**:
+
+- Map on right side: Sticky on XL+ screens with fixed viewport height
+- Implementation: [src/app/(frontend)/contact-us/page.tsx](<src/app/(frontend)/contact-us/page.tsx>)
+- Wrapper: `xl:sticky xl:top-[184px]`
+- Map height: `xl:h-[calc(100vh-184px)]`
+- WHY: Keeps map visible while user fills out long contact form
+- Responsive: Only applies to XL screens (≥1280px), scrolls normally on smaller screens
+
 ---
 
 ## 4. Tool Routing (Which Tool for What)
@@ -92,6 +119,7 @@ const form = useForm({
 
 - React Hook Form: `mcp__context7__resolve-library-id({ libraryName: 'react-hook-form' })`
 - shadcn/ui: `mcp__context7__get-library-docs({ context7CompatibleLibraryID: '/shadcn/ui' })`
+- Google Maps: `mcp__context7__resolve-library-id({ libraryName: '@vis.gl/react-google-maps' })`
 - Tailwind CSS, Zod, TanStack Query, etc.
 - **When**: Need API docs, usage examples, latest features
 
@@ -125,7 +153,7 @@ const form = useForm({
 - UI library: [src/components/ui/](src/components/ui/)
 - Blog: [src/components/blog/](src/components/blog/)
 - Animations: [src/components/fancy/text/](src/components/fancy/text/)
-- Advanced: [animated-button.tsx](src/components/animated-button.tsx), [motion-link.tsx](src/components/motion-link.tsx), [contact-form.tsx](src/components/contact-form.tsx)
+- Advanced: [animated-button.tsx](src/components/animated-button.tsx), [motion-link.tsx](src/components/motion-link.tsx), [contact-form.tsx](src/components/contact-form.tsx), [google-map.tsx](src/components/google-map.tsx)
 - Header: [src/components/header/sticky-header-wrapper.tsx](src/components/header/sticky-header-wrapper.tsx)
 
 **Sanity CMS**:
