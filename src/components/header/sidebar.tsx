@@ -36,7 +36,7 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
 
       <div
         className={cn(
-          'fixed inset-0 z-20 transition-opacity duration-300',
+          'fixed inset-0 z-20 transition-opacity duration-300 h-screen',
           isOpen ? 'pointer-events-auto' : 'pointer-events-none'
         )}
         onClick={() => setIsOpen(false)}
