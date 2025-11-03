@@ -9,6 +9,17 @@ import {
   getAllPostCategories,
 } from '@/sanity/lib/queries';
 import BlogContent from '@/components/blog/blog-content';
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/metadata';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return generatePageMetadata({
+    title: 'Blog',
+    description:
+      'Insights, best practices, and expert advice on project management, PMO optimization, and organizational success from the PMO Hive team.',
+    path: '/blog',
+  });
+}
 
 export default async function Blog() {
   const queryClient = new QueryClient();

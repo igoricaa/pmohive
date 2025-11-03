@@ -6,6 +6,13 @@ export const postType = defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'seo',
+      title: 'SEO & Meta Tags',
+      type: 'seo',
+      description:
+        'SEO settings for this blog post. Optimized metadata improves search visibility and social sharing.',
+    }),
+    defineField({
       name: 'subtitle',
       type: 'subtitle',
     }),
@@ -55,7 +62,21 @@ export const postType = defineType({
     }),
     defineField({
       name: 'featuredMedia',
+      title: 'Featured Image',
       type: 'image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alt Text',
+          description: 'Alternative text for accessibility',
+          validation: (rule) =>
+            rule.required().error('Alt text is required for accessibility'),
+        },
+      ],
       validation: (rule) => rule.required(),
     }),
   ],

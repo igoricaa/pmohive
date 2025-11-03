@@ -235,12 +235,81 @@ export type HeadingBlock = {
   };
 };
 
+export type BlockContent = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote" | "highlighted";
+  listItem?: "bullet" | "number";
+  markDefs?: Array<{
+    href?: string;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+} | {
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  };
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt?: string;
+  _type: "image";
+  _key: string;
+}>;
+
+export type OpenPosition = {
+  _id: string;
+  _type: "openPosition";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  location: string;
+  type: string;
+  description: BlockContent;
+};
+
+export type TeamMember = {
+  _id: string;
+  _type: "teamMember";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  specializations: Array<string>;
+  bio: BlockContent;
+};
+
 export type CaseStudy = {
   _id: string;
   _type: "caseStudy";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   mainInfo: {
     title: string;
     client: string;
@@ -278,103 +347,13 @@ export type CaseStudy = {
   blog: BlogSection;
 };
 
-export type CareersPage = {
-  _id: string;
-  _type: "careersPage";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title: string;
-  introSection: IntroSection;
-  openPositions: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "openPosition";
-  }>;
-};
-
-export type OpenPosition = {
-  _id: string;
-  _type: "openPosition";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title: string;
-  location: string;
-  type: string;
-  description: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote" | "highlighted";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
-};
-
-export type BlockContent = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote" | "highlighted";
-  listItem?: "bullet" | "number";
-  markDefs?: Array<{
-    href?: string;
-    _type: "link";
-    _key: string;
-  }>;
-  level?: number;
-  _type: "block";
-  _key: string;
-} | {
-  asset?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-  };
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  alt?: string;
-  _type: "image";
-  _key: string;
-}>;
-
 export type Post = {
   _id: string;
   _type: "post";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   subtitle?: Subtitle;
   title: string;
   slug: Slug;
@@ -397,6 +376,7 @@ export type Post = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
+    alt: string;
     _type: "image";
   };
 };
@@ -441,6 +421,7 @@ export type Service = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title: string;
   slug: Slug;
   excerpt: string;
@@ -521,30 +502,6 @@ export type Service = {
   ctaSection: BreakSection;
 };
 
-export type TeamMember = {
-  _id: string;
-  _type: "teamMember";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name: string;
-  image: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt: string;
-    _type: "image";
-  };
-  specializations: Array<string>;
-  bio: BlockContent;
-};
-
 export type Button = {
   _type: "button";
   text: string;
@@ -565,12 +522,31 @@ export type Button = {
   };
 };
 
+export type CareersPage = {
+  _id: string;
+  _type: "careersPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo?: Seo;
+  title: string;
+  introSection: IntroSection;
+  openPositions: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "openPosition";
+  }>;
+};
+
 export type TermsOfUse = {
   _id: string;
   _type: "termsOfUse";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title: string;
   slug: Slug;
   lastUpdated: string;
@@ -586,6 +562,7 @@ export type CookiePolicy = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title: string;
   slug: Slug;
   lastUpdated: string;
@@ -601,6 +578,7 @@ export type PrivacyPolicy = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title: string;
   slug: Slug;
   lastUpdated: string;
@@ -616,6 +594,7 @@ export type ContactPage = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   subtitle: Subtitle;
   heading: string;
   description: BlockContent;
@@ -633,6 +612,7 @@ export type AboutPage = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title: string;
   introSection: IntroSection;
   animatedTextPart1: string;
@@ -716,6 +696,7 @@ export type HomePage = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title: string;
   hero: HeroSection;
   about: AboutSection;
@@ -941,6 +922,59 @@ export type GeneralInfo = {
     };
     _key: string;
   }>;
+  companyName: string;
+  description: string;
+  address: {
+    streetAddress: string;
+    addressLocality: string;
+    addressRegion: string;
+    postalCode: string;
+    addressCountry: string;
+  };
+  businessHours: {
+    openingTime: string;
+    closingTime: string;
+    daysOfWeek: Array<string>;
+  };
+  priceRange?: "$" | "$$" | "$$$" | "$$$$";
+  businessType: "LocalBusiness" | "ProfessionalService" | "Consultant" | "AccountingService" | "Attorney" | "FinancialService";
+  officeImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+};
+
+export type Seo = {
+  _type: "seo";
+  metaTitle?: string;
+  metaDescription?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  keywords?: Array<string>;
+  canonicalUrl?: string;
+  noIndex?: boolean;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -1061,11 +1095,11 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = DividerBlock | SpacerBlock | TextGridItem | TextGridBlock | ImageBlock | TextareaBlock | HeadingTextBlock | HeadingBlock | CaseStudy | CareersPage | OpenPosition | BlockContent | Post | PostCategory | Project | Service | TeamMember | Button | TermsOfUse | CookiePolicy | PrivacyPolicy | ContactPage | Subtitle | AboutPage | VisionSection | ApproachSection | IntroSection | HomePage | BreakSection | BlogSection | TeamSection | AboutSection | HeroSection | GeneralInfo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = DividerBlock | SpacerBlock | TextGridItem | TextGridBlock | ImageBlock | TextareaBlock | HeadingTextBlock | HeadingBlock | BlockContent | OpenPosition | TeamMember | CaseStudy | Post | PostCategory | Project | Service | Button | CareersPage | TermsOfUse | CookiePolicy | PrivacyPolicy | ContactPage | Subtitle | AboutPage | VisionSection | ApproachSection | IntroSection | HomePage | BreakSection | BlogSection | TeamSection | AboutSection | HeroSection | GeneralInfo | Seo | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
-// Query: {    "homePage": *[_type == "homePage"][0] {      ...,      team {        ...,        teamMembers[]->      },      about {        ...,        services[]-> {          header {            subtitle {              text,              highlightedText            },            heading,            featuredImage {              ...,              alt            }          },          "slug": slug.current,          excerpt,        }      }    }  }
+// Query: {    "homePage": *[_type == "homePage"][0] {      ...,      seo {        metaTitle,        metaDescription,        ogTitle,        ogDescription,        ogImage {          ...,          alt        },        keywords,        canonicalUrl,        noIndex      },      team {        ...,        teamMembers[]->      },      about {        ...,        services[]-> {          header {            subtitle {              text,              highlightedText            },            heading,            featuredImage {              ...,              alt            }          },          "slug": slug.current,          excerpt,        }      }    }  }
 export type HOME_PAGE_QUERYResult = {
   homePage: {
     _id: string;
@@ -1073,6 +1107,28 @@ export type HOME_PAGE_QUERYResult = {
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
+    seo: {
+      metaTitle: string | null;
+      metaDescription: string | null;
+      ogTitle: string | null;
+      ogDescription: string | null;
+      ogImage: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string | null;
+        _type: "image";
+      } | null;
+      keywords: Array<string> | null;
+      canonicalUrl: string | null;
+      noIndex: boolean | null;
+    } | null;
     title: string;
     hero: HeroSection;
     about: {
@@ -1195,19 +1251,15 @@ export type LATEST_POSTS_QUERYResult = Array<{
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
+    alt: string;
     _type: "image";
   };
   date: string;
 }>;
 // Variable: GENERAL_INFO_QUERY
-// Query: {  "generalInfo": *[_type == "generalInfo"][0],}
+// Query: {  "generalInfo": *[_type == "generalInfo"][0] {    logoFull {      ...,      alt    },    logoMark {      ...,      alt    },    email,    phone,    googleMapCoordinates,    socials[] {      _key,      title,      url,      icon {        ...,        alt      }    },    companyName,    description,    address {      streetAddress,      addressLocality,      addressRegion,      postalCode,      addressCountry    },    businessHours {      openingTime,      closingTime,      daysOfWeek    },    priceRange,    businessType,    officeImage {      ...,      alt    }  }}
 export type GENERAL_INFO_QUERYResult = {
   generalInfo: {
-    _id: string;
-    _type: "generalInfo";
-    _createdAt: string;
-    _updatedAt: string;
-    _rev: string;
     logoFull: {
       asset?: {
         _ref: string;
@@ -1221,7 +1273,7 @@ export type GENERAL_INFO_QUERYResult = {
       alt: string;
       _type: "image";
     };
-    logoMark?: {
+    logoMark: {
       asset?: {
         _ref: string;
         _type: "reference";
@@ -1233,11 +1285,12 @@ export type GENERAL_INFO_QUERYResult = {
       crop?: SanityImageCrop;
       alt: string;
       _type: "image";
-    };
+    } | null;
     email: string;
     phone: string;
     googleMapCoordinates: Geopoint;
-    socials?: Array<{
+    socials: Array<{
+      _key: string;
       title: string;
       url: string;
       icon: {
@@ -1253,8 +1306,36 @@ export type GENERAL_INFO_QUERYResult = {
         alt: string;
         _type: "image";
       };
-      _key: string;
-    }>;
+    }> | null;
+    companyName: string;
+    description: string;
+    address: {
+      streetAddress: string;
+      addressLocality: string;
+      addressRegion: string;
+      postalCode: string;
+      addressCountry: string;
+    };
+    businessHours: {
+      openingTime: string;
+      closingTime: string;
+      daysOfWeek: Array<string>;
+    };
+    priceRange: "$" | "$$" | "$$$" | "$$$$" | null;
+    businessType: "AccountingService" | "Attorney" | "Consultant" | "FinancialService" | "LocalBusiness" | "ProfessionalService";
+    officeImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string | null;
+      _type: "image";
+    } | null;
   } | null;
 };
 // Variable: BLOG_POSTS_QUERY
@@ -1274,6 +1355,7 @@ export type BLOG_POSTS_QUERYResult = Array<{
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
+    alt: string;
     _type: "image";
   };
   date: string;
@@ -1300,6 +1382,7 @@ export type BLOG_POSTS_QUERY_ASCResult = Array<{
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
+    alt: string;
     _type: "image";
   };
   date: string;
@@ -1317,10 +1400,11 @@ export type POST_CATEGORIES_QUERYResult = Array<{
   slug: string;
 }>;
 // Variable: POST_QUERY
-// Query: {  "currentPost": *[_type == "post" && slug.current == $slug][0]{    _id,    title,    subtitle {      text,      highlightedText    },    "slug": slug.current,    date,    content,    excerpt,    featuredMedia,  },  "relatedPosts": *[    _type == "post"     && slug.current != $slug  ] | order(date desc)[0...3]{    _id,    title,    "slug": slug.current,    excerpt,    date,    featuredMedia  }}
+// Query: {  "currentPost": *[_type == "post" && slug.current == $slug][0]{    _id,    _updatedAt,    title,    subtitle {      text,      highlightedText    },    "slug": slug.current,    date,    content,    excerpt,    featuredMedia,    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    }  },  "relatedPosts": *[    _type == "post"    && slug.current != $slug  ] | order(date desc)[0...3]{    _id,    title,    "slug": slug.current,    excerpt,    date,    featuredMedia  }}
 export type POST_QUERYResult = {
   currentPost: {
     _id: string;
+    _updatedAt: string;
     title: string;
     subtitle: {
       text: string;
@@ -1340,8 +1424,31 @@ export type POST_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
+      alt: string;
       _type: "image";
     };
+    seo: {
+      metaTitle: string | null;
+      metaDescription: string | null;
+      ogTitle: string | null;
+      ogDescription: string | null;
+      ogImage: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string | null;
+        _type: "image";
+      } | null;
+      keywords: Array<string> | null;
+      canonicalUrl: string | null;
+      noIndex: boolean | null;
+    } | null;
   } | null;
   relatedPosts: Array<{
     _id: string;
@@ -1359,14 +1466,17 @@ export type POST_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
+      alt: string;
       _type: "image";
     };
   }>;
 };
 // Variable: POSTS_QUERY_WITH_SLUGS
-// Query: *[_type == "post"]{  slug}
+// Query: *[_type == "post"]{  slug,  _updatedAt,  date}
 export type POSTS_QUERY_WITH_SLUGSResult = Array<{
   slug: Slug;
+  _updatedAt: string;
+  date: string;
 }>;
 // Variable: SERVICES_QUERY
 // Query: *[_type == "service"]
@@ -1376,6 +1486,7 @@ export type SERVICES_QUERYResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo?: Seo;
   title: string;
   slug: Slug;
   excerpt: string;
@@ -1456,9 +1567,10 @@ export type SERVICES_QUERYResult = Array<{
   ctaSection: BreakSection;
 }>;
 // Variable: SERVICES_QUERY_WITH_SLUGS
-// Query: *[_type == "service"]{  slug}
+// Query: *[_type == "service"]{  slug,  _updatedAt}
 export type SERVICES_QUERY_WITH_SLUGSResult = Array<{
   slug: Slug;
+  _updatedAt: string;
 }>;
 // Variable: SERVICES_QUERY_FOR_NAV
 // Query: *[_type == "service"] | order(title asc) {  title,  "slug": slug.current}
@@ -1467,7 +1579,7 @@ export type SERVICES_QUERY_FOR_NAVResult = Array<{
   slug: string;
 }>;
 // Variable: CONTACT_PAGE_QUERY
-// Query: {  "contactPage": *[_type == "contactPage"][0]}
+// Query: {  "contactPage": *[_type == "contactPage"][0] {    ...,    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    }  }}
 export type CONTACT_PAGE_QUERYResult = {
   contactPage: {
     _id: string;
@@ -1475,13 +1587,35 @@ export type CONTACT_PAGE_QUERYResult = {
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
+    seo: {
+      metaTitle: string | null;
+      metaDescription: string | null;
+      ogTitle: string | null;
+      ogDescription: string | null;
+      ogImage: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string | null;
+        _type: "image";
+      } | null;
+      keywords: Array<string> | null;
+      canonicalUrl: string | null;
+      noIndex: boolean | null;
+    } | null;
     subtitle: Subtitle;
     heading: string;
     description: BlockContent;
   } | null;
 };
 // Variable: ABOUT_PAGE_QUERY
-// Query: {  "aboutPage": *[_type == "aboutPage"][0] {    ...,    team {      ...,      teamMembers[]->    },    approachSection {      ...,      approachItems[]->    },    visionSection {      ...,      visionItems[]->    },  }}
+// Query: {  "aboutPage": *[_type == "aboutPage"][0] {    ...,    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    },    team {      ...,      teamMembers[]->    },    approachSection {      ...,      approachItems[]->    },    visionSection {      ...,      visionItems[]->    },  }}
 export type ABOUT_PAGE_QUERYResult = {
   aboutPage: {
     _id: string;
@@ -1489,6 +1623,28 @@ export type ABOUT_PAGE_QUERYResult = {
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
+    seo: {
+      metaTitle: string | null;
+      metaDescription: string | null;
+      ogTitle: string | null;
+      ogDescription: string | null;
+      ogImage: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string | null;
+        _type: "image";
+      } | null;
+      keywords: Array<string> | null;
+      canonicalUrl: string | null;
+      noIndex: boolean | null;
+    } | null;
     title: string;
     introSection: IntroSection;
     animatedTextPart1: string;
@@ -1572,7 +1728,7 @@ export type ABOUT_PAGE_QUERYResult = {
   } | null;
 };
 // Variable: CAREERS_PAGE_QUERY
-// Query: {  "careersPage": *[_type == "careersPage"][0] {    ...,    openPositions[]->  }}
+// Query: {  "careersPage": *[_type == "careersPage"][0] {    ...,    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    },    openPositions[]->  }}
 export type CAREERS_PAGE_QUERYResult = {
   careersPage: {
     _id: string;
@@ -1580,6 +1736,28 @@ export type CAREERS_PAGE_QUERYResult = {
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
+    seo: {
+      metaTitle: string | null;
+      metaDescription: string | null;
+      ogTitle: string | null;
+      ogDescription: string | null;
+      ogImage: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string | null;
+        _type: "image";
+      } | null;
+      keywords: Array<string> | null;
+      canonicalUrl: string | null;
+      noIndex: boolean | null;
+    } | null;
     title: string;
     introSection: IntroSection;
     openPositions: Array<{
@@ -1591,24 +1769,25 @@ export type CAREERS_PAGE_QUERYResult = {
       title: string;
       location: string;
       type: string;
-      description: Array<{
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "highlighted" | "normal";
-        listItem?: "bullet" | "number";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      } | {
+      description: BlockContent;
+    }>;
+  } | null;
+};
+// Variable: SERVICE_QUERY
+// Query: {  "currentService": *[_type == "service" && slug.current == $slug][0] {    ...,    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    },    _updatedAt  }}
+export type SERVICE_QUERYResult = {
+  currentService: {
+    _id: string;
+    _type: "service";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    seo: {
+      metaTitle: string | null;
+      metaDescription: string | null;
+      ogTitle: string | null;
+      ogDescription: string | null;
+      ogImage: {
         asset?: {
           _ref: string;
           _type: "reference";
@@ -1618,22 +1797,13 @@ export type CAREERS_PAGE_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt: string | null;
         _type: "image";
-        _key: string;
-      }>;
-    }>;
-  } | null;
-};
-// Variable: SERVICE_QUERY
-// Query: {  "currentService": *[_type == "service" && slug.current == $slug][0]}
-export type SERVICE_QUERYResult = {
-  currentService: {
-    _id: string;
-    _type: "service";
-    _createdAt: string;
-    _updatedAt: string;
-    _rev: string;
+      } | null;
+      keywords: Array<string> | null;
+      canonicalUrl: string | null;
+      noIndex: boolean | null;
+    } | null;
     title: string;
     slug: Slug;
     excerpt: string;
@@ -1715,7 +1885,7 @@ export type SERVICE_QUERYResult = {
   } | null;
 };
 // Variable: CASE_STUDY_QUERY
-// Query: {  "caseStudy": *[_type == "caseStudy" && slug.current == $slug][0]}
+// Query: {  "caseStudy": *[_type == "caseStudy" && slug.current == $slug][0] {    ...,    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    },    _updatedAt  }}
 export type CASE_STUDY_QUERYResult = {
   caseStudy: {
     _id: string;
@@ -1723,6 +1893,28 @@ export type CASE_STUDY_QUERYResult = {
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
+    seo: {
+      metaTitle: string | null;
+      metaDescription: string | null;
+      ogTitle: string | null;
+      ogDescription: string | null;
+      ogImage: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string | null;
+        _type: "image";
+      } | null;
+      keywords: Array<string> | null;
+      canonicalUrl: string | null;
+      noIndex: boolean | null;
+    } | null;
     mainInfo: {
       title: string;
       client: string;
@@ -1761,9 +1953,10 @@ export type CASE_STUDY_QUERYResult = {
   } | null;
 };
 // Variable: CASE_STUDIES_QUERY_WITH_SLUGS
-// Query: *[_type == "caseStudy"]{  slug}
+// Query: *[_type == "caseStudy"]{  slug,  _updatedAt}
 export type CASE_STUDIES_QUERY_WITH_SLUGSResult = Array<{
   slug: Slug;
+  _updatedAt: string;
 }>;
 // Variable: CASE_STUDIES_QUERY
 // Query: *[_type == "caseStudy"] {  mainInfo {    title,    featuredImage {    ...,    alt    },  },  "slug": slug.current,}
@@ -1787,7 +1980,7 @@ export type CASE_STUDIES_QUERYResult = Array<{
   slug: string;
 }>;
 // Variable: PRIVACY_POLICY_QUERY
-// Query: {  "privacyPolicy": *[_type == "privacyPolicy"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    introContent,    content  }}
+// Query: {  "privacyPolicy": *[_type == "privacyPolicy"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    introContent,    content,    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    }  }}
 export type PRIVACY_POLICY_QUERYResult = {
   privacyPolicy: {
     title: string;
@@ -1797,10 +1990,32 @@ export type PRIVACY_POLICY_QUERYResult = {
     termlyEmbedUrl: string | null;
     introContent: BlockContent | null;
     content: BlockContent;
+    seo: {
+      metaTitle: string | null;
+      metaDescription: string | null;
+      ogTitle: string | null;
+      ogDescription: string | null;
+      ogImage: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string | null;
+        _type: "image";
+      } | null;
+      keywords: Array<string> | null;
+      canonicalUrl: string | null;
+      noIndex: boolean | null;
+    } | null;
   } | null;
 };
 // Variable: COOKIE_POLICY_QUERY
-// Query: {  "cookiePolicy": *[_type == "cookiePolicy"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    introContent,    content  }}
+// Query: {  "cookiePolicy": *[_type == "cookiePolicy"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    introContent,    content,    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    }  }}
 export type COOKIE_POLICY_QUERYResult = {
   cookiePolicy: {
     title: string;
@@ -1810,10 +2025,32 @@ export type COOKIE_POLICY_QUERYResult = {
     termlyEmbedUrl: string | null;
     introContent: BlockContent | null;
     content: BlockContent;
+    seo: {
+      metaTitle: string | null;
+      metaDescription: string | null;
+      ogTitle: string | null;
+      ogDescription: string | null;
+      ogImage: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string | null;
+        _type: "image";
+      } | null;
+      keywords: Array<string> | null;
+      canonicalUrl: string | null;
+      noIndex: boolean | null;
+    } | null;
   } | null;
 };
 // Variable: TERMS_OF_USE_QUERY
-// Query: {  "termsOfUse": *[_type == "termsOfUse"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    introContent,    content  }}
+// Query: {  "termsOfUse": *[_type == "termsOfUse"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    introContent,    content,    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    }  }}
 export type TERMS_OF_USE_QUERYResult = {
   termsOfUse: {
     title: string;
@@ -1823,6 +2060,28 @@ export type TERMS_OF_USE_QUERYResult = {
     termlyEmbedUrl: string | null;
     introContent: BlockContent | null;
     content: BlockContent;
+    seo: {
+      metaTitle: string | null;
+      metaDescription: string | null;
+      ogTitle: string | null;
+      ogDescription: string | null;
+      ogImage: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string | null;
+        _type: "image";
+      } | null;
+      keywords: Array<string> | null;
+      canonicalUrl: string | null;
+      noIndex: boolean | null;
+    } | null;
   } | null;
 };
 
@@ -1830,26 +2089,26 @@ export type TERMS_OF_USE_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "{\n    \"homePage\": *[_type == \"homePage\"][0] {\n      ...,\n      team {\n        ...,\n        teamMembers[]->\n      },\n      about {\n        ...,\n        services[]-> {\n          header {\n            subtitle {\n              text,\n              highlightedText\n            },\n            heading,\n            featuredImage {\n              ...,\n              alt\n            }\n          },\n          \"slug\": slug.current,\n          excerpt,\n        }\n      }\n    }\n  }": HOME_PAGE_QUERYResult;
+    "{\n    \"homePage\": *[_type == \"homePage\"][0] {\n      ...,\n      seo {\n        metaTitle,\n        metaDescription,\n        ogTitle,\n        ogDescription,\n        ogImage {\n          ...,\n          alt\n        },\n        keywords,\n        canonicalUrl,\n        noIndex\n      },\n      team {\n        ...,\n        teamMembers[]->\n      },\n      about {\n        ...,\n        services[]-> {\n          header {\n            subtitle {\n              text,\n              highlightedText\n            },\n            heading,\n            featuredImage {\n              ...,\n              alt\n            }\n          },\n          \"slug\": slug.current,\n          excerpt,\n        }\n      }\n    }\n  }": HOME_PAGE_QUERYResult;
     "*[_type == \"post\"] | order(_createdAt desc) [0...$limit] {\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  featuredMedia,\n  date,\n}": LATEST_POSTS_QUERYResult;
-    "{\n  \"generalInfo\": *[_type == \"generalInfo\"][0],\n}": GENERAL_INFO_QUERYResult;
+    "{\n  \"generalInfo\": *[_type == \"generalInfo\"][0] {\n    logoFull {\n      ...,\n      alt\n    },\n    logoMark {\n      ...,\n      alt\n    },\n    email,\n    phone,\n    googleMapCoordinates,\n    socials[] {\n      _key,\n      title,\n      url,\n      icon {\n        ...,\n        alt\n      }\n    },\n    companyName,\n    description,\n    address {\n      streetAddress,\n      addressLocality,\n      addressRegion,\n      postalCode,\n      addressCountry\n    },\n    businessHours {\n      openingTime,\n      closingTime,\n      daysOfWeek\n    },\n    priceRange,\n    businessType,\n    officeImage {\n      ...,\n      alt\n    }\n  }\n}": GENERAL_INFO_QUERYResult;
     "\n  *[_type == \"post\"\n    && (!defined($search) || title match $search + \"*\")\n    && (!defined($category) || category._ref == $category)\n  ] | order(date desc) [0...11] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    featuredMedia,\n    date,\n    category->{\n      _id,\n      name,\n      \"slug\": slug.current\n    }\n  }\n": BLOG_POSTS_QUERYResult;
     "\n  *[_type == \"post\"\n    && (!defined($search) || title match $search + \"*\")\n    && (!defined($category) || category._ref == $category)\n  ] | order(date asc) [0...11] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    featuredMedia,\n    date,\n    category->{\n      _id,\n      name,\n      \"slug\": slug.current\n    }\n  }\n": BLOG_POSTS_QUERY_ASCResult;
     "\n  *[_type == \"postCategory\"] | order(name asc) {\n    _id,\n    name,\n    \"slug\": slug.current\n  }\n": POST_CATEGORIES_QUERYResult;
-    "{\n  \"currentPost\": *[_type == \"post\" && slug.current == $slug][0]{\n    _id,\n    title,\n    subtitle {\n      text,\n      highlightedText\n    },\n    \"slug\": slug.current,\n    date,\n    content,\n    excerpt,\n    featuredMedia,\n  },\n  \"relatedPosts\": *[\n    _type == \"post\" \n    && slug.current != $slug\n  ] | order(date desc)[0...3]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    date,\n    featuredMedia\n  }\n}": POST_QUERYResult;
-    "*[_type == \"post\"]{\n  slug\n}": POSTS_QUERY_WITH_SLUGSResult;
+    "{\n  \"currentPost\": *[_type == \"post\" && slug.current == $slug][0]{\n    _id,\n    _updatedAt,\n    title,\n    subtitle {\n      text,\n      highlightedText\n    },\n    \"slug\": slug.current,\n    date,\n    content,\n    excerpt,\n    featuredMedia,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    }\n  },\n  \"relatedPosts\": *[\n    _type == \"post\"\n    && slug.current != $slug\n  ] | order(date desc)[0...3]{\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    date,\n    featuredMedia\n  }\n}": POST_QUERYResult;
+    "*[_type == \"post\"]{\n  slug,\n  _updatedAt,\n  date\n}": POSTS_QUERY_WITH_SLUGSResult;
     "*[_type == \"service\"]": SERVICES_QUERYResult;
-    "*[_type == \"service\"]{\n  slug\n}": SERVICES_QUERY_WITH_SLUGSResult;
+    "*[_type == \"service\"]{\n  slug,\n  _updatedAt\n}": SERVICES_QUERY_WITH_SLUGSResult;
     "*[_type == \"service\"] | order(title asc) {\n  title,\n  \"slug\": slug.current\n}": SERVICES_QUERY_FOR_NAVResult;
-    "{\n  \"contactPage\": *[_type == \"contactPage\"][0]\n}": CONTACT_PAGE_QUERYResult;
-    "{\n  \"aboutPage\": *[_type == \"aboutPage\"][0] {\n    ...,\n    team {\n      ...,\n      teamMembers[]->\n    },\n    approachSection {\n      ...,\n      approachItems[]->\n    },\n    visionSection {\n      ...,\n      visionItems[]->\n    },\n  }\n}": ABOUT_PAGE_QUERYResult;
-    "{\n  \"careersPage\": *[_type == \"careersPage\"][0] {\n    ...,\n    openPositions[]->\n  }\n}": CAREERS_PAGE_QUERYResult;
-    "{\n  \"currentService\": *[_type == \"service\" && slug.current == $slug][0]\n}": SERVICE_QUERYResult;
-    "{\n  \"caseStudy\": *[_type == \"caseStudy\" && slug.current == $slug][0]\n}": CASE_STUDY_QUERYResult;
-    "*[_type == \"caseStudy\"]{\n  slug\n}": CASE_STUDIES_QUERY_WITH_SLUGSResult;
+    "{\n  \"contactPage\": *[_type == \"contactPage\"][0] {\n    ...,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    }\n  }\n}": CONTACT_PAGE_QUERYResult;
+    "{\n  \"aboutPage\": *[_type == \"aboutPage\"][0] {\n    ...,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    },\n    team {\n      ...,\n      teamMembers[]->\n    },\n    approachSection {\n      ...,\n      approachItems[]->\n    },\n    visionSection {\n      ...,\n      visionItems[]->\n    },\n  }\n}": ABOUT_PAGE_QUERYResult;
+    "{\n  \"careersPage\": *[_type == \"careersPage\"][0] {\n    ...,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    },\n    openPositions[]->\n  }\n}": CAREERS_PAGE_QUERYResult;
+    "{\n  \"currentService\": *[_type == \"service\" && slug.current == $slug][0] {\n    ...,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    },\n    _updatedAt\n  }\n}": SERVICE_QUERYResult;
+    "{\n  \"caseStudy\": *[_type == \"caseStudy\" && slug.current == $slug][0] {\n    ...,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    },\n    _updatedAt\n  }\n}": CASE_STUDY_QUERYResult;
+    "*[_type == \"caseStudy\"]{\n  slug,\n  _updatedAt\n}": CASE_STUDIES_QUERY_WITH_SLUGSResult;
     "*[_type == \"caseStudy\"] {\n  mainInfo {\n    title,\n    featuredImage {\n    ...,\n    alt\n    },\n  },\n  \"slug\": slug.current,\n}": CASE_STUDIES_QUERYResult;
-    "{\n  \"privacyPolicy\": *[_type == \"privacyPolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content\n  }\n}": PRIVACY_POLICY_QUERYResult;
-    "{\n  \"cookiePolicy\": *[_type == \"cookiePolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content\n  }\n}": COOKIE_POLICY_QUERYResult;
-    "{\n  \"termsOfUse\": *[_type == \"termsOfUse\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content\n  }\n}": TERMS_OF_USE_QUERYResult;
+    "{\n  \"privacyPolicy\": *[_type == \"privacyPolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    }\n  }\n}": PRIVACY_POLICY_QUERYResult;
+    "{\n  \"cookiePolicy\": *[_type == \"cookiePolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    }\n  }\n}": COOKIE_POLICY_QUERYResult;
+    "{\n  \"termsOfUse\": *[_type == \"termsOfUse\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    introContent,\n    content,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    }\n  }\n}": TERMS_OF_USE_QUERYResult;
   }
 }

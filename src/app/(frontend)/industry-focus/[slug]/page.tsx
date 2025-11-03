@@ -14,12 +14,35 @@ import { cn } from '@/lib/utils';
 import BreakSection from '@/components/sections/break-section';
 import { AnimateInView } from '@/components/animate-in-view';
 import React from 'react';
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/metadata';
 
 export async function generateStaticParams() {
   const services = await getAllServicesWithSlugs();
   return services.map((service: { slug: { current: string } }) => ({
     slug: service.slug.current,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const { currentService } = await getServiceData(slug);
+
+  if (!currentService) {
+    return {};
+  }
+
+  return generatePageMetadata({
+    title: currentService.seo?.metaTitle || currentService.title,
+    description: currentService.seo?.metaDescription || currentService.excerpt,
+    image: currentService.seo?.ogImage as SanityImageSource,
+    seo: currentService.seo,
+    path: `/industry-focus/${slug}`,
+  });
 }
 
 export default async function IndustryFocusPage({

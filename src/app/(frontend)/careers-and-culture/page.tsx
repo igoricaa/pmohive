@@ -3,6 +3,26 @@ import OpenPositionsSection from '@/components/sections/careers/open-positions-s
 import { getCareersPageData } from '@/sanity/lib/queries';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/metadata';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { careersPage } = await getCareersPageData();
+
+  if (!careersPage) {
+    return {};
+  }
+
+  return generatePageMetadata({
+    title: careersPage.seo?.metaTitle || 'Careers & Culture',
+    description:
+      careersPage.seo?.metaDescription ||
+      `Join the PMO Hive team. Explore open positions: ${careersPage.openPositions?.map((p) => p.title).join(', ') || 'Check back for opportunities'}.`,
+    image: careersPage.seo?.ogImage as SanityImageSource,
+    seo: careersPage.seo,
+    path: '/careers-and-culture',
+  });
+}
 
 export default async function CareersAndCulturePage() {
   const [careersPageResult] = await Promise.all([getCareersPageData()]);

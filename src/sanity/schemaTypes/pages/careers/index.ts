@@ -8,6 +8,11 @@ export const careersPageType = defineType({
   icon: InfoIcon,
   groups: [
     {
+      name: 'seo',
+      title: 'SEO & Meta',
+      icon: InfoIcon,
+    },
+    {
       name: 'hero',
       title: 'Hero',
       icon: InfoIcon,
@@ -20,6 +25,13 @@ export const careersPageType = defineType({
     },
   ],
   fields: [
+    defineField({
+      name: 'seo',
+      title: 'SEO & Meta Tags',
+      type: 'seo',
+      description: 'SEO settings for the Careers page.',
+      group: 'seo',
+    }),
     defineField({
       name: 'title',
       title: 'Page Title',

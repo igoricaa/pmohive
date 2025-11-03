@@ -18,6 +18,10 @@ import {
 import { cn } from '@/lib/utils';
 import ScrollMeter from '@/components/scroll-meter';
 import { AnimateInView } from '@/components/animate-in-view';
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/metadata';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import ArticleSchema from '@/components/structured-data/article-schema';
 
 export async function generateStaticParams() {
   const posts = await getAllPostsWithSlugs();
@@ -25,6 +29,34 @@ export async function generateStaticParams() {
   return posts.map((post: { slug: { current: string } }) => ({
     slug: post.slug.current,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const { currentPost } = await getPostData(slug);
+
+  if (!currentPost) {
+    return {};
+  }
+
+  return generatePageMetadata({
+    title: currentPost.seo?.metaTitle || currentPost.title,
+    description:
+      currentPost.seo?.metaDescription ||
+      currentPost.excerpt ||
+      currentPost.content,
+    image: currentPost.seo?.ogImage as SanityImageSource,
+    seo: currentPost.seo,
+    type: 'article',
+    publishedTime: currentPost.date,
+    modifiedTime: currentPost._updatedAt,
+    author: 'PMO Hive',
+    path: `/blog/${slug}`,
+  });
 }
 
 export default async function BlogPostPage({
@@ -42,8 +74,19 @@ export default async function BlogPostPage({
   }
 
   return (
-    <main className='pb-10 sm:pb-16 xl:pb-35 pt-28 sm:pt-34 lg:pt-40'>
-      <ScrollMeter />
+    <>
+      {/* Article Schema for SEO */}
+      <ArticleSchema
+        title={currentPost.title}
+        description={currentPost.excerpt}
+        publishedTime={currentPost.date}
+        modifiedTime={currentPost._updatedAt}
+        image={currentPost.featuredMedia}
+        slug={slug}
+      />
+
+      <main className='pb-10 sm:pb-16 xl:pb-35 pt-28 sm:pt-34 lg:pt-40'>
+        <ScrollMeter />
       <div className='relative px-side'>
         <div className='absolute inset-0 bg-gradient-to-b from-transparent from-0% to-black/65'></div>
         <Image
@@ -155,5 +198,6 @@ export default async function BlogPostPage({
         </section>
       </div>
     </main>
+    </>
   );
 }

@@ -5,6 +5,25 @@ import { PortableTextBlock } from 'next-sanity';
 import { notFound } from 'next/navigation';
 import { ContactForm } from '@/components/contact-form';
 import { GoogleMap } from '@/components/google-map';
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/metadata';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { contactPage } = await getContactPageData();
+
+  if (!contactPage) {
+    return {};
+  }
+
+  return generatePageMetadata({
+    title: contactPage.seo?.metaTitle || 'Contact Us',
+    description: contactPage.seo?.metaDescription || contactPage.description,
+    image: contactPage.seo?.ogImage as SanityImageSource,
+    seo: contactPage.seo,
+    path: '/contact-us',
+  });
+}
 
 export default async function ContactPage() {
   const [{ contactPage: contactPageData }, { generalInfo: generalInfoData }] =

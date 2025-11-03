@@ -23,6 +23,19 @@ import {
 export const HOME_PAGE_QUERY = defineQuery(`{
     "homePage": *[_type == "homePage"][0] {
       ...,
+      seo {
+        metaTitle,
+        metaDescription,
+        ogTitle,
+        ogDescription,
+        ogImage {
+          ...,
+          alt
+        },
+        keywords,
+        canonicalUrl,
+        noIndex
+      },
       team {
         ...,
         teamMembers[]->
@@ -65,7 +78,48 @@ export const LATEST_POSTS_QUERY =
 }`);
 
 export const GENERAL_INFO_QUERY = defineQuery(`{
-  "generalInfo": *[_type == "generalInfo"][0],
+  "generalInfo": *[_type == "generalInfo"][0] {
+    logoFull {
+      ...,
+      alt
+    },
+    logoMark {
+      ...,
+      alt
+    },
+    email,
+    phone,
+    googleMapCoordinates,
+    socials[] {
+      _key,
+      title,
+      url,
+      icon {
+        ...,
+        alt
+      }
+    },
+    companyName,
+    description,
+    address {
+      streetAddress,
+      addressLocality,
+      addressRegion,
+      postalCode,
+      addressCountry
+    },
+    businessHours {
+      openingTime,
+      closingTime,
+      daysOfWeek
+    },
+    priceRange,
+    businessType,
+    officeImage {
+      ...,
+      alt
+    }
+  }
 }`);
 
 export const getGeneralInfoData =
@@ -150,6 +204,7 @@ export async function getAllPostCategories() {
 export const POST_QUERY = defineQuery(`{
   "currentPost": *[_type == "post" && slug.current == $slug][0]{
     _id,
+    _updatedAt,
     title,
     subtitle {
       text,
@@ -160,9 +215,22 @@ export const POST_QUERY = defineQuery(`{
     content,
     excerpt,
     featuredMedia,
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      ogImage {
+        ...,
+        alt
+      },
+      keywords,
+      canonicalUrl,
+      noIndex
+    }
   },
   "relatedPosts": *[
-    _type == "post" 
+    _type == "post"
     && slug.current != $slug
   ] | order(date desc)[0...3]{
     _id,
@@ -183,7 +251,9 @@ export const getPostData = async (slug: string): Promise<POST_QUERYResult> => {
 };
 
 export const POSTS_QUERY_WITH_SLUGS = defineQuery(`*[_type == "post"]{
-  slug
+  slug,
+  _updatedAt,
+  date
 }`);
 
 export const SERVICES_QUERY = defineQuery(`*[_type == "service"]`);
@@ -196,7 +266,8 @@ export async function getAllServices(): Promise<SERVICES_QUERYResult> {
 }
 
 export const SERVICES_QUERY_WITH_SLUGS = defineQuery(`*[_type == "service"]{
-  slug
+  slug,
+  _updatedAt
 }`);
 
 export async function getAllServicesWithSlugs(): Promise<SERVICES_QUERY_WITH_SLUGSResult> {
@@ -227,7 +298,22 @@ export async function getAllPostsWithSlugs() {
 }
 
 export const CONTACT_PAGE_QUERY = defineQuery(`{
-  "contactPage": *[_type == "contactPage"][0]
+  "contactPage": *[_type == "contactPage"][0] {
+    ...,
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      ogImage {
+        ...,
+        alt
+      },
+      keywords,
+      canonicalUrl,
+      noIndex
+    }
+  }
 }`);
 
 export const getContactPageData =
@@ -241,6 +327,19 @@ export const getContactPageData =
 export const ABOUT_PAGE_QUERY = defineQuery(`{
   "aboutPage": *[_type == "aboutPage"][0] {
     ...,
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      ogImage {
+        ...,
+        alt
+      },
+      keywords,
+      canonicalUrl,
+      noIndex
+    },
     team {
       ...,
       teamMembers[]->
@@ -266,6 +365,19 @@ export const getAboutPageData = async (): Promise<ABOUT_PAGE_QUERYResult> => {
 export const CAREERS_PAGE_QUERY = defineQuery(`{
   "careersPage": *[_type == "careersPage"][0] {
     ...,
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      ogImage {
+        ...,
+        alt
+      },
+      keywords,
+      canonicalUrl,
+      noIndex
+    },
     openPositions[]->
   }
 }`);
@@ -279,7 +391,23 @@ export const getCareersPageData =
   };
 
 export const SERVICE_QUERY = defineQuery(`{
-  "currentService": *[_type == "service" && slug.current == $slug][0]
+  "currentService": *[_type == "service" && slug.current == $slug][0] {
+    ...,
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      ogImage {
+        ...,
+        alt
+      },
+      keywords,
+      canonicalUrl,
+      noIndex
+    },
+    _updatedAt
+  }
 }`);
 
 export const getServiceData = async (
@@ -293,7 +421,23 @@ export const getServiceData = async (
 };
 
 export const CASE_STUDY_QUERY = defineQuery(`{
-  "caseStudy": *[_type == "caseStudy" && slug.current == $slug][0]
+  "caseStudy": *[_type == "caseStudy" && slug.current == $slug][0] {
+    ...,
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      ogImage {
+        ...,
+        alt
+      },
+      keywords,
+      canonicalUrl,
+      noIndex
+    },
+    _updatedAt
+  }
 }`);
 
 export const getCaseStudyData = async (
@@ -308,7 +452,8 @@ export const getCaseStudyData = async (
 
 export const CASE_STUDIES_QUERY_WITH_SLUGS =
   defineQuery(`*[_type == "caseStudy"]{
-  slug
+  slug,
+  _updatedAt
 }`);
 
 export const getAllCaseStudiesWithSlugs =
@@ -345,7 +490,20 @@ export const PRIVACY_POLICY_QUERY = defineQuery(`{
     version,
     termlyEmbedUrl,
     introContent,
-    content
+    content,
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      ogImage {
+        ...,
+        alt
+      },
+      keywords,
+      canonicalUrl,
+      noIndex
+    }
   }
 }`);
 
@@ -365,7 +523,20 @@ export const COOKIE_POLICY_QUERY = defineQuery(`{
     version,
     termlyEmbedUrl,
     introContent,
-    content
+    content,
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      ogImage {
+        ...,
+        alt
+      },
+      keywords,
+      canonicalUrl,
+      noIndex
+    }
   }
 }`);
 
@@ -385,7 +556,20 @@ export const TERMS_OF_USE_QUERY = defineQuery(`{
     version,
     termlyEmbedUrl,
     introContent,
-    content
+    content,
+    seo {
+      metaTitle,
+      metaDescription,
+      ogTitle,
+      ogDescription,
+      ogImage {
+        ...,
+        alt
+      },
+      keywords,
+      canonicalUrl,
+      noIndex
+    }
   }
 }`);
 

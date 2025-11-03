@@ -37,35 +37,48 @@ import {
   spacerBlockType,
   dividerBlockType,
 } from './case-study';
+import { seoType } from './seoType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
+    // Core types
+    seoType,
     generalInfoType,
+
+    // Pages
     homePageType,
     aboutPageType,
     contactPageType,
     privacyPolicyType,
     cookiePolicyType,
     termsOfUseType,
+    careersPageType,
+
+    // Sections
     aboutSectionType,
     heroSectionType,
     breakSectionType,
     teamSectionType,
     blogSectionType,
-    teamMemberType,
+    introSectionType,
+    approachSectionType,
+    visionSectionType,
+
+    // Content types
     serviceType,
     projectType,
     postType,
     postCategoryType,
+    caseStudyType,
+    teamMemberType,
+    openPositionType,
+
+    // Reusable types
     blockContentType,
     subtitleType,
     buttonType,
-    introSectionType,
-    approachSectionType,
-    visionSectionType,
-    openPositionType,
-    careersPageType,
-    caseStudyType,
+
+    // Case study blocks
     headingBlockType,
     headingTextBlockType,
     textareaBlockType,

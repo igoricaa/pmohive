@@ -8,6 +8,11 @@ export const aboutPageType = defineType({
   icon: InfoIcon,
   groups: [
     {
+      name: 'seo',
+      title: 'SEO & Meta',
+      icon: InfoIcon,
+    },
+    {
       name: 'hero',
       title: 'Hero',
       icon: InfoIcon,
@@ -20,6 +25,13 @@ export const aboutPageType = defineType({
     },
   ],
   fields: [
+    defineField({
+      name: 'seo',
+      title: 'SEO & Meta Tags',
+      type: 'seo',
+      description: 'SEO settings for the About Us page.',
+      group: 'seo',
+    }),
     defineField({
       name: 'title',
       title: 'Page Title',

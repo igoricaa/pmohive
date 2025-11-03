@@ -10,6 +10,24 @@ import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { PortableTextBlock } from 'next-sanity';
 import { notFound } from 'next/navigation';
 import SplitSection from '@/components/sections/split-section';
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/metadata';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { aboutPage } = await getAboutPageData();
+
+  if (!aboutPage) {
+    return {};
+  }
+
+  return generatePageMetadata({
+    title: aboutPage.seo?.metaTitle || 'About Us',
+    description: aboutPage.seo?.metaDescription || aboutPage.animatedTextPart1,
+    image: aboutPage.seo?.ogImage as SanityImageSource,
+    seo: aboutPage.seo,
+    path: '/about-us',
+  });
+}
 
 export default async function AboutUsPage() {
   const [aboutPageResult, latestPostsResult] = await Promise.all([

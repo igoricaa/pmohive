@@ -8,6 +8,12 @@ export const contactPageType = defineType({
   icon: MailIcon,
   fields: [
     defineField({
+      name: 'seo',
+      title: 'SEO & Meta Tags',
+      type: 'seo',
+      description: 'SEO settings for the Contact page.',
+    }),
+    defineField({
       name: 'subtitle',
       title: 'Subtitle',
       type: 'subtitle',

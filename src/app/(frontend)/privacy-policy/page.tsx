@@ -3,11 +3,28 @@ import Heading from '@/components/ui/heading';
 import { getPrivacyPolicyData } from '@/sanity/lib/queries';
 import { PortableTextBlock } from 'next-sanity';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/metadata';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { BlockContent } from '../../../../sanity.types';
 
-export const metadata = {
-  title: 'Privacy Policy | PMO Hive',
-  description: 'Our privacy policy and data protection information',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { privacyPolicy } = await getPrivacyPolicyData();
+
+  if (!privacyPolicy) {
+    return {};
+  }
+
+  return generatePageMetadata({
+    title: privacyPolicy.seo?.metaTitle || 'Privacy Policy',
+    description:
+      (privacyPolicy.seo?.metaDescription as string) ||
+      (privacyPolicy.introContent as BlockContent),
+    image: privacyPolicy.seo?.ogImage as SanityImageSource,
+    seo: privacyPolicy.seo,
+    path: '/privacy-policy',
+  });
+}
 
 export default async function PrivacyPolicyPage() {
   const data = await getPrivacyPolicyData();

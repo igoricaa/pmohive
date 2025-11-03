@@ -1,5 +1,16 @@
 import { ProjectsListComponent } from '@/components/sections/projects-list-component';
 import { getAllCaseStudies } from '@/sanity/lib/queries';
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/metadata';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return generatePageMetadata({
+    title: 'Our Projects - PMO Hive',
+    description:
+      'Explore PMO Hive case studies showcasing successful project management implementations, organizational transformations, and strategic PMO solutions across various industries.',
+    path: '/projects',
+  });
+}
 
 export default async function ProjectsPage() {
   const projects = await getAllCaseStudies();

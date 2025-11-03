@@ -12,6 +12,11 @@ export const homePageType = defineType({
   icon: HomeIcon,
   groups: [
     {
+      name: 'seo',
+      title: 'SEO & Meta',
+      icon: HomeIcon,
+    },
+    {
       name: 'hero',
       title: 'Hero',
       icon: HomeIcon,
@@ -24,6 +29,14 @@ export const homePageType = defineType({
     },
   ],
   fields: [
+    defineField({
+      name: 'seo',
+      title: 'SEO & Meta Tags',
+      type: 'seo',
+      description:
+        'SEO settings for search engines and social media sharing. Fill these out to optimize homepage visibility.',
+      group: 'seo',
+    }),
     defineField({
       name: 'title',
       title: 'Page Title',

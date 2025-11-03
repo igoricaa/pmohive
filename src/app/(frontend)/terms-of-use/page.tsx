@@ -3,11 +3,28 @@ import Heading from '@/components/ui/heading';
 import { getTermsOfUseData } from '@/sanity/lib/queries';
 import { PortableTextBlock } from 'next-sanity';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/metadata';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { BlockContent } from '../../../../sanity.types';
 
-export const metadata = {
-  title: 'Terms of Use | PMO Hive',
-  description: 'Terms and conditions for using our website',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { termsOfUse } = await getTermsOfUseData();
+
+  if (!termsOfUse) {
+    return {};
+  }
+
+  return generatePageMetadata({
+    title: termsOfUse.seo?.metaTitle || 'Terms of Use',
+    description:
+      termsOfUse.seo?.metaDescription ||
+      (termsOfUse.introContent as BlockContent),
+    image: termsOfUse.seo?.ogImage as SanityImageSource,
+    seo: termsOfUse.seo,
+    path: '/terms-of-use',
+  });
+}
 
 export default async function TermsOfUsePage() {
   const data = await getTermsOfUseData();

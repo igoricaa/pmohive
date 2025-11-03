@@ -8,6 +8,13 @@ export const serviceType = defineType({
   icon: BriefcaseIcon,
   fields: [
     defineField({
+      name: 'seo',
+      title: 'SEO & Meta Tags',
+      type: 'seo',
+      description:
+        'SEO settings for this service page. Optimize to attract clients searching for this service.',
+    }),
+    defineField({
       name: 'title',
       title: 'Title',
       type: 'string',

@@ -26,7 +26,11 @@ export default async function Header() {
     <StickyHeaderWrapper
       topBar={<TopBar phone={phone} email={email} />}
       mainBar={
-        <MainBar logoFull={logoFull} socials={socials} routes={routes} />
+        <MainBar
+          logoFull={logoFull}
+          socials={socials ?? undefined}
+          routes={routes}
+        />
       }
     />
   );

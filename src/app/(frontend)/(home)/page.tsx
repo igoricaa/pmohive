@@ -8,6 +8,24 @@ import BlogSection from '@/components/sections/home/blog-section';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import BreakSection from '@/components/sections/break-section';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/metadata';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { homePage } = await getHomePageData();
+
+  if (!homePage) {
+    return {};
+  }
+
+  return generatePageMetadata({
+    title: homePage.seo?.metaTitle || homePage.hero?.heading || 'PMO Hive',
+    description: homePage.seo?.metaDescription || homePage.hero?.description,
+    image: homePage.seo?.ogImage as SanityImageSource,
+    seo: homePage.seo,
+    path: '/',
+  });
+}
 
 export default async function Home() {
   const [homePageResult, latestPostsResult] = await Promise.all([

@@ -8,6 +8,13 @@ export const caseStudyType = defineType({
   icon: Briefcase,
   fields: [
     defineField({
+      name: 'seo',
+      title: 'SEO & Meta Tags',
+      type: 'seo',
+      description:
+        'SEO settings for this case study. Helps potential clients discover your work through search engines.',
+    }),
+    defineField({
       name: 'mainInfo',
       title: 'Main Info',
       type: 'object',

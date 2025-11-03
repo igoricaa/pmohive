@@ -3,11 +3,28 @@ import Heading from '@/components/ui/heading';
 import { getCookiePolicyData } from '@/sanity/lib/queries';
 import { PortableTextBlock } from 'next-sanity';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/metadata';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
-export const metadata = {
-  title: 'Cookie Policy | PMO Hive',
-  description: 'Our cookie policy and tracking information',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { cookiePolicy } = await getCookiePolicyData();
+
+  if (!cookiePolicy) {
+    return {};
+  }
+
+  return generatePageMetadata({
+    title: cookiePolicy.seo?.metaTitle || 'Cookie Policy',
+    description:
+      cookiePolicy.seo?.metaDescription ||
+      cookiePolicy.introContent ||
+      cookiePolicy.content,
+    image: cookiePolicy.seo?.ogImage as SanityImageSource,
+    seo: cookiePolicy.seo,
+    path: '/cookie-policy',
+  });
+}
 
 export default async function CookiePolicyPage() {
   const data = await getCookiePolicyData();

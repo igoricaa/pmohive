@@ -8,6 +8,13 @@ export const cookiePolicyType = defineType({
   icon: CookieIcon,
   fields: [
     defineField({
+      name: 'seo',
+      title: 'SEO & Meta Tags',
+      type: 'seo',
+      description:
+        'SEO settings for the Cookie Policy page. Tip: Enable "Hide from Search Engines" to prevent indexing.',
+    }),
+    defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
