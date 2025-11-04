@@ -84,19 +84,6 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
             ])
         ),
       S.listItem()
-        .title('Projects')
-        .icon(FolderKanbanIcon)
-        .child(
-          S.list()
-            .title('Projects')
-            .items([
-              S.listItem()
-                .title('Projects')
-                .icon(FolderKanbanIcon)
-                .child(S.documentTypeList('project').title('Projects')),
-            ])
-        ),
-      S.listItem()
         .title('Case Studies')
         .icon(BriefcaseIcon)
         .child(
@@ -186,7 +173,6 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
             'careersPage',
             'post',
             'service',
-            'project',
             'teamMember',
             'generalInfo',
             'postCategory',

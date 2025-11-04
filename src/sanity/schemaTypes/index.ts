@@ -16,7 +16,6 @@ import { blockContentType } from './blockContentType';
 import { teamMemberType } from './teamMemberType';
 import { subtitleType } from './subtitleType';
 import { serviceType } from './services';
-import { projectType } from './projectType';
 import { generalInfoType } from './generalInfoType';
 import { buttonType } from './buttonType';
 import { aboutPageType } from './pages/about-us';
@@ -66,7 +65,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
 
     // Content types
     serviceType,
-    projectType,
     postType,
     postCategoryType,
     caseStudyType,
