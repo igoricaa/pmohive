@@ -5,7 +5,7 @@ import { parseBody } from "next-sanity/webhook";
 // Webhook payload type from Sanity
 type WebhookPayload = {
 	_type: string;
-	slug?: { current: string };
+	slug?: string; // Comes as direct string from projection: "slug": slug.current
 	_id: string;
 };
 
@@ -16,7 +16,7 @@ const REVALIDATION_MAP: Record<string, (payload: WebhookPayload) => string[]> =
 			"post",
 			"posts",
 			"latestPosts",
-			...(payload.slug ? [`post-${payload.slug.current}`] : []),
+			...(payload.slug ? [`post-${payload.slug}`] : []),
 		],
 		postCategory: () => ["postCategory"],
 		homePage: () => ["home-page-data"],
@@ -24,12 +24,12 @@ const REVALIDATION_MAP: Record<string, (payload: WebhookPayload) => string[]> =
 		service: (payload) => [
 			"services",
 			"service",
-			...(payload.slug ? [`service-${payload.slug.current}`] : []),
+			...(payload.slug ? [`service-${payload.slug}`] : []),
 		],
 		caseStudy: (payload) => [
 			"caseStudies",
 			"caseStudy",
-			...(payload.slug ? [`caseStudy-${payload.slug.current}`] : []),
+			...(payload.slug ? [`caseStudy-${payload.slug}`] : []),
 		],
 		aboutPage: () => ["aboutPage"],
 		contactPage: () => ["contactPage"],
