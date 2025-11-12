@@ -416,7 +416,7 @@ export const getServiceData = async (
   return await sanityFetch({
     query: SERVICE_QUERY,
     params: { slug },
-    tags: ['service'],
+    tags: ['service', `service-${slug}`],
   });
 };
 
