@@ -6,6 +6,17 @@ export const privacyPolicyType = defineType({
   title: 'Privacy Policy',
   type: 'document',
   icon: ShieldCheckIcon,
+  groups: [
+    {
+      name: 'seo',
+      title: 'SEO',
+    },
+    {
+      name: 'content',
+      title: 'Content',
+      default: true,
+    },
+  ],
   fields: [
     defineField({
       name: 'seo',
@@ -13,12 +24,14 @@ export const privacyPolicyType = defineType({
       type: 'seo',
       description:
         'SEO settings for the Privacy Policy page. Tip: Enable "Hide from Search Engines" to prevent indexing.',
+      group: 'seo',
     }),
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
       validation: (rule) => rule.required().error('Title is required'),
+      group: 'content',
     }),
     defineField({
       name: 'slug',
@@ -29,12 +42,14 @@ export const privacyPolicyType = defineType({
         maxLength: 96,
       },
       validation: (rule) => rule.required().error('Slug is required'),
+      group: 'content',
     }),
     defineField({
       name: 'lastUpdated',
       title: 'Last Updated',
       type: 'datetime',
       validation: (rule) => rule.required().error('Last updated date is required'),
+      group: 'content',
     }),
     defineField({
       name: 'version',
@@ -42,24 +57,28 @@ export const privacyPolicyType = defineType({
       type: 'string',
       description: 'E.g., "1.0", "2.1"',
       validation: (rule) => rule.required().error('Version is required'),
+      group: 'content',
     }),
     defineField({
       name: 'termlyEmbedUrl',
       title: 'Termly Embed URL',
       type: 'url',
       description: 'Optional: Embed URL from Termly if using their hosted policy',
+      group: 'content',
     }),
     defineField({
       name: 'introContent',
       title: 'Introduction',
       type: 'blockContent',
       description: 'Optional brief introduction before the main policy content',
+      group: 'content',
     }),
     defineField({
       name: 'content',
       title: 'Policy Content',
       type: 'blockContent',
       validation: (rule) => rule.required().error('Policy content is required'),
+      group: 'content',
     }),
   ],
   preview: {

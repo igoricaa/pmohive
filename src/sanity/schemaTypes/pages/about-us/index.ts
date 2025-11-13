@@ -40,6 +40,7 @@ export const aboutPageType = defineType({
         'Internal title for the about page (not displayed on frontend)',
       initialValue: 'About Page',
       validation: (rule) => rule.required().error('Page title is required'),
+      group: 'hero',
     }),
     defineField({
       name: 'introSection',
@@ -47,6 +48,7 @@ export const aboutPageType = defineType({
       type: 'introSection',
       description: 'Main intro section at the top of the page',
       validation: (rule) => rule.required().error('Intro section is required'),
+      group: 'hero',
     }),
 
     defineField({
@@ -56,6 +58,7 @@ export const aboutPageType = defineType({
       description: 'Section animated text part 1',
       validation: (rule) =>
         rule.required().error('Animated text part 1 is required'),
+      group: 'content',
     }),
 
     defineField({
@@ -65,6 +68,7 @@ export const aboutPageType = defineType({
       description: 'Section animated text part 2',
       validation: (rule) =>
         rule.required().error('Animated text part 2 is required'),
+      group: 'content',
     }),
     defineField({
       name: 'break',
@@ -73,6 +77,7 @@ export const aboutPageType = defineType({
       description:
         'Break section with background image and call-to-action buttons',
       validation: (rule) => rule.required().error('Break section is required'),
+      group: 'content',
     }),
     defineField({
       name: 'team',
@@ -80,6 +85,7 @@ export const aboutPageType = defineType({
       type: 'teamSection',
       description: 'Team section with team members',
       validation: (rule) => rule.required().error('Team section is required'),
+      group: 'content',
     }),
     defineField({
       name: 'approachSection',
@@ -88,6 +94,7 @@ export const aboutPageType = defineType({
       description: 'Approach section with subtitle, heading and items',
       validation: (rule) =>
         rule.required().error('Approach section is required'),
+      group: 'content',
     }),
     defineField({
       name: 'visionSection',
@@ -96,6 +103,7 @@ export const aboutPageType = defineType({
       description:
         'Vision section with subtitle, description and background image',
       validation: (rule) => rule.required().error('Vision section is required'),
+      group: 'content',
     }),
     defineField({
       name: 'blog',
@@ -103,6 +111,7 @@ export const aboutPageType = defineType({
       type: 'blogSection',
       description: 'Blog section with subtitle, heading and description',
       validation: (rule) => rule.required().error('Blog section is required'),
+      group: 'content',
     }),
   ],
   preview: {

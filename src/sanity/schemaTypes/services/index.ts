@@ -6,6 +6,17 @@ export const serviceType = defineType({
   title: 'Service',
   type: 'document',
   icon: BriefcaseIcon,
+  groups: [
+    {
+      name: 'seo',
+      title: 'SEO',
+    },
+    {
+      name: 'content',
+      title: 'Content',
+      default: true,
+    },
+  ],
   fields: [
     defineField({
       name: 'seo',
@@ -13,6 +24,7 @@ export const serviceType = defineType({
       type: 'seo',
       description:
         'SEO settings for this service page. Optimize to attract clients searching for this service.',
+      group: 'seo',
     }),
     defineField({
       name: 'title',
@@ -20,6 +32,7 @@ export const serviceType = defineType({
       type: 'string',
       description: 'Service title',
       validation: (rule) => rule.required().error('Title is required'),
+      group: 'content',
     }),
     defineField({
       name: 'slug',
@@ -37,6 +50,7 @@ export const serviceType = defineType({
             .replace(/^-+|-+$/g, ''),
       },
       validation: (rule) => rule.required().error('Slug is required'),
+      group: 'content',
     }),
     defineField({
       name: 'excerpt',
@@ -49,6 +63,7 @@ export const serviceType = defineType({
           .error('Excerpt is required')
           .max(190)
           .warning('Keep excerpt under 190 characters'),
+      group: 'content',
     }),
     defineField({
       name: 'header',
@@ -56,6 +71,7 @@ export const serviceType = defineType({
       type: 'object',
       description: 'Header section for the service',
       validation: (rule) => rule.required().error('Header section is required'),
+      group: 'content',
       fields: [
         defineField({
           name: 'featuredImage',
@@ -106,6 +122,7 @@ export const serviceType = defineType({
       name: 'challenge',
       title: 'Challenge',
       type: 'object',
+      group: 'content',
       fields: [
         defineField({
           name: 'subtitle',
@@ -157,6 +174,7 @@ export const serviceType = defineType({
       name: 'role',
       title: 'Role',
       type: 'object',
+      group: 'content',
       fields: [
         defineField({
           name: 'subtitle',
@@ -181,6 +199,7 @@ export const serviceType = defineType({
       name: 'approach',
       title: 'Approach',
       type: 'object',
+      group: 'content',
       fields: [
         defineField({
           name: 'subtitle',
@@ -229,11 +248,13 @@ export const serviceType = defineType({
       description: 'Highlighted text for the service',
       validation: (rule) =>
         rule.required().error('Highlighted text is required'),
+      group: 'content',
     }),
     defineField({
       name: 'infoSection',
       title: 'Info Section',
       type: 'object',
+      group: 'content',
       fields: [
         defineField({
           name: 'subtitle',
@@ -283,6 +304,7 @@ export const serviceType = defineType({
       name: 'proofPoint',
       title: 'Proof Points',
       type: 'object',
+      group: 'content',
       fields: [
         defineField({
           name: 'subtitle',
@@ -324,6 +346,7 @@ export const serviceType = defineType({
       type: 'breakSection',
       description: 'CTA section for the service',
       validation: (rule) => rule.required().error('CTA section is required'),
+      group: 'content',
     }),
   ],
   preview: {

@@ -6,6 +6,17 @@ export const caseStudyType = defineType({
   title: 'Case Study',
   type: 'document',
   icon: Briefcase,
+  groups: [
+    {
+      name: 'seo',
+      title: 'SEO',
+    },
+    {
+      name: 'content',
+      title: 'Content',
+      default: true,
+    },
+  ],
   fields: [
     defineField({
       name: 'seo',
@@ -13,12 +24,14 @@ export const caseStudyType = defineType({
       type: 'seo',
       description:
         'SEO settings for this case study. Helps potential clients discover your work through search engines.',
+      group: 'seo',
     }),
     defineField({
       name: 'mainInfo',
       title: 'Main Info',
       type: 'object',
       description: 'Core information about the case study',
+      group: 'content',
       fields: [
         defineField({
           name: 'title',
@@ -79,12 +92,14 @@ export const caseStudyType = defineType({
             .replace(/^-+|-+$/g, ''),
       },
       validation: (rule) => rule.required().error('Slug is required'),
+      group: 'content',
     }),
     defineField({
       name: 'content',
       title: 'Content',
       type: 'array',
       description: 'Modular content blocks for the case study',
+      group: 'content',
       of: [
         defineArrayMember({ type: 'headingBlock' }),
         defineArrayMember({ type: 'headingTextBlock' }),
@@ -101,6 +116,7 @@ export const caseStudyType = defineType({
       type: 'blogSection',
       description: 'Blog section with subtitle, heading and description',
       validation: (rule) => rule.required().error('Blog section is required'),
+      group: 'content',
     }),
   ],
   preview: {

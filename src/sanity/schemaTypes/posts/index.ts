@@ -4,6 +4,17 @@ export const postType = defineType({
   name: 'post',
   title: 'Post',
   type: 'document',
+  groups: [
+    {
+      name: 'seo',
+      title: 'SEO',
+    },
+    {
+      name: 'content',
+      title: 'Content',
+      default: true,
+    },
+  ],
   fields: [
     defineField({
       name: 'seo',
@@ -11,15 +22,18 @@ export const postType = defineType({
       type: 'seo',
       description:
         'SEO settings for this blog post. Optimized metadata improves search visibility and social sharing.',
+      group: 'seo',
     }),
     defineField({
       name: 'subtitle',
       type: 'subtitle',
+      group: 'content',
     }),
     defineField({
       name: 'title',
       type: 'string',
       validation: (rule) => rule.required(),
+      group: 'content',
     }),
     defineField({
       name: 'slug',
@@ -35,6 +49,7 @@ export const postType = defineType({
             .replace(/^-+|-+$/g, ''),
       },
       validation: (rule) => rule.required(),
+      group: 'content',
     }),
     defineField({
       name: 'category',
@@ -42,6 +57,7 @@ export const postType = defineType({
       type: 'reference',
       to: [{ type: 'postCategory' }],
       validation: (rule) => rule.required(),
+      group: 'content',
     }),
     defineField({
       name: 'date',
@@ -50,15 +66,18 @@ export const postType = defineType({
         dateFormat: 'DD.MM.YYYY',
       },
       validation: (rule) => rule.required(),
+      group: 'content',
     }),
     defineField({
       name: 'content',
       type: 'blockContent',
       validation: (rule) => rule.required(),
+      group: 'content',
     }),
     defineField({
       name: 'excerpt',
       type: 'blockContent',
+      group: 'content',
     }),
     defineField({
       name: 'featuredMedia',
@@ -78,6 +97,7 @@ export const postType = defineType({
         },
       ],
       validation: (rule) => rule.required(),
+      group: 'content',
     }),
   ],
   preview: {

@@ -6,12 +6,24 @@ export const contactPageType = defineType({
   title: 'Contact Page',
   type: 'document',
   icon: MailIcon,
+  groups: [
+    {
+      name: 'seo',
+      title: 'SEO',
+    },
+    {
+      name: 'content',
+      title: 'Content',
+      default: true,
+    },
+  ],
   fields: [
     defineField({
       name: 'seo',
       title: 'SEO & Meta Tags',
       type: 'seo',
       description: 'SEO settings for the Contact page.',
+      group: 'seo',
     }),
     defineField({
       name: 'subtitle',
@@ -19,6 +31,7 @@ export const contactPageType = defineType({
       type: 'subtitle',
       description: 'Subtitle with optional highlighted text',
       validation: (rule) => rule.required().error('Subtitle is required'),
+      group: 'content',
     }),
     defineField({
       name: 'heading',
@@ -26,6 +39,7 @@ export const contactPageType = defineType({
       type: 'string',
       description: 'Main heading for the contact page',
       validation: (rule) => rule.required().error('Heading is required'),
+      group: 'content',
     }),
     defineField({
       name: 'description',
@@ -33,6 +47,7 @@ export const contactPageType = defineType({
       type: 'blockContent',
       description: 'Rich text description for the contact page',
       validation: (rule) => rule.required().error('Description is required'),
+      group: 'content',
     }),
   ],
   preview: {
