@@ -45,7 +45,7 @@ const BreakSection = ({
             fill
             sizes='100vw'
             quality={85}
-            className='w-full h-full object-cover'
+            className='w-full h-full object-cover object-[50%_15%]'
           />
           <div className='absolute inset-0 bg-gradient-to-b from-transparent from-0% to-black'></div>
         </div>

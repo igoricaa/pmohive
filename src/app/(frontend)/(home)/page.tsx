@@ -1,4 +1,8 @@
-import { getHomePageData, getLatestPosts } from '@/sanity/lib/queries';
+import {
+  getHomePageData,
+  getHomeServices,
+  getLatestPosts,
+} from '@/sanity/lib/queries';
 import HeroSection from '@/components/sections/home/hero-section';
 import AboutSection from '@/components/sections/home/about-section';
 import { Stat } from '@/lib/types';
@@ -28,10 +32,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const [homePageResult, latestPostsResult] = await Promise.all([
-    getHomePageData(),
-    getLatestPosts(12),
-  ]);
+  const [homePageResult, servicesResult, latestPostsResult] = await Promise.all(
+    [getHomePageData(), getHomeServices(), getLatestPosts(12)]
+  );
 
   const { homePage: homePageData } = homePageResult;
 
@@ -55,18 +58,20 @@ export default async function Home() {
       <AboutSection
         heading={homePageData.about.heading}
         animatedText={homePageData.about.animatedText}
-        serviceItems={homePageData.about.services.map((item) => ({
-          subtitle: {
-            text: item.header.subtitle.text,
-            highlightedText: item.header.subtitle.highlightedText || null,
-          },
-          heading: item.header.heading,
-          slug: item.slug,
-          excerpt: item.excerpt,
-          image: item.header.featuredImage as SanityImageSource & {
-            alt: string;
-          },
-        }))}
+        serviceItems={
+          servicesResult?.map((item) => ({
+            subtitle: {
+              text: item.header.subtitle.text,
+              highlightedText: item.header.subtitle.highlightedText || null,
+            },
+            heading: item.header.heading,
+            slug: item.slug,
+            excerpt: item.excerpt,
+            image: item.header.featuredImage as SanityImageSource & {
+              alt: string;
+            },
+          })) || []
+        }
         stats={homePageData.about.stats as Stat[]}
         wrapUpText={homePageData.about.wrapUpText}
         weAreSection={homePageData.about.weAreSection}

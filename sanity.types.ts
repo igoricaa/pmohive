@@ -1075,7 +1075,7 @@ export type AllSanitySchemaTypes = DividerBlock | SpacerBlock | TextGridItem | T
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
-// Query: {    "homePage": *[_type == "homePage"][0] {      ...,      seo {        metaTitle,        metaDescription,        ogTitle,        ogDescription,        ogImage {          ...,          alt        },        keywords,        canonicalUrl,        noIndex      },      team {        ...,        teamMembers[]->      },      about {        ...,        services[]-> {          header {            subtitle {              text,              highlightedText            },            heading,            featuredImage {              ...,              alt            }          },          "slug": slug.current,          excerpt,        }      }    }  }
+// Query: {    "homePage": *[_type == "homePage"][0] {      ...,      seo {        metaTitle,        metaDescription,        ogTitle,        ogDescription,        ogImage {          ...,          alt        },        keywords,        canonicalUrl,        noIndex      },      team {        ...,        teamMembers[]->      },      about {        heading,        animatedText,        stats,        wrapUpText,        weAreSection      }    }  }
 export type HOME_PAGE_QUERYResult = {
   homePage: {
     _id: string;
@@ -1108,36 +1108,11 @@ export type HOME_PAGE_QUERYResult = {
     title: string;
     hero: HeroSection;
     about: {
-      _type: "aboutSection";
       heading: {
         text: string;
         highlightedText: string;
       };
       animatedText: string;
-      services: Array<{
-        header: {
-          subtitle: {
-            text: string;
-            highlightedText: string | null;
-          };
-          heading: string;
-          featuredImage: {
-            asset?: {
-              _ref: string;
-              _type: "reference";
-              _weak?: boolean;
-              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-            };
-            media?: unknown;
-            hotspot?: SanityImageHotspot;
-            crop?: SanityImageCrop;
-            alt: string;
-            _type: "image";
-          };
-        };
-        slug: string;
-        excerpt: string;
-      }>;
       stats: Array<{
         statTitle: string;
         statValue?: string;
@@ -1211,6 +1186,32 @@ export type HOME_PAGE_QUERYResult = {
     pmoPromo: BreakSection;
   } | null;
 };
+// Variable: HOME_SERVICES_QUERY
+// Query: *[_type == "homePage"][0].about.services[]-> {    header {      subtitle {        text,        highlightedText      },      heading,      featuredImage {        ...,        alt      }    },    "slug": slug.current,    excerpt,  }
+export type HOME_SERVICES_QUERYResult = Array<{
+  header: {
+    subtitle: {
+      text: string;
+      highlightedText: string | null;
+    };
+    heading: string;
+    featuredImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+  };
+  slug: string;
+  excerpt: string;
+}> | null;
 // Variable: LATEST_POSTS_QUERY
 // Query: *[_type == "post"] | order(_createdAt desc) [0...$limit] {  title,  "slug": slug.current,  excerpt,  featuredMedia,  date,}
 export type LATEST_POSTS_QUERYResult = Array<{
@@ -2065,7 +2066,8 @@ export type TERMS_OF_USE_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "{\n    \"homePage\": *[_type == \"homePage\"][0] {\n      ...,\n      seo {\n        metaTitle,\n        metaDescription,\n        ogTitle,\n        ogDescription,\n        ogImage {\n          ...,\n          alt\n        },\n        keywords,\n        canonicalUrl,\n        noIndex\n      },\n      team {\n        ...,\n        teamMembers[]->\n      },\n      about {\n        ...,\n        services[]-> {\n          header {\n            subtitle {\n              text,\n              highlightedText\n            },\n            heading,\n            featuredImage {\n              ...,\n              alt\n            }\n          },\n          \"slug\": slug.current,\n          excerpt,\n        }\n      }\n    }\n  }": HOME_PAGE_QUERYResult;
+    "{\n    \"homePage\": *[_type == \"homePage\"][0] {\n      ...,\n      seo {\n        metaTitle,\n        metaDescription,\n        ogTitle,\n        ogDescription,\n        ogImage {\n          ...,\n          alt\n        },\n        keywords,\n        canonicalUrl,\n        noIndex\n      },\n      team {\n        ...,\n        teamMembers[]->\n      },\n      about {\n        heading,\n        animatedText,\n        stats,\n        wrapUpText,\n        weAreSection\n      }\n    }\n  }": HOME_PAGE_QUERYResult;
+    "\n  *[_type == \"homePage\"][0].about.services[]-> {\n    header {\n      subtitle {\n        text,\n        highlightedText\n      },\n      heading,\n      featuredImage {\n        ...,\n        alt\n      }\n    },\n    \"slug\": slug.current,\n    excerpt,\n  }\n": HOME_SERVICES_QUERYResult;
     "*[_type == \"post\"] | order(_createdAt desc) [0...$limit] {\n  title,\n  \"slug\": slug.current,\n  excerpt,\n  featuredMedia,\n  date,\n}": LATEST_POSTS_QUERYResult;
     "{\n  \"generalInfo\": *[_type == \"generalInfo\"][0] {\n    logoFull {\n      ...,\n      alt\n    },\n    logoMark {\n      ...,\n      alt\n    },\n    email,\n    phone,\n    googleMapCoordinates,\n    socials[] {\n      _key,\n      title,\n      url,\n      icon {\n        ...,\n        alt\n      }\n    },\n    companyName,\n    description,\n    address {\n      streetAddress,\n      addressLocality,\n      addressRegion,\n      postalCode,\n      addressCountry\n    },\n    businessHours {\n      openingTime,\n      closingTime,\n      daysOfWeek\n    },\n    priceRange,\n    businessType,\n    officeImage {\n      ...,\n      alt\n    }\n  }\n}": GENERAL_INFO_QUERYResult;
     "\n  *[_type == \"post\"\n    && (!defined($search) || title match $search + \"*\")\n    && (!defined($category) || category._ref == $category)\n  ] | order(date desc) [0...11] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    excerpt,\n    featuredMedia,\n    date,\n    category->{\n      _id,\n      name,\n      \"slug\": slug.current\n    }\n  }\n": BLOG_POSTS_QUERYResult;

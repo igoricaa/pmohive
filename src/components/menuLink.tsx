@@ -30,33 +30,22 @@ const MenuLink = ({
     pathname === route.path ||
     (route.children && route.children.some((child) => pathname === child.path));
 
-  // For footer and mobile variants, don't render dropdown (will be handled separately)
-  if (variant === 'footer' || variant === 'mobile-menu') {
+  // For mobile variant, don't render dropdown (handled by Accordion in mobile-menu.tsx)
+  if (variant === 'mobile-menu') {
     return (
       <Link
         href={route.path}
         className={cn(
-          'text-xl font-bold hover:text-primary transition-[color,opacity] group relative whitespace-nowrap',
+          'text-2xl sm:text-4xl font-semibold hover:text-primary transition-[color,opacity] group relative whitespace-nowrap',
           className,
-          pathname === route.path && 'text-primary',
-          variant === 'footer' &&
-            `opacity-50 hover:opacity-100 hover:translate-x-4 sm:hover:translate-x-0 translate-x-0 ${
-              pathname === route.path
-                ? 'opacity-100 translate-x-4 sm:translate-x-0'
-                : 'opacity-50'
-            }`,
-          variant === 'mobile-menu' &&
-            `text-2xl sm:text-4xl font-semibold ${
-              pathname === route.path && 'translate-x-6 sm:translate-x-8'
-            }`
+          pathname === route.path &&
+            'text-primary translate-x-6 sm:translate-x-8'
         )}
       >
         <span
           className={cn(
-            'text-primary text-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute -left-4 transition-[opacity,visibility]',
-            pathname === route.path && 'opacity-100 visible',
-            variant === 'mobile-menu' &&
-              'text-2xl sm:text-4xl font-semibold -left-6 sm:-left-8'
+            'text-primary text-2xl sm:text-4xl font-semibold opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute -left-6 sm:-left-8 transition-[opacity,visibility]',
+            pathname === route.path && 'opacity-100 visible'
           )}
         >
           /
@@ -66,7 +55,136 @@ const MenuLink = ({
     );
   }
 
-  // If route has children, render as dropdown
+  // Footer variant with mobile stacked children and desktop dropdown
+  if (variant === 'footer') {
+    // If route has children
+    if (route.children && route.children.length > 0) {
+      return (
+        <>
+          {/* Desktop: Hover dropdown */}
+          <div className='hidden sm:block relative [&_.absolute.top-full]:!right-0 [&_.absolute.top-full]:!left-auto [&_.absolute.top-full]:!justify-end [&_[data-slot=navigation-menu-content]]:!right-0 [&_[data-slot=navigation-menu-content]]:!left-auto'>
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger
+                    className={cn(
+                      'text-xl font-bold text-white! hover:text-primary! transition-[color,opacity] group/trigger relative whitespace-nowrap bg-transparent! hover:bg-transparent! h-auto px-0 py-0 opacity-50 hover:opacity-100',
+                      isActive && 'text-primary opacity-100',
+                      className
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        'text-primary text-xl opacity-0 invisible group-hover/trigger:opacity-100 group-hover/trigger:visible absolute -left-4 transition-[opacity,visibility]',
+                        isActive && 'opacity-100 visible'
+                      )}
+                    >
+                      /
+                    </span>
+                    {route.label}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className='bg-black-custom p-0'>
+                    <ul className='grid gap-4 px-6 pt-4 pb-6 has-[li:hover]:[&>li]:opacity-50'>
+                      {route.children.map((child) => (
+                        <li
+                          key={child.path}
+                          className='transition-opacity hover:opacity-100!'
+                        >
+                          <NavigationMenuLink
+                            asChild
+                            className='bg-transparent!'
+                          >
+                            <Link
+                              href={child.path}
+                              className={cn(
+                                'text-white whitespace-nowrap flex flex-row items-center gap-2 select-none rounded-md p-0! leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-primary active:text-primary focus:text-primary group',
+                                pathname === child.path &&
+                                  'bg-accent text-primary'
+                              )}
+                            >
+                              <div className='text-base font-semibold leading-none'>
+                                {child.label}
+                              </div>
+                              <ArrowUpRight
+                                color='#F09A60'
+                                size={24}
+                                className={cn(
+                                  'size-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-[opacity,visibility]',
+                                  pathname === child.path &&
+                                    'opacity-100 visible'
+                                )}
+                              />
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+
+          {/* Mobile/Tablet: Stacked children */}
+          <div className='sm:hidden flex flex-col gap-3'>
+            <div
+              className={cn(
+                'text-xl font-bold hover:text-primary transition-[color,opacity] group relative whitespace-nowrap opacity-50 hover:opacity-100',
+                isActive && 'text-primary opacity-100'
+              )}
+            >
+              <span
+                className={cn(
+                  'text-primary text-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute -left-4 transition-[opacity,visibility]',
+                  isActive && 'opacity-100 visible'
+                )}
+              >
+                /
+              </span>
+              {route.label}
+            </div>
+            {route.children.map((child) => (
+              <Link
+                key={child.path}
+                href={child.path}
+                className={cn(
+                  'text-base font-semibold hover:text-primary transition-colors pl-4 opacity-40 hover:opacity-100',
+                  pathname === child.path && 'text-primary opacity-100'
+                )}
+              >
+                {child.label}
+              </Link>
+            ))}
+          </div>
+        </>
+      );
+    }
+
+    // Footer variant without children
+    return (
+      <Link
+        href={route.path}
+        className={cn(
+          'text-xl font-bold hover:text-primary transition-[color,opacity] group relative whitespace-nowrap opacity-50 hover:opacity-100 hover:translate-x-4 sm:hover:translate-x-0 translate-x-0',
+          className,
+          pathname === route.path &&
+            'text-primary opacity-100 translate-x-4 sm:translate-x-0'
+        )}
+      >
+        <span
+          className={cn(
+            'text-primary text-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute -left-4 transition-[opacity,visibility]',
+            pathname === route.path && 'opacity-100 visible'
+          )}
+        >
+          /
+        </span>
+        {route.label}
+      </Link>
+    );
+  }
+
+  // If route has children, render as dropdown (default variant - for header)
   if (route.children && route.children.length > 0) {
     return (
       <NavigationMenu>

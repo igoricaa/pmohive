@@ -41,22 +41,11 @@ export const HOME_PAGE_QUERY = defineQuery(`{
         teamMembers[]->
       },
       about {
-        ...,
-        services[]-> {
-          header {
-            subtitle {
-              text,
-              highlightedText
-            },
-            heading,
-            featuredImage {
-              ...,
-              alt
-            }
-          },
-          "slug": slug.current,
-          excerpt,
-        }
+        heading,
+        animatedText,
+        stats,
+        wrapUpText,
+        weAreSection
       }
     }
   }`);
@@ -67,6 +56,31 @@ export const getHomePageData = async (): Promise<HOME_PAGE_QUERYResult> => {
     tags: ['home-page-data'],
   });
 };
+
+export const HOME_SERVICES_QUERY = defineQuery(`
+  *[_type == "homePage"][0].about.services[]-> {
+    header {
+      subtitle {
+        text,
+        highlightedText
+      },
+      heading,
+      featuredImage {
+        ...,
+        alt
+      }
+    },
+    "slug": slug.current,
+    excerpt,
+  }
+`);
+
+export async function getHomeServices() {
+  return await sanityFetch({
+    query: HOME_SERVICES_QUERY,
+    tags: ['services'],
+  });
+}
 
 export const LATEST_POSTS_QUERY =
   defineQuery(`*[_type == "post"] | order(_createdAt desc) [0...$limit] {

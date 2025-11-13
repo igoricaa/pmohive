@@ -2,13 +2,17 @@ import { Link } from '@/components/motion-link';
 import Image from 'next/image';
 import { getGeneralInfoData } from '@/sanity/lib/queries';
 import { urlFor } from '@/sanity/lib/image';
-import { routes } from '@/app/data';
+
 import MenuLink from './menuLink';
 import hexagonalPattern from '../../public/hexagonal-pattern.svg';
 import { CookieSettingsButton } from './cookie-settings-button';
+import { getRoutes } from '@/app/data';
 
 export default async function Footer() {
-  const { generalInfo: generalInfoData } = await getGeneralInfoData();
+  const [{ generalInfo: generalInfoData }, routes] = await Promise.all([
+    getGeneralInfoData(),
+    getRoutes(),
+  ]);
 
   if (!generalInfoData) {
     return <footer>Loading...</footer>;

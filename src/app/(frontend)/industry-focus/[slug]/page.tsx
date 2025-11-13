@@ -69,7 +69,7 @@ export default async function IndustryFocusPage({
           height={388}
           quality={85}
           preload={true}
-          className='w-full h-auto object-cover aspect-[343/161] sm:aspect-[786/222] xl:aspect-[1375/388]'
+          className='w-full h-auto object-cover aspect-[343/161] sm:aspect-[786/335] xl:aspect-[1375/500]'
         />
       </div>
 
