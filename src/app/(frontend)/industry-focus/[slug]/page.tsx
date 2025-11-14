@@ -1,5 +1,5 @@
 import Heading from '@/components/ui/heading';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { getAllServicesWithSlugs, getServiceData } from '@/sanity/lib/queries';
 import { Image } from 'next-sanity/image';
 import { SERVICE_QUERYResult } from '../../../../../sanity.types';
@@ -63,10 +63,10 @@ export default async function IndustryFocusPage({
       <div className='relative px-side'>
         <div className='absolute inset-0 bg-gradient-to-b from-transparent from-0% to-black/65'></div>
         <Image
-          src={urlForUncropped(currentService.header.featuredImage).url()}
+          src={urlFor(currentService.header.featuredImage).url()}
           alt={currentService.title}
           width={1375}
-          height={388}
+          height={500}
           quality={85}
           preload={true}
           className='w-full h-auto object-cover aspect-[343/161] sm:aspect-[786/335] xl:aspect-[1375/500]'

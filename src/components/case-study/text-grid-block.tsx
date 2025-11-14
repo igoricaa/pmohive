@@ -1,6 +1,6 @@
 import Heading from '@/components/ui/heading';
 import PortableText from '@/components/portable-text';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { Image } from 'next-sanity/image';
 import { cn } from '@/lib/utils';
 import type { TextGridBlock as TextGridBlockType } from '../../../sanity.types';
@@ -94,7 +94,7 @@ export default function TextGridBlock({
               )}
               {item.indicatorType === 'icon' && item.icon && (
                 <Image
-                  src={urlForUncropped(item.icon).url()}
+                  src={urlFor(item.icon).url()}
                   alt={item.icon.alt || ''}
                   width={80}
                   height={80}

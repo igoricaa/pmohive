@@ -154,11 +154,11 @@ className = 'grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-2 md:gap-4';
 **Sanity Images**:
 
 ```typescript
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { Image } from 'next-sanity/image';
 
 <Image
-  src={urlForUncropped(image).url()}
+  src={urlFor(image).url()}
   alt={image.alt}
   width={1000}
   height={1000}
@@ -166,7 +166,7 @@ import { Image } from 'next-sanity/image';
 />
 ```
 
-Helpers: `urlForUncropped()`, `urlForFill()`, `urlForClip()`, `urlForWithHotspot()`
+Helpers: `urlFor(), urlForUncropped()`, `urlForFill()`, `urlForClip()`, `urlForWithHotspot()`
 
 ---
 
@@ -226,7 +226,7 @@ Libraries: shadcn/ui, tailwindcss, lucide-react, framer-motion, react-hook-form,
 **Modular Content Blocks**:
 
 - Use discriminated union with `_type` property for block routing
-- Example: [src/app/(frontend)/case-study/[slug]/page.tsx](<src/app/(frontend)/case-study/[slug]/page.tsx>)
+- **Case Studies Example**: [src/app/(frontend)/case-study/[slug]/page.tsx](<src/app/(frontend)/case-study/[slug]/page.tsx>)
 
 ```typescript
 switch (block._type) {
@@ -236,6 +236,34 @@ switch (block._type) {
     return <TextareaBlock content={block.content} />;
   // ... more blocks
 }
+```
+
+- **Legal Pages Example**: [src/components/legal/legal-page-content.tsx](src/components/legal/legal-page-content.tsx)
+
+```typescript
+switch (block._type) {
+  case 'portableTextBlock':
+    return <PortableTextBlock content={block.content} />;
+  case 'tableBlock':
+    return <TableBlock table={block.table} caption={block.caption} />;
+  default:
+    return null;
+}
+```
+
+**Table Block Pattern** ([@sanity/table](https://www.sanity.io/plugins/sanity-table)):
+
+```typescript
+// Schema: src/sanity/schemaTypes/pages/legal/blocks/tableBlockType.ts
+defineField({
+  name: 'table',
+  type: 'table', // From @sanity/table plugin
+  validation: (rule) => rule.required(),
+});
+
+// Component: src/components/legal/table-block.tsx
+// Renders first row as <thead>, remaining rows as <tbody>
+// Supports optional caption for accessibility
 ```
 
 **Reusable Field Composition**:
@@ -304,7 +332,7 @@ pnpx sanity@latest typegen      # Generate types
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/components/motion-link';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { useQueryState, parseAsString } from 'nuqs';
 import { motion } from 'motion/react';
 ```
@@ -322,7 +350,7 @@ const [search, setSearch] = useQueryState('search', parseAsString.withDefault(''
 <Button><ArrowRight /></Button>
 
 // Sanity Image
-<Image src={urlForUncropped(image).url()} alt={image.alt} width={1000} height={1000} />
+<Image src={urlFor(image).url()} alt={image.alt} width={1000} height={1000} />
 ```
 
 ---

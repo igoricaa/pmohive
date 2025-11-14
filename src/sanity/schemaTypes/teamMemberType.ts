@@ -53,6 +53,69 @@ export const teamMemberType = defineType({
       description: 'Team member biography',
       validation: (rule) => rule.required().error('Bio is required'),
     }),
+    defineField({
+      name: 'socials',
+      title: 'Social Networks',
+      type: 'array',
+      description: 'Social media profiles',
+      of: [
+        {
+          type: 'object',
+          name: 'socialNetwork',
+          title: 'Social Network',
+          fields: [
+            {
+              name: 'title',
+              type: 'string',
+              title: 'Title',
+              description: 'Social network name (e.g., Facebook, Twitter, LinkedIn)',
+              validation: (rule) => rule.required().error('Title is required'),
+            },
+            {
+              name: 'url',
+              type: 'url',
+              title: 'URL',
+              description: 'Social media profile URL',
+              validation: (rule) => rule.required().error('URL is required'),
+            },
+            {
+              name: 'icon',
+              type: 'image',
+              title: 'Icon',
+              description: 'Social network icon image',
+              options: {
+                hotspot: true,
+              },
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alt Text',
+                  description: 'Alternative text for accessibility',
+                  validation: (rule) =>
+                    rule.required().error('Alt text is required for accessibility'),
+                },
+              ],
+              validation: (rule) => rule.required().error('Icon is required'),
+            },
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              url: 'url',
+              media: 'icon',
+            },
+            prepare({ title, url, media }) {
+              return {
+                title: title || 'Social Network',
+                subtitle: url || 'No URL',
+                media,
+              };
+            },
+          },
+        },
+      ],
+    }),
   ],
   preview: {
     select: {

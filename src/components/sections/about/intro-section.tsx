@@ -1,6 +1,6 @@
 import Heading from '@/components/ui/heading';
 import { cn } from '@/lib/utils';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { Image } from 'next-sanity/image';
 
@@ -31,11 +31,10 @@ const IntroSection = ({
         <div className='sm:w-6/8 xl:w-9/12 h-64 w-full sm:h-full sm:aspect-[580/302] xl:aspect-[991/478] relative sm:absolute sm:right-0 sm:top-0 -z-1 '>
           <div className='absolute inset-0 bg-gradient-to-bl from-transparent from-30% to-black/60'></div>
           <Image
-            src={urlForUncropped(backgroundImage).url()}
+            src={urlFor(backgroundImage).url()}
             alt={backgroundImage.alt}
-            width={991}
-            height={478}
-            quality={85}
+            width={1486}
+            height={717}
             preload={true}
             className='object-cover w-full h-full'
           />

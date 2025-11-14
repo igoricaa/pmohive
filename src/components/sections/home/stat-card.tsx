@@ -1,6 +1,6 @@
 import PortableText from '@/components/portable-text';
 import { Stat } from '@/lib/types';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { PortableTextBlock } from 'next-sanity';
 import { Image } from 'next-sanity/image';
 
@@ -14,7 +14,7 @@ const StatCard = ({ stat, className }: { stat: Stat; className?: string }) => {
       )}
       {stat.statIcon && (
         <Image
-          src={urlForUncropped(stat.statIcon).url()}
+          src={urlFor(stat.statIcon).url()}
           alt={stat.statIcon.alt}
           width={100}
           height={100}

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { BlockContent } from '../../sanity.types';
 import { extractPlainText } from './text-utils';
@@ -70,9 +70,9 @@ export function generatePageMetadata({
   // Image logic: SEO OG image > content image > default
   let ogImageUrl = DEFAULT_OG_IMAGE;
   if (seo?.ogImage) {
-    ogImageUrl = urlForUncropped(seo.ogImage).width(1200).height(630).url();
+    ogImageUrl = urlFor(seo.ogImage).width(1200).height(630).url();
   } else if (image) {
-    ogImageUrl = urlForUncropped(image).width(1200).height(630).url();
+    ogImageUrl = urlFor(image).width(1200).height(630).url();
   }
 
   // Canonical URL logic

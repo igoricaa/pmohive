@@ -1,4 +1,4 @@
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { BlockContent } from '../../../sanity.types';
 import { extractPlainText } from '@/lib/text-utils';
@@ -32,7 +32,7 @@ export default function ArticleSchema({
 }: ArticleSchemaProps) {
   // Generate image URL
   const imageUrl = image
-    ? urlForUncropped(image).width(1200).height(630).url()
+    ? urlFor(image).width(1200).height(630).url()
     : 'https://www.pmohive.com/opengraph-image.png';
 
   // Extract plain text from description if it's BlockContent
@@ -71,7 +71,7 @@ export default function ArticleSchema({
 
   return (
     <script
-      type="application/ld+json"
+      type='application/ld+json'
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   );

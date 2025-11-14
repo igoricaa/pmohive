@@ -17,7 +17,7 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'clip';
       document.body.setAttribute('data-lenis-prevent', 'true');
     } else {
       document.body.style.overflow = '';

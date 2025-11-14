@@ -7,13 +7,15 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { TeamMember } from '../../../sanity.types';
 import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
 import Heading from '@/components/ui/heading';
 import AnimatedButton from '../animated-button';
 import { AnimateInView } from '../animate-in-view';
+import SocialIconAnimated from '../social-icon-animated';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
 interface CareersSectionProps {
   subtitle: {
@@ -114,10 +116,10 @@ const CareersSection = ({
                     {/* Background Image */}
                     <div className='absolute inset-0 -z-20'>
                       <Image
-                        src={urlForUncropped(member.image).url()}
+                        src={urlFor(member.image).url()}
                         alt={member.image.alt}
-                        width={448}
-                        height={585}
+                        width={1140}
+                        height={1488}
                         quality={85}
                         className='w-full h-full object-cover'
                       />
@@ -127,15 +129,30 @@ const CareersSection = ({
                     <div className='absolute inset-0 bg-gradient-to-b from-transparent from-50% to-black/45 -z-10' />
 
                     {/* Content */}
-                    <div className='pl-4 pr-5 xl:pl-8 xl:pr-11 pb-4 xl:pb-7 z-0 h-full flex flex-col justify-end'>
-                      <h3 className='text-lg sm:text-3xl xl:text-2xl'>
-                        {member.name}
-                      </h3>
+                    <div className='pl-4 pr-5 xl:pl-8 xl:pr-11 pb-4 xl:pb-7 pt-3 z-0 h-full flex flex-col justify-between'>
+                      {member.socials && member.socials.length > 0 && (
+                        <div className='flex items-center gap-2'>
+                          {member.socials.map((social) => (
+                            <SocialIconAnimated
+                              key={social.title}
+                              icon={social.icon as SanityImageSource}
+                              title={social.title}
+                              url={social.url}
+                            />
+                          ))}
+                        </div>
+                      )}
 
-                      <div className='mt-2 sm:mt-3 xl:mt-5 z-0 max-w-md'>
-                        <PortableText
-                          value={member.bio as PortableTextBlock[]}
-                        />
+                      <div>
+                        <h3 className='text-lg sm:text-3xl xl:text-2xl'>
+                          {member.name}
+                        </h3>
+
+                        <div className='mt-2 sm:mt-3 xl:mt-5 z-0 max-w-md'>
+                          <PortableText
+                            value={member.bio as PortableTextBlock[]}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

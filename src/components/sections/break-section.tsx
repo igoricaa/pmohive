@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { Image } from 'next-sanity/image';
 import { PortableTextBlock } from 'next-sanity';
@@ -40,11 +40,10 @@ const BreakSection = ({
       <div className='relative overflow-hidden sm:h-100 xl:h-auto xl:aspect-[1375/521] sm:pb-6 xl:pb-12 sm:px-4 xl:px-10 2xl:px-0 grid grid-cols-1 md:grid-cols-8 xl:grid-cols-12 gap-4 xl:gap-5 items-end'>
         <div className='relative w-full h-53 sm:h-full sm:absolute sm:inset-0 z-0'>
           <Image
-            src={urlForUncropped(backgroundImage).url()}
+            src={urlFor(backgroundImage).url()}
             alt={backgroundImage.alt}
             fill
             sizes='100vw'
-            quality={85}
             className='w-full h-full object-cover object-[50%_15%]'
           />
           <div className='absolute inset-0 bg-gradient-to-b from-transparent from-0% to-black'></div>

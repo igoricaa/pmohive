@@ -1,4 +1,4 @@
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
 interface ImageMetadata {
@@ -24,11 +24,7 @@ export function getImageMetadata(
   const height = options?.height || 630;
   const quality = options?.quality || 85;
 
-  const url = urlForUncropped(image)
-    .width(width)
-    .height(height)
-    .quality(quality)
-    .url();
+  const url = urlFor(image).width(width).height(height).quality(quality).url();
 
   // Extract alt text from image object
   const alt =
@@ -46,9 +42,12 @@ export function getImageMetadata(
 /**
  * Generate Open Graph image object from Sanity image
  */
-export function getOgImage(
-  image: SanityImageSource & { alt?: string }
-): { url: string; width: number; height: number; alt: string } {
+export function getOgImage(image: SanityImageSource & { alt?: string }): {
+  url: string;
+  width: number;
+  height: number;
+  alt: string;
+} {
   return getImageMetadata(image, { width: 1200, height: 630 });
 }
 

@@ -2,7 +2,7 @@ import PostCard from '@/components/blog/post-card';
 import ShareArticle from '@/components/blog/share-article';
 import PostPortableText from '@/components/post-portable-text';
 import Heading from '@/components/ui/heading';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { getAllPostsWithSlugs, getPostData } from '@/sanity/lib/queries';
 import { PortableTextBlock } from 'next-sanity';
 import { Image } from 'next-sanity/image';
@@ -90,10 +90,10 @@ export default async function BlogPostPage({
         <div className='relative px-side'>
           <div className='absolute inset-0 bg-gradient-to-b from-transparent from-0% to-black/65'></div>
           <Image
-            src={urlForUncropped(currentPost.featuredMedia).url()}
+            src={urlFor(currentPost.featuredMedia).url()}
             alt={currentPost.title}
             width={1375}
-            height={388}
+            height={500}
             quality={85}
             preload={true}
             className='w-full h-auto object-cover aspect-[343/161] sm:aspect-[786/335] xl:aspect-[1375/500]'

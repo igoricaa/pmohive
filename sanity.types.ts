@@ -342,6 +342,25 @@ export type TeamMember = {
   };
   specializations: Array<string>;
   bio: BlockContent;
+  socials?: Array<{
+    title: string;
+    url: string;
+    icon: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    _type: "socialNetwork";
+    _key: string;
+  }>;
 };
 
 export type CaseStudy = {
@@ -1242,6 +1261,25 @@ export type HOME_PAGE_QUERYResult = {
         };
         specializations: Array<string>;
         bio: BlockContent;
+        socials?: Array<{
+          title: string;
+          url: string;
+          icon: {
+            asset?: {
+              _ref: string;
+              _type: "reference";
+              _weak?: boolean;
+              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+            };
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            alt: string;
+            _type: "image";
+          };
+          _type: "socialNetwork";
+          _key: string;
+        }>;
       }>;
     };
     blog: BlogSection;
@@ -1717,6 +1755,25 @@ export type ABOUT_PAGE_QUERYResult = {
         };
         specializations: Array<string>;
         bio: BlockContent;
+        socials?: Array<{
+          title: string;
+          url: string;
+          icon: {
+            asset?: {
+              _ref: string;
+              _type: "reference";
+              _weak?: boolean;
+              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+            };
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            alt: string;
+            _type: "image";
+          };
+          _type: "socialNetwork";
+          _key: string;
+        }>;
       }>;
     };
     approachSection: {

@@ -23,7 +23,7 @@ function LoadingProgressBar() {
   useEffect(() => {
     if (showLoader) {
       lenis?.stop();
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'clip';
     } else {
       document.body.style.overflow = '';
       lenis?.start();

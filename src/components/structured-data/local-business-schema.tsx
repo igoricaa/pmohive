@@ -1,5 +1,5 @@
 import { GENERAL_INFO_QUERYResult } from '../../../sanity.types';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 
 interface LocalBusinessSchemaProps {
   generalInfo: NonNullable<GENERAL_INFO_QUERYResult['generalInfo']>;
@@ -13,7 +13,9 @@ interface LocalBusinessSchemaProps {
  * @see https://schema.org/LocalBusiness
  * @see https://developers.google.com/search/docs/appearance/structured-data/local-business
  */
-export default function LocalBusinessSchema({ generalInfo }: LocalBusinessSchemaProps) {
+export default function LocalBusinessSchema({
+  generalInfo,
+}: LocalBusinessSchemaProps) {
   const {
     companyName,
     description,
@@ -30,14 +32,16 @@ export default function LocalBusinessSchema({ generalInfo }: LocalBusinessSchema
 
   // Generate image URL if office image is provided
   const imageUrl = officeImage
-    ? urlForUncropped(officeImage).width(1200).height(800).url()
+    ? urlFor(officeImage).width(1200).height(800).url()
     : logoFull
-      ? urlForUncropped(logoFull).width(1200).height(800).url()
+      ? urlFor(logoFull).width(1200).height(800).url()
       : undefined;
 
   // Format opening hours specification
   const openingHoursSpecification =
-    businessHours && businessHours.daysOfWeek && businessHours.daysOfWeek.length > 0
+    businessHours &&
+    businessHours.daysOfWeek &&
+    businessHours.daysOfWeek.length > 0
       ? [
           {
             '@type': 'OpeningHoursSpecification',
@@ -86,7 +90,7 @@ export default function LocalBusinessSchema({ generalInfo }: LocalBusinessSchema
 
   return (
     <script
-      type="application/ld+json"
+      type='application/ld+json'
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   );

@@ -1,7 +1,7 @@
 import { Link } from '@/components/motion-link';
 import { Post } from '../../../sanity.types';
 import { Image } from 'next-sanity/image';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { cn, formatDate } from '@/lib/utils';
 import { PortableTextBlock } from 'next-sanity';
 import PortableText from '../portable-text';
@@ -19,7 +19,7 @@ const PostCard = ({ post, className }: { post: Post; className?: string }) => {
         {/* Background Image */}
         <div className='absolute inset-0 -z-20'>
           <Image
-            src={urlForUncropped(post.featuredMedia).url()}
+            src={urlFor(post.featuredMedia).url()}
             alt={post.title}
             width={285}
             height={372}

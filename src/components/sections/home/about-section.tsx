@@ -4,7 +4,7 @@ import StatCard from './stat-card';
 import { cn } from '@/lib/utils';
 import { HOME_PAGE_QUERYResult } from '../../../../sanity.types';
 import { Image } from 'next-sanity/image';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import PortableText from '@/components/portable-text';
 import { PortableTextBlock } from 'next-sanity';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
@@ -93,10 +93,10 @@ const AboutSection = ({
           className='col-span-1 xl:col-span-5 xl:col-start-2'
         >
           <Image
-            src={urlForUncropped(weAreSection.image).url()}
+            src={urlFor(weAreSection.image).url()}
             alt={weAreSection.image.alt}
-            width={566}
-            height={420}
+            width={1132}
+            height={840}
             className='h-auto w-full object-cover'
           />
         </AnimateInView>

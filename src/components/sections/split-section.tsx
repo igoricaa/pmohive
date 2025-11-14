@@ -1,7 +1,7 @@
 import PortableText from '@/components/portable-text';
 import Subtitle from '@/components/ui/subtitle';
 import { cn } from '@/lib/utils';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { PortableTextBlock } from 'next-sanity';
 import { Image } from 'next-sanity/image';
@@ -43,12 +43,11 @@ const SplitSection = ({
           className='h-full'
         >
           <Image
-            src={urlForUncropped(backgroundImage).url()}
+            src={urlFor(backgroundImage).url()}
             alt={backgroundImage.alt}
-            width={560}
-            height={681}
-            quality={85}
-            className='w-full h-full object-cover'
+            width={1160}
+            height={1362}
+            className='w-full object-cover'
           />
         </AnimateInView>
       </div>

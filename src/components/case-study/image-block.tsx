@@ -1,4 +1,4 @@
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { Image } from 'next-sanity/image';
 import type { ImageBlock } from '../../../sanity.types';
 
@@ -10,7 +10,7 @@ export default function ImageBlock({
   return (
     <figure className='my-12 sm:my-16 xl:my-24'>
       <Image
-        src={urlForUncropped(image).url()}
+        src={urlFor(image).url()}
         alt={image.alt}
         width={aspectRatio?.width || 1600}
         height={aspectRatio?.height || 900}

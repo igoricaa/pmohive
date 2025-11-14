@@ -1,5 +1,5 @@
 import { GENERAL_INFO_QUERYResult } from '../../../sanity.types';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 
 interface OrganizationSchemaProps {
   generalInfo: NonNullable<GENERAL_INFO_QUERYResult['generalInfo']>;
@@ -13,8 +13,11 @@ interface OrganizationSchemaProps {
  * @see https://schema.org/Organization
  * @see https://developers.google.com/search/docs/appearance/structured-data/organization
  */
-export default function OrganizationSchema({ generalInfo }: OrganizationSchemaProps) {
-  const { companyName, description, email, phone, logoFull, socials } = generalInfo;
+export default function OrganizationSchema({
+  generalInfo,
+}: OrganizationSchemaProps) {
+  const { companyName, description, email, phone, logoFull, socials } =
+    generalInfo;
 
   // Extract ALL social media URLs for sameAs property
   const sameAsUrls = socials
@@ -23,7 +26,7 @@ export default function OrganizationSchema({ generalInfo }: OrganizationSchemaPr
 
   // Generate logo URL
   const logoUrl = logoFull
-    ? urlForUncropped(logoFull).width(600).height(60).url()
+    ? urlFor(logoFull).width(600).height(60).url()
     : undefined;
 
   const schema = {
@@ -40,7 +43,7 @@ export default function OrganizationSchema({ generalInfo }: OrganizationSchemaPr
 
   return (
     <script
-      type="application/ld+json"
+      type='application/ld+json'
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   );

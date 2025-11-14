@@ -208,8 +208,8 @@ Setup: [src/app/(frontend)/layout.tsx](<src/app/(frontend)/layout.tsx>) wraps wi
 **Sanity Image Optimization**:
 
 ```typescript
-import { urlForUncropped } from '@/sanity/lib/image';
-<Image src={urlForUncropped(image).url()} ... />
+import { urlFor } from '@/sanity/lib/image';
+<Image src={urlFor(image).url()} ... />
 ```
 
 **Progress Bar with Synchronized Completion**:
@@ -268,13 +268,24 @@ See: [src/components/progress-bar.tsx](src/components/progress-bar.tsx)
 - `NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX` (Google Tag Manager)
 - `NEXT_PUBLIC_TERMLY_UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` (Termly website UUID)
 
-**Legal Pages** (Sanity CMS-driven):
+**Legal Pages** (Sanity CMS-driven, composable content):
 
-- Privacy Policy: [/privacy-policy/page.tsx](<src/app/(frontend)/privacy-policy/page.tsx>)
-- Cookie Policy: [/cookie-policy/page.tsx](<src/app/(frontend)/cookie-policy/page.tsx>)
-- Terms of Use: [/terms-of-use/page.tsx](<src/app/(frontend)/terms-of-use/page.tsx>)
-- Schemas: [src/sanity/schemaTypes/pages/](src/sanity/schemaTypes/pages/) (privacyPolicyType, cookiePolicyType, termsOfUseType)
-- Queries: [queries.ts:293](src/sanity/lib/queries.ts:293) (getPrivacyPolicyData, getCookiePolicyData, getTermsOfUseData)
+- **Pages**: [/privacy-policy/page.tsx](<src/app/(frontend)/privacy-policy/page.tsx>), [/cookie-policy/page.tsx](<src/app/(frontend)/cookie-policy/page.tsx>), [/terms-of-use/page.tsx](<src/app/(frontend)/terms-of-use/page.tsx>)
+- **Schemas**: [src/sanity/schemaTypes/pages/](src/sanity/schemaTypes/pages/) (privacyPolicyType, cookiePolicyType, termsOfUseType)
+- **Architecture**: Array-based composable content (changed from single `blockContent` field)
+  - Block types: `portableTextBlock` (rich text), `tableBlock` (tables with optional captions)
+  - Block schemas: [src/sanity/schemaTypes/pages/legal/blocks/](src/sanity/schemaTypes/pages/legal/blocks/)
+  - Components: [src/components/legal/](src/components/legal/) (legal-page-content.tsx, portable-text-block.tsx, table-block.tsx)
+  - Pattern: Uses `_type` discriminator for block routing (similar to case studies)
+- **Table Plugin**: [@sanity/table](https://www.sanity.io/plugins/sanity-table) (plain text cells only)
+  - Install: `pnpm add @sanity/table`
+  - Config: Added to [sanity.config.ts](sanity.config.ts) plugins array
+- **GROQ Queries**: [queries.ts:499](src/sanity/lib/queries.ts:499)
+  - Fetch composable blocks: `content[] { _key, _type, _type == "portableTextBlock" => { content }, _type == "tableBlock" => { table, caption } }`
+- **Migration**: Legacy `blockContent` field renamed to `legacyContent` (hidden but preserved)
+- **Singleton Deletion Gotcha**: If singleton document deleted, can't recreate via Studio UI
+  - Solution: Delete old documents via CLI (`pnpx sanity documents delete <id>`) or Studio's Content list view
+  - Prevention: Ensure only one document exists per legal page type (check with GROQ: `*[_type == "privacyPolicy"]`)
 
 **Contact Form GDPR**:
 

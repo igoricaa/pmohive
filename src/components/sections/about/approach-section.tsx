@@ -1,7 +1,7 @@
 import { AnimateInView } from '@/components/animate-in-view';
 import Heading from '@/components/ui/heading';
 import { cn } from '@/lib/utils';
-import { urlForUncropped } from '@/sanity/lib/image';
+import { urlFor } from '@/sanity/lib/image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { Image } from 'next-sanity/image';
 
@@ -56,7 +56,7 @@ export default function ApproachSection({
           >
             <article key={item._key}>
               <Image
-                src={urlForUncropped(item.icon).url()}
+                src={urlFor(item.icon).url()}
                 alt={item.icon.alt}
                 width={156}
                 height={156}
