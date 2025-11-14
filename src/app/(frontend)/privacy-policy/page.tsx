@@ -1,12 +1,12 @@
-import PortableText from '@/components/portable-text';
 import Heading from '@/components/ui/heading';
 import { getPrivacyPolicyData } from '@/sanity/lib/queries';
-import { PortableTextBlock } from 'next-sanity';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { generatePageMetadata } from '@/lib/metadata';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { BlockContent } from '../../../../sanity.types';
+import Link from 'next/link';
+import LegalPageContent from '@/components/legal/legal-page-content';
 
 export async function generateMetadata(): Promise<Metadata> {
   const { privacyPolicy } = await getPrivacyPolicyData();
@@ -34,6 +34,9 @@ export default async function PrivacyPolicyPage() {
     notFound();
   }
 
+  const termlyEmbedUrl =
+    'https://app.termly.io/policy-viewer/policy.html?policyUUID=c11251a7-57b1-4680-9b66-ff88bc2ce4d6';
+
   const lastUpdated = policy.lastUpdated
     ? new Date(policy.lastUpdated).toLocaleDateString('en-GB', {
         day: 'numeric',
@@ -52,17 +55,25 @@ export default async function PrivacyPolicyPage() {
           {lastUpdated && <p>Last updated: {lastUpdated}</p>}
         </div>
 
-        {policy.introContent && (
+        {policy.content && policy.content.length > 0 ? (
           <div className='mt-8'>
-            <PortableText value={policy.introContent as PortableTextBlock[]} />
+            <LegalPageContent content={policy.content as any} />
           </div>
+        ) : (
+          policy.introContent && (
+            <div className='mt-8'>
+              <p className='text-sm text-gray-600 dark:text-gray-400 mb-4'>
+                Legacy content format - please migrate to composable blocks in Sanity Studio
+              </p>
+            </div>
+          )
         )}
 
-        <div className='mt-8'>
-          <PortableText value={policy.content as PortableTextBlock[]} />
-        </div>
+        <Link href={termlyEmbedUrl} target='_blank'>
+          View full policy
+        </Link>
 
-        {policy.termlyEmbedUrl && (
+        {/* {policy.termlyEmbedUrl && (
           <div className='mt-12'>
             <iframe
               src={policy.termlyEmbedUrl}
@@ -70,7 +81,7 @@ export default async function PrivacyPolicyPage() {
               title='Privacy Policy'
             />
           </div>
-        )}
+        )} */}
       </div>
     </main>
   );

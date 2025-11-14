@@ -1,5 +1,5 @@
 import { CookieIcon } from 'lucide-react';
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 export const cookiePolicyType = defineType({
   name: 'cookiePolicy',
@@ -67,18 +67,33 @@ export const cookiePolicyType = defineType({
       group: 'content',
     }),
     defineField({
-      name: 'introContent',
-      title: 'Introduction',
-      type: 'blockContent',
-      description: 'Optional brief introduction before the main policy content',
+      name: 'content',
+      title: 'Content',
+      type: 'array',
+      description: 'Composable content blocks for the policy',
+      of: [
+        defineArrayMember({ type: 'portableTextBlock' }),
+        defineArrayMember({ type: 'tableBlock' }),
+      ],
+      validation: (rule) => rule.required().error('Content is required'),
       group: 'content',
     }),
+    // Legacy fields - hidden but kept for backward compatibility during migration
     defineField({
-      name: 'content',
-      title: 'Policy Content',
+      name: 'introContent',
+      title: 'Introduction (Legacy)',
       type: 'blockContent',
-      validation: (rule) => rule.required().error('Policy content is required'),
+      description: 'DEPRECATED: Use the composable content blocks above instead',
       group: 'content',
+      hidden: true,
+    }),
+    defineField({
+      name: 'legacyContent',
+      title: 'Policy Content (Legacy)',
+      type: 'blockContent',
+      description: 'DEPRECATED: Use the composable content blocks above instead',
+      group: 'content',
+      hidden: true,
     }),
   ],
   preview: {

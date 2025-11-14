@@ -1,11 +1,10 @@
-import PortableText from '@/components/portable-text';
 import Heading from '@/components/ui/heading';
 import { getCookiePolicyData } from '@/sanity/lib/queries';
-import { PortableTextBlock } from 'next-sanity';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { generatePageMetadata } from '@/lib/metadata';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import LegalPageContent from '@/components/legal/legal-page-content';
 
 export async function generateMetadata(): Promise<Metadata> {
   const { cookiePolicy } = await getCookiePolicyData();
@@ -18,8 +17,8 @@ export async function generateMetadata(): Promise<Metadata> {
     title: cookiePolicy.seo?.metaTitle || 'Cookie Policy',
     description:
       cookiePolicy.seo?.metaDescription ||
-      cookiePolicy.introContent ||
-      cookiePolicy.content,
+      (cookiePolicy.introContent as any) ||
+      'Cookie Policy',
     image: cookiePolicy.seo?.ogImage as SanityImageSource,
     seo: cookiePolicy.seo,
     path: '/cookie-policy',
@@ -52,15 +51,19 @@ export default async function CookiePolicyPage() {
           {lastUpdated && <p>Last updated: {lastUpdated}</p>}
         </div>
 
-        {policy.introContent && (
+        {policy.content && policy.content.length > 0 ? (
           <div className='mt-8'>
-            <PortableText value={policy.introContent as PortableTextBlock[]} />
+            <LegalPageContent content={policy.content as any} />
           </div>
+        ) : (
+          policy.introContent && (
+            <div className='mt-8'>
+              <p className='text-sm text-gray-600 dark:text-gray-400 mb-4'>
+                Legacy content format - please migrate to composable blocks in Sanity Studio
+              </p>
+            </div>
+          )
         )}
-
-        <div className='mt-8'>
-          <PortableText value={policy.content as PortableTextBlock[]} />
-        </div>
 
         {policy.termlyEmbedUrl && (
           <div className='mt-12'>

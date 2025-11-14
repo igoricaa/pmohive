@@ -1,12 +1,11 @@
-import PortableText from '@/components/portable-text';
 import Heading from '@/components/ui/heading';
 import { getTermsOfUseData } from '@/sanity/lib/queries';
-import { PortableTextBlock } from 'next-sanity';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { generatePageMetadata } from '@/lib/metadata';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { BlockContent } from '../../../../sanity.types';
+import LegalPageContent from '@/components/legal/legal-page-content';
 
 export async function generateMetadata(): Promise<Metadata> {
   const { termsOfUse } = await getTermsOfUseData();
@@ -19,7 +18,8 @@ export async function generateMetadata(): Promise<Metadata> {
     title: termsOfUse.seo?.metaTitle || 'Terms of Use',
     description:
       termsOfUse.seo?.metaDescription ||
-      (termsOfUse.introContent as BlockContent),
+      (termsOfUse.introContent as any) ||
+      'Terms of Use',
     image: termsOfUse.seo?.ogImage as SanityImageSource,
     seo: termsOfUse.seo,
     path: '/terms-of-use',
@@ -52,15 +52,19 @@ export default async function TermsOfUsePage() {
           {lastUpdated && <p>Last updated: {lastUpdated}</p>}
         </div>
 
-        {terms.introContent && (
+        {terms.content && terms.content.length > 0 ? (
           <div className='mt-8'>
-            <PortableText value={terms.introContent as PortableTextBlock[]} />
+            <LegalPageContent content={terms.content as any} />
           </div>
+        ) : (
+          terms.introContent && (
+            <div className='mt-8'>
+              <p className='text-sm text-gray-600 dark:text-gray-400 mb-4'>
+                Legacy content format - please migrate to composable blocks in Sanity Studio
+              </p>
+            </div>
+          )
         )}
-
-        <div className='mt-8'>
-          <PortableText value={terms.content as PortableTextBlock[]} />
-        </div>
 
         {terms.termlyEmbedUrl && (
           <div className='mt-12'>

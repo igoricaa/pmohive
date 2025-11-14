@@ -503,8 +503,18 @@ export const PRIVACY_POLICY_QUERY = defineQuery(`{
     lastUpdated,
     version,
     termlyEmbedUrl,
+    content[] {
+      _key,
+      _type,
+      _type == "portableTextBlock" => {
+        content
+      },
+      _type == "tableBlock" => {
+        table,
+        caption
+      }
+    },
     introContent,
-    content,
     seo {
       metaTitle,
       metaDescription,
@@ -536,8 +546,18 @@ export const COOKIE_POLICY_QUERY = defineQuery(`{
     lastUpdated,
     version,
     termlyEmbedUrl,
+    content[] {
+      _key,
+      _type,
+      _type == "portableTextBlock" => {
+        content
+      },
+      _type == "tableBlock" => {
+        table,
+        caption
+      }
+    },
     introContent,
-    content,
     seo {
       metaTitle,
       metaDescription,
@@ -569,8 +589,18 @@ export const TERMS_OF_USE_QUERY = defineQuery(`{
     lastUpdated,
     version,
     termlyEmbedUrl,
+    content[] {
+      _key,
+      _type,
+      _type == "portableTextBlock" => {
+        content
+      },
+      _type == "tableBlock" => {
+        table,
+        caption
+      }
+    },
     introContent,
-    content,
     seo {
       metaTitle,
       metaDescription,

@@ -37,6 +37,8 @@ import {
   dividerBlockType,
 } from './case-study';
 import { seoType } from './seoType';
+import { portableTextBlockType } from './pages/legal/blocks/portableTextBlockType';
+import { tableBlockType } from './pages/legal/blocks/tableBlockType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -85,5 +87,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     textGridItemType,
     spacerBlockType,
     dividerBlockType,
+
+    // Legal page blocks
+    portableTextBlockType,
+    tableBlockType,
   ],
 };
