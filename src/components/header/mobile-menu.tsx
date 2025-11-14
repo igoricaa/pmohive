@@ -31,7 +31,7 @@ const MobileMenu = ({
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'clip';
+      document.body.style.overflow = 'hidden';
       document.body.setAttribute('data-lenis-prevent', 'true');
     } else {
       document.body.style.overflow = '';

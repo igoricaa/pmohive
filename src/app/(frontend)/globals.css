@@ -157,7 +157,6 @@
   }
   body {
     @apply bg-black text-white;
-    scrollbar-gutter: stable;
   }
 
   main {
