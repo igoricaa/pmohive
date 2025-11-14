@@ -74,6 +74,7 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
           src={hexagonalPattern}
           alt='Hexagonal pattern'
           unoptimized
+          sizes='747px'
           className='object-contain min-w-[747px] h-[531px] -z-10 absolute -top-6 -left-42 opacity-20'
         />
 
@@ -123,7 +124,8 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
                     width={30}
                     height={30}
                     unoptimized
-                    className='w-7.5 h-7.5 xl:w-8.5 xl:h-8.5'
+                    sizes='34px'
+                    className='size-7.5 xl:size-8.5'
                   />
                 </Link>
               ))}

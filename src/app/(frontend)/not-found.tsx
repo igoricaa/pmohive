@@ -32,6 +32,9 @@ export default function NotFound() {
               width={550}
               height={210}
               unoptimized
+              sizes={
+                '(max-width: 480px) 100vw, (max-width: 1280px) 380px, 548px'
+              }
               className='w-full sm:w-95 xl:w-137 h-auto object-contain mb-4 xl:mb-6'
             />
 

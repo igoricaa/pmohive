@@ -88,6 +88,7 @@ const MobileMenu = ({
           src={hexagonalPattern}
           alt='Hexagonal pattern'
           unoptimized
+          sizes='596px'
           className='object-contain min-w-[595px] h-[423px] -z-10 absolute -top-6 -left-5 opacity-20'
         />
 
@@ -199,7 +200,8 @@ const MobileMenu = ({
                     width={30}
                     height={30}
                     unoptimized
-                    className='w-7.5 h-7.5 xl:w-8.5 xl:h-8.5'
+                    sizes='34px'
+                    className='size-7.5 xl:size-8.5'
                   />
                 </Link>
               ))}

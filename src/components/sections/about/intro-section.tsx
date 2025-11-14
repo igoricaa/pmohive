@@ -36,6 +36,7 @@ const IntroSection = ({
             width={1486}
             height={717}
             preload={true}
+            sizes='(max-width: 640px) 100vw, 75vw'
             className='object-cover w-full h-full'
           />
         </div>

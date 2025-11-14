@@ -98,7 +98,8 @@ export default function TextGridBlock({
                   alt={item.icon.alt || ''}
                   width={80}
                   height={80}
-                  className='w-16 h-16 xl:w-20 xl:h-20 object-contain'
+                  sizes='80px'
+                  className='size-16 xl:size-20 object-contain'
                 />
               )}
 

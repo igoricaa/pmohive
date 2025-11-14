@@ -42,6 +42,7 @@ const ServicesSection = ({
                 alt={item.image.alt}
                 width={447}
                 height={344}
+                sizes='(max-width: 640px) 100vw, (max-width: 1024px) 65vw, (max-width: 1920px) 50vw, 25vw'
                 className='h-full w-full object-cover absolute inset-0 -z-10'
               />
 
@@ -100,6 +101,7 @@ const ServicesSection = ({
                   alt={item.image.alt}
                   width={447}
                   height={344}
+                  sizes='(max-width: 640px) 100vw, (max-width: 1024px) 65vw, (max-width: 1920px) 50vw, 25vw'
                   className='h-full w-full object-cover absolute inset-0 -z-10'
                 />
 

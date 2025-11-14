@@ -97,6 +97,7 @@ const AboutSection = ({
             alt={weAreSection.image.alt}
             width={1132}
             height={840}
+            sizes='(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 45vw'
             className='h-auto w-full object-cover'
           />
         </AnimateInView>

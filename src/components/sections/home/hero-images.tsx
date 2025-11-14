@@ -52,6 +52,7 @@ function AnimatedImage({ image, index, isAppReady }: AnimatedImageProps) {
         {...IMAGE_DIMENSIONS}
         loading='eager'
         fetchPriority='high'
+        sizes='(max-width: 768px) 40vw, (max-width: 1280px) 30vw, 21vw'
         className='w-full h-auto object-cover'
       />
     </motion.div>

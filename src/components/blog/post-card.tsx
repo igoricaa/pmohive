@@ -23,7 +23,8 @@ const PostCard = ({ post, className }: { post: Post; className?: string }) => {
             alt={post.title}
             width={285}
             height={372}
-            className='w-full h-full object-cover'
+            sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw'
+            className='w-full h-auto object-cover'
           />
         </div>
 

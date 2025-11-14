@@ -14,6 +14,7 @@ export default function ImageBlock({
         alt={image.alt}
         width={aspectRatio?.width || 1600}
         height={aspectRatio?.height || 900}
+        sizes='(max-width: 1280px) 100vw, 85vw'
         className='w-full h-auto object-contain'
         style={{
           aspectRatio:

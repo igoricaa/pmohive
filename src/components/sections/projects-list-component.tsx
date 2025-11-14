@@ -71,6 +71,7 @@ const ProjectsListComponent = ({
                 alt={projects[isHoveredIndex].mainInfo.featuredImage.alt}
                 width={678}
                 height={463}
+                sizes='(max-width: 768px) 100vw, 50vw'
                 className='h-full w-full object-cover'
               />
             </div>
@@ -95,6 +96,7 @@ const ProjectsListComponent = ({
                           alt={project.mainInfo.featuredImage.alt}
                           width={678}
                           height={463}
+                          sizes='(max-width: 768px) 100vw, 50vw'
                           className='h-full w-full object-cover'
                         />
                       </div>
@@ -124,7 +126,6 @@ const ProjectsListComponent = ({
 
         {/* Projects List */}
 
-        
         <div className='absolute bottom-12 left-0 col-span-full sm:w-[calc(50%-var(--padding-side))]'>
           <p className='flex w-full items-center gap-3 text-sm xl:text-base font-mono mb-2 xl:mb-3'>
             case studies

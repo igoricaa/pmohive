@@ -94,6 +94,7 @@ const MainBar = ({
           unoptimized
           preload={true}
           fetchPriority='high'
+          sizes='(max-width: 1024px) 92px, 124px'
           className='h-full w-20 sm:w-23 lg:w-31'
         />
       </Link>

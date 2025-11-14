@@ -33,7 +33,8 @@ const SocialIconAnimated = ({
         width={20}
         height={20}
         unoptimized
-        className='w-5 h-5 max-w-5 max-h-5 object-contain flex-shrink-0'
+        sizes='20px'
+        className='size-5 max-w-5 max-h-5 object-contain flex-shrink-0'
       />
     </Link>
   );

@@ -19,6 +19,7 @@ const StatCard = ({ stat, className }: { stat: Stat; className?: string }) => {
           width={100}
           height={100}
           unoptimized
+          sizes='88px'
           className='h-auto object-cover w-17 sm:w-22'
         />
       )}

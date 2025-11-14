@@ -60,6 +60,7 @@ export default function ApproachSection({
                 alt={item.icon.alt}
                 width={156}
                 height={156}
+                sizes="(max-width: 640px) 112px, 156px"
                 unoptimized
                 className='size-28 sm:size-39'
               />

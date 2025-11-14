@@ -51,6 +51,7 @@ export default function ProjectDetailClient({
                   alt={project.mainInfo.featuredImage.alt}
                   width={1375}
                   height={700}
+                  sizes='(max-width: 1280px) 100vw, 85vw'
                   className='h-full w-full object-cover'
                 />
                 <div className='absolute inset-0 bg-gradient-to-b from-transparent from-0% to-black/65'></div>

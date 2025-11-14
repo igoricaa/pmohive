@@ -35,7 +35,7 @@ const SplitSection = ({
         className
       )}
     >
-      <div className='col-span-1 xl:col-span-5 xl:col-start-2 2xl:col-span-4 2xl:col-start-3 w-full h-55 md:h-full xl:aspect-[580/681] overflow-hidden'>
+      <div className='col-span-1 xl:col-span-5 xl:col-start-2 2xl:col-span-4 2xl:col-start-3 w-full h-55 sm:h-80 md:h-full xl:aspect-[580/681] overflow-hidden'>
         <AnimateInView
           offset={80}
           direction='right'
@@ -47,6 +47,7 @@ const SplitSection = ({
             alt={backgroundImage.alt}
             width={1160}
             height={1362}
+            sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 42vw, 33vw'
             className='w-full object-cover'
           />
         </AnimateInView>

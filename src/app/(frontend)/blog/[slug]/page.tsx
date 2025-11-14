@@ -94,7 +94,6 @@ export default async function BlogPostPage({
             alt={currentPost.title}
             width={1375}
             height={500}
-            quality={85}
             preload={true}
             className='w-full h-auto object-cover aspect-[343/161] sm:aspect-[786/335] xl:aspect-[1375/500]'
           />

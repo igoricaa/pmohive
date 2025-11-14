@@ -81,6 +81,7 @@ const AnimatedButton = ({
               alt={icon.alt}
               width={20}
               height={20}
+              sizes='20px'
               className={iconClassName}
             />
           )}
@@ -91,6 +92,7 @@ const AnimatedButton = ({
               alt={icon.alt}
               width={20}
               height={20}
+              sizes='20px'
               className={iconClassName}
             />
           )}

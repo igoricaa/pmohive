@@ -37,6 +37,7 @@ const PostPortableText = ({
             alt={value.alt || ''}
             width={1600}
             height={1200}
+            sizes='(max-width: 1280px) 100vw, 75vw'
             className='w-full h-auto object-cover'
           />
         </div>
@@ -156,6 +157,8 @@ const PostPortableText = ({
             alt='PMO Hive logo mark'
             width={434}
             height={280}
+            unoptimized
+            sizes='(max-width: 640px) 272px, (max-width: 1280px) 352px, 436px'
             className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-68 sm:w-88 xl:w-109 '
           />
           <span className='highlight'>/pmo</span> {children}

@@ -31,6 +31,7 @@ export default async function Footer() {
           alt='Hexagonal pattern'
           width={747}
           height={531}
+          sizes='(max-width: 640px) 472px, 748px'
           unoptimized
           className='object-contain w-118 sm:w-187'
         />
@@ -46,6 +47,7 @@ export default async function Footer() {
               alt={logoFull.alt}
               width={419}
               height={214}
+              sizes='(max-width: 768px) 176px, (max-width: 1280px) 274px, 420px'
               className='object-contain h-full w-44 min-w-44 md:w-68.5 md:min-w-68.5 xl:w-105 xl:min-w-105'
             />
           </Link>
@@ -90,7 +92,8 @@ export default async function Footer() {
                       width={30}
                       height={30}
                       unoptimized
-                      className='w-7.5 h-7.5 xl:w-8.5 xl:h-8.5'
+                      sizes='34px'
+                      className='w-7.5 xl:size-8.5'
                     />
                   </Link>
                 ))}
