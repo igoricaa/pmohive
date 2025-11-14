@@ -63,7 +63,7 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
 
       <div
         className={cn(
-          'fixed top-0 right-0 w-120 h-screen bg-black translate-x-full transition-transform ease-out duration-200 z-30 px-8 pb-8 pt-35 flex flex-col justify-between overflow-hidden',
+          'fixed top-0 right-0 w-120 h-screen bg-black translate-x-full transition-transform ease-out duration-300 z-30 px-8 pb-8 pt-35 flex flex-col justify-between overflow-hidden',
           'before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-gradient-to-b before:from-black before:from-5% before:via-[#F79E62] before:via-50% before:to-black before:to-95%',
           isOpen && 'translate-x-0'
         )}
@@ -92,7 +92,7 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
               href='/about-us'
               variant='default'
               onClick={() => setIsOpen(false)}
-              delayMs={200}
+              delayMs={300}
             />
             <AnimatedButton
               text='Contact Us'
@@ -100,7 +100,7 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
               variant='secondary'
               icon={{ type: 'lucide', name: 'ArrowRight' }}
               onClick={() => setIsOpen(false)}
-              delayMs={200}
+              delayMs={300}
             />
           </div>
         </div>
@@ -135,7 +135,7 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
               href='/data-protection'
               className='font-sans font-semibold text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
               onClick={() => setIsOpen(false)}
-              delayMs={200}
+              delayMs={300}
             >
               Data Protection
             </Link>
@@ -146,7 +146,7 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
               href='/terms'
               className='font-sans font-semibold text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
               onClick={() => setIsOpen(false)}
-              delayMs={200}
+              delayMs={300}
             >
               Terms &amp; Conditions
             </Link>
@@ -157,7 +157,7 @@ const Sidebar = ({ socials }: { socials: GeneralInfo['socials'] }) => {
               href='/imprint'
               className='font-sans font-semibold text-base tracking-[0.1px] text-light-grey whitespace-nowrap'
               onClick={() => setIsOpen(false)}
-              delayMs={200}
+              delayMs={300}
             >
               Imprint
             </Link>
