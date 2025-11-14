@@ -574,8 +574,6 @@ export type TermsOfUse = {
   } & PortableTextBlock | {
     _key: string;
   } & TableBlock>;
-  introContent?: BlockContent;
-  legacyContent?: BlockContent;
 };
 
 export type CookiePolicy = {
@@ -595,8 +593,6 @@ export type CookiePolicy = {
   } & PortableTextBlock | {
     _key: string;
   } & TableBlock>;
-  introContent?: BlockContent;
-  legacyContent?: BlockContent;
 };
 
 export type PrivacyPolicy = {
@@ -616,8 +612,6 @@ export type PrivacyPolicy = {
   } & PortableTextBlock | {
     _key: string;
   } & TableBlock>;
-  introContent?: BlockContent;
-  legacyContent?: BlockContent;
 };
 
 export type ContactPage = {
@@ -2025,7 +2019,7 @@ export type CASE_STUDIES_QUERYResult = Array<{
   slug: string;
 }>;
 // Variable: PRIVACY_POLICY_QUERY
-// Query: {  "privacyPolicy": *[_type == "privacyPolicy"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    content[] {      _key,      _type,      _type == "portableTextBlock" => {        content      },      _type == "tableBlock" => {        table,        caption      }    },    introContent,    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    }  }}
+// Query: {  "privacyPolicy": *[_type == "privacyPolicy"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    content[] {      _key,      _type,      _type == "portableTextBlock" => {        content      },      _type == "tableBlock" => {        table,        caption      }    },    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    }  }}
 export type PRIVACY_POLICY_QUERYResult = {
   privacyPolicy: {
     title: string;
@@ -2073,7 +2067,6 @@ export type PRIVACY_POLICY_QUERYResult = {
       table: Table;
       caption: string | null;
     }>;
-    introContent: BlockContent | null;
     seo: {
       metaTitle: string | null;
       metaDescription: string | null;
@@ -2099,7 +2092,7 @@ export type PRIVACY_POLICY_QUERYResult = {
   } | null;
 };
 // Variable: COOKIE_POLICY_QUERY
-// Query: {  "cookiePolicy": *[_type == "cookiePolicy"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    content[] {      _key,      _type,      _type == "portableTextBlock" => {        content      },      _type == "tableBlock" => {        table,        caption      }    },    introContent,    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    }  }}
+// Query: {  "cookiePolicy": *[_type == "cookiePolicy"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    content[] {      _key,      _type,      _type == "portableTextBlock" => {        content      },      _type == "tableBlock" => {        table,        caption      }    },    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    }  }}
 export type COOKIE_POLICY_QUERYResult = {
   cookiePolicy: {
     title: string;
@@ -2147,7 +2140,6 @@ export type COOKIE_POLICY_QUERYResult = {
       table: Table;
       caption: string | null;
     }>;
-    introContent: BlockContent | null;
     seo: {
       metaTitle: string | null;
       metaDescription: string | null;
@@ -2173,7 +2165,7 @@ export type COOKIE_POLICY_QUERYResult = {
   } | null;
 };
 // Variable: TERMS_OF_USE_QUERY
-// Query: {  "termsOfUse": *[_type == "termsOfUse"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    content[] {      _key,      _type,      _type == "portableTextBlock" => {        content      },      _type == "tableBlock" => {        table,        caption      }    },    introContent,    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    }  }}
+// Query: {  "termsOfUse": *[_type == "termsOfUse"][0] {    title,    "slug": slug.current,    lastUpdated,    version,    termlyEmbedUrl,    content[] {      _key,      _type,      _type == "portableTextBlock" => {        content      },      _type == "tableBlock" => {        table,        caption      }    },    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    }  }}
 export type TERMS_OF_USE_QUERYResult = {
   termsOfUse: {
     title: string;
@@ -2221,7 +2213,6 @@ export type TERMS_OF_USE_QUERYResult = {
       table: Table;
       caption: string | null;
     }>;
-    introContent: BlockContent | null;
     seo: {
       metaTitle: string | null;
       metaDescription: string | null;
@@ -2270,8 +2261,8 @@ declare module "@sanity/client" {
     "{\n  \"caseStudy\": *[_type == \"caseStudy\" && slug.current == $slug][0] {\n    ...,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    },\n    _updatedAt\n  }\n}": CASE_STUDY_QUERYResult;
     "*[_type == \"caseStudy\"]{\n  slug,\n  _updatedAt\n}": CASE_STUDIES_QUERY_WITH_SLUGSResult;
     "*[_type == \"caseStudy\"] {\n  mainInfo {\n    title,\n    featuredImage {\n    ...,\n    alt\n    },\n  },\n  \"slug\": slug.current,\n}": CASE_STUDIES_QUERYResult;
-    "{\n  \"privacyPolicy\": *[_type == \"privacyPolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    content[] {\n      _key,\n      _type,\n      _type == \"portableTextBlock\" => {\n        content\n      },\n      _type == \"tableBlock\" => {\n        table,\n        caption\n      }\n    },\n    introContent,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    }\n  }\n}": PRIVACY_POLICY_QUERYResult;
-    "{\n  \"cookiePolicy\": *[_type == \"cookiePolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    content[] {\n      _key,\n      _type,\n      _type == \"portableTextBlock\" => {\n        content\n      },\n      _type == \"tableBlock\" => {\n        table,\n        caption\n      }\n    },\n    introContent,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    }\n  }\n}": COOKIE_POLICY_QUERYResult;
-    "{\n  \"termsOfUse\": *[_type == \"termsOfUse\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    content[] {\n      _key,\n      _type,\n      _type == \"portableTextBlock\" => {\n        content\n      },\n      _type == \"tableBlock\" => {\n        table,\n        caption\n      }\n    },\n    introContent,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    }\n  }\n}": TERMS_OF_USE_QUERYResult;
+    "{\n  \"privacyPolicy\": *[_type == \"privacyPolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    content[] {\n      _key,\n      _type,\n      _type == \"portableTextBlock\" => {\n        content\n      },\n      _type == \"tableBlock\" => {\n        table,\n        caption\n      }\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    }\n  }\n}": PRIVACY_POLICY_QUERYResult;
+    "{\n  \"cookiePolicy\": *[_type == \"cookiePolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    content[] {\n      _key,\n      _type,\n      _type == \"portableTextBlock\" => {\n        content\n      },\n      _type == \"tableBlock\" => {\n        table,\n        caption\n      }\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    }\n  }\n}": COOKIE_POLICY_QUERYResult;
+    "{\n  \"termsOfUse\": *[_type == \"termsOfUse\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    content[] {\n      _key,\n      _type,\n      _type == \"portableTextBlock\" => {\n        content\n      },\n      _type == \"tableBlock\" => {\n        table,\n        caption\n      }\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    }\n  }\n}": TERMS_OF_USE_QUERYResult;
   }
 }

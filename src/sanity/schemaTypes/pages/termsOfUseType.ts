@@ -48,7 +48,8 @@ export const termsOfUseType = defineType({
       name: 'lastUpdated',
       title: 'Last Updated',
       type: 'datetime',
-      validation: (rule) => rule.required().error('Last updated date is required'),
+      validation: (rule) =>
+        rule.required().error('Last updated date is required'),
       group: 'content',
     }),
     defineField({
@@ -63,7 +64,8 @@ export const termsOfUseType = defineType({
       name: 'termlyEmbedUrl',
       title: 'Termly Embed URL',
       type: 'url',
-      description: 'Optional: Embed URL from Termly if using their hosted policy',
+      description:
+        'Optional: Embed URL from Termly if using their hosted policy',
       group: 'content',
     }),
     defineField({
@@ -77,23 +79,6 @@ export const termsOfUseType = defineType({
       ],
       validation: (rule) => rule.required().error('Content is required'),
       group: 'content',
-    }),
-    // Legacy fields - hidden but kept for backward compatibility during migration
-    defineField({
-      name: 'introContent',
-      title: 'Introduction (Legacy)',
-      type: 'blockContent',
-      description: 'DEPRECATED: Use the composable content blocks above instead',
-      group: 'content',
-      hidden: true,
-    }),
-    defineField({
-      name: 'legacyContent',
-      title: 'Policy Content (Legacy)',
-      type: 'blockContent',
-      description: 'DEPRECATED: Use the composable content blocks above instead',
-      group: 'content',
-      hidden: true,
     }),
   ],
   preview: {

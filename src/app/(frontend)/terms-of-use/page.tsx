@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { generatePageMetadata } from '@/lib/metadata';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import { BlockContent } from '../../../../sanity.types';
 import LegalPageContent from '@/components/legal/legal-page-content';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -16,10 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return generatePageMetadata({
     title: termsOfUse.seo?.metaTitle || 'Terms of Use',
-    description:
-      termsOfUse.seo?.metaDescription ||
-      (termsOfUse.introContent as any) ||
-      'Terms of Use',
+    description: termsOfUse.seo?.metaDescription || 'Terms of Use',
     image: termsOfUse.seo?.ogImage as SanityImageSource,
     seo: termsOfUse.seo,
     path: '/terms-of-use',
@@ -47,23 +43,15 @@ export default async function TermsOfUsePage() {
       <div className='max-w-4xl mx-auto'>
         <Heading level='h1'>{terms.title}</Heading>
 
-        <div className='mt-4 flex flex-wrap gap-4 text-sm text-foreground/60'>
+        <div className='mt-4 flex flex-wrap gap-4 text-sm'>
           {terms.version && <p>Version {terms.version}</p>}
           {lastUpdated && <p>Last updated: {lastUpdated}</p>}
         </div>
 
-        {terms.content && terms.content.length > 0 ? (
+        {terms.content && terms.content.length > 0 && (
           <div className='mt-8'>
             <LegalPageContent content={terms.content as any} />
           </div>
-        ) : (
-          terms.introContent && (
-            <div className='mt-8'>
-              <p className='text-sm text-gray-600 dark:text-gray-400 mb-4'>
-                Legacy content format - please migrate to composable blocks in Sanity Studio
-              </p>
-            </div>
-          )
         )}
 
         {terms.termlyEmbedUrl && (

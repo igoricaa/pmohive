@@ -346,7 +346,7 @@ const [search, setSearch] = useQueryState('search', parseAsString.withDefault(''
 
 **Sanity Legal Schemas**:
 
-- Fields: title, slug, lastUpdated, version, termlyEmbedUrl (optional), introContent (optional), content
+- Fields: title, slug, lastUpdated, version, termlyEmbedUrl (optional), content
 - Icons: ShieldCheckIcon (privacy), CookieIcon (cookie), FileTextIcon (terms)
 - Preview: Shows version + lastUpdated in subtitle
 

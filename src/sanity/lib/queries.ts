@@ -514,7 +514,6 @@ export const PRIVACY_POLICY_QUERY = defineQuery(`{
         caption
       }
     },
-    introContent,
     seo {
       metaTitle,
       metaDescription,
@@ -557,7 +556,6 @@ export const COOKIE_POLICY_QUERY = defineQuery(`{
         caption
       }
     },
-    introContent,
     seo {
       metaTitle,
       metaDescription,
@@ -600,7 +598,6 @@ export const TERMS_OF_USE_QUERY = defineQuery(`{
         caption
       }
     },
-    introContent,
     seo {
       metaTitle,
       metaDescription,

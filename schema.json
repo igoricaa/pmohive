@@ -3997,22 +3997,6 @@
           }
         },
         "optional": false
-      },
-      "introContent": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "blockContent"
-        },
-        "optional": true
-      },
-      "legacyContent": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "blockContent"
-        },
-        "optional": true
       }
     }
   },
@@ -4136,22 +4120,6 @@
           }
         },
         "optional": false
-      },
-      "introContent": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "blockContent"
-        },
-        "optional": true
-      },
-      "legacyContent": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "blockContent"
-        },
-        "optional": true
       }
     }
   },
@@ -4275,22 +4243,6 @@
           }
         },
         "optional": false
-      },
-      "introContent": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "blockContent"
-        },
-        "optional": true
-      },
-      "legacyContent": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "blockContent"
-        },
-        "optional": true
       }
     }
   },
