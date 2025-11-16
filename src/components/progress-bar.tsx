@@ -4,23 +4,48 @@ import { AnimatePresence, easeOut, motion, useSpring } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { useAppContext } from './providers/app-ready-provider';
 import { useLenis } from 'lenis/react';
+import { isBot } from '@/lib/utils';
 
 let isInitialLoad = true;
 
+/**
+ * Client-side bot detection fallback
+ * Used when server-side detection didn't catch the bot
+ */
+function isClientBot(): boolean {
+  if (typeof window === 'undefined') return false;
+  return isBot(navigator.userAgent);
+}
+
 function LoadingProgressBar() {
+  // Skip loading entirely for bots (client-side detection)
+  const shouldSkip = isClientBot();
+
+  // Override isInitialLoad if bot detected
+  if (shouldSkip) {
+    isInitialLoad = false;
+  }
   const progress = useMockLoading();
   const [showLoader, setShowLoader] = useState(isInitialLoad);
   const { setAppIsReady } = useAppContext();
   const lenis = useLenis();
 
   useEffect(() => {
+    // If bot detected, immediately signal app is ready
+    if (shouldSkip) {
+      setAppIsReady(true);
+    }
+
     return () => {
       isInitialLoad = false;
     };
-  }, []);
+  }, [shouldSkip, setAppIsReady]);
 
   // Control scroll based on showLoader state
+  // Skip scroll locking entirely for bots
   useEffect(() => {
+    if (shouldSkip) return;
+
     if (showLoader) {
       lenis?.stop();
       document.body.style.overflow = 'hidden';
@@ -28,10 +53,13 @@ function LoadingProgressBar() {
       document.body.style.overflow = '';
       lenis?.start();
     }
-  }, [showLoader, lenis]);
+  }, [showLoader, lenis, shouldSkip]);
 
   // Listen for progress completion
+  // Skip for bots - no animation needed
   useEffect(() => {
+    if (shouldSkip) return;
+
     const unsubscribe = progress.on('change', (latest) => {
       if (latest >= 0.99) {
         // Wait 150ms to show completed bar before hiding
@@ -42,7 +70,7 @@ function LoadingProgressBar() {
     });
 
     return () => unsubscribe();
-  }, [progress]);
+  }, [progress, shouldSkip]);
 
   const loaderVariants = {
     initial: { y: 0 },
