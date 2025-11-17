@@ -54,7 +54,7 @@ const ProjectsListComponent = ({
     <ViewTransition>
       <div
         className={cn(
-          'w-screen relative grid grid-cols-1 sm:grid-cols-8 xl:grid-cols-12 gap-x-4 xl:gap-x-5 gap-y-15 px-side',
+          'relative grid grid-cols-1 sm:grid-cols-8 xl:grid-cols-12 gap-x-4 xl:gap-x-5 gap-y-15 px-side',
           className
         )}
       >

@@ -55,7 +55,7 @@ function AccordionTrigger({
         {children}
         <div
           className={cn(
-            'svg-wrapper bg-[#E8E8E8] border border-primary-dark rounded-full size-8 flex items-center justify-center transition-[rotate,background-color] duration-300',
+            'svg-wrapper bg-[#E8E8E8] border border-primary-dark rounded-full size-8 min-w-8 min-h-8 max-w-8 max-h-8 flex items-center justify-center transition-[rotate,background-color] duration-300',
             iconWrapperClassName
           )}
         >
