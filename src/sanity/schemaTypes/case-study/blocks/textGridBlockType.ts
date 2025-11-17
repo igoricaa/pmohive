@@ -23,8 +23,6 @@ export const textGridBlockType = defineType({
       title: 'Grid Items',
       type: 'array',
       of: [defineArrayMember({ type: 'textGridItem' })],
-      validation: (rule) =>
-        rule.required().min(1).error('At least one grid item is required'),
     }),
   ],
   preview: {

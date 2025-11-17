@@ -1224,7 +1224,7 @@
               }
             }
           },
-          "optional": false
+          "optional": true
         }
       }
     }
@@ -2774,6 +2774,34 @@
                 "type": "string"
               },
               "optional": false
+            },
+            "industry": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "location": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "phase": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "value": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
             },
             "featuredImage": {
               "type": "objectAttribute",

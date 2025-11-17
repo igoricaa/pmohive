@@ -76,10 +76,34 @@ export default function ProjectDetailClient({
                 <span className='highlight font-bold'>Client:</span>{' '}
                 {project.mainInfo.client}
               </p>
+              {project.mainInfo.industry && (
+                <p className='font-mono text-sm sm:text-base mt-2'>
+                  <span className='highlight font-bold'>Industry:</span>{' '}
+                  {project.mainInfo.industry}
+                </p>
+              )}
               <p className='font-mono text-sm sm:text-base mt-2'>
-                <span className='highlight font-bold'>Project:</span>{' '}
+                <span className='highlight font-bold'>Project Type:</span>{' '}
                 {project.mainInfo.projectDescription}
               </p>
+              {project.mainInfo.location && (
+                <p className='font-mono text-sm sm:text-base mt-2'>
+                  <span className='highlight font-bold'>Location:</span>{' '}
+                  {project.mainInfo.location}
+                </p>
+              )}
+              {project.mainInfo.phase && (
+                <p className='font-mono text-sm sm:text-base mt-2'>
+                  <span className='highlight font-bold'>Phase:</span>{' '}
+                  {project.mainInfo.phase}
+                </p>
+              )}
+              {project.mainInfo.value && (
+                <p className='font-mono text-sm sm:text-base mt-2'>
+                  <span className='highlight font-bold'>Value:</span>{' '}
+                  {project.mainInfo.value}
+                </p>
+              )}
             </div>
 
             {/* Content Blocks */}

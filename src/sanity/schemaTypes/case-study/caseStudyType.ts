@@ -54,6 +54,26 @@ export const caseStudyType = defineType({
             rule.required().error('Project description is required'),
         }),
         defineField({
+          name: 'industry',
+          title: 'Industry',
+          type: 'string',
+        }),
+        defineField({
+          name: 'location',
+          title: 'Location',
+          type: 'string',
+        }),
+        defineField({
+          name: 'phase',
+          title: 'Phase',
+          type: 'string',
+        }),
+        defineField({
+          name: 'value',
+          title: 'Value',
+          type: 'string',
+        }),
+        defineField({
           name: 'featuredImage',
           title: 'Featured Image',
           type: 'image',

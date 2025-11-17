@@ -161,7 +161,7 @@ export type TextGridBlock = {
     _type: "image";
     _key: string;
   }>;
-  items: Array<{
+  items?: Array<{
     _key: string;
   } & TextGridItem>;
 };
@@ -374,6 +374,10 @@ export type CaseStudy = {
     title: string;
     client: string;
     projectDescription: string;
+    industry?: string;
+    location?: string;
+    phase?: string;
+    value?: string;
     featuredImage: {
       asset?: {
         _ref: string;
@@ -2015,6 +2019,10 @@ export type CASE_STUDY_QUERYResult = {
       title: string;
       client: string;
       projectDescription: string;
+      industry?: string;
+      location?: string;
+      phase?: string;
+      value?: string;
       featuredImage: {
         asset?: {
           _ref: string;
