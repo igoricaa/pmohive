@@ -43,8 +43,6 @@ export const caseStudyType = defineType({
           name: 'client',
           title: 'Client',
           type: 'string',
-          validation: (rule) =>
-            rule.required().error('Client name is required'),
         }),
         defineField({
           name: 'projectDescription',
