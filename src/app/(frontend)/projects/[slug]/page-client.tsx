@@ -3,7 +3,10 @@
 import { ViewTransition } from 'react';
 import { Image } from 'next-sanity/image';
 import { urlFor } from '@/sanity/lib/image';
-import { CaseStudy } from '../../../../../sanity.types';
+import {
+  CaseStudy,
+  LATEST_POSTS_QUERYResult,
+} from '../../../../../sanity.types';
 import Heading from '@/components/ui/heading';
 import HeadingBlock from '@/components/case-study/heading-block';
 import HeadingTextBlock from '@/components/case-study/heading-text-block';
@@ -16,19 +19,23 @@ import { AnimateInView } from '@/components/animate-in-view';
 import { UseInViewOptions } from 'motion/react';
 import Link from 'next/link';
 import { ArrowLeftIcon } from 'lucide-react';
+import BlogSection from '@/components/sections/home/blog-section';
+import { PortableTextBlock } from 'next-sanity';
 
 type MarginType = UseInViewOptions['margin'];
 
 export default function ProjectDetailClient({
   project,
+  latestPosts,
 }: {
   project: CaseStudy;
+  latestPosts: LATEST_POSTS_QUERYResult;
 }) {
   const slug = project.slug.current;
 
   return (
     <ViewTransition>
-      <div className='min-h-screen w-screen relative'>
+      <div className='min-h-screen relative'>
         <div className='xl:grid xl:grid-cols-12 xl:gap-x-5 px-side'>
           <div className='xl:col-span-10 xl:col-start-2 space-y-12'>
             {/* Back Button */}
@@ -72,10 +79,12 @@ export default function ProjectDetailClient({
 
             {/* Project Info */}
             <div className='border-b border-white/30 pb-6 xl:pb-8'>
-              <p className='font-mono text-sm sm:text-base'>
-                <span className='highlight font-bold'>Client:</span>{' '}
-                {project.mainInfo.client}
-              </p>
+              {project.mainInfo.client && (
+                <p className='font-mono text-sm sm:text-base'>
+                  <span className='highlight font-bold'>Client:</span>{' '}
+                  {project.mainInfo.client}
+                </p>
+              )}
               {project.mainInfo.industry && (
                 <p className='font-mono text-sm sm:text-base mt-2'>
                   <span className='highlight font-bold'>Industry:</span>{' '}
@@ -180,6 +189,14 @@ export default function ProjectDetailClient({
             </div>
           </div>
         </div>
+        <BlogSection
+          subtitle={project.blog.subtitle}
+          heading={project.blog.heading}
+          description={project.blog.description as PortableTextBlock[]}
+          ctaButton={project.blog.button}
+          posts={latestPosts}
+          className='mt-16 md:mt-25'
+        />
       </div>
     </ViewTransition>
   );

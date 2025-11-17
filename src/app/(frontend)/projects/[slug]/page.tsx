@@ -1,6 +1,7 @@
 import {
   getAllCaseStudiesWithSlugs,
   getCaseStudyData,
+  getLatestPosts,
 } from '@/sanity/lib/queries';
 import { notFound } from 'next/navigation';
 import { Slug } from 'sanity';
@@ -52,7 +53,10 @@ export default async function ProjectDetailPage({
 }) {
   const { slug } = await params;
 
-  const { caseStudy } = await getCaseStudyData(slug);
+  const [{ caseStudy }, latestPostsResult] = await Promise.all([
+    getCaseStudyData(slug),
+    getLatestPosts(12),
+  ]);
 
   if (!caseStudy) {
     notFound();
@@ -60,7 +64,10 @@ export default async function ProjectDetailPage({
 
   return (
     <main className='pb-10 sm:pb-16 xl:pb-35 pt-28 sm:pt-34 lg:pt-40'>
-      <PageClient project={caseStudy as CaseStudy} />
+      <PageClient
+        project={caseStudy as CaseStudy}
+        latestPosts={latestPostsResult}
+      />
     </main>
   );
 }

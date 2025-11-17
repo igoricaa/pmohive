@@ -2766,7 +2766,7 @@
               "value": {
                 "type": "string"
               },
-              "optional": false
+              "optional": true
             },
             "projectDescription": {
               "type": "objectAttribute",

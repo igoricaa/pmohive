@@ -372,7 +372,7 @@ export type CaseStudy = {
   seo?: Seo;
   mainInfo: {
     title: string;
-    client: string;
+    client?: string;
     projectDescription: string;
     industry?: string;
     location?: string;
@@ -2017,7 +2017,7 @@ export type CASE_STUDY_QUERYResult = {
     } | null;
     mainInfo: {
       title: string;
-      client: string;
+      client?: string;
       projectDescription: string;
       industry?: string;
       location?: string;
