@@ -437,6 +437,16 @@ export const getServiceData = async (
 export const CASE_STUDY_QUERY = defineQuery(`{
   "caseStudy": *[_type == "caseStudy" && slug.current == $slug][0] {
     ...,
+    content[] {
+      ...,
+      _type == "imageBlock" => {
+        ...,
+        image {
+          ...,
+          "dimensions": asset->metadata.dimensions
+        }
+      }
+    },
     seo {
       metaTitle,
       metaDescription,

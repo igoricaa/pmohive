@@ -182,10 +182,6 @@ export type ImageBlock = {
     _type: "image";
   };
   subtitle?: string;
-  aspectRatio?: {
-    width: number;
-    height: number;
-  };
 };
 
 export type TextareaBlock = {
@@ -1985,7 +1981,7 @@ export type SERVICE_QUERYResult = {
   } | null;
 };
 // Variable: CASE_STUDY_QUERY
-// Query: {  "caseStudy": *[_type == "caseStudy" && slug.current == $slug][0] {    ...,    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    },    _updatedAt  }}
+// Query: {  "caseStudy": *[_type == "caseStudy" && slug.current == $slug][0] {    ...,    content[] {      ...,      _type == "imageBlock" => {        ...,        image {          ...,          "dimensions": asset->metadata.dimensions        }      }    },    seo {      metaTitle,      metaDescription,      ogTitle,      ogDescription,      ogImage {        ...,        alt      },      keywords,      canonicalUrl,      noIndex    },    _updatedAt  }}
 export type CASE_STUDY_QUERYResult = {
   caseStudy: {
     _id: string;
@@ -2038,21 +2034,162 @@ export type CASE_STUDY_QUERYResult = {
       };
     };
     slug: Slug;
-    content?: Array<{
+    content: Array<{
       _key: string;
-    } & DividerBlock | {
+      _type: "dividerBlock";
+      height: number;
+    } | {
       _key: string;
-    } & HeadingBlock | {
+      _type: "headingBlock";
+      heading: {
+        subtitle?: Subtitle;
+        highlightedText?: string;
+        text: string;
+        level: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+        alignment: "center" | "end" | "start";
+      };
+    } | {
       _key: string;
-    } & HeadingTextBlock | {
+      _type: "headingTextBlock";
+      heading: {
+        subtitle?: Subtitle;
+        highlightedText?: string;
+        text: string;
+        level: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+        alignment: "center" | "end" | "start";
+      };
+      content: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "highlighted" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+    } | {
       _key: string;
-    } & ImageBlock | {
+      _type: "imageBlock";
+      image: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "image";
+        dimensions: SanityImageDimensions | null;
+      };
+      subtitle?: string;
+    } | {
       _key: string;
-    } & SpacerBlock | {
+      _type: "spacerBlock";
+      height: number;
+    } | {
       _key: string;
-    } & TextareaBlock | {
+      _type: "textareaBlock";
+      content: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "highlighted" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+    } | {
       _key: string;
-    } & TextGridBlock>;
+      _type: "textGridBlock";
+      heading?: {
+        subtitle?: Subtitle;
+        highlightedText?: string;
+        text: string;
+        level: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+        alignment: "center" | "end" | "start";
+      };
+      content?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "highlighted" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+      items?: Array<{
+        _key: string;
+      } & TextGridItem>;
+    }> | null;
     blog: BlogSection;
   } | null;
 };
@@ -2323,7 +2460,7 @@ declare module "@sanity/client" {
     "{\n  \"aboutPage\": *[_type == \"aboutPage\"][0] {\n    ...,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    },\n    team {\n      ...,\n      teamMembers[]->\n    },\n    approachSection {\n      ...,\n      approachItems[]->\n    },\n    visionSection {\n      ...,\n      visionItems[]->\n    },\n  }\n}": ABOUT_PAGE_QUERYResult;
     "{\n  \"careersPage\": *[_type == \"careersPage\"][0] {\n    ...,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    },\n    openPositions[]->\n  }\n}": CAREERS_PAGE_QUERYResult;
     "{\n  \"currentService\": *[_type == \"service\" && slug.current == $slug][0] {\n    ...,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    },\n    _updatedAt\n  }\n}": SERVICE_QUERYResult;
-    "{\n  \"caseStudy\": *[_type == \"caseStudy\" && slug.current == $slug][0] {\n    ...,\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    },\n    _updatedAt\n  }\n}": CASE_STUDY_QUERYResult;
+    "{\n  \"caseStudy\": *[_type == \"caseStudy\" && slug.current == $slug][0] {\n    ...,\n    content[] {\n      ...,\n      _type == \"imageBlock\" => {\n        ...,\n        image {\n          ...,\n          \"dimensions\": asset->metadata.dimensions\n        }\n      }\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    },\n    _updatedAt\n  }\n}": CASE_STUDY_QUERYResult;
     "*[_type == \"caseStudy\"]{\n  slug,\n  _updatedAt\n}": CASE_STUDIES_QUERY_WITH_SLUGSResult;
     "*[_type == \"caseStudy\"] {\n  mainInfo {\n    title,\n    featuredImage {\n    ...,\n    alt\n    },\n  },\n  \"slug\": slug.current,\n}": CASE_STUDIES_QUERYResult;
     "{\n  \"privacyPolicy\": *[_type == \"privacyPolicy\"][0] {\n    title,\n    \"slug\": slug.current,\n    lastUpdated,\n    version,\n    termlyEmbedUrl,\n    content[] {\n      _key,\n      _type,\n      _type == \"portableTextBlock\" => {\n        content\n      },\n      _type == \"tableBlock\" => {\n        table,\n        caption\n      }\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      ogTitle,\n      ogDescription,\n      ogImage {\n        ...,\n        alt\n      },\n      keywords,\n      canonicalUrl,\n      noIndex\n    }\n  }\n}": PRIVACY_POLICY_QUERYResult;

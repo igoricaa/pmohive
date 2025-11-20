@@ -153,10 +153,8 @@ export default function ProjectDetailClient({
                     return (
                       <AnimateInView key={block._key} {...animationProps}>
                         <ImageBlock
-                          _type={block._type}
                           image={block.image}
                           subtitle={block.subtitle}
-                          aspectRatio={block.aspectRatio}
                         />
                       </AnimateInView>
                     );

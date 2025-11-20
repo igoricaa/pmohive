@@ -1324,29 +1324,6 @@
             "type": "string"
           },
           "optional": true
-        },
-        "aspectRatio": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "object",
-            "attributes": {
-              "width": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false
-              },
-              "height": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false
-              }
-            }
-          },
-          "optional": true
         }
       }
     }

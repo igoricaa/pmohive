@@ -32,26 +32,6 @@ export const imageBlockType = defineType({
       type: 'string',
       description: 'Optional caption for the image',
     }),
-    defineField({
-      name: 'aspectRatio',
-      title: 'Aspect Ratio',
-      type: 'object',
-      description: 'Define the aspect ratio for the image',
-      fields: [
-        {
-          name: 'width',
-          type: 'number',
-          title: 'Width',
-          validation: (rule) => rule.required().positive(),
-        },
-        {
-          name: 'height',
-          type: 'number',
-          title: 'Height',
-          validation: (rule) => rule.required().positive(),
-        },
-      ],
-    }),
   ],
   preview: {
     select: {
