@@ -54,6 +54,10 @@ function AnimatedImage({ image, index, isAppReady }: AnimatedImageProps) {
         fetchPriority='high'
         sizes='(max-width: 768px) 40vw, (max-width: 1280px) 30vw, 21vw'
         className='w-full h-auto object-cover'
+        style={{
+          clipPath:
+            'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+        }}
       />
     </motion.div>
   );
